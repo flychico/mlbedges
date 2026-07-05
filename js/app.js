@@ -60,11 +60,14 @@ function renderNav(active) {
     ["index.html", "Home"],
     ["dashboard.html", "Dashboard"],
     ["picks.html", "Picks"],
-    ["odds.html", "Live Odds"],
-    ["tools.html", "Value Tools"],
-    ["stats.html", "Team Stats"],
-    ["recaps.html", "Daily Recap"],
-    ["articles.html", "Articles"]
+    ["previews/", "Previews"],
+    ["results.html", "Results"],
+    ["odds.html", "Odds"],
+    ["tools.html", "Tools"],
+    ["stats.html", "Stats"],
+    ["recaps.html", "Recap"],
+    ["articles.html", "Articles"],
+    ["membership.html", "Membership"]
   ];
   const el = document.getElementById("nav");
   if (!el) return;
