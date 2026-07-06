@@ -23,6 +23,14 @@ deeper competitor-reasoning and verifier pass described in `AGENT.md` and `READM
 - "Never suppress a pick, never hide a pick behind a paywall" — the live Results and
   Previews pages hold to this; membership is sold on delivery and price-discipline
   alerts, not on access.
+- Run Line Sanity Check (`01-agent-core/RUN_LINE_SANITY_CHECK.md`) — the run-line
+  model previously used `Math.abs()` on the market point, which could grade an
+  underdog run line as if it needed to win outright, producing a run-line "value"
+  pick that directly contradicted the moneyline's projected winner (e.g., Team A
+  moneyline alongside Team B -1.5 for the same game). Fixed in both
+  `scripts/generate-previews.js` and `picks/index.html`: cover probability now uses
+  the signed point, and any run-line pick that would contradict the moneyline's
+  projected winner is rejected (shown as a pass) rather than published.
 - Actual delivery — `scripts/send-member-emails.js` now runs as the last step of the
   daily workflow: it reads that day's `data/picks/<date>.json`, pulls the list of
   people who've submitted the "member-email" form on the Membership page (via the
