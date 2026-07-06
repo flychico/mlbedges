@@ -1,118 +1,286 @@
 {
   "date": "2026-07-06",
-  "generated": "2026-07-06T16:40:18.918Z",
+  "generated": "2026-07-06T20:25:44.863Z",
   "picks": [
     {
       "gamePk": 824089,
       "away": "Philadelphia Phillies",
       "home": "Kansas City Royals",
-      "pick": "Philadelphia Phillies",
-      "side": "away",
-      "prob": 0.7315,
-      "mktProb": 0.6557,
-      "bestAm": -205,
       "time": "2026-07-06T18:10:00Z",
-      "valueTag": "VALUE",
-      "consensusAgree": 0,
-      "consensusOppose": 0
+      "moneyline": {
+        "pick": "Philadelphia Phillies",
+        "side": "away",
+        "prob": 0.7244,
+        "mktProb": 0.0288,
+        "bestAm": 3300,
+        "valueTag": "VALUE",
+        "isPass": false,
+        "consensusAgree": 0,
+        "consensusOppose": 0
+      },
+      "total": {
+        "line": 13.5,
+        "projTotal": 8.2,
+        "pick": "Under",
+        "edge": 0.4436,
+        "prob": 0.8948,
+        "mktProb": 0.4512,
+        "bestAm": 120
+      },
+      "runLine": {
+        "point": 9.5,
+        "projMargin": -2.6,
+        "pick": "Philadelphia Phillies",
+        "edge": 0.4206,
+        "prob": 1,
+        "mktProb": 0.5794,
+        "bestAm": -143
+      }
     },
     {
       "gamePk": 822958,
       "away": "New York Yankees",
       "home": "Tampa Bay Rays",
-      "pick": "Tampa Bay Rays",
-      "side": "home",
-      "prob": 0.6411,
-      "mktProb": 0.5054,
-      "bestAm": -106,
       "time": "2026-07-06T22:40:00Z",
-      "valueTag": "VALUE",
-      "consensusAgree": 0,
-      "consensusOppose": 0
+      "moneyline": {
+        "pick": "Tampa Bay Rays",
+        "side": "home",
+        "prob": 0.6411,
+        "mktProb": 0.4762,
+        "bestAm": 109,
+        "valueTag": "VALUE",
+        "isPass": false,
+        "consensusAgree": 0,
+        "consensusOppose": 0
+      },
+      "total": {
+        "line": 7.5,
+        "projTotal": 6.4,
+        "pick": "Under",
+        "edge": 0.0778,
+        "prob": 0.5997,
+        "mktProb": 0.522,
+        "bestAm": -115
+      },
+      "runLine": {
+        "point": -1.5,
+        "projMargin": -0.8,
+        "pick": "New York Yankees",
+        "edge": 0.3933,
+        "prob": 0.782,
+        "mktProb": 0.3887,
+        "bestAm": 153
+      }
     },
     {
       "gamePk": 822712,
       "away": "Houston Astros",
       "home": "Washington Nationals",
-      "pick": "Washington Nationals",
-      "side": "home",
-      "prob": 0.5628,
-      "mktProb": 0.5208,
-      "bestAm": -116,
       "time": "2026-07-06T22:45:00Z",
-      "valueTag": "VALUE",
-      "consensusAgree": 0,
-      "consensusOppose": 0
+      "moneyline": {
+        "pick": "Washington Nationals",
+        "side": "home",
+        "prob": 0.5628,
+        "mktProb": 0.5144,
+        "bestAm": -110,
+        "valueTag": "VALUE",
+        "isPass": false,
+        "consensusAgree": 0,
+        "consensusOppose": 0
+      },
+      "total": {
+        "line": 9,
+        "projTotal": 13.2,
+        "pick": "Over",
+        "edge": 0.3437,
+        "prob": 0.8431,
+        "mktProb": 0.4994,
+        "bestAm": -104
+      },
+      "runLine": {
+        "point": -1.5,
+        "projMargin": 0.7,
+        "pick": "Houston Astros",
+        "edge": 0.242,
+        "prob": 0.6077,
+        "mktProb": 0.3656,
+        "bestAm": 162
+      }
     },
     {
       "gamePk": 824900,
       "away": "New York Mets",
       "home": "Atlanta Braves",
-      "pick": "Atlanta Braves",
-      "side": "home",
-      "prob": 0.7539,
-      "mktProb": 0.5413,
-      "bestAm": -123,
       "time": "2026-07-06T23:15:00Z",
-      "valueTag": "VALUE",
-      "consensusAgree": 0,
-      "consensusOppose": 0
+      "moneyline": {
+        "pick": "Atlanta Braves",
+        "side": "home",
+        "prob": 0.7539,
+        "mktProb": 0.5426,
+        "bestAm": -125,
+        "valueTag": "VALUE",
+        "isPass": false,
+        "consensusAgree": 1,
+        "consensusOppose": 1
+      },
+      "total": {
+        "line": 9,
+        "projTotal": 8.9,
+        "pick": null,
+        "edge": 0,
+        "prob": null,
+        "mktProb": null,
+        "bestAm": null
+      },
+      "runLine": {
+        "point": -1.5,
+        "projMargin": 2.6,
+        "pick": "Atlanta Braves",
+        "edge": 0.2671,
+        "prob": 0.6426,
+        "mktProb": 0.3755,
+        "bestAm": 160
+      }
     },
     {
       "gamePk": 823036,
       "away": "Milwaukee Brewers",
       "home": "St. Louis Cardinals",
-      "pick": "Milwaukee Brewers",
-      "side": "away",
-      "prob": 0.6654,
-      "mktProb": 0.5006,
-      "bestAm": -104,
       "time": "2026-07-06T23:45:00Z",
-      "valueTag": "VALUE",
-      "consensusAgree": 1,
-      "consensusOppose": 1
+      "moneyline": {
+        "pick": "Milwaukee Brewers",
+        "side": "away",
+        "prob": 0.6654,
+        "mktProb": 0.5,
+        "bestAm": -104,
+        "valueTag": "VALUE",
+        "isPass": false,
+        "consensusAgree": 1,
+        "consensusOppose": 1
+      },
+      "total": {
+        "line": 8,
+        "projTotal": 8.5,
+        "pick": "Over",
+        "edge": 0.0426,
+        "prob": 0.5495,
+        "mktProb": 0.5069,
+        "bestAm": -110
+      },
+      "runLine": {
+        "point": -1.5,
+        "projMargin": -2.3,
+        "pick": "Milwaukee Brewers",
+        "edge": 0.5171,
+        "prob": 0.8979,
+        "mktProb": 0.3808,
+        "bestAm": 155
+      }
     },
     {
       "gamePk": 823282,
       "away": "Arizona Diamondbacks",
       "home": "San Diego Padres",
-      "pick": "San Diego Padres",
-      "side": "home",
-      "prob": 0.5141,
-      "mktProb": 0.5326,
-      "bestAm": -121,
       "time": "2026-07-07T01:40:00Z",
-      "valueTag": null,
-      "consensusAgree": 0,
-      "consensusOppose": 0
+      "moneyline": {
+        "pick": "San Diego Padres",
+        "side": "home",
+        "prob": 0.5141,
+        "mktProb": 0.5364,
+        "bestAm": -120,
+        "valueTag": null,
+        "isPass": true,
+        "consensusAgree": 0,
+        "consensusOppose": 0
+      },
+      "total": {
+        "line": 8.5,
+        "projTotal": 9.9,
+        "pick": "Over",
+        "edge": 0.1294,
+        "prob": 0.6268,
+        "mktProb": 0.4975,
+        "bestAm": -105
+      },
+      "runLine": {
+        "point": -1.5,
+        "projMargin": 0.8,
+        "pick": "San Diego Padres",
+        "edge": 0.0477,
+        "prob": 0.4066,
+        "mktProb": 0.359,
+        "bestAm": 171
+      }
     },
     {
       "gamePk": 823205,
       "away": "Toronto Blue Jays",
       "home": "San Francisco Giants",
-      "pick": "San Francisco Giants",
-      "side": "home",
-      "prob": 0.5286,
-      "mktProb": 0.4949,
-      "bestAm": -101,
       "time": "2026-07-07T01:45:00Z",
-      "valueTag": "VALUE",
-      "consensusAgree": 0,
-      "consensusOppose": 0
+      "moneyline": {
+        "pick": "San Francisco Giants",
+        "side": "home",
+        "prob": 0.5286,
+        "mktProb": 0.4973,
+        "bestAm": -101,
+        "valueTag": "VALUE",
+        "isPass": false,
+        "consensusAgree": 0,
+        "consensusOppose": 0
+      },
+      "total": {
+        "line": 7.5,
+        "projTotal": 8.5,
+        "pick": "Over",
+        "edge": 0.0765,
+        "prob": 0.5971,
+        "mktProb": 0.5206,
+        "bestAm": -118
+      },
+      "runLine": {
+        "point": -1.5,
+        "projMargin": -0.4,
+        "pick": "Toronto Blue Jays",
+        "edge": 0.3516,
+        "prob": 0.737,
+        "mktProb": 0.3854,
+        "bestAm": 152
+      }
     },
     {
       "gamePk": 823930,
       "away": "Colorado Rockies",
       "home": "Los Angeles Dodgers",
-      "pick": "Los Angeles Dodgers",
-      "side": "home",
-      "prob": 0.8011,
-      "mktProb": 0.6723,
-      "bestAm": -220,
       "time": "2026-07-07T02:10:00Z",
-      "valueTag": "VALUE",
-      "consensusAgree": 1,
-      "consensusOppose": 1
+      "moneyline": {
+        "pick": "Los Angeles Dodgers",
+        "side": "home",
+        "prob": 0.8011,
+        "mktProb": 0.6935,
+        "bestAm": -250,
+        "valueTag": "VALUE",
+        "isPass": false,
+        "consensusAgree": 1,
+        "consensusOppose": 0
+      },
+      "total": {
+        "line": 9,
+        "projTotal": 12.4,
+        "pick": "Over",
+        "edge": 0.2664,
+        "prob": 0.789,
+        "mktProb": 0.5226,
+        "bestAm": -118
+      },
+      "runLine": {
+        "point": -1.5,
+        "projMargin": 3.1,
+        "pick": "Los Angeles Dodgers",
+        "edge": 0.192,
+        "prob": 0.7018,
+        "mktProb": 0.5098,
+        "bestAm": -114
+      }
     }
   ]
 }
