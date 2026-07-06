@@ -3,127 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Join LyDia — Daily MLB Picks & Free Preview</title>
-<meta name="description" content="Join LyDia for daily MLB picks with full reasoning, a free daily preview, public results tracking, and transparent model-based analysis.">
+<title>Join LyDia | Daily MLB Picks</title>
+<meta name="description" content="Join LyDia for daily MLB picks, full reasoning, a free daily preview, and transparent result tracking.">
 <link rel="canonical" href="https://mlbedges.com/membership.html">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚾</text></svg>">
 <link rel="stylesheet" href="css/style.css">
-<style>
-.plan {
-  max-width: 520px; margin: 24px auto; text-align: center;
-  border: 2px solid var(--accent); border-radius: var(--radius);
-  background: var(--bg-card); padding: 28px;
-}
-.plan .price { font-size: 2.6rem; font-weight: 800; color: var(--accent); }
-.plan .price span { font-size: 1rem; font-weight: 600; color: var(--text-dim); }
-.plan ul { list-style: none; text-align: left; margin: 18px 0; padding: 0; }
-.plan li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: .95rem; }
-.plan li::before { content: "✓ "; color: var(--accent); font-weight: 800; }
-.forms { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 28px; }
-</style>
 </head>
 <body>
 <nav id="nav"></nav>
 <main>
   <p class="eyebrow">Join LyDia</p>
   <h1>Daily MLB picks with the full reasoning.</h1>
-  <p class="subtitle">Start with the free preview, then upgrade when you want every daily pick and the full slate breakdown.</p>
-
+  <p class="subtitle">Start with the free preview. Upgrade when you want every daily pick and the full slate breakdown.</p>
   <div class="grid grid-2">
     <div class="card">
       <h3>Free Daily Preview</h3>
-      <p>One featured game preview, one lesson from the slate, and a recap of what LyDia is watching before first pitch.</p>
+      <p>One featured preview, one lesson from the slate, and a recap of what LyDia is watching before first pitch.</p>
       <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="margin-top:14px">
         <p class="hidden"><input name="bot-field"></p>
         <input type="hidden" name="form-name" value="newsletter">
-        <div class="field">
-          <label for="nl-email">Email address</label>
-          <input type="email" id="nl-email" name="email" required placeholder="you@example.com">
-        </div>
-        <button type="submit" class="secondary">Subscribe free</button>
+        <label>Email address</label>
+        <input type="email" name="email" required placeholder="you@example.com">
+        <p style="margin-top:12px"><button type="submit" class="secondary">Subscribe free</button></p>
       </form>
     </div>
-
     <div class="card">
-      <h3>Why join before the record is built?</h3>
-      <p>Because the record is public from the beginning. Members are not buying a fake hot streak. They are joining the process early: model output, market review, written reasoning, and transparent grading.</p>
+      <h3>LyDia Monthly</h3>
+      <p><span class="big-num">$30</span> / month</p>
+      <ul style="margin-left:18px">
+        <li>Every official daily pick</li>
+        <li>Full reasoning and model edge</li>
+        <li>What could go wrong on every pick</li>
+        <li>Public result tracking</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <p><a class="btn" href="mailto:lynold@ndhorizon.com?subject=LyDia%20Monthly%20Membership">Request access</a></p>
     </div>
   </div>
-
-  <div class="plan">
-    <h2 style="margin-top:0">LyDia Daily Picks</h2>
-    <div class="price">$30<span>/month</span></div>
-    <ul>
-      <li>Every daily MLB pick sent before first pitch</li>
-      <li>Full reasoning: model lean, market price, pitcher context, and matchup notes</li>
-      <li>Value flags when the model meaningfully beats the no-vig market probability</li>
-      <li>Public results tracking on the Results page</li>
-      <li>Cancel anytime</li>
-    </ul>
-    <div id="paypal-button-container-P-0U2970970K989854ENJFNLVA"></div>
-    <div id="sub-success" class="result-box" hidden>
-      <strong>You're in.</strong> Tell us where to send your daily picks:
-      <form name="member-email" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="margin-top:10px">
-        <p class="hidden"><input name="bot-field"></p>
-        <input type="hidden" name="form-name" value="member-email">
-        <input type="hidden" name="subscription-id" id="sub-id" value="">
-        <div class="field">
-          <label for="member-em">Email for daily picks</label>
-          <input type="email" id="member-em" name="email" required placeholder="you@example.com">
-        </div>
-        <button type="submit">Save my email</button>
-      </form>
-    </div>
-    <p class="dim small" style="margin-top:10px">Secure payment via PayPal. 21+ only where legal. Analysis and education only. No results guaranteed.</p>
-  </div>
-
-  <div class="forms">
-    <div class="card">
-      <h3>Already subscribed?</h3>
-      <p>If you subscribed but did not register a delivery email, add it here so your picks land in the right inbox.</p>
-      <form name="member-email" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <p class="hidden"><input name="bot-field"></p>
-        <input type="hidden" name="form-name" value="member-email">
-        <div class="field" style="margin-top:10px">
-          <label for="wl-email">Email address</label>
-          <input type="email" id="wl-email" name="email" required placeholder="you@example.com">
-        </div>
-        <div class="field">
-          <label for="wl-subid">PayPal subscription ID, optional, starts with I-</label>
-          <input type="text" id="wl-subid" name="subscription-id" placeholder="I-XXXXXXXXXX">
-        </div>
-        <button type="submit">Register email</button>
-      </form>
-    </div>
-
-    <div class="card">
-      <h3>What happens daily?</h3>
-      <p>LyDia runs the slate, checks the market, reviews public expert context, publishes the free preview, sends member picks, then grades everything after final scores.</p>
-      <p style="margin-top:12px"><a class="btn secondary" href="process.html">See the process</a></p>
-    </div>
-  </div>
-
-  <div class="notice warn" style="margin-top:28px">
-    <strong>Disclaimer:</strong> LyDia provides analysis and opinions for entertainment and informational purposes. Nothing on this site is betting, financial, or investment advice. No win rate is guaranteed. Only bet what you can afford to lose. If gambling stops being fun, call 1-800-GAMBLER.
-  </div>
+  <div class="notice warn">No pick is guaranteed. LyDia is for analysis and education only. Only bet what you can afford to lose.</div>
 </main>
 <footer id="footer"></footer>
 <script src="js/app.js"></script>
 <script>renderNav("membership.html"); renderFooter();</script>
-<script src="https://www.paypal.com/sdk/js?client-id=BAA8Cwl-aXCTuv2CfMNydxfJvojvfQbVzee0gdfapDoJXgvxz-VGmO64ubP5YoP2BARXY_gVHC85qNo2TY&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-<script>
-  paypal.Buttons({
-    style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'subscribe' },
-    createSubscription: function (data, actions) {
-      return actions.subscription.create({ plan_id: 'P-0U2970970K989854ENJFNLVA' });
-    },
-    onApprove: function (data, actions) {
-      var box = document.getElementById('sub-success');
-      document.getElementById('sub-id').value = data.subscriptionID || '';
-      box.hidden = false;
-      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }).render('#paypal-button-container-P-0U2970970K989854ENJFNLVA');
-</script>
 </body>
 </html>

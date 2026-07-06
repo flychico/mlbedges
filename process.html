@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Process — LyDia MLB Picks</title>
-<meta name="description" content="How LyDia creates daily MLB picks using model output, market probabilities, public expert context, lineup checks, and public results tracking.">
+<title>Process | LyDia MLB Picks</title>
+<meta name="description" content="How LyDia creates daily MLB picks using model output, market pricing, public expert signals, context checks, and public results tracking.">
 <link rel="canonical" href="https://mlbedges.com/process.html">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚾</text></svg>">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,41 +13,16 @@
 <main>
   <p class="eyebrow">How LyDia works</p>
   <h1>Our daily pick process.</h1>
-  <p class="subtitle">LyDia is built around one idea: a pick should have a reason, a price, a timestamp, and a result. The process below is how we keep the daily slate consistent.</p>
-
+  <p class="subtitle">A pick should have a reason, a price, a timestamp, and a result. This is the operating system behind the daily slate.</p>
   <div class="grid grid-2">
-    <div class="card step-card"><strong>1. Build the slate</strong><p>Load the daily MLB schedule, probable pitchers, team records, recent form, and available market odds.</p></div>
-    <div class="card step-card"><strong>2. Run the model</strong><p>Use team strength, last-10 form, home field, starting pitcher adjustment, and no-vig market probabilities to create a first-pass lean.</p></div>
-    <div class="card step-card"><strong>3. Scan the market</strong><p>Review public expert picks, odds movement, and sportsbook pricing to understand what the broader market is emphasizing.</p></div>
-    <div class="card step-card"><strong>4. Check context</strong><p>Before publishing, review injuries, confirmed lineups where available, bullpen usage, travel, weather, park factors, and late scratches.</p></div>
-    <div class="card step-card"><strong>5. Pick only when there is a reason</strong><p>A model lean alone is not enough. A published pick should have model support, price support, and a clear written reason.</p></div>
-    <div class="card step-card"><strong>6. Publish and grade</strong><p>The free preview goes out first. Member picks include the full slate. Results are graded after games finish and kept public.</p></div>
+    <div class="card"><h3>1. Build the slate</h3><p>Load the MLB schedule, probable pitchers, team records, recent form, and available market odds.</p></div>
+    <div class="card"><h3>2. Run the model</h3><p>Use team strength, last-10 form, home field, starting pitcher adjustment, and no-vig market probabilities.</p></div>
+    <div class="card"><h3>3. Review public signals</h3><p>Public competitor picks and market commentary are reviewed as research signals, not copied.</p></div>
+    <div class="card"><h3>4. Check context</h3><p>Look for injuries, confirmed lineups, bullpen usage, travel, weather, park factors, and late scratches.</p></div>
+    <div class="card"><h3>5. Publish only with a reason</h3><p>A model lean alone is not enough. A published pick needs price support and a clear explanation.</p></div>
+    <div class="card"><h3>6. Grade results</h3><p>Results are graded after games finish and kept visible.</p></div>
   </div>
-
-  <h2>What makes a pick stronger?</h2>
-  <div class="card">
-    <table>
-      <thead><tr><th>Signal</th><th>What it means</th></tr></thead>
-      <tbody>
-        <tr><td>Model edge</td><td>LyDia's internal probability is meaningfully different from the no-vig market probability.</td></tr>
-        <tr><td>Price quality</td><td>The available line still supports the pick. A good idea at a bad number is not a good play.</td></tr>
-        <tr><td>Context alignment</td><td>Pitching, lineup, bullpen, weather, and park factors support the same side or total.</td></tr>
-        <tr><td>Market awareness</td><td>Public expert analysis and line movement are reviewed, but they do not replace our own process.</td></tr>
-        <tr><td>Clear explanation</td><td>The reason can be explained in plain English before the game starts.</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h2>Transparency rules</h2>
-  <div class="grid grid-3">
-    <div class="card"><h3>No fake history</h3><p>Results start from launch and are shown publicly. A 0-0 record is better than a made-up record.</p></div>
-    <div class="card"><h3>No guarantees</h3><p>Baseball has variance. Even strong processes lose. The goal is consistent decision quality, not guaranteed outcomes.</p></div>
-    <div class="card"><h3>No blind copying</h3><p>Public expert picks can be reviewed as research, but LyDia publishes original analysis based on its own model and written reasoning.</p></div>
-  </div>
-
-  <div class="notice warn">
-    LyDia provides analysis and education only. Nothing here is betting, financial, or investment advice. No pick, model, stat, or market signal guarantees profit.
-  </div>
+  <div class="notice warn">LyDia is analysis and education only. No pick is guaranteed. Bet responsibly.</div>
 </main>
 <footer id="footer"></footer>
 <script src="js/app.js"></script>
