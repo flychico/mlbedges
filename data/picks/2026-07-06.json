@@ -1,6 +1,6 @@
 {
   "date": "2026-07-06",
-  "generated": "2026-07-06T21:07:08.697Z",
+  "generated": "2026-07-06T21:22:52.219Z",
   "picks": [
     {
       "gamePk": 824089,
@@ -10,11 +10,11 @@
       "moneyline": {
         "pick": "Philadelphia Phillies",
         "side": "away",
-        "prob": 0.7244,
+        "prob": 0.6588,
         "mktProb": null,
         "bestAm": null,
         "valueTag": null,
-        "isPass": false,
+        "isPass": true,
         "consensusAgree": 0,
         "consensusOppose": 0,
         "tier": null,
@@ -25,22 +25,22 @@
         "risk": null
       },
       "total": {
-        "line": 14.5,
-        "projTotal": 8.2,
+        "line": 16.5,
+        "projTotal": 8.3,
         "pick": "Under",
-        "edge": 0.4495,
-        "prob": 0.932,
-        "mktProb": 0.4825,
-        "bestAm": 110
+        "edge": 0.0959,
+        "prob": 0.975,
+        "mktProb": 0.8791,
+        "bestAm": -770
       },
       "runLine": {
-        "point": 12.5,
-        "projMargin": -2.6,
+        "point": 13.5,
+        "projMargin": -2.4,
         "pick": "Philadelphia Phillies",
-        "edge": 0.3144,
+        "edge": 0.8649,
         "prob": 1,
-        "mktProb": 0.6856,
-        "bestAm": -136
+        "mktProb": 0.1351,
+        "bestAm": 1060
       }
     },
     {
@@ -52,36 +52,36 @@
         "pick": "Tampa Bay Rays",
         "side": "home",
         "prob": 0.6411,
-        "mktProb": 0.4722,
-        "bestAm": 108,
+        "mktProb": 0.47,
+        "bestAm": 109,
         "valueTag": "VALUE",
         "isPass": false,
         "consensusAgree": 0,
         "consensusOppose": 0,
         "tier": "Strong Play",
-        "edgeScore": 97,
-        "priceRange": "+108 to -103",
-        "mktProbRange": "46.2% to 48.0%",
-        "why": "Tampa Bay Rays projects ahead here mainly on the mound — Griffin Jax has the stronger run-prevention profile this season against Cam Schlittler. This is a price-sensitive play — the edge holds at +108, but the value is gone by +124 or worse.",
-        "risk": "Cam Schlittler has enough stuff to outpitch his season line on a given night — an efficient outing from him tightens this quickly. The model doesn't see live injury, bullpen-availability, or lineup news — worth a quick recheck before first pitch."
+        "edgeScore": 96,
+        "priceRange": "+109 to -103",
+        "mktProbRange": "45.9% to 48.0%",
+        "why": "Tampa Bay Rays projects ahead mainly on the mound — Griffin Jax has the stronger run-prevention number this season against Cam Schlittler.",
+        "risk": "Cam Schlittler can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
       "total": {
         "line": 7.5,
         "projTotal": 6.4,
         "pick": "Under",
-        "edge": 0.0796,
+        "edge": 0.079,
         "prob": 0.5997,
-        "mktProb": 0.5201,
+        "mktProb": 0.5208,
         "bestAm": -115
       },
       "runLine": {
         "point": -1.5,
         "projMargin": -0.8,
         "pick": "New York Yankees",
-        "edge": 0.39,
+        "edge": 0.3872,
         "prob": 0.782,
-        "mktProb": 0.392,
-        "bestAm": 152
+        "mktProb": 0.3948,
+        "bestAm": 150
       }
     },
     {
@@ -93,35 +93,35 @@
         "pick": "Washington Nationals",
         "side": "home",
         "prob": 0.5628,
-        "mktProb": 0.5151,
+        "mktProb": 0.5156,
         "bestAm": -110,
         "valueTag": "VALUE",
         "isPass": false,
         "consensusAgree": 0,
         "consensusOppose": 0,
         "tier": "Standard Play",
-        "edgeScore": 91,
+        "edgeScore": 80,
         "priceRange": "-110 to -118",
         "mktProbRange": "51.2% to 52.0%",
-        "why": "Washington Nationals grades out ahead on the model's blend of run differential and recent form, with the home-field bump added in. This is a price-sensitive play — the edge holds at -110, but the value is gone by -122 or worse.",
-        "risk": "Mike Burrows has enough stuff to outpitch his season line on a given night — an efficient outing from him tightens this quickly. The model doesn't see live injury, bullpen-availability, or lineup news — worth a quick recheck before first pitch."
+        "why": "Washington Nationals grades out ahead on the model's blend of run differential and recent form, plus the home-field bump.",
+        "risk": "Mike Burrows can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
       "total": {
         "line": 9,
         "projTotal": 13.2,
         "pick": "Over",
-        "edge": 0.3448,
+        "edge": 0.3409,
         "prob": 0.8438,
-        "mktProb": 0.499,
+        "mktProb": 0.5029,
         "bestAm": -104
       },
       "runLine": {
         "point": -1.5,
         "projMargin": 0.7,
         "pick": "Houston Astros",
-        "edge": 0.242,
+        "edge": 0.2368,
         "prob": 0.6076,
-        "mktProb": 0.3656,
+        "mktProb": 0.3708,
         "bestAm": 162
       }
     },
@@ -134,18 +134,18 @@
         "pick": "Atlanta Braves",
         "side": "home",
         "prob": 0.7539,
-        "mktProb": 0.5428,
-        "bestAm": -126,
+        "mktProb": 0.5423,
+        "bestAm": -124,
         "valueTag": "VALUE",
         "isPass": false,
         "consensusAgree": 1,
         "consensusOppose": 1,
         "tier": "Strong Play",
-        "edgeScore": 97,
-        "priceRange": "-126 to -135",
+        "edgeScore": 96,
+        "priceRange": "-124 to -135",
         "mktProbRange": "53.7% to 54.7%",
-        "why": "Atlanta Braves projects ahead here mainly on the mound — Reynaldo López has the stronger run-prevention profile this season against Freddy Peralta. This is a price-sensitive play — the edge holds at -126, but the value is gone by -146 or worse.",
-        "risk": "Freddy Peralta has enough stuff to outpitch his season line on a given night — an efficient outing from him tightens this quickly. The model doesn't see live injury, bullpen-availability, or lineup news — worth a quick recheck before first pitch."
+        "why": "Atlanta Braves projects ahead mainly on the mound — Reynaldo López has the stronger run-prevention number this season against Freddy Peralta.",
+        "risk": "Freddy Peralta can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
       "total": {
         "line": 9,
@@ -175,35 +175,35 @@
         "pick": "Milwaukee Brewers",
         "side": "away",
         "prob": 0.6654,
-        "mktProb": 0.5009,
-        "bestAm": -104,
+        "mktProb": 0.5019,
+        "bestAm": -105,
         "valueTag": "VALUE",
         "isPass": false,
         "consensusAgree": 1,
         "consensusOppose": 1,
         "tier": "Strong Play",
-        "edgeScore": 97,
-        "priceRange": "-104 to -115",
-        "mktProbRange": "49.8% to 50.7%",
-        "why": "Milwaukee Brewers projects ahead here mainly on the mound — Shane Drohan has the stronger run-prevention profile this season against Dustin May. This is a price-sensitive play — the edge holds at -104, but the value is gone by -124 or worse.",
-        "risk": "Dustin May has enough stuff to outpitch his season line on a given night — an efficient outing from him tightens this quickly. The model doesn't see live injury, bullpen-availability, or lineup news — worth a quick recheck before first pitch."
+        "edgeScore": 96,
+        "priceRange": "-105 to -115",
+        "mktProbRange": "49.9% to 51.1%",
+        "why": "Milwaukee Brewers projects ahead mainly on the mound — Shane Drohan has the stronger run-prevention number this season against Dustin May.",
+        "risk": "Dustin May can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
       "total": {
         "line": 8,
         "projTotal": 8.5,
-        "pick": "Over",
-        "edge": 0.0454,
-        "prob": 0.5511,
-        "mktProb": 0.5057,
-        "bestAm": -108
+        "pick": null,
+        "edge": 0,
+        "prob": null,
+        "mktProb": null,
+        "bestAm": null
       },
       "runLine": {
         "point": -1.5,
         "projMargin": -2.3,
         "pick": "Milwaukee Brewers",
-        "edge": 0.5155,
+        "edge": 0.5144,
         "prob": 0.8982,
-        "mktProb": 0.3828,
+        "mktProb": 0.3838,
         "bestAm": 155
       }
     },
@@ -216,7 +216,7 @@
         "pick": "San Diego Padres",
         "side": "home",
         "prob": 0.5141,
-        "mktProb": 0.537,
+        "mktProb": 0.5379,
         "bestAm": -122,
         "valueTag": null,
         "isPass": true,
@@ -233,19 +233,19 @@
         "line": 8.5,
         "projTotal": 9.9,
         "pick": "Over",
-        "edge": 0.1296,
+        "edge": 0.1292,
         "prob": 0.6268,
-        "mktProb": 0.4972,
+        "mktProb": 0.4976,
         "bestAm": -105
       },
       "runLine": {
-        "point": -1.5,
+        "point": null,
         "projMargin": 0.8,
-        "pick": "San Diego Padres",
-        "edge": 0.0457,
-        "prob": 0.4066,
-        "mktProb": 0.3609,
-        "bestAm": 171
+        "pick": null,
+        "edge": 0,
+        "prob": null,
+        "mktProb": null,
+        "bestAm": null
       }
     },
     {
@@ -257,36 +257,36 @@
         "pick": "San Francisco Giants",
         "side": "home",
         "prob": 0.5286,
-        "mktProb": 0.497,
+        "mktProb": 0.4977,
         "bestAm": -101,
         "valueTag": "VALUE",
         "isPass": false,
         "consensusAgree": 0,
         "consensusOppose": 0,
         "tier": "Standard Play",
-        "edgeScore": 76,
-        "priceRange": "-101 to -111",
-        "mktProbRange": "49.1% to 50.2%",
-        "why": "San Francisco Giants grades out ahead on the model's blend of run differential and recent form, with the home-field bump added in. This is a price-sensitive play — the edge holds at -101, but the value is gone by -109 or worse.",
-        "risk": "Kevin Gausman has enough stuff to outpitch his season line on a given night — an efficient outing from him tightens this quickly. The model doesn't see live injury, bullpen-availability, or lineup news — worth a quick recheck before first pitch."
+        "edgeScore": 69,
+        "priceRange": "-101 to -113",
+        "mktProbRange": "49.1% to 50.3%",
+        "why": "San Francisco Giants grades out ahead on the model's blend of run differential and recent form, plus the home-field bump.",
+        "risk": "Kevin Gausman can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
       "total": {
         "line": 7.5,
         "projTotal": 8.5,
         "pick": "Over",
-        "edge": 0.0773,
+        "edge": 0.0778,
         "prob": 0.5979,
-        "mktProb": 0.5206,
+        "mktProb": 0.5201,
         "bestAm": -118
       },
       "runLine": {
         "point": -1.5,
         "projMargin": -0.4,
         "pick": "Toronto Blue Jays",
-        "edge": 0.3517,
+        "edge": 0.3525,
         "prob": 0.7371,
-        "mktProb": 0.3854,
-        "bestAm": 152
+        "mktProb": 0.3845,
+        "bestAm": 155
       }
     },
     {
@@ -298,35 +298,35 @@
         "pick": "Los Angeles Dodgers",
         "side": "home",
         "prob": 0.8011,
-        "mktProb": 0.694,
+        "mktProb": 0.6955,
         "bestAm": -250,
         "valueTag": "VALUE",
         "isPass": false,
         "consensusAgree": 1,
         "consensusOppose": 0,
         "tier": "Strong Play",
-        "edgeScore": 97,
-        "priceRange": "-250 to -267",
-        "mktProbRange": "68.5% to 69.8%",
-        "why": "Los Angeles Dodgers projects ahead here mainly on the mound — Eric Lauer has the stronger run-prevention profile this season against Kyle Freeland. This is a price-sensitive play — the edge holds at -250, but the value is gone by -270 or worse.",
-        "risk": "Kyle Freeland has enough stuff to outpitch his season line on a given night — an efficient outing from him tightens this quickly. The model doesn't see live injury, bullpen-availability, or lineup news — worth a quick recheck before first pitch."
+        "edgeScore": 96,
+        "priceRange": "-250 to -275",
+        "mktProbRange": "68.5% to 70.1%",
+        "why": "Los Angeles Dodgers projects ahead mainly on the mound — Eric Lauer has the stronger run-prevention number this season against Kyle Freeland.",
+        "risk": "Kyle Freeland can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
       "total": {
         "line": 9,
         "projTotal": 12.4,
         "pick": "Over",
-        "edge": 0.2667,
+        "edge": 0.2658,
         "prob": 0.789,
-        "mktProb": 0.5223,
+        "mktProb": 0.5233,
         "bestAm": -118
       },
       "runLine": {
         "point": -1.5,
         "projMargin": 3.1,
         "pick": "Los Angeles Dodgers",
-        "edge": 0.192,
+        "edge": 0.1892,
         "prob": 0.7018,
-        "mktProb": 0.5098,
+        "mktProb": 0.5127,
         "bestAm": -114
       }
     }
