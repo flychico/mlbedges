@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* LyDia Picks — daily game previews + pick logging.
+/* LyDia — daily game previews + pick logging.
    Usage: node scripts/generate-previews.js [YYYY-MM-DD]   (default: today in US Eastern)
    Env:   ODDS_API_KEY  (optional — adds market odds + value edges)
    Writes: previews/<date>.html, previews/index.html, data/picks/<date>.json, sitemap.xml */
@@ -39,7 +39,7 @@ const clampEra = e => Math.min(ERA_CLAMP[1], Math.max(ERA_CLAMP[0], e));
 const ipToNum = ip => { const [w, f] = String(ip).split("."); return Number(w) + (Number(f) || 0) / 3; };
 
 const NAV = `<nav><div class="nav-inner">
-  <a class="brand" href="/index.html"><span class="brand-ly">Ly</span><span class="brand-dia">Dia</span> Picks</a>
+  <a class="brand" href="/index.html"><span class="brand-ly">Ly</span><span class="brand-dia">Dia</span></a>
   <a class="navlink" href="/index.html">Home</a>
   <a class="navlink" href="/dashboard.html">Dashboard</a>
   <a class="navlink" href="/picks.html">Picks</a>
@@ -49,7 +49,7 @@ const NAV = `<nav><div class="nav-inner">
   <a class="navlink" href="/recaps/">Recaps</a>
   <a class="navlink" href="/membership.html">Membership</a>
 </div></nav>`;
-const FOOTER = `<footer>LyDia Picks — analysis and education only, not betting advice. Please bet responsibly. If gambling stops being fun, call 1-800-GAMBLER.</footer>`;
+const FOOTER = `<footer>LyDia — analysis and education only, not betting advice. Please bet responsibly. If gambling stops being fun, call 1-800-GAMBLER.</footer>`;
 
 function pageShell(title, desc, body) {
   return `<!DOCTYPE html>
@@ -284,7 +284,7 @@ async function main() {
   fs.mkdirSync(path.join(ROOT, "previews"), { recursive: true });
   fs.mkdirSync(path.join(ROOT, "data", "picks"), { recursive: true });
   fs.writeFileSync(path.join(ROOT, "previews", `${DATE}.html`), pageShell(
-    `MLB Game Previews & Picks ${nice} | LyDia Picks`,
+    `MLB Game Previews & Picks ${nice} | LyDia`,
     `Preview and model pick for every MLB game on ${nice}: pitching matchups, form, and value vs the betting market.`,
     body));
   fs.writeFileSync(path.join(ROOT, "data", "picks", `${DATE}.json`), JSON.stringify({ date: DATE, generated: new Date().toISOString(), picks: picksOut }, null, 2));
@@ -293,7 +293,7 @@ async function main() {
   // archive index
   const posts = fs.readdirSync(path.join(ROOT, "previews")).filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f)).sort().reverse();
   fs.writeFileSync(path.join(ROOT, "previews", "index.html"), pageShell(
-    "MLB Game Previews — archive | LyDia Picks",
+    "MLB Game Previews — archive | LyDia",
     "Daily MLB game previews with model picks for every matchup.",
     `<h1>Game Previews</h1>\n<div class="card archive-list">\n` +
     posts.map(f => `<a href="/previews/${f}">Game Previews — ${esc(niceDate(f.replace(".html", "")))}</a>`).join("\n") +

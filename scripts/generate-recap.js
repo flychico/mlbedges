@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* MLB Edges — static daily recap generator.
+/* LyDia — static daily recap generator.
    Usage: node scripts/generate-recap.js [YYYY-MM-DD]
    Default date: yesterday in US Eastern time.
    Writes: recaps/<date>.html, recaps/index.html, sitemap.xml
@@ -71,7 +71,7 @@ function recapSentence(g) {
 }
 
 const NAV = `<nav><div class="nav-inner">
-  <a class="brand" href="/index.html"><span class="brand-ly">Ly</span><span class="brand-dia">Dia</span> Picks</a>
+  <a class="brand" href="/index.html"><span class="brand-ly">Ly</span><span class="brand-dia">Dia</span></a>
   <a class="navlink" href="/index.html">Home</a>
   <a class="navlink" href="/dashboard.html">Dashboard</a>
   <a class="navlink" href="/picks.html">Picks</a>
@@ -81,7 +81,7 @@ const NAV = `<nav><div class="nav-inner">
   <a class="navlink active" href="/recaps/">Recaps</a>
   <a class="navlink" href="/membership.html">Membership</a>
 </div></nav>`;
-const FOOTER = `<footer>MLB Edges — analysis and education only, not betting advice. Please bet responsibly. If gambling stops being fun, call 1-800-GAMBLER.</footer>`;
+const FOOTER = `<footer>LyDia — analysis and education only, not betting advice. Please bet responsibly. If gambling stops being fun, call 1-800-GAMBLER.</footer>`;
 
 function pageShell(title, desc, body) {
   return `<!DOCTYPE html>
@@ -143,7 +143,7 @@ async function main() {
   fs.mkdirSync(RECAP_DIR, { recursive: true });
   const outFile = path.join(RECAP_DIR, `${DATE}.html`);
   fs.writeFileSync(outFile, pageShell(
-    `MLB Recap ${nice} — every final score | MLB Edges`,
+    `MLB Recap ${nice} — every final score | LyDia`,
     `MLB results for ${nice}: ${finals.length} finals, ${totalRuns} runs. ${intro.slice(0, 120)}`,
     body));
   console.log("wrote", path.relative(ROOT, outFile));
@@ -155,7 +155,7 @@ async function main() {
     return `<a href="/recaps/${f}">MLB Recap — ${esc(niceDate(d))}</a>`;
   }).join("\n");
   fs.writeFileSync(path.join(RECAP_DIR, "index.html"), pageShell(
-    "Daily MLB Recaps — archive | MLB Edges",
+    "Daily MLB Recaps — archive | LyDia",
     "Archive of daily MLB recaps: every final score, every day of the season.",
     `<h1>Daily Recaps</h1>\n<p class="subtitle">Every day of the season, recapped.</p>\n<div class="card archive-list">\n${list}\n</div>`));
   console.log("wrote recaps/index.html");

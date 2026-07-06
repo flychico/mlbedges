@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* LyDia Picks — grade yesterday's picks against final scores and rebuild results.html.
+/* LyDia — grade yesterday's picks against final scores and rebuild results.html.
    Usage: node scripts/grade-results.js [YYYY-MM-DD]  (default: yesterday in US Eastern)
    Reads:  data/picks/<date>.json
    Writes: data/results.json, results.html */
@@ -90,7 +90,7 @@ ${dayRows}
 </div>`;
 
   const NAV = `<nav><div class="nav-inner">
-  <a class="brand" href="/index.html"><span class="brand-ly">Ly</span><span class="brand-dia">Dia</span> Picks</a>
+  <a class="brand" href="/index.html"><span class="brand-ly">Ly</span><span class="brand-dia">Dia</span></a>
   <a class="navlink" href="/index.html">Home</a>
   <a class="navlink" href="/dashboard.html">Dashboard</a>
   <a class="navlink" href="/picks.html">Picks</a>
@@ -106,8 +106,8 @@ ${dayRows}
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Results — verified pick record | LyDia Picks</title>
-<meta name="description" content="LyDia Picks verified results: ${W}-${L} (${winPct}%) — every model pick graded publicly against final scores.">
+<title>Results — verified pick record | LyDia</title>
+<meta name="description" content="LyDia verified results: ${W}-${L} (${winPct}%) — every model pick graded publicly against final scores.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9918;</text></svg>">
 <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -116,7 +116,7 @@ ${NAV}
 <main>
 ${body}
 </main>
-<footer>LyDia Picks — analysis and education only, not betting advice. Please bet responsibly. If gambling stops being fun, call 1-800-GAMBLER.</footer>
+<footer>LyDia — analysis and education only, not betting advice. Please bet responsibly. If gambling stops being fun, call 1-800-GAMBLER.</footer>
 </body>
 </html>
 `;
