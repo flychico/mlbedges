@@ -1,0 +1,40 @@
+name: LyDia Grade Results Agent
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+      timezone: "America/New_York"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lydia-grade-results
+  cancel-in-progress: false
+
+jobs:
+  grade-results:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run LyDia grading agent
+        run: python agents/grade_results_agent.py
+
+      - name: Commit graded results
+        run: |
+          git config user.name "LyDia Results Agent"
+          git config user.email "actions@github.com"
+          git add data/results results.html data/daily
+          git commit -m "Grade LyDia results" || echo "No changes to commit"
+          git push

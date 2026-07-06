@@ -1,0 +1,43 @@
+name: LyDia Daily Picks Agent
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 10 * * *"
+      timezone: "America/New_York"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lydia-daily-picks
+  cancel-in-progress: false
+
+jobs:
+  daily-picks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run LyDia daily picks agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python agents/daily_picks_agent.py
+
+      - name: Commit generated daily content
+        run: |
+          git config user.name "LyDia Picks Agent"
+          git config user.email "actions@github.com"
+          git add index.html previews data results.html
+          git commit -m "Generate LyDia daily picks" || echo "No changes to commit"
+          git push
