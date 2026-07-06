@@ -71,15 +71,16 @@ function recapSentence(g) {
 }
 
 const NAV = `<nav><div class="nav-inner">
-  <a class="brand" href="/index.html"><span class="brand-ly">Ly</span><span class="brand-dia">Dia</span></a>
-  <a class="navlink" href="/index.html">Home</a>
-  <a class="navlink" href="/dashboard.html">Dashboard</a>
-  <a class="navlink" href="/picks.html">Picks</a>
+  <a class="brand" href="/"><span class="brand-ly">Ly</span><span class="brand-dia">Dia</span></a>
+  <a class="navlink" href="/">Home</a>
+  <a class="navlink" href="/dashboard/">Dashboard</a>
+  <a class="navlink" href="/picks/">Picks</a>
   <a class="navlink" href="/previews/">Previews</a>
-  <a class="navlink" href="/results.html">Results</a>
-  <a class="navlink" href="/odds.html">Odds</a>
+  <a class="navlink" href="/results/">Results</a>
+  <a class="navlink" href="/odds/">Odds</a>
   <a class="navlink active" href="/recaps/">Recaps</a>
-  <a class="navlink" href="/membership.html">Membership</a>
+  <a class="navlink" href="/articles/">Articles</a>
+  <a class="navlink navlink-cta" href="/membership/">Join $30/mo</a>
 </div></nav>`;
 const FOOTER = `<footer>LyDia — analysis and education only, not betting advice. Please bet responsibly. If gambling stops being fun, call 1-800-GAMBLER.</footer>`;
 
@@ -138,7 +139,7 @@ async function main() {
     const head = `${teamShort(a.team.name)} ${a.score}, ${teamShort(h.team.name)} ${h.score}`;
     body += `<div class="recap-game"><h3>${esc(head)}</h3><p>${esc(recapSentence(g))}</p></div>\n`;
   }
-  body += `<p class="dim small">Generated from official MLB data. <a href="/recaps/">All recaps</a> · <a href="/picks.html">Today's model picks</a> · <a href="/odds.html">Live odds</a></p>`;
+  body += `<p class="dim small">Generated from official MLB data. <a href="/recaps/">All recaps</a> · <a href="/picks/">Today's model picks</a> · <a href="/odds/">Live odds</a></p>`;
 
   fs.mkdirSync(RECAP_DIR, { recursive: true });
   const outFile = path.join(RECAP_DIR, `${DATE}.html`);
@@ -161,7 +162,7 @@ async function main() {
   console.log("wrote recaps/index.html");
 
   // sitemap
-  const staticPages = ["", "dashboard.html", "picks.html", "odds.html", "tools.html", "stats.html", "recaps.html", "articles.html", "recaps/"];
+  const staticPages = ["", "dashboard/", "picks/", "odds/", "tools/", "stats/", "articles/", "membership/", "results/", "recaps/", "previews/"];
   const urls = staticPages.map(p => `${SITE}/${p}`).concat(posts.map(f => `${SITE}/recaps/${f}`));
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
     urls.map(u => `  <url><loc>${u}</loc></url>`).join("\n") + `\n</urlset>\n`;
