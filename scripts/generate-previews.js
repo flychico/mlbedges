@@ -20,7 +20,8 @@ const LEAGUE_ERA = 4.20, MIN_IP = 20, ERA_CLAMP = [2.75, 6.00], VALUE_EDGE = 0.0
 const TOTAL_STD = 4.2;      // std dev of MLB game total runs (normal approximation)
 const MARGIN_STD = 3.0;     // std dev of MLB game run margin (normal approximation)
 const RUN_LINE = 1.5;       // standard MLB run line
-const NO_PLAY_EDGE = 0.03;  // raw edge below this on every market -> explicit "pass" language
+const NO_PLAY_EDGE = 0.03;  // raw edge below this on moneyline -> explicit "pass" language
+const NO_PLAY_EDGE_SECONDARY = 0.05; // totals/run-line use a lighter model, so require a bigger edge before calling a play
 
 // Public competitor signal — a second opinion only. LyDia's own model + market
 // edge always decides the pick; this can upgrade a value pick's confidence label
@@ -225,7 +226,7 @@ async function weatherFor(homeTeam, gameIso) {
 // model conviction, not a probability. Documented in methodology text; not a
 // claim of precision, just a consistent way to rank plays against each other.
 function tierAndScore(edge, prob) {
-  const score = Math.max(5, Math.min(97, Math.round(50 + edge * 800 + (prob - 0.5) * 40)));
+  const score = Math.max(5, Math.min(96, Math.round(50 + edge * 600 + (prob - 0.5) * 30)));
   const tier = edge >= 0.06 ? "Strong Play" : edge >= NO_PLAY_EDGE ? "Standard Play" : null;
   return { tier, score };
 }
@@ -255,33 +256,27 @@ function whyWeLikeIt({ pick, pickHome, spA, spH, sA, sH, pd }) {
   const pickSp = pickHome ? spH : spA, oppSp = pickHome ? spA : spH;
   const eraDiff = spA.eff - spH.eff;
   const formPick = pickHome ? sH.form : sA.form, formOpp = pickHome ? sA.form : sH.form;
-  let s1;
   if (Math.abs(eraDiff) >= 0.4) {
-    s1 = `${pick} projects ahead here mainly on the mound — ${pickSp.name} has the stronger run-prevention profile this season against ${oppSp.name}.`;
+    return `${pick} projects ahead mainly on the mound — ${pickSp.name} has the stronger run-prevention number this season against ${oppSp.name}.`;
   } else if (formPick !== null && formOpp !== null && Math.abs(formPick - formOpp) >= 0.15) {
-    s1 = `${pick} has been the hotter team lately (last 10: ${pickHome ? sH.l10 : sA.l10} vs. ${pickHome ? sA.l10 : sH.l10}), enough to tip an otherwise close pitching matchup.`;
-  } else {
-    s1 = `${pick} grades out ahead on the model's blend of run differential and recent form${pickHome ? ", with the home-field bump added in" : ""}.`;
+    return `${pick} has been the hotter team lately (last 10: ${pickHome ? sH.l10 : sA.l10} vs. ${pickHome ? sA.l10 : sH.l10}), enough to tip a close matchup.`;
   }
-  const s2 = pd ? `This is a price-sensitive play — the edge holds at ${pd.current}, but the value is gone by ${pd.playableTo} or worse.` : "";
-  return [s1, s2].filter(Boolean).join(" ");
+  return `${pick} grades out ahead on the model's blend of run differential and recent form${pickHome ? ", plus the home-field bump" : ""}.`;
 }
 
-// "What could go wrong" — real weather data when it's genuinely a factor,
-// otherwise an honest note about what the model can't see (injuries, bullpen
-// availability, lineup changes) rather than a fabricated risk.
+// "What could go wrong" — one line, real weather data when it's genuinely a
+// factor, otherwise an honest note about what the model can't see (injuries,
+// bullpen availability, lineup changes) rather than a fabricated risk.
 function whatCouldGoWrong({ wx, pkInfo, oppSp }) {
-  const bits = [];
   if (pkInfo && !pkInfo[3] && wx) {
     if (wx.precip !== null && wx.precip >= 40) {
-      bits.push(`There's roughly a ${wx.precip}% chance of rain around first pitch at ${pkInfo[0]} — a delay can scramble starter and bullpen usage.`);
-    } else if (wx.wind >= 12) {
-      bits.push(`Wind is up (${wx.wind} mph ${wx.dir}) at ${pkInfo[0]}, which adds variance to a number this dependent on pitching.`);
+      return `Roughly a ${wx.precip}% chance of rain at ${pkInfo[0]} — a delay can scramble starter and bullpen usage.`;
+    }
+    if (wx.wind >= 12) {
+      return `Wind is up (${wx.wind} mph ${wx.dir}) at ${pkInfo[0]}, adding variance to a pitching-driven number.`;
     }
   }
-  bits.push(`${oppSp.name} has enough stuff to outpitch his season line on a given night — an efficient outing from him tightens this quickly.`);
-  bits.push(`The model doesn't see live injury, bullpen-availability, or lineup news — worth a quick recheck before first pitch.`);
-  return bits.join(" ");
+  return `${oppSp.name} can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch.`;
 }
 
 async function getJson(url) {
@@ -579,8 +574,8 @@ async function main() {
       const modelPOver = 1 - normCdf((line - projTotal) / TOTAL_STD);
       const edgeOver = modelPOver - pOver, edgeUnder = (1 - modelPOver) - pUnder;
       let totPick = null, totEdge = 0, totProb = null, totMktProb = null, totBestAm = null;
-      if (edgeOver >= edgeUnder && edgeOver >= NO_PLAY_EDGE) { totPick = "Over"; totEdge = edgeOver; totProb = modelPOver; totMktProb = pOver; totBestAm = bestOver; }
-      else if (edgeUnder > edgeOver && edgeUnder >= NO_PLAY_EDGE) { totPick = "Under"; totEdge = edgeUnder; totProb = 1 - modelPOver; totMktProb = pUnder; totBestAm = bestUnder; }
+      if (edgeOver >= edgeUnder && edgeOver >= NO_PLAY_EDGE_SECONDARY) { totPick = "Over"; totEdge = edgeOver; totProb = modelPOver; totMktProb = pOver; totBestAm = bestOver; }
+      else if (edgeUnder > edgeOver && edgeUnder >= NO_PLAY_EDGE_SECONDARY) { totPick = "Under"; totEdge = edgeUnder; totProb = 1 - modelPOver; totMktProb = pUnder; totBestAm = bestUnder; }
       totalOut = { line, projTotal: Number(projTotal.toFixed(1)), pick: totPick, edge: Number(totEdge.toFixed(4)), prob: totProb !== null ? Number(totProb.toFixed(4)) : null, mktProb: totMktProb !== null ? Number(totMktProb.toFixed(4)) : null, bestAm: totBestAm };
     } else {
       totalOut = { line: null, projTotal: Number(projTotal.toFixed(1)), pick: null, edge: 0, prob: null, mktProb: null, bestAm: null };
@@ -592,8 +587,8 @@ async function main() {
       const modelPHomeCover = normCdf((projMargin - Math.abs(homePoint)) / MARGIN_STD);
       const edgeHome = modelPHomeCover - pHomeCover, edgeAway = (1 - modelPHomeCover) - pAwayCover;
       let rlPick = null, rlEdge = 0, rlProb = null, rlMktProb = null, rlBestAm = null, rlPoint = null;
-      if (edgeHome >= edgeAway && edgeHome >= NO_PLAY_EDGE) { rlPick = h.team.name; rlEdge = edgeHome; rlProb = modelPHomeCover; rlMktProb = pHomeCover; rlBestAm = bestHome; rlPoint = homePoint; }
-      else if (edgeAway > edgeHome && edgeAway >= NO_PLAY_EDGE) { rlPick = a.team.name; rlEdge = edgeAway; rlProb = 1 - modelPHomeCover; rlMktProb = pAwayCover; rlBestAm = bestAway; rlPoint = awayPoint; }
+      if (edgeHome >= edgeAway && edgeHome >= NO_PLAY_EDGE_SECONDARY) { rlPick = h.team.name; rlEdge = edgeHome; rlProb = modelPHomeCover; rlMktProb = pHomeCover; rlBestAm = bestHome; rlPoint = homePoint; }
+      else if (edgeAway > edgeHome && edgeAway >= NO_PLAY_EDGE_SECONDARY) { rlPick = a.team.name; rlEdge = edgeAway; rlProb = 1 - modelPHomeCover; rlMktProb = pAwayCover; rlBestAm = bestAway; rlPoint = awayPoint; }
       runLineOut = { point: rlPoint, projMargin: Number(projMargin.toFixed(1)), pick: rlPick, edge: Number(rlEdge.toFixed(4)), prob: rlProb !== null ? Number(rlProb.toFixed(4)) : null, mktProb: rlMktProb !== null ? Number(rlMktProb.toFixed(4)) : null, bestAm: rlBestAm };
     } else {
       runLineOut = { point: null, projMargin: Number(projMargin.toFixed(1)), pick: null, edge: 0, prob: null, mktProb: null, bestAm: null };
@@ -604,16 +599,18 @@ async function main() {
     const consensus = buildConsensus(a.team.name, h.team.name, manualSignals, autoSignals);
     const agreeCount = (pickHome ? consensus.agreeHome : consensus.agreeAway).length;
     const opposeCount = (pickHome ? consensus.agreeAway : consensus.agreeHome).length;
+    // Every moneyline lean ends up either a real value play OR an explicit pass —
+    // no third, unlabeled state. Previously, an edge at or below -NO_PLAY_EDGE (the
+    // market strongly preferring the other side) or a missing market price fell
+    // through both checks and rendered as an unqualified pick; that's fixed here.
     let valueTag = "";
     let isPass = false;
-    if (edge !== null) {
-      if (edge >= VALUE_EDGE) {
-        if (opposeCount >= CONSENSUS_CONTEST_N && edge < CONSENSUS_CONTEST_EDGE) valueTag = "CONTESTED VALUE";
-        else if (agreeCount >= CONSENSUS_ALIGN_N) valueTag = "STRONG VALUE";
-        else valueTag = "VALUE";
-      } else if (edge < NO_PLAY_EDGE && edge > -NO_PLAY_EDGE) {
-        isPass = true;
-      }
+    if (edge !== null && edge >= VALUE_EDGE) {
+      if (opposeCount >= CONSENSUS_CONTEST_N && edge < CONSENSUS_CONTEST_EDGE) valueTag = "CONTESTED VALUE";
+      else if (agreeCount >= CONSENSUS_ALIGN_N) valueTag = "STRONG VALUE";
+      else valueTag = "VALUE";
+    } else {
+      isPass = true;
     }
     const signalNote = agreeCount
       ? `${agreeCount} tracked public source${agreeCount > 1 ? "s" : ""} also lean${agreeCount > 1 ? "" : "s"} ${pick}.`

@@ -48,36 +48,35 @@ const pct = p => p === null || p === undefined ? "" : (p * 100).toFixed(0) + "%"
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const isValidEmail = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || "").trim());
 
-function pickLines(p) {
+// One compact line per market that actually has a play. No "pass" lines here —
+// games with zero plays are summarized separately, not spelled out one by one.
+function activeLines(p) {
   const lines = [];
-  if (p.moneyline && p.moneyline.pick) {
-    if (p.moneyline.isPass) {
-      lines.push(`Moneyline: pass — no edge`);
-    } else {
-      const tierTxt = p.moneyline.tier ? ` [${p.moneyline.tier}, edge score ${p.moneyline.edgeScore}/100]` : "";
-      lines.push(`Moneyline: ${p.moneyline.pick} (${pct(p.moneyline.prob)}${p.moneyline.bestAm ? `, ${fmtAm(p.moneyline.bestAm)}` : ""})${p.moneyline.valueTag ? " — " + p.moneyline.valueTag : ""}${tierTxt}`);
-      if (p.moneyline.why) lines.push(`Why we like it: ${p.moneyline.why}`);
-      if (p.moneyline.risk) lines.push(`What could go wrong: ${p.moneyline.risk}`);
-    }
+  if (p.moneyline && p.moneyline.pick && !p.moneyline.isPass) {
+    const tierTxt = p.moneyline.tier ? ` — ${p.moneyline.tier} (edge score ${p.moneyline.edgeScore}/100)` : "";
+    lines.push({
+      main: `Moneyline: ${p.moneyline.pick} (${pct(p.moneyline.prob)}${p.moneyline.bestAm ? `, ${fmtAm(p.moneyline.bestAm)}` : ""})${tierTxt}`,
+      why: p.moneyline.why || null,
+      risk: p.moneyline.risk || null
+    });
   }
   if (p.total && p.total.pick) {
-    lines.push(`Total: ${p.total.pick} ${p.total.line} (model ${p.total.projTotal} runs${p.total.bestAm ? `, ${fmtAm(p.total.bestAm)}` : ""})`);
+    lines.push({ main: `Total: ${p.total.pick} ${p.total.line} (model ${p.total.projTotal} runs${p.total.bestAm ? `, ${fmtAm(p.total.bestAm)}` : ""})` });
   }
   if (p.runLine && p.runLine.pick) {
-    lines.push(`Run line: ${p.runLine.pick} ${p.runLine.point > 0 ? "+" : ""}${p.runLine.point} (projected margin ${p.runLine.projMargin > 0 ? "+" : ""}${p.runLine.projMargin}${p.runLine.bestAm ? `, ${fmtAm(p.runLine.bestAm)}` : ""})`);
+    lines.push({ main: `Run line: ${p.runLine.pick} ${p.runLine.point > 0 ? "+" : ""}${p.runLine.point} (projected margin ${p.runLine.projMargin > 0 ? "+" : ""}${p.runLine.projMargin}${p.runLine.bestAm ? `, ${fmtAm(p.runLine.bestAm)}` : ""})` });
   }
   return lines;
 }
 
 function buildEmail(dateStr, picks, isPreview) {
   const nice = niceDate(dateStr);
-  const playCount = picks.reduce((n, p) => {
-    let c = 0;
-    if (p.moneyline && p.moneyline.pick && !p.moneyline.isPass) c++;
-    if (p.total && p.total.pick) c++;
-    if (p.runLine && p.runLine.pick) c++;
-    return n + c;
-  }, 0);
+  const withPlay = [], noPlay = [];
+  for (const p of picks) {
+    const lines = activeLines(p);
+    if (lines.length) withPlay.push({ p, lines }); else noPlay.push(p);
+  }
+  const playCount = withPlay.reduce((n, g) => n + g.lines.length, 0);
 
   const subjectBase = playCount
     ? `LyDia Picks — ${nice} (${playCount} play${playCount > 1 ? "s" : ""})`
@@ -90,27 +89,32 @@ function buildEmail(dateStr, picks, isPreview) {
     : "";
   const previewBannerText = isPreview ? "PREVIEW SEND — no paid members yet, owner-only copy.\n\n" : "";
 
-  const rowsHtml = picks.map(p => {
-    const lines = pickLines(p);
-    const body = lines.length
-      ? lines.map(l => `<div style="margin:4px 0">${esc(l)}</div>`).join("")
-      : `<div style="color:#888;font-style:italic">No official play</div>`;
-    return `<div style="border-left:3px solid #d6336c;padding:8px 0 8px 12px;margin:14px 0">
+  const rowsHtml = withPlay.map(({ p, lines }) => {
+    const body = lines.map(l => `<div style="margin:3px 0">${esc(l.main)}</div>` +
+      (l.why ? `<div style="font-size:12.5px;color:#555;margin:2px 0"><b>Why:</b> ${esc(l.why)}</div>` : "") +
+      (l.risk ? `<div style="font-size:12.5px;color:#555;margin:2px 0 0"><b>Risk:</b> ${esc(l.risk)}</div>` : "")
+    ).join("");
+    return `<div style="border-left:3px solid #d6336c;padding:8px 0 8px 12px;margin:12px 0">
       <div style="font-weight:700">${esc(p.away)} @ ${esc(p.home)}</div>
       ${body}
     </div>`;
   }).join("");
 
-  const rowsText = picks.map(p => {
-    const lines = pickLines(p);
-    return `${p.away} @ ${p.home}\n` + (lines.length ? lines.map(l => "  " + l).join("\n") : "  No official play") + "\n";
-  }).join("\n");
+  const noPlaySummary = noPlay.length
+    ? `<p style="font-size:12.5px;color:#888;margin-top:16px">No edge, no play (${noPlay.length}): ${noPlay.map(p => esc(`${p.away} @ ${p.home}`)).join(" · ")}</p>`
+    : "";
+
+  const rowsText = withPlay.map(({ p, lines }) =>
+    `${p.away} @ ${p.home}\n` + lines.map(l => "  " + l.main + (l.why ? `\n    Why: ${l.why}` : "") + (l.risk ? `\n    Risk: ${l.risk}` : "")).join("\n")
+  ).join("\n\n");
+  const noPlayText = noPlay.length ? `\n\nNo edge, no play: ${noPlay.map(p => `${p.away} @ ${p.home}`).join(" · ")}` : "";
 
   const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a">
     ${previewBanner}
     <h2 style="margin-bottom:4px">LyDia Picks — ${esc(nice)}</h2>
     <p style="color:#666;font-size:14px">${playCount ? `${playCount} play${playCount > 1 ? "s" : ""} on today's ${picks.length}-game slate.` : `No edge anywhere on today's ${picks.length}-game slate — the model is passing across the board.`}</p>
-    ${rowsHtml}
+    ${rowsHtml || `<p style="color:#888;font-style:italic">Nothing cleared the bar today.</p>`}
+    ${noPlaySummary}
     <p style="font-size:13px;color:#888;margin-top:20px">Full reasoning for every game: <a href="https://mlbedges.com/previews/${dateStr}">mlbedges.com/previews/${dateStr}</a><br>
     Every pick graded publicly: <a href="https://mlbedges.com/results/">mlbedges.com/results/</a></p>
     <p style="font-size:12px;color:#aaa;margin-top:24px;border-top:1px solid #eee;padding-top:10px">
@@ -119,7 +123,7 @@ function buildEmail(dateStr, picks, isPreview) {
     Questions? Just reply to this email.</p>
   </div>`;
 
-  const text = `${previewBannerText}LyDia Picks — ${nice}\n\n${rowsText}\nFull reasoning: https://mlbedges.com/previews/${dateStr}\nResults history: https://mlbedges.com/results/\n\nLyDia — analysis and education only, not betting advice. 1-800-GAMBLER.`;
+  const text = `${previewBannerText}LyDia Picks — ${nice}\n\n${rowsText || "Nothing cleared the bar today."}${noPlayText}\n\nFull reasoning: https://mlbedges.com/previews/${dateStr}\nResults history: https://mlbedges.com/results/\n\nLyDia — analysis and education only, not betting advice. 1-800-GAMBLER.`;
 
   return { subject, html, text };
 }
