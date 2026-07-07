@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XVWTMDNBJK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XVWTMDNBJK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitcher Matchup Tool — LyDia's Lab</title>
+<meta name="description" content="Compare today's MLB probable starters with LyDia's pitcher edge score, matchup strength, ERA, WHIP, strikeout profile, and reliability notes.">
+<link rel="canonical" href="https://mlbedges.com/tools/pitcher-matchups/">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+.controls { display:flex; gap:10px; align-items:end; flex-wrap:wrap; margin-bottom:16px; }
+.controls .field { margin-bottom:0; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:16px 0 22px; }
+.kpi { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; }
+.kpi .label { font-size:.76rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; }
+.kpi .value { font-size:1.35rem; font-weight:800; }
+.match-card { margin-bottom:14px; }
+.match-head { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; margin-bottom:10px; }
+.match-head .matchup { font-weight:800; font-size:1.05rem; }
+.edge-line { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0; }
+.pitcher-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; }
+.pitcher-box { background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:12px; }
+.pitcher-box h3 { margin:0 0 6px; }
+.score { font-size:1.7rem; font-weight:800; color:var(--accent); }
+.stat-row { display:flex; justify-content:space-between; gap:8px; font-size:.88rem; border-top:1px solid var(--border); padding-top:5px; margin-top:5px; }
+.read { margin-top:10px; font-size:.88rem; color:var(--text-dim); }
+@media (max-width:720px){ .pitcher-grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<nav id="nav"></nav>
+<main>
+  <p class="eyebrow">LyDia's Lab</p>
+  <h1>Pitcher Matchup Tool</h1>
+  <p class="subtitle">Compare every probable starter on the MLB card. The score blends run prevention, WHIP, strikeout/walk profile, and sample reliability into one clean matchup read.</p>
+
+  <div class="controls">
+    <div class="field">
+      <label for="date-pick">Date</label>
+      <input type="date" id="date-pick">
+    </div>
+    <button onclick="shiftDay(0)">Today</button>
+    <button class="secondary" onclick="shiftDay(1)">Tomorrow</button>
+    <button class="secondary" onclick="load()">Refresh</button>
+  </div>
+
+  <div class="notice">
+    <strong>How to read it:</strong> a strong starting pitcher edge matters most early. Full-game markets still need bullpen context, lineups, park, and weather.
+  </div>
+
+  <div id="kpis" class="kpis"></div>
+  <div id="status" class="loading">Loading pitcher matchups…</div>
+  <div id="games"></div>
+</main>
+<footer id="footer"></footer>
+<script src="/js/app.js"></script>
+<script>
+renderNav("/tools/"); renderFooter();
+
+const LEAGUE_ERA = 4.20;
+const LEAGUE_WHIP = 1.30;
+const datePick = document.getElementById("date-pick");
+datePick.value = localISODate(new Date());
+datePick.addEventListener("change", load);
+load();
+
+function localISODate(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+function shiftDay(n) {
+  const d = new Date(); d.setDate(d.getDate() + n);
+  datePick.value = localISODate(d);
+  load();
+}
+function clamp(n, min, max) { return Math.min(max, Math.max(min, n)); }
+function ipToNum(ip) {
+  if (!ip || ip === "-.--") return 0;
+  const [w, f] = String(ip).split(".");
+  return Number(w || 0) + (Number(f || 0) / 3);
+}
+function num(v, fallback=null) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : fallback;
+}
+function fmt(v, dp=2) { return Number.isFinite(v) ? Number(v).toFixed(dp) : "—"; }
+
+async function load() {
+  const statusEl = document.getElementById("status");
+  const gamesEl = document.getElementById("games");
+  const kpisEl = document.getElementById("kpis");
+  statusEl.innerHTML = `<div class="loading">Loading pitcher matchups…</div>`;
+  gamesEl.innerHTML = ""; kpisEl.innerHTML = "";
+
+  const date = datePick.value;
+  let sched;
+  try {
+    const res = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${date}&hydrate=probablePitcher`);
+    if (!res.ok) throw new Error("Schedule HTTP " + res.status);
+    sched = await res.json();
+  } catch (e) {
+    statusEl.innerHTML = `<div class="notice warn">Could not load MLB schedule (${escapeHtml(e.message)}).</div>`;
+    return;
+  }
+
+  const games = (((sched.dates || [])[0]) || {}).games || [];
+  if (!games.length) {
+    statusEl.innerHTML = `<div class="notice">No MLB games scheduled for ${date}.</div>`;
+    return;
+  }
+  games.sort((a,b) => new Date(a.gameDate) - new Date(b.gameDate));
+
+  const ids = [...new Set(games.flatMap(g => ["away","home"].map(s => g.teams[s].probablePitcher && g.teams[s].probablePitcher.id).filter(Boolean)))];
+  const pitcherStats = await fetchPitchers(ids);
+  const cards = games.map(g => renderGame(g, pitcherStats));
+  statusEl.innerHTML = "";
+  gamesEl.innerHTML = cards.join("");
+
+  const withEdges = games.map(g => matchupData(g, pitcherStats));
+  const strong = withEdges.filter(x => x.strength === "Strong").length;
+  const moderate = withEdges.filter(x => x.strength === "Moderate").length;
+  const tbd = withEdges.filter(x => x.away.name === "TBD" || x.home.name === "TBD").length;
+  kpisEl.innerHTML = `
+    <div class="kpi"><div class="label">Games</div><div class="value">${games.length}</div><div class="small dim">on selected date</div></div>
+    <div class="kpi"><div class="label">Strong SP edges</div><div class="value">${strong}</div><div class="small dim">score gap of 14+</div></div>
+    <div class="kpi"><div class="label">Moderate SP edges</div><div class="value">${moderate}</div><div class="small dim">score gap of 8–13</div></div>
+    <div class="kpi"><div class="label">TBD starters</div><div class="value">${tbd}</div><div class="small dim">monitor closer to first pitch</div></div>`;
+}
+
+async function fetchPitchers(ids) {
+  const out = {};
+  if (!ids.length) return out;
+  try {
+    const res = await fetch(`https://statsapi.mlb.com/api/v1/people?personIds=${ids.join(",")}&hydrate=stats(group=[pitching],type=[season])`);
+    if (!res.ok) return out;
+    const data = await res.json();
+    for (const p of data.people || []) {
+      const split = (((p.stats || [])[0] || {}).splits || [])[0];
+      const st = split && split.stat ? split.stat : {};
+      out[p.id] = {
+        name: p.fullName,
+        era: num(st.era),
+        whip: num(st.whip),
+        ip: ipToNum(st.inningsPitched),
+        so: num(st.strikeOuts, 0),
+        bb: num(st.baseOnBalls, 0),
+        hr: num(st.homeRuns, 0),
+        gs: num(st.gamesStarted, 0)
+      };
+    }
+  } catch(e) {}
+  return out;
+}
+
+function pitcher(side, stats) {
+  const p = side.probablePitcher;
+  if (!p) return scorePitcher({ name: "TBD", missing: true });
+  const st = stats[p.id] || { name: p.fullName, missing: true };
+  return scorePitcher(st);
+}
+
+function scorePitcher(st) {
+  if (st.missing || !Number.isFinite(st.era)) {
+    return { ...st, score: 50, grade: "Unknown", note: "season stats unavailable; neutral score used" };
+  }
+  const era = st.era || LEAGUE_ERA;
+  const whip = Number.isFinite(st.whip) ? st.whip : LEAGUE_WHIP;
+  const ip = st.ip || 0;
+  const k9 = ip ? (st.so / ip) * 9 : null;
+  const bb9 = ip ? (st.bb / ip) * 9 : null;
+
+  const eraScore = clamp(100 - (era - 2.00) * 16, 20, 92);
+  const whipScore = clamp(100 - (whip - 0.90) * 90, 20, 92);
+  const kbbScore = (k9 !== null && bb9 !== null)
+    ? clamp(50 + (k9 - 8.0) * 4 - (bb9 - 3.0) * 6, 20, 90)
+    : 50;
+  const sampleScore = clamp(35 + Math.min(ip, 100) * 0.35, 35, 70);
+  const score = Math.round(eraScore * .40 + whipScore * .25 + kbbScore * .20 + sampleScore * .15);
+
+  let grade = "Average";
+  if (score >= 75) grade = "Strong";
+  else if (score >= 65) grade = "Above avg";
+  else if (score < 45) grade = "Weak";
+  else if (score < 55) grade = "Below avg";
+
+  const note = ip < 20 ? "limited innings; treat score with caution" : null;
+  return { ...st, score, grade, note, k9, bb9 };
+}
+
+function matchupData(g, stats) {
+  const away = pitcher(g.teams.away, stats);
+  const home = pitcher(g.teams.home, stats);
+  const gap = Math.abs(home.score - away.score);
+  let strength = "No clear edge";
+  if (gap >= 14) strength = "Strong";
+  else if (gap >= 8) strength = "Moderate";
+  else if (gap >= 4) strength = "Slight";
+  const edgeTeam = gap < 4 ? "No clear SP edge" : (home.score > away.score ? g.teams.home.team.name : g.teams.away.team.name);
+  return { away, home, gap, strength, edgeTeam };
+}
+
+function renderPitcherBox(label, team, p) {
+  return `<div class="pitcher-box">
+    <h3>${escapeHtml(team)}</h3>
+    <div class="dim small">${escapeHtml(label)} starter</div>
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:end">
+      <div><b>${escapeHtml(p.name || "TBD")}</b><div class="small dim">${escapeHtml(p.grade || "Unknown")}</div></div>
+      <div class="score">${p.score}</div>
+    </div>
+    <div class="stat-row"><span>ERA</span><b>${fmt(p.era)}</b></div>
+    <div class="stat-row"><span>WHIP</span><b>${fmt(p.whip)}</b></div>
+    <div class="stat-row"><span>IP</span><b>${p.ip ? Math.round(p.ip) : "—"}</b></div>
+    <div class="stat-row"><span>K/9</span><b>${p.k9 ? fmt(p.k9, 1) : "—"}</b></div>
+    <div class="stat-row"><span>BB/9</span><b>${p.bb9 ? fmt(p.bb9, 1) : "—"}</b></div>
+    ${p.note ? `<div class="small dim" style="margin-top:8px">${escapeHtml(p.note)}</div>` : ""}
+  </div>`;
+}
+
+function renderGame(g, stats) {
+  const awayTeam = g.teams.away.team.name;
+  const homeTeam = g.teams.home.team.name;
+  const d = matchupData(g, stats);
+  const time = new Date(g.gameDate).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  const badgeClass = d.strength === "Strong" ? "pos" : d.strength === "No clear edge" ? "neutral" : "neutral";
+  const read = d.strength === "No clear edge"
+    ? "The starting pitcher matchup does not create a meaningful separation by itself."
+    : `${d.edgeTeam} holds the starting pitcher edge. This is most relevant early; full-game reads still need bullpen and lineup context.`;
+
+  return `<div class="card match-card">
+    <div class="match-head">
+      <span class="matchup">${escapeHtml(awayTeam)} @ ${escapeHtml(homeTeam)}</span>
+      <span class="dim small">${time}</span>
+    </div>
+    <div class="edge-line">
+      <span class="badge ${badgeClass}">${escapeHtml(d.strength)}</span>
+      <span><b>Edge:</b> ${escapeHtml(d.edgeTeam)}</span>
+      <span class="dim small">Score gap: ${d.gap}</span>
+    </div>
+    <div class="pitcher-grid">
+      ${renderPitcherBox("Away", awayTeam, d.away)}
+      ${renderPitcherBox("Home", homeTeam, d.home)}
+    </div>
+    <div class="read">${escapeHtml(read)}</div>
+  </div>`;
+}
+</script>
+</body>
+</html>
