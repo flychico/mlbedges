@@ -1,4 +1,4 @@
-name: LyDia Daily Source of Truth
+name: LyDia Source-of-Truth Manual Run
 
 on:
   workflow_dispatch:
@@ -11,43 +11,49 @@ on:
         description: "posted, current, or closing"
         required: false
         default: "posted"
-  schedule:
-    # 11:40 UTC = 7:40 AM Eastern during MLB daylight-saving months.
-    - cron: "40 11 * * *"
 
 permissions:
   contents: write
 
+concurrency:
+  group: lydia-source-of-truth-manual
+  cancel-in-progress: false
+
 jobs:
-  generate-daily-source:
+  generate-source-of-truth:
     runs-on: ubuntu-latest
     env:
       ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 20
 
       - name: Generate source-of-truth daily outputs
         run: |
-          if [ -n "${{ github.event.inputs.date }}" ]; then
-            node scripts/generate-member-lab.js --date "${{ github.event.inputs.date }}" --snapshot "${{ github.event.inputs.snapshot || 'posted' }}"
+          DATE_INPUT="${{ github.event.inputs.date }}"
+          SNAPSHOT_INPUT="${{ github.event.inputs.snapshot }}"
+          if [ -n "$DATE_INPUT" ]; then
+            node scripts/generate-member-lab.js --date "$DATE_INPUT" --snapshot "${SNAPSHOT_INPUT:-posted}"
           else
-            node scripts/generate-member-lab.js --snapshot "posted"
+            node scripts/generate-member-lab.js --snapshot "${SNAPSHOT_INPUT:-posted}"
           fi
 
-      - name: Commit generated daily outputs
+      - name: Commit generated source-of-truth outputs
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "lydia-bot"
+          git config user.email "actions@users.noreply.github.com"
           git add data/member-brief data/market data/picks previews
           if git diff --cached --quiet; then
-            echo "No daily output changes to commit."
+            echo "No source-of-truth output changes to commit."
           else
-            git commit -m "Update LyDia daily source-of-truth outputs"
+            git commit -m "Update LyDia source-of-truth outputs"
+            git pull --rebase
             git push
           fi

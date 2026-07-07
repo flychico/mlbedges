@@ -2,10 +2,19 @@ name: Daily content
 
 on:
   schedule:
-    # Runs every day at 7:35 AM America/New_York
-    - cron: "35 7 * * *"
-      timezone: "America/New_York"
-  workflow_dispatch: {}
+    # 7:35 AM Eastern during MLB daylight-saving months.
+    # GitHub cron runs in UTC, so 11:35 UTC = 7:35 AM ET during DST.
+    - cron: "35 11 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "YYYY-MM-DD date to generate/email. Leave blank for today."
+        required: false
+        default: ""
+      snapshot:
+        description: "posted, current, or closing. Morning daily run should use posted."
+        required: false
+        default: "posted"
 
 permissions:
   contents: write
@@ -42,26 +51,36 @@ jobs:
       - name: Generate yesterday's recap
         run: node scripts/generate-recap.js
 
-      - name: Generate today's previews and picks
+      - name: Generate today's source-of-truth picks, member brief, market snapshot, and preview
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: node scripts/generate-previews.js
+        run: |
+          DATE_INPUT="${{ github.event.inputs.date }}"
+          SNAPSHOT_INPUT="${{ github.event.inputs.snapshot }}"
+          if [ -n "$DATE_INPUT" ]; then
+            node scripts/generate-member-lab.js --date "$DATE_INPUT" --snapshot "${SNAPSHOT_INPUT:-posted}"
+          else
+            node scripts/generate-member-lab.js --snapshot "posted"
+          fi
 
-      - name: Verify generated files
+      - name: Verify generated source-of-truth files
         run: |
           echo "Checking generated content..."
 
           echo "Results folder:"
           ls -la results || true
 
-          echo "Previews folder:"
-          ls -la previews || true
-
           echo "Recaps folder:"
           ls -la recaps || true
 
+          echo "Previews folder:"
+          ls -la previews || true
+
           echo "Data folder:"
           ls -la data || true
+          ls -la data/member-brief || true
+          ls -la data/picks || true
+          ls -la data/market || true
 
           if [ ! -f "results/index.html" ]; then
             echo "ERROR: results/index.html was not generated."
@@ -78,9 +97,24 @@ jobs:
             exit 1
           fi
 
+          if [ ! -f "data/member-brief/today.json" ]; then
+            echo "ERROR: data/member-brief/today.json was not generated."
+            exit 1
+          fi
+
+          if [ ! -f "data/picks/today.json" ]; then
+            echo "ERROR: data/picks/today.json was not generated."
+            exit 1
+          fi
+
+          if [ ! -f "data/market/today.json" ]; then
+            echo "ERROR: data/market/today.json was not generated."
+            exit 1
+          fi
+
           echo "Generated files look good."
 
-      - name: Commit and push if changed
+      - name: Commit and push generated site files if changed
         run: |
           git config user.name "lydia-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -95,12 +129,19 @@ jobs:
             git push
           fi
 
-      - name: Email today's picks to paid members
+      - name: Email today's Daily Member Brief to paid members
         continue-on-error: true
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           EMAIL_REPLY_TO: ${{ secrets.EMAIL_REPLY_TO }}
+          OWNER_EMAIL: ${{ secrets.OWNER_EMAIL }}
           NETLIFY_API_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: node scripts/send-member-emails.js
+        run: |
+          DATE_INPUT="${{ github.event.inputs.date }}"
+          if [ -n "$DATE_INPUT" ]; then
+            node scripts/send-member-emails.js "$DATE_INPUT"
+          else
+            node scripts/send-member-emails.js
+          fi
