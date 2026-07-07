@@ -6,8 +6,8 @@
 - Home:
 - Market reviewed:
 - Current price:
-- Playable to:
-- Pass at:
+- Internal max acceptable price:
+- Same-game market consistency:
 
 ## Probability
 
@@ -20,14 +20,14 @@
 
 | Category | Max | Score | Notes |
 |---|---:|---:|---|
-| Starting Pitcher Edge | 25 |  |  |
-| Offensive Matchup Edge | 20 |  |  |
-| Bullpen Edge | 15 |  |  |
-| Lineup/Injury Edge | 10 |  |  |
-| Park/Weather Edge | 10 |  |  |
-| Market/Price Edge | 15 |  |  |
-| Competitor Logic Signal | 5 |  |  |
-| **Total** | **100** |  |  |
+| Starting Pitcher Edge | 25 | | |
+| Offensive Matchup Edge | 20 | | |
+| Bullpen Edge | 15 | | |
+| Lineup/Injury Edge | 10 | | |
+| Park/Weather Edge | 10 | | |
+| Market/Price Edge | 15 | | |
+| Competitor Logic Signal | 5 | | |
+| **Total** | **100** | | |
 
 ## Hard gates
 
@@ -35,7 +35,8 @@
 - Stale odds:
 - Lineup uncertainty:
 - Weather risk:
-- Price moved past range:
+- Price moved beyond internal value threshold:
+- Same-game market contradiction:
 - Copied/narrative logic:
 
 ## Decision

@@ -17,26 +17,27 @@ Calculate or estimate:
 5. Edge Score out of 100
 6. Hard gate issues
 7. Candidate status
+8. Same-game market consistency
 
 ## Edge Score weights
 
 ```text
-Starting Pitcher Edge:       25
-Offensive Matchup Edge:     20
-Bullpen Edge:               15
-Lineup/Injury Edge:         10
-Park/Weather Edge:          10
-Market/Price Edge:          15
-Competitor Logic Signal:     5
+Starting Pitcher Edge:    25
+Offensive Matchup Edge:   20
+Bullpen Edge:        15
+Lineup/Injury Edge:     10
+Park/Weather Edge:     10
+Market/Price Edge:     15
+Competitor Logic Signal:   5
 ```
 
 ## Status rules
 
 ```text
 85-100 = Strong Play Candidate
-75-84  = Play Candidate
-65-74  = Lean Only
-<65    = No Play
+75-84 = Play Candidate
+65-74 = Lean Only
+<65  = No Play
 ```
 
 ## Hard gate rules
@@ -47,11 +48,31 @@ Hard gates:
 
 - Starting pitcher conflict
 - Stale odds
-- Price beyond playable range
+- Current price no longer supports the edge
 - Major lineup uncertainty
 - Material weather risk
 - Mostly narrative reasoning
 - No independent LyDia edge
+- Same-game market contradiction
+
+## Run line sanity check
+
+Before assigning value to a run line:
+
+1. Identify the model's projected winner.
+2. Identify projected margin.
+3. Convert run-line odds to breakeven probability.
+4. Confirm the selected run-line side can logically clear that breakeven probability.
+5. Reject any opposing -1.5 run line when the model projects the other team to win.
+6. Reject any -1.5 play when projected margin is under 1 run unless separate run-distribution logic supports it.
+
+Example:
+
+```text
+Model projects Rays 64.1% to win and Rays by 0.8.
+Yankees -1.5 cannot be value because Yankees win probability itself is capped below the breakeven required for +150.
+Reject Yankees -1.5.
+```
 
 ## Output format
 
@@ -67,6 +88,7 @@ Raw edge:
 Edge Score:
 Key edge factors:
 Noise ignored:
+Same-game market consistency check:
 Hard gates:
 Candidate status:
 Recommended action:

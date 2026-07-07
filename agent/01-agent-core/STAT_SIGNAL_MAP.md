@@ -72,7 +72,7 @@ Use:
 - No-vig probability
 - Line movement
 - Closing-line value after result
-- Playable price range
+- Internal price check
 
 Why:
 

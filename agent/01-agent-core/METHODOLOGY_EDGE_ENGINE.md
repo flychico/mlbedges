@@ -43,13 +43,13 @@ Use no-vig probability for true market comparison.
 The Edge Score is a 100-point structure:
 
 ```text
-Starting Pitcher Edge:       25 points
-Offensive Matchup Edge:     20 points
-Bullpen Edge:               15 points
-Lineup/Injury Edge:         10 points
-Park/Weather Edge:          10 points
-Market/Price Edge:          15 points
-Competitor Logic Signal:     5 points
+Starting Pitcher Edge:    25 points
+Offensive Matchup Edge:   20 points
+Bullpen Edge:        15 points
+Lineup/Injury Edge:     10 points
+Park/Weather Edge:     10 points
+Market/Price Edge:     15 points
+Competitor Logic Signal:   5 points
 ```
 
 ## Step 4: Apply hard gates
@@ -58,7 +58,7 @@ Even high score games are rejected if any hard gate fails:
 
 - Starting pitcher conflict
 - Odds stale or unavailable
-- Line has moved past playable price
+- Line has moved beyond the internal value threshold
 - Major lineup uncertainty for a key pick thesis
 - Weather threatens total/prop logic
 - Reasoning is mostly narrative
@@ -68,18 +68,18 @@ Even high score games are rejected if any hard gate fails:
 
 ```text
 85-100: Strong Play Candidate
-75-84:  Play Candidate
-65-74:  Lean Only
+75-84: Play Candidate
+65-74: Lean Only
 Below 65: No Play
 ```
 
 ## Edge threshold
 
-Recommended V2 default:
+Recommended default:
 
 ```text
 Official pick minimum raw edge: +3.0 percentage points
-Strong play minimum raw edge:   +5.0 percentage points
+Strong play minimum raw edge:  +5.0 percentage points
 ```
 
 These thresholds can be tuned after enough tracked results.

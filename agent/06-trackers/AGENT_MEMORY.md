@@ -1,6 +1,6 @@
 # Agent Memory
 
-This file stores durable operational memory for LyDia V2.
+This file stores durable operational memory for LyDia.
 
 ## Brand voice
 

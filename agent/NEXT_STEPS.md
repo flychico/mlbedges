@@ -1,38 +1,31 @@
-# Next Steps for LyDia Agent v2
+# Next Steps for LyDia Agent
 
-## Immediate next move
+## Immediate
 
-Run V2 on 3 to 5 real slates manually before automating. The goal is to test the methodology, not pretend the first model is perfect.
+Run LyDia on 3 to 5 real slates manually before automating. The goal is to test the methodology, not pretend the first model is perfect.
 
-## Manual testing plan
+Track:
+- Closing line value
+- Whether the pick won or lost
+- Whether the reasoning was right
+- Whether the verifier should have caught anything
+- Whether the market consistency gate worked
 
-For each slate:
+## Automation path
 
-1. Fill the daily input.
-2. Score every game using the edge model.
-3. Track all official picks, leans, and no-plays.
-4. Capture competitor picks and reasoning.
-5. Record the closing line.
-6. Grade the result and the process.
-7. Update `LESSONS_LEARNED.md`.
+1. Put this package in GitHub.
+2. Add a Python runner for morning cards and night grading.
+3. Connect reliable data sources for odds, scores, weather, lineups, and probable pitchers.
+4. Add GitHub Actions schedules.
+5. Save generated cards, verifier reports, and postmortems to the repo.
+6. Add email delivery after the system has been tested.
+7. Add website/member publishing only after the verifier has proven reliable.
 
-## What to evaluate after 5 slates
+## Future upgrade candidates
 
-- Did official picks beat the closing line?
-- Did high edge scores perform better than leans?
-- Which reasoning tags worked?
-- Which signals were noise?
-- Did competitor reasoning help or confuse the engine?
-- Which markets looked strongest: full game ML, F5 ML, team totals, or totals?
-- Was the agent too aggressive or too conservative?
-
-## V3 candidates
-
-- Automated odds pull
-- Automated probable pitcher pull
-- Automated weather/radar pull
-- Competitor scraper
-- Website publishing draft generator
-- Email/newsletter output
-- Member dashboard archive
-- Results tracker charts
+- True probability conversion layer
+- Closing line value dashboard
+- Competitor source grading
+- Signal-level performance tracking
+- Automated lineup/injury rechecks
+- Member delivery workflow

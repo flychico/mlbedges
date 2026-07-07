@@ -60,5 +60,5 @@ Which competitor logic worked, failed, or was misleading?
 Add concise bullets that should be saved to LESSONS_LEARNED.md.
 
 ## Engine Adjustment Suggestions
-What should V2 adjust tomorrow?
+What should LyDia adjust tomorrow?
 ```

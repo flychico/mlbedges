@@ -1,65 +1,37 @@
-# LyDia Agent v2
+# LyDia Agent
 
-LyDia Agent v2 is built around one core principle:
+LyDia is the final operating package for the LyDia Daily Picks Agent.
 
-> We are not trying to predict winners. We are trying to identify mispriced probabilities.
+Core principle:
 
-V1 produced daily MLB previews and paid picks. V2 adds a real methodology layer:
+> Pick the price, not just the team.
 
-- Edge scoring
-- Noise filtering
-- Competitor reasoning analysis
-- Playable price ranges
-- No-play logic
-- Closing-line value tracking
-- Postmortem grading
-- Visible memory files
-- A stricter verifier
+LyDia is built to produce daily MLB betting previews, paid-member pick sheets, internal reasoning, verifier reports, and post-game learning notes while protecting the brand from weak logic, stale data, and irresponsible betting language.
 
-This package is manual-first and automation-ready. You can run it in ChatGPT/Claude today by copying the prompts and filling the templates. Later, this structure can be moved into GitHub, connected to live data, and scheduled.
+## Daily workflow
 
-## Daily run flow
+1. Fill `03-templates/DAILY_INPUT_TEMPLATE.md`.
+2. Run `02-prompts/01_DATA_COLLECTOR_PROMPT.md` if data is missing.
+3. Run `02-prompts/02_EDGE_ENGINE_PROMPT.md`.
+4. Run `02-prompts/03_COMPETITOR_REASONING_AGENT_PROMPT.md`.
+5. Run `02-prompts/04_MASTER_DAILY_AGENT_PROMPT.md`.
+6. Run `02-prompts/05_VERIFIER_PROMPT.md`.
+7. Publish only the approved card.
+8. After results settle, run `02-prompts/06_RESULTS_GRADER_POSTMORTEM_PROMPT.md`.
 
-1. Fill `03-templates/DAILY_INPUT_TEMPLATE_V2.md`.
-2. Run `02-prompts/01_DATA_COLLECTOR_PROMPT.md` if data is incomplete.
-3. Run `02-prompts/02_EDGE_ENGINE_PROMPT.md` to score the slate.
-4. Run `02-prompts/03_COMPETITOR_REASONING_AGENT_PROMPT.md` to process competitor logic.
-5. Run `02-prompts/04_MASTER_DAILY_AGENT_PROMPT_V2.md` to create the daily card.
-6. Run `02-prompts/05_VERIFIER_PROMPT_V2.md` before publishing.
-7. After results, run `02-prompts/06_RESULTS_GRADER_POSTMORTEM_PROMPT.md`.
-8. Update the trackers in `06-trackers/`.
+## Non-negotiables
 
-## V2 agent stack
+- Do not invent data.
+- Do not claim guaranteed wins.
+- Do not use language like “lock,” “risk-free,” “free money,” or “can’t lose.”
+- Do not tell users how much money to bet.
+- Use competitor picks only as context, never as copy.
+- If there is no strong edge, say no play.
+- Separate free public content from paid-member content.
+- Every paid pick must pass verification before publishing.
+- Public picks and previews should not include “Playable to” or “Pass at.” Keep pricing checks internal.
+- Same-game market contradictions must be rejected before publishing.
 
-```text
-Data Collector Agent
-↓
-Edge Engine Agent
-↓
-Competitor Reasoning Agent
-↓
-Pick Candidate Agent
-↓
-Verifier Agent
-↓
-No-Play Filter
-↓
-Publishing Agent
-↓
-Results Grader
-↓
-Lessons Learned Memory
-```
+## Key guardrail
 
-## Minimum publishing rule
-
-A pick may only be published when it has:
-
-- Confirmed or clearly labeled pitcher status
-- Current price and playable range
-- Independent LyDia edge score
-- Clear market-implied probability comparison
-- No major unresolved lineup/weather conflict
-- Verifier status of APPROVED or APPROVED WITH CAUTION
-
-No edge, no pick. No shame. Discipline is the product.
+LyDia includes a Market Consistency Gate. If the model likes one team on the moneyline, it cannot also publish the opposing team -1.5 run line as value. Example: Rays ML and Yankees -1.5 cannot both be official value plays in the same standard card.

@@ -1,6 +1,6 @@
 # Human Approval Rules
 
-LyDia Agent v2 may draft, score, verify, and recommend. It does not publish automatically.
+LyDia Agent may draft, score, verify, and recommend. It does not publish automatically.
 
 ## Human approval required for
 
@@ -19,7 +19,7 @@ LyDia Agent v2 may draft, score, verify, and recommend. It does not publish auto
 - Stale odds
 - Weak reasoning
 - Unconfirmed pitchers
-- Price movement past playable range
+- Price movement beyond internal value threshold
 - Compliance language problems
 
 ## Approval language

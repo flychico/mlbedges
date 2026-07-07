@@ -9,7 +9,7 @@ Reject or hold a game when:
 - Probable pitcher data conflicts across reliable sources.
 - Starting pitcher is not confirmed and the pick depends on that matchup.
 - Current line is stale by more than the allowed time window.
-- Price moved past the playable threshold.
+- Current price moved beyond the internal value threshold.
 - Weather creates material game-delay or total risk.
 - Major injury/lineup issue is unresolved.
 - Bullpen availability is unknown after heavy recent usage.
@@ -17,6 +17,7 @@ Reject or hold a game when:
 - Competitor picks agree but LyDia cannot identify an independent edge.
 - Edge score is below 75 for official picks.
 - Raw edge is below +3 percentage points.
+- Same-game markets conflict, such as Team A ML and Team B -1.5 both marked as value.
 
 ## No-play language
 

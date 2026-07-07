@@ -27,7 +27,7 @@ For each game:
 
 ## Output
 
-Return the filled `DAILY_INPUT_TEMPLATE_V2.md` structure.
+Return the filled `DAILY_INPUT_TEMPLATE.md` structure.
 
 ## Rules
 
