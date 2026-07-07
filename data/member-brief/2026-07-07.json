@@ -1,6 +1,6 @@
 {
   "date": "2026-07-07",
-  "generated_at": "2026-07-07T17:33:56.293Z",
+  "generated_at": "2026-07-07T17:54:26.077Z",
   "snapshot_type": "posted",
   "source_of_truth": "scripts/generate-member-lab.js",
   "summary": "8 official picks cleared the full Lab process. 1 additional game landed on the watchlist.",
@@ -20,7 +20,7 @@
       "pick_team": "Milwaukee Brewers",
       "side": "away",
       "model_probability": 0.732,
-      "edge": 0.2026,
+      "edge": 0.2033,
       "status": "official_pick",
       "value_tag": "STRONG SETUP",
       "lab_score": 88,
@@ -60,7 +60,7 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.5294,
+        "no_vig_probability": 0.5287,
         "best_price": -116,
         "books": 9
       }
@@ -320,7 +320,7 @@
       "pick_team": "Texas Rangers",
       "side": "home",
       "model_probability": 0.6703,
-      "edge": 0.0737,
+      "edge": 0.0742,
       "status": "official_pick",
       "value_tag": "QUALIFIED SETUP",
       "lab_score": 73,
@@ -360,7 +360,7 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.5966,
+        "no_vig_probability": 0.5961,
         "best_price": -157,
         "books": 9
       }
@@ -380,7 +380,7 @@
       "pick_team": "Arizona Diamondbacks",
       "side": "away",
       "model_probability": 0.5561,
-      "edge": 0.0793,
+      "edge": 0.0786,
       "status": "official_pick",
       "value_tag": "QUALIFIED SETUP",
       "lab_score": 70,
@@ -420,7 +420,7 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.4767,
+        "no_vig_probability": 0.4775,
         "best_price": 106,
         "books": 9
       }
@@ -560,7 +560,7 @@
       "pick_team": "Milwaukee Brewers",
       "side": "away",
       "model_probability": 0.5712,
-      "edge": 0.0418,
+      "edge": 0.0425,
       "status": "pass",
       "value_tag": "PASS",
       "lab_score": 53,
@@ -600,7 +600,7 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.5294,
+        "no_vig_probability": 0.5287,
         "best_price": -116,
         "books": 9
       }
@@ -740,7 +740,7 @@
       "pick_team": "Philadelphia Phillies",
       "side": "away",
       "model_probability": 0.5862,
-      "edge": -0.0222,
+      "edge": -0.0219,
       "status": "pass",
       "value_tag": "PASS",
       "lab_score": 40,
@@ -780,8 +780,8 @@
         "major_caution": true
       },
       "market": {
-        "no_vig_probability": 0.6085,
-        "best_price": -167,
+        "no_vig_probability": 0.6081,
+        "best_price": -166,
         "books": 9
       }
     },

@@ -1,6 +1,6 @@
 {
   "date": "2026-07-07",
-  "generated": "2026-07-07T17:33:56.293Z",
+  "generated": "2026-07-07T17:54:26.077Z",
   "source_of_truth": "scripts/generate-member-lab.js",
   "note": "Official picks are created only after pitcher matchup, bullpen fatigue, market pricing, and Lab Score checks.",
   "picks": [
@@ -48,13 +48,13 @@
         "pick": "Milwaukee Brewers",
         "side": "away",
         "prob": 0.732,
-        "mktProb": 0.5294,
+        "mktProb": 0.5287,
         "bestAm": -116,
         "valueTag": "STRONG SETUP",
         "isPass": false,
         "tier": "Strong Setup",
         "edgeScore": 88,
-        "rawEdge": 0.2026,
+        "rawEdge": 0.2033,
         "why": "Milwaukee Brewers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
@@ -323,13 +323,13 @@
         "pick": "Texas Rangers",
         "side": "home",
         "prob": 0.6703,
-        "mktProb": 0.5966,
+        "mktProb": 0.5961,
         "bestAm": -157,
         "valueTag": "QUALIFIED SETUP",
         "isPass": false,
         "tier": "Qualified Setup",
         "edgeScore": 73,
-        "rawEdge": 0.0737,
+        "rawEdge": 0.0742,
         "why": "Texas Rangers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 73.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
@@ -378,13 +378,13 @@
         "pick": "Arizona Diamondbacks",
         "side": "away",
         "prob": 0.5561,
-        "mktProb": 0.4767,
+        "mktProb": 0.4775,
         "bestAm": 106,
         "valueTag": "QUALIFIED SETUP",
         "isPass": false,
         "tier": "Qualified Setup",
         "edgeScore": 70,
-        "rawEdge": 0.0793,
+        "rawEdge": 0.0786,
         "why": "Arizona Diamondbacks cleared the model, market, pitcher, and bullpen checks with a Lab Score of 70.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
