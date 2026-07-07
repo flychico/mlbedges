@@ -2,7 +2,7 @@
 /*
   LyDia — email the Daily Member Brief to paid members.
 
-  Refactored source:
+  Source:
   - Prefer data/member-brief/<date>.json from scripts/generate-member-lab.js
   - Fallback to data/picks/<date>.json only if the member brief file is missing
 
@@ -23,12 +23,20 @@ const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const NETLIFY_API_TOKEN = process.env.NETLIFY_API_TOKEN;
-const NETLIFY_SITE_ID = process.env.NETLIFY_SITE_ID;
-const EMAIL_FROM = process.env.EMAIL_FROM || "LyDia Picks <picks@mlbedges.com>";
-const EMAIL_REPLY_TO = process.env.EMAIL_REPLY_TO || "";
-const OWNER_EMAIL = process.env.OWNER_EMAIL !== undefined ? process.env.OWNER_EMAIL : "lynoldmercado@gmail.com";
+const RESEND_API_KEY = (process.env.RESEND_API_KEY || "").trim();
+const NETLIFY_API_TOKEN = (process.env.NETLIFY_API_TOKEN || "").trim();
+const NETLIFY_SITE_ID = (process.env.NETLIFY_SITE_ID || "").trim();
+const EMAIL_FROM = (process.env.EMAIL_FROM || "LyDia Picks <picks@mlbedges.com>").trim();
+const EMAIL_REPLY_TO = (process.env.EMAIL_REPLY_TO || "").trim();
+
+// Important:
+// GitHub Actions turns missing secrets into empty strings.
+// The old version treated an empty OWNER_EMAIL secret as "disable owner copy."
+// This version only disables the owner copy if OWNER_EMAIL is exactly "disabled" or "none".
+const OWNER_EMAIL_RAW = (process.env.OWNER_EMAIL || "").trim();
+const OWNER_EMAIL = (OWNER_EMAIL_RAW && !["disabled", "none", "false", "off"].includes(OWNER_EMAIL_RAW.toLowerCase()))
+  ? OWNER_EMAIL_RAW
+  : (!OWNER_EMAIL_RAW ? "lynoldmercado@gmail.com" : "");
 
 function etToday() {
   const et = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
@@ -70,19 +78,19 @@ function loadDailyData(dateStr) {
   const briefFile = path.join(ROOT, "data", "member-brief", `${dateStr}.json`);
   if (fs.existsSync(briefFile)) {
     const brief = JSON.parse(fs.readFileSync(briefFile, "utf8"));
-    return { type: "brief", brief };
+    return { type: "brief", brief, file: briefFile };
   }
 
   const todayBrief = path.join(ROOT, "data", "member-brief", "today.json");
   if (dateStr === etToday() && fs.existsSync(todayBrief)) {
     const brief = JSON.parse(fs.readFileSync(todayBrief, "utf8"));
-    return { type: "brief", brief };
+    return { type: "brief", brief, file: todayBrief };
   }
 
   const picksFile = path.join(ROOT, "data", "picks", `${dateStr}.json`);
   if (fs.existsSync(picksFile)) {
     const picks = JSON.parse(fs.readFileSync(picksFile, "utf8"));
-    return { type: "legacy-picks", picks };
+    return { type: "legacy-picks", picks, file: picksFile };
   }
 
   return null;
@@ -309,11 +317,19 @@ async function sendEmail(to, subject, html, text) {
 
   if (!res.ok) {
     const errText = await res.text().catch(() => "");
-    throw new Error(`Resend HTTP ${res.status}: ${errText.slice(0, 200)}`);
+    throw new Error(`Resend HTTP ${res.status}: ${errText.slice(0, 500)}`);
   }
 }
 
 async function main() {
+  console.log(`Email script date: ${DATE}`);
+  console.log(`EMAIL_FROM set: ${EMAIL_FROM ? "yes" : "no"}`);
+  console.log(`EMAIL_REPLY_TO set: ${EMAIL_REPLY_TO ? "yes" : "no"}`);
+  console.log(`OWNER_EMAIL resolved: ${OWNER_EMAIL || "(disabled)"}`);
+  console.log(`RESEND_API_KEY set: ${RESEND_API_KEY ? "yes" : "no"}`);
+  console.log(`NETLIFY_API_TOKEN set: ${NETLIFY_API_TOKEN ? "yes" : "no"}`);
+  console.log(`NETLIFY_SITE_ID set: ${NETLIFY_SITE_ID ? "yes" : "no"}`);
+
   if (!RESEND_API_KEY) {
     console.log("RESEND_API_KEY not set — email step skipped.");
     return;
@@ -325,20 +341,31 @@ async function main() {
     return;
   }
 
+  console.log(`Loaded email data source: ${data.type} (${data.file})`);
+
   const realMembers = await getMemberEmails();
+  console.log(`Member emails found from Netlify: ${realMembers.length}`);
+
   const isPreview = realMembers.length === 0;
   const sendSet = new Set(realMembers);
 
-  if (OWNER_EMAIL && isValidEmail(OWNER_EMAIL)) sendSet.add(OWNER_EMAIL.trim().toLowerCase());
+  if (OWNER_EMAIL && isValidEmail(OWNER_EMAIL)) {
+    sendSet.add(OWNER_EMAIL.trim().toLowerCase());
+    console.log(`Owner copy enabled: ${OWNER_EMAIL}`);
+  } else {
+    console.log("Owner copy not enabled.");
+  }
 
   const emails = [...sendSet];
+  console.log(`Final recipient count: ${emails.length}`);
+
   if (!emails.length) {
-    console.log("No member emails and no OWNER_EMAIL set — nothing to send today.");
+    console.log("No member emails and no OWNER_EMAIL fallback — nothing to send today.");
     return;
   }
 
   if (isPreview) {
-    console.log(`No paid members found — sending Daily Member Brief to owner inbox (${OWNER_EMAIL}) for review.`);
+    console.log(`No paid members found — sending Daily Member Brief owner preview copy.`);
   }
 
   const email = data.type === "brief"
@@ -351,6 +378,7 @@ async function main() {
   for (const address of emails) {
     try {
       await sendEmail(address, email.subject, email.html, email.text);
+      console.log(`Sent email to ${address}`);
       sent++;
     } catch (e) {
       console.error("Failed to email", address, "-", e.message);
