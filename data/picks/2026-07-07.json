@@ -1,6 +1,6 @@
 {
   "date": "2026-07-07",
-  "generated": "2026-07-07T11:42:56.558Z",
+  "generated": "2026-07-07T11:57:41.877Z",
   "picks": [
     {
       "gamePk": 823062,
@@ -11,7 +11,7 @@
         "pick": "Milwaukee Brewers",
         "side": "away",
         "prob": 0.6558,
-        "mktProb": 0.6296,
+        "mktProb": 0.6297,
         "bestAm": -180,
         "valueTag": null,
         "isPass": true,
@@ -52,7 +52,7 @@
         "pick": "Milwaukee Brewers",
         "side": "away",
         "prob": 0.5877,
-        "mktProb": 0.6296,
+        "mktProb": 0.6297,
         "bestAm": -180,
         "valueTag": null,
         "isPass": true,
@@ -134,7 +134,7 @@
         "pick": "Detroit Tigers",
         "side": "home",
         "prob": 0.6688,
-        "mktProb": 0.6227,
+        "mktProb": 0.6229,
         "bestAm": -177,
         "valueTag": "VALUE",
         "isPass": false,
@@ -175,8 +175,8 @@
         "pick": "Pittsburgh Pirates",
         "side": "home",
         "prob": 0.5357,
-        "mktProb": 0.5979,
-        "bestAm": -155,
+        "mktProb": 0.5999,
+        "bestAm": -158,
         "valueTag": null,
         "isPass": true,
         "consensusAgree": 0,
@@ -192,9 +192,9 @@
         "line": 8,
         "projTotal": 8.7,
         "pick": "Over",
-        "edge": 0.0773,
+        "edge": 0.0764,
         "prob": 0.5692,
-        "mktProb": 0.4919,
+        "mktProb": 0.4929,
         "bestAm": -102
       },
       "runLine": {
@@ -233,19 +233,19 @@
         "line": 8,
         "projTotal": 6.8,
         "pick": "Under",
-        "edge": 0.1041,
+        "edge": 0.1038,
         "prob": 0.6142,
-        "mktProb": 0.5101,
+        "mktProb": 0.5104,
         "bestAm": -112
       },
       "runLine": {
         "point": 1.5,
         "projMargin": 1.5,
         "pick": "Miami Marlins",
-        "edge": 0.1989,
+        "edge": 0.1993,
         "prob": 0.8386,
-        "mktProb": 0.6397,
-        "bestAm": -199
+        "mktProb": 0.6393,
+        "bestAm": -198
       }
     },
     {
@@ -257,7 +257,7 @@
         "pick": "Tampa Bay Rays",
         "side": "home",
         "prob": 0.6061,
-        "mktProb": 0.523,
+        "mktProb": 0.5232,
         "bestAm": -117,
         "valueTag": "VALUE",
         "isPass": false,
@@ -283,10 +283,10 @@
         "point": 1.5,
         "projMargin": -0.5,
         "pick": "New York Yankees",
-        "edge": 0.0994,
+        "edge": 0.0976,
         "prob": 0.7452,
-        "mktProb": 0.6458,
-        "bestAm": -196
+        "mktProb": 0.6476,
+        "bestAm": -200
       }
     },
     {
@@ -298,7 +298,7 @@
         "pick": "Washington Nationals",
         "side": "home",
         "prob": 0.7343,
-        "mktProb": 0.5286,
+        "mktProb": 0.5287,
         "bestAm": -118,
         "valueTag": "VALUE",
         "isPass": false,
@@ -306,8 +306,8 @@
         "consensusOppose": 0,
         "tier": "Strong Play",
         "edgeScore": 96,
-        "priceRange": "-118 to -130",
-        "mktProbRange": "52.0% to 53.7%",
+        "priceRange": "-118 to -127",
+        "mktProbRange": "52.0% to 53.3%",
         "why": "Washington Nationals projects ahead mainly on the mound — Andrew Alvarez has the stronger run-prevention number this season against Tatsuya Imai.",
         "risk": "Tatsuya Imai can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
@@ -315,9 +315,9 @@
         "line": 9,
         "projTotal": 11.1,
         "pick": "Over",
-        "edge": 0.1747,
+        "edge": 0.1754,
         "prob": 0.6949,
-        "mktProb": 0.5202,
+        "mktProb": 0.5195,
         "bestAm": -115
       },
       "runLine": {
@@ -339,7 +339,7 @@
         "pick": "New York Mets",
         "side": "home",
         "prob": 0.5721,
-        "mktProb": 0.5803,
+        "mktProb": 0.5807,
         "bestAm": -148,
         "valueTag": null,
         "isPass": true,
@@ -356,19 +356,19 @@
         "line": 8,
         "projTotal": 8.9,
         "pick": "Over",
-        "edge": 0.0681,
+        "edge": 0.0646,
         "prob": 0.5808,
-        "mktProb": 0.5127,
+        "mktProb": 0.5163,
         "bestAm": -114
       },
       "runLine": {
         "point": 1.5,
         "projMargin": 0.1,
         "pick": "Kansas City Royals",
-        "edge": 0.0734,
+        "edge": 0.0741,
         "prob": 0.674,
-        "mktProb": 0.6006,
-        "bestAm": -156
+        "mktProb": 0.5999,
+        "bestAm": -157
       }
     },
     {
@@ -380,7 +380,7 @@
         "pick": "Philadelphia Phillies",
         "side": "away",
         "prob": 0.5146,
-        "mktProb": 0.6033,
+        "mktProb": 0.6042,
         "bestAm": -165,
         "valueTag": null,
         "isPass": true,
@@ -406,9 +406,9 @@
         "point": 1.5,
         "projMargin": 0.1,
         "pick": "Cincinnati Reds",
-        "edge": 0.1913,
+        "edge": 0.1929,
         "prob": 0.7086,
-        "mktProb": 0.5173,
+        "mktProb": 0.5157,
         "bestAm": -113
       }
     },
@@ -421,16 +421,16 @@
         "pick": "Minnesota Twins",
         "side": "home",
         "prob": 0.5604,
-        "mktProb": 0.5198,
+        "mktProb": 0.5181,
         "bestAm": -111,
         "valueTag": "VALUE",
         "isPass": false,
         "consensusAgree": 0,
         "consensusOppose": 0,
         "tier": "Standard Play",
-        "edgeScore": 76,
-        "priceRange": "-111 to -130",
-        "mktProbRange": "51.3% to 53.7%",
+        "edgeScore": 77,
+        "priceRange": "-111 to -127",
+        "mktProbRange": "51.3% to 53.1%",
         "why": "Minnesota Twins grades out ahead on the model's blend of run differential and recent form, plus the home-field bump.",
         "risk": "Joey Cantillo can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
@@ -462,7 +462,7 @@
         "pick": "Boston Red Sox",
         "side": "away",
         "prob": 0.6152,
-        "mktProb": 0.5389,
+        "mktProb": 0.5393,
         "bestAm": -120,
         "valueTag": "VALUE",
         "isPass": false,
@@ -470,8 +470,8 @@
         "consensusOppose": 0,
         "tier": "Strong Play",
         "edgeScore": 96,
-        "priceRange": "-120 to -136",
-        "mktProbRange": "53.2% to 54.8%",
+        "priceRange": "-120 to -137",
+        "mktProbRange": "53.2% to 55.1%",
         "why": "Boston Red Sox projects ahead mainly on the mound — Payton Tolle has the stronger run-prevention number this season against Noah Schultz.",
         "risk": "Noah Schultz can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
@@ -479,18 +479,18 @@
         "line": 8.5,
         "projTotal": 9.8,
         "pick": "Over",
-        "edge": 0.1312,
+        "edge": 0.1287,
         "prob": 0.6178,
-        "mktProb": 0.4865,
-        "bestAm": 102
+        "mktProb": 0.489,
+        "bestAm": -102
       },
       "runLine": {
         "point": -1.5,
         "projMargin": -2.4,
         "pick": "Boston Red Sox",
-        "edge": 0.2058,
+        "edge": 0.2056,
         "prob": 0.6169,
-        "mktProb": 0.4111,
+        "mktProb": 0.4113,
         "bestAm": 138
       }
     },
@@ -503,7 +503,7 @@
         "pick": "Texas Rangers",
         "side": "home",
         "prob": 0.6703,
-        "mktProb": 0.5971,
+        "mktProb": 0.5969,
         "bestAm": -158,
         "valueTag": "VALUE",
         "isPass": false,
@@ -512,7 +512,7 @@
         "tier": "Strong Play",
         "edgeScore": 96,
         "priceRange": "-158 to -167",
-        "mktProbRange": "59.3% to 60.0%",
+        "mktProbRange": "59.1% to 60.0%",
         "why": "Texas Rangers has been the hotter team lately (last 10: 7-3 vs. 3-7), enough to tip a close matchup.",
         "risk": "José Soriano can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
@@ -529,10 +529,10 @@
         "point": 1.5,
         "projMargin": 0.2,
         "pick": "Los Angeles Angels",
-        "edge": 0.0686,
+        "edge": 0.0668,
         "prob": 0.6632,
-        "mktProb": 0.5946,
-        "bestAm": -150
+        "mktProb": 0.5964,
+        "bestAm": -156
       }
     },
     {
@@ -544,16 +544,16 @@
         "pick": "Arizona Diamondbacks",
         "side": "away",
         "prob": 0.5561,
-        "mktProb": 0.4637,
-        "bestAm": 110,
+        "mktProb": 0.4646,
+        "bestAm": 109,
         "valueTag": "VALUE",
         "isPass": false,
         "consensusAgree": 0,
         "consensusOppose": 0,
         "tier": "Strong Play",
         "edgeScore": 96,
-        "priceRange": "+110 to +105",
-        "mktProbRange": "45.6% to 46.9%",
+        "priceRange": "+109 to +104",
+        "mktProbRange": "45.6% to 47.0%",
         "why": "Arizona Diamondbacks has been the hotter team lately (last 10: 4-6 vs. 1-9), enough to tip a close matchup.",
         "risk": "Germán Márquez can outpitch his season line on a given night, and the model doesn't see live injury or lineup news — worth a quick recheck before first pitch."
       },
@@ -602,9 +602,9 @@
         "line": 7.5,
         "projTotal": 8.4,
         "pick": "Over",
-        "edge": 0.0754,
+        "edge": 0.0744,
         "prob": 0.5884,
-        "mktProb": 0.513,
+        "mktProb": 0.5141,
         "bestAm": -114
       },
       "runLine": {
@@ -643,18 +643,18 @@
         "line": 9.5,
         "projTotal": 10.5,
         "pick": "Over",
-        "edge": 0.0854,
+        "edge": 0.0851,
         "prob": 0.5926,
-        "mktProb": 0.5073,
+        "mktProb": 0.5075,
         "bestAm": -110
       },
       "runLine": {
         "point": -1.5,
         "projMargin": 5.1,
         "pick": "Los Angeles Dodgers",
-        "edge": 0.3472,
+        "edge": 0.3478,
         "prob": 0.8829,
-        "mktProb": 0.5357,
+        "mktProb": 0.5351,
         "bestAm": -122
       }
     }
