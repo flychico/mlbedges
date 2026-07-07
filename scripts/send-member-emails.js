@@ -1,24 +1,26 @@
 #!/usr/bin/env node
-/* LyDia — email today's picks to paid members.
-   Usage: node scripts/send-member-emails.js [YYYY-MM-DD] (default: today in US Eastern)
+/*
+  LyDia — email the Daily Member Brief to paid members.
 
-   Reads: data/picks/<date>.json (written by generate-previews.js)
-   Member list: pulled live from Netlify Forms (form name "member-email") using
-   NETLIFY_API_TOKEN + NETLIFY_SITE_ID. Sends via Resend using RESEND_API_KEY.
+  Refactored source:
+  - Prefer data/member-brief/<date>.json from scripts/generate-member-lab.js
+  - Fallback to data/picks/<date>.json only if the member brief file is missing
 
-   Designed to fail soft: if any required secret is missing, or there's nothing to
-   send, it logs why and exits 0 — it should never break the daily site-generation
-   run. The workflow also sets continue-on-error on this step as a second safety net.
+  Member list:
+  - Pulled live from Netlify Forms form name "member-email"
+  - Requires NETLIFY_API_TOKEN + NETLIFY_SITE_ID
 
-   Known limitation (documented, not hidden): the member list trusts whatever the
-   "member-email" Netlify form has collected. There's no server-side check against
-   PayPal that a given submission is an active paying subscriber. Good enough for
-   the founding stretch; if abuse becomes a real problem, the fix is a Netlify
-   Function that verifies the subscription-id against PayPal's API before adding
-   someone to the send list. */
+  Sending:
+  - Uses Resend with RESEND_API_KEY
+  - EMAIL_FROM, EMAIL_REPLY_TO, OWNER_EMAIL are optional overrides
+
+  Safety:
+  - If secrets are missing, or nothing exists to send, the script logs and exits 0.
+*/
 
 const fs = require("fs");
 const path = require("path");
+
 const ROOT = path.join(__dirname, "..");
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -26,104 +28,231 @@ const NETLIFY_API_TOKEN = process.env.NETLIFY_API_TOKEN;
 const NETLIFY_SITE_ID = process.env.NETLIFY_SITE_ID;
 const EMAIL_FROM = process.env.EMAIL_FROM || "LyDia Picks <picks@mlbedges.com>";
 const EMAIL_REPLY_TO = process.env.EMAIL_REPLY_TO || "";
-// Owner oversight address — while there are no real paying members yet, every
-// day's cards route here so the daily send can actually be seen and checked.
-// Once real members exist, this address is still included as a standing copy
-// for monitoring (set OWNER_EMAIL to override or "" to disable).
 const OWNER_EMAIL = process.env.OWNER_EMAIL !== undefined ? process.env.OWNER_EMAIL : "lynoldmercado@gmail.com";
 
 function etToday() {
   const et = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
   return `${et.getFullYear()}-${String(et.getMonth() + 1).padStart(2, "0")}-${String(et.getDate()).padStart(2, "0")}`;
 }
+
 const DATE = process.argv[2] || etToday();
 
 function niceDate(iso) {
   const [y, m, d] = iso.split("-").map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  });
 }
-const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const fmtAm = am => { if (am === null || am === undefined) return ""; am = Math.round(am); return am > 0 ? "+" + am : String(am); };
-const pct = p => p === null || p === undefined ? "" : (p * 100).toFixed(0) + "%";
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;"
+}[c]));
+
+const fmtAm = am => {
+  if (am === null || am === undefined || Number.isNaN(Number(am))) return "—";
+  am = Math.round(Number(am));
+  return am > 0 ? "+" + am : String(am);
+};
+
+const pct = p => p === null || p === undefined || Number.isNaN(Number(p)) ? "—" : (Number(p) * 100).toFixed(1) + "%";
+const edge = e => e === null || e === undefined || Number.isNaN(Number(e)) ? "—" : (Number(e) >= 0 ? "+" : "") + (Number(e) * 100).toFixed(1) + "%";
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const isValidEmail = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || "").trim());
 
-// One compact line per market that actually has a play. No "pass" lines here —
-// games with zero plays are summarized separately, not spelled out one by one.
-function activeLines(p) {
-  const lines = [];
-  if (p.moneyline && p.moneyline.pick && !p.moneyline.isPass) {
-    const tierTxt = p.moneyline.tier ? ` — ${p.moneyline.tier} (edge score ${p.moneyline.edgeScore}/100)` : "";
-    lines.push({
-      main: `Moneyline: ${p.moneyline.pick} (${pct(p.moneyline.prob)}${p.moneyline.bestAm ? `, ${fmtAm(p.moneyline.bestAm)}` : ""})${tierTxt}`,
-      why: p.moneyline.why || null,
-      risk: p.moneyline.risk || null
-    });
+function loadDailyData(dateStr) {
+  const briefFile = path.join(ROOT, "data", "member-brief", `${dateStr}.json`);
+  if (fs.existsSync(briefFile)) {
+    const brief = JSON.parse(fs.readFileSync(briefFile, "utf8"));
+    return { type: "brief", brief };
   }
-  if (p.total && p.total.pick) {
-    lines.push({ main: `Total: ${p.total.pick} ${p.total.line} (model ${p.total.projTotal} runs${p.total.bestAm ? `, ${fmtAm(p.total.bestAm)}` : ""})` });
+
+  const todayBrief = path.join(ROOT, "data", "member-brief", "today.json");
+  if (dateStr === etToday() && fs.existsSync(todayBrief)) {
+    const brief = JSON.parse(fs.readFileSync(todayBrief, "utf8"));
+    return { type: "brief", brief };
   }
-  if (p.runLine && p.runLine.pick) {
-    lines.push({ main: `Run line: ${p.runLine.pick} ${p.runLine.point > 0 ? "+" : ""}${p.runLine.point} (projected margin ${p.runLine.projMargin > 0 ? "+" : ""}${p.runLine.projMargin}${p.runLine.bestAm ? `, ${fmtAm(p.runLine.bestAm)}` : ""})` });
+
+  const picksFile = path.join(ROOT, "data", "picks", `${dateStr}.json`);
+  if (fs.existsSync(picksFile)) {
+    const picks = JSON.parse(fs.readFileSync(picksFile, "utf8"));
+    return { type: "legacy-picks", picks };
   }
-  return lines;
+
+  return null;
 }
 
-function buildEmail(dateStr, picks, isPreview) {
-  const nice = niceDate(dateStr);
-  const withPlay = [], noPlay = [];
-  for (const p of picks) {
-    const lines = activeLines(p);
-    if (lines.length) withPlay.push({ p, lines }); else noPlay.push(p);
-  }
-  const playCount = withPlay.reduce((n, g) => n + g.lines.length, 0);
+function lineForGame(g) {
+  const market = g.market || {};
+  const pitcher = g.pitcher_edge || {};
+  const bullpen = g.bullpen || {};
 
-  const subjectBase = playCount
-    ? `LyDia Picks — ${nice} (${playCount} play${playCount > 1 ? "s" : ""})`
-    : `LyDia — no plays today (${nice})`;
-  const subject = isPreview ? `[Preview — no paid members yet] ${subjectBase}` : subjectBase;
+  const statusLabel = g.status === "official_pick" ? "Official Pick"
+    : g.status === "watchlist" ? "Watchlist"
+    : "Pass";
+
+  return {
+    game: g.game || `${g.away || ""} @ ${g.home || ""}`,
+    status: statusLabel,
+    pick: g.pick_team || (g.moneyline && g.moneyline.pick) || "—",
+    labScore: g.lab_score ?? g.labScore ?? (g.moneyline && g.moneyline.edgeScore) ?? "—",
+    modelProb: g.model_probability ?? (g.moneyline && g.moneyline.prob) ?? null,
+    marketProb: market.no_vig_probability ?? (g.moneyline && g.moneyline.mktProb) ?? null,
+    price: market.best_price ?? (g.moneyline && g.moneyline.bestAm) ?? null,
+    rawEdge: g.edge ?? (g.moneyline && g.moneyline.rawEdge) ?? null,
+    pitcherEdge: pitcher.team || (g.pitcherEdge && g.pitcherEdge.team) || "—",
+    bullpenRead: bullpen.label || "—",
+    read: g.read || (g.moneyline && g.moneyline.why) || "",
+    risk: (g.moneyline && g.moneyline.risk) || "",
+    passReason: g.pass_reason || ""
+  };
+}
+
+function buildFromBrief(dateStr, brief, isPreview) {
+  const nice = niceDate(dateStr);
+  const games = Array.isArray(brief.games) ? brief.games : [];
+  const official = games.filter(g => g.status === "official_pick");
+  const watchlist = games.filter(g => g.status === "watchlist");
+  const passes = games.filter(g => g.status === "pass");
+
+  const subjectBase = official.length
+    ? `LyDia Daily Member Brief — ${nice} (${official.length} official pick${official.length > 1 ? "s" : ""})`
+    : `LyDia Daily Member Brief — ${nice} (no official picks)`;
+
+  const subject = isPreview ? `[Preview — owner copy] ${subjectBase}` : subjectBase;
+
   const previewBanner = isPreview
     ? `<div style="background:#fff3cd;color:#664d03;font-size:12px;padding:8px 12px;border-radius:6px;margin-bottom:14px">
-        Preview send — there are no paid members yet, so this is going to the owner inbox only, exactly as a real member would receive it.
+        Preview send — no paid members found yet, so this is going to the owner inbox only.
       </div>`
     : "";
-  const previewBannerText = isPreview ? "PREVIEW SEND — no paid members yet, owner-only copy.\n\n" : "";
 
-  const rowsHtml = withPlay.map(({ p, lines }) => {
-    const body = lines.map(l => `<div style="margin:3px 0">${esc(l.main)}</div>` +
-      (l.why ? `<div style="font-size:12.5px;color:#555;margin:2px 0"><b>Why:</b> ${esc(l.why)}</div>` : "") +
-      (l.risk ? `<div style="font-size:12.5px;color:#555;margin:2px 0 0"><b>Risk:</b> ${esc(l.risk)}</div>` : "")
-    ).join("");
+  const officialHtml = official.length
+    ? official.map(g => {
+        const x = lineForGame(g);
+        return `<div style="border-left:3px solid #d6508e;padding:10px 0 10px 12px;margin:14px 0">
+          <div style="font-weight:800">${esc(x.game)}</div>
+          <div style="margin-top:4px"><b>${esc(x.status)}:</b> ${esc(x.pick)} ML · Lab Score ${esc(x.labScore)}/100 · ${fmtAm(x.price)}</div>
+          <div style="font-size:13px;color:#555;margin-top:4px">
+            Model ${pct(x.modelProb)} · Market ${pct(x.marketProb)} · Edge ${edge(x.rawEdge)}
+          </div>
+          <div style="font-size:13px;color:#555;margin-top:4px">
+            Pitcher edge: ${esc(x.pitcherEdge)} · Bullpen: ${esc(x.bullpenRead)}
+          </div>
+          ${x.read ? `<div style="font-size:13px;color:#555;margin-top:5px"><b>Read:</b> ${esc(x.read)}</div>` : ""}
+          ${x.risk ? `<div style="font-size:13px;color:#555;margin-top:3px"><b>Risk:</b> ${esc(x.risk)}</div>` : ""}
+        </div>`;
+      }).join("")
+    : `<p style="color:#888;font-style:italic">Nothing cleared the full official-pick threshold today.</p>`;
+
+  const watchHtml = watchlist.length
+    ? `<p style="font-size:13px;color:#555"><b>Watchlist:</b> ${watchlist.map(g => esc(`${g.game} (${g.pick_team || "—"}, Lab ${g.lab_score ?? "—"})`)).join(" · ")}</p>`
+    : "";
+
+  const passHtml = passes.length
+    ? `<p style="font-size:12.5px;color:#888"><b>Passes / no clear setup:</b> ${passes.length} game${passes.length === 1 ? "" : "s"}. Full pass reasons are on the member brief page.</p>`
+    : "";
+
+  const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:620px;margin:0 auto;color:#1a1a1a">
+    ${previewBanner}
+    <h2 style="margin-bottom:4px;color:#d6508e">LyDia Daily Member Brief — ${esc(nice)}</h2>
+    <p style="color:#666;font-size:14px">${esc(brief.summary || `${official.length} official picks, ${watchlist.length} watchlist games, ${passes.length} passes.`)}</p>
+    ${officialHtml}
+    ${watchHtml}
+    ${passHtml}
+    <p style="font-size:13px;color:#888;margin-top:20px">
+      Full member brief: <a href="https://mlbedges.com/member-brief/" style="color:#4d9fdc">mlbedges.com/member-brief/</a><br>
+      Public preview: <a href="https://mlbedges.com/previews/${dateStr}.html" style="color:#4d9fdc">mlbedges.com/previews/${dateStr}.html</a><br>
+      Market tracker: <a href="https://mlbedges.com/tools/market/" style="color:#4d9fdc">mlbedges.com/tools/market/</a><br>
+      Results history: <a href="https://mlbedges.com/results/" style="color:#4d9fdc">mlbedges.com/results/</a>
+    </p>
+    <p style="font-size:12px;color:#aaa;margin-top:24px;border-top:1px solid #eee;padding-top:10px">
+      LyDia — analysis and education only, not betting advice. No win rate is guaranteed. Please bet responsibly;
+      if gambling stops being fun, call 1-800-GAMBLER. Manage your subscription from your PayPal account.
+      Questions? Just reply to this email.
+    </p>
+  </div>`;
+
+  const officialText = official.length
+    ? official.map(g => {
+        const x = lineForGame(g);
+        return `${x.game}
+  ${x.status}: ${x.pick} ML · Lab Score ${x.labScore}/100 · ${fmtAm(x.price)}
+  Model ${pct(x.modelProb)} · Market ${pct(x.marketProb)} · Edge ${edge(x.rawEdge)}
+  Pitcher edge: ${x.pitcherEdge} · Bullpen: ${x.bullpenRead}
+  Read: ${x.read || "—"}
+  Risk: ${x.risk || "—"}`;
+      }).join("\n\n")
+    : "Nothing cleared the full official-pick threshold today.";
+
+  const watchText = watchlist.length
+    ? `\n\nWatchlist: ${watchlist.map(g => `${g.game} (${g.pick_team || "—"}, Lab ${g.lab_score ?? "—"})`).join(" · ")}`
+    : "";
+
+  const text = `${isPreview ? "PREVIEW SEND — owner copy.\n\n" : ""}LyDia Daily Member Brief — ${nice}
+
+${brief.summary || ""}
+
+${officialText}${watchText}
+
+Passes / no clear setup: ${passes.length}
+
+Full member brief: https://mlbedges.com/member-brief/
+Public preview: https://mlbedges.com/previews/${dateStr}.html
+Market tracker: https://mlbedges.com/tools/market/
+Results history: https://mlbedges.com/results/
+
+LyDia — analysis and education only, not betting advice. 1-800-GAMBLER.`;
+
+  return { subject, html, text };
+}
+
+function buildFromLegacyPicks(dateStr, picksFile, isPreview) {
+  const nice = niceDate(dateStr);
+  const picks = Array.isArray(picksFile.picks) ? picksFile.picks : [];
+  const active = picks.filter(p => p.moneyline && p.moneyline.pick && !p.moneyline.isPass);
+
+  const subjectBase = active.length
+    ? `LyDia Picks — ${nice} (${active.length} official pick${active.length > 1 ? "s" : ""})`
+    : `LyDia Picks — ${nice} (no official picks)`;
+
+  const subject = isPreview ? `[Preview — owner copy] ${subjectBase}` : subjectBase;
+
+  const rowsHtml = active.map(p => {
+    const ml = p.moneyline || {};
     return `<div style="border-left:3px solid #d6508e;padding:8px 0 8px 12px;margin:12px 0">
       <div style="font-weight:700">${esc(p.away)} @ ${esc(p.home)}</div>
-      ${body}
+      <div>Moneyline: ${esc(ml.pick)} (${pct(ml.prob)}, ${fmtAm(ml.bestAm)}) · ${esc(ml.tier || "Official pick")}</div>
+      ${ml.why ? `<div style="font-size:12.5px;color:#555;margin:2px 0"><b>Why:</b> ${esc(ml.why)}</div>` : ""}
+      ${ml.risk ? `<div style="font-size:12.5px;color:#555;margin:2px 0 0"><b>Risk:</b> ${esc(ml.risk)}</div>` : ""}
     </div>`;
   }).join("");
 
-  const noPlaySummary = noPlay.length
-    ? `<p style="font-size:12.5px;color:#888;margin-top:16px">No edge, no play (${noPlay.length}): ${noPlay.map(p => esc(`${p.away} @ ${p.home}`)).join(" · ")}</p>`
-    : "";
-
-  const rowsText = withPlay.map(({ p, lines }) =>
-    `${p.away} @ ${p.home}\n` + lines.map(l => "  " + l.main + (l.why ? `\n    Why: ${l.why}` : "") + (l.risk ? `\n    Risk: ${l.risk}` : "")).join("\n")
-  ).join("\n\n");
-  const noPlayText = noPlay.length ? `\n\nNo edge, no play: ${noPlay.map(p => `${p.away} @ ${p.home}`).join(" · ")}` : "";
-
   const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a">
-    ${previewBanner}
+    ${isPreview ? `<div style="background:#fff3cd;color:#664d03;font-size:12px;padding:8px 12px;border-radius:6px;margin-bottom:14px">Preview send — owner copy.</div>` : ""}
     <h2 style="margin-bottom:4px;color:#d6508e">LyDia Picks — ${esc(nice)}</h2>
-    <p style="color:#666;font-size:14px">${playCount ? `${playCount} play${playCount > 1 ? "s" : ""} on today's ${picks.length}-game slate.` : `No edge anywhere on today's ${picks.length}-game slate — the model is passing across the board.`}</p>
+    <p style="color:#666;font-size:14px">${active.length ? `${active.length} official pick${active.length > 1 ? "s" : ""}.` : `No official picks today.`}</p>
     ${rowsHtml || `<p style="color:#888;font-style:italic">Nothing cleared the bar today.</p>`}
-    ${noPlaySummary}
-    <p style="font-size:13px;color:#888;margin-top:20px">Full reasoning for every game: <a href="https://mlbedges.com/previews/${dateStr}" style="color:#4d9fdc">mlbedges.com/previews/${dateStr}</a><br>
-    Every pick graded publicly: <a href="https://mlbedges.com/results/" style="color:#4d9fdc">mlbedges.com/results/</a></p>
+    <p style="font-size:13px;color:#888;margin-top:20px">
+      Full reasoning: <a href="https://mlbedges.com/previews/${dateStr}.html" style="color:#4d9fdc">mlbedges.com/previews/${dateStr}.html</a><br>
+      Results history: <a href="https://mlbedges.com/results/" style="color:#4d9fdc">mlbedges.com/results/</a>
+    </p>
     <p style="font-size:12px;color:#aaa;margin-top:24px;border-top:1px solid #eee;padding-top:10px">
-    LyDia — analysis and education only, not betting advice. No win rate is guaranteed. Please bet responsibly;
-    if gambling stops being fun, call 1-800-GAMBLER. Manage your subscription from your PayPal account.
-    Questions? Just reply to this email.</p>
+      LyDia — analysis and education only, not betting advice. 1-800-GAMBLER.
+    </p>
   </div>`;
 
-  const text = `${previewBannerText}LyDia Picks — ${nice}\n\n${rowsText || "Nothing cleared the bar today."}${noPlayText}\n\nFull reasoning: https://mlbedges.com/previews/${dateStr}\nResults history: https://mlbedges.com/results/\n\nLyDia — analysis and education only, not betting advice. 1-800-GAMBLER.`;
+  const text = `${isPreview ? "PREVIEW SEND — owner copy.\n\n" : ""}LyDia Picks — ${nice}\n\n` +
+    (active.length
+      ? active.map(p => `${p.away} @ ${p.home}\n  Moneyline: ${p.moneyline.pick} (${pct(p.moneyline.prob)}, ${fmtAm(p.moneyline.bestAm)})`).join("\n\n")
+      : "Nothing cleared the bar today.") +
+    `\n\nFull reasoning: https://mlbedges.com/previews/${dateStr}.html\nResults history: https://mlbedges.com/results/`;
 
   return { subject, html, text };
 }
@@ -133,33 +262,51 @@ async function getMemberEmails() {
     console.log("NETLIFY_API_TOKEN / NETLIFY_SITE_ID not set — skipping member lookup.");
     return [];
   }
+
   const headers = { Authorization: `Bearer ${NETLIFY_API_TOKEN}` };
   const formsRes = await fetch(`https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}/forms`, { headers });
-  if (!formsRes.ok) { console.warn("Netlify forms lookup failed: HTTP", formsRes.status); return []; }
+  if (!formsRes.ok) {
+    console.warn("Netlify forms lookup failed: HTTP", formsRes.status);
+    return [];
+  }
+
   const forms = await formsRes.json();
   const form = forms.find(f => f.name === "member-email");
-  if (!form) { console.log('No "member-email" form found yet on Netlify (no signups collected so far).'); return []; }
+  if (!form) {
+    console.log('No "member-email" form found yet on Netlify.');
+    return [];
+  }
 
   const subsRes = await fetch(`https://api.netlify.com/api/v1/forms/${form.id}/submissions`, { headers });
-  if (!subsRes.ok) { console.warn("Netlify submissions lookup failed: HTTP", subsRes.status); return []; }
-  const subs = await subsRes.json();
+  if (!subsRes.ok) {
+    console.warn("Netlify submissions lookup failed: HTTP", subsRes.status);
+    return [];
+  }
 
+  const subs = await subsRes.json();
   const emails = new Set();
+
   for (const s of subs) {
     const email = (s.data && (s.data.email || s.data.Email)) || "";
     if (isValidEmail(email)) emails.add(email.trim().toLowerCase());
   }
+
   return [...emails];
 }
 
 async function sendEmail(to, subject, html, text) {
   const body = { from: EMAIL_FROM, to: [to], subject, html, text };
   if (EMAIL_REPLY_TO) body.reply_to = EMAIL_REPLY_TO;
+
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify(body)
   });
+
   if (!res.ok) {
     const errText = await res.text().catch(() => "");
     throw new Error(`Resend HTTP ${res.status}: ${errText.slice(0, 200)}`);
@@ -168,36 +315,54 @@ async function sendEmail(to, subject, html, text) {
 
 async function main() {
   if (!RESEND_API_KEY) {
-    console.log("RESEND_API_KEY not set — email step skipped (site generation is unaffected).");
+    console.log("RESEND_API_KEY not set — email step skipped.");
     return;
   }
 
-  const picksFile = path.join(ROOT, "data", "picks", `${DATE}.json`);
-  if (!fs.existsSync(picksFile)) { console.log(`No picks file for ${DATE} — nothing to email.`); return; }
-  const { picks } = JSON.parse(fs.readFileSync(picksFile, "utf8"));
-  if (!picks || !picks.length) { console.log(`No games in ${DATE} picks file — nothing to email.`); return; }
+  const data = loadDailyData(DATE);
+  if (!data) {
+    console.log(`No member brief or picks file for ${DATE} — nothing to email.`);
+    return;
+  }
 
   const realMembers = await getMemberEmails();
   const isPreview = realMembers.length === 0;
   const sendSet = new Set(realMembers);
-  if (OWNER_EMAIL && isValidEmail(OWNER_EMAIL)) sendSet.add(OWNER_EMAIL.trim().toLowerCase());
-  const emails = [...sendSet];
-  if (!emails.length) { console.log("No member emails and no OWNER_EMAIL set — nothing to send today."); return; }
-  if (isPreview) console.log(`No paid members yet — sending today's cards to the owner inbox (${OWNER_EMAIL}) for review.`);
 
-  const { subject, html, text } = buildEmail(DATE, picks, isPreview);
-  let sent = 0, failed = 0;
-  for (const email of emails) {
+  if (OWNER_EMAIL && isValidEmail(OWNER_EMAIL)) sendSet.add(OWNER_EMAIL.trim().toLowerCase());
+
+  const emails = [...sendSet];
+  if (!emails.length) {
+    console.log("No member emails and no OWNER_EMAIL set — nothing to send today.");
+    return;
+  }
+
+  if (isPreview) {
+    console.log(`No paid members found — sending Daily Member Brief to owner inbox (${OWNER_EMAIL}) for review.`);
+  }
+
+  const email = data.type === "brief"
+    ? buildFromBrief(DATE, data.brief, isPreview)
+    : buildFromLegacyPicks(DATE, data.picks, isPreview);
+
+  let sent = 0;
+  let failed = 0;
+
+  for (const address of emails) {
     try {
-      await sendEmail(email, subject, html, text);
+      await sendEmail(address, email.subject, email.html, email.text);
       sent++;
     } catch (e) {
-      console.error("Failed to email", email, "-", e.message);
+      console.error("Failed to email", address, "-", e.message);
       failed++;
     }
-    await sleep(600); // gentle pacing against ESP rate limits
+    await sleep(600);
   }
-  console.log(`Emailed ${sent} member(s)${failed ? `, ${failed} failure(s)` : ""} for ${DATE}.`);
+
+  console.log(`Emailed ${sent} recipient(s)${failed ? `, ${failed} failure(s)` : ""} for ${DATE}. Source: ${data.type}.`);
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch(e => {
+  console.error(e);
+  process.exit(1);
+});
