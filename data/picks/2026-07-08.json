@@ -1,7 +1,338 @@
 {
   "date": "2026-07-08",
-  "generated": "2026-07-08T04:39:08.041Z",
+  "generated": "2026-07-08T04:47:22.056Z",
   "source_of_truth": "scripts/generate-member-lab.js",
   "note": "Official picks are created only after pitcher matchup, bullpen fatigue, market pricing, and Lab Score checks.",
-  "picks": []
+  "picks": [
+    {
+      "gamePk": 824253,
+      "away": "Athletics",
+      "home": "Detroit Tigers",
+      "time": "2026-07-08T22:40:00Z",
+      "labScore": 90,
+      "status": "official_pick",
+      "pitcherEdge": {
+        "team": "Detroit Tigers",
+        "gap": 27,
+        "conflict": false,
+        "away_score": 50,
+        "home_score": 77,
+        "away_pitcher": "Jeffrey Springs",
+        "home_pitcher": "Troy Melton",
+        "away_era": 5.79,
+        "home_era": 2.05,
+        "away_whip": 1.38,
+        "home_whip": 0.8
+      },
+      "bullpen": {
+        "pick_team": {
+          "score": 80,
+          "label": "High risk",
+          "last_game_bp_ip": 4,
+          "last3_bp_ip": 6.3,
+          "last_game_relievers": 3,
+          "back_to_back_arms": 0
+        },
+        "opponent": {
+          "score": 90,
+          "label": "High risk",
+          "last_game_bp_ip": 4,
+          "last3_bp_ip": 10,
+          "last_game_relievers": 2,
+          "back_to_back_arms": 0
+        },
+        "label": "Neutral",
+        "major_caution": false
+      },
+      "moneyline": {
+        "pick": "Detroit Tigers",
+        "side": "home",
+        "prob": 0.827,
+        "mktProb": 0.5907,
+        "bestAm": -152,
+        "valueTag": "STRONG SETUP",
+        "isPass": false,
+        "tier": "Strong Setup",
+        "edgeScore": 90,
+        "rawEdge": 0.2363,
+        "why": "Detroit Tigers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 90.",
+        "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+      }
+    },
+    {
+      "gamePk": 822957,
+      "away": "New York Yankees",
+      "home": "Tampa Bay Rays",
+      "time": "2026-07-08T22:40:00Z",
+      "labScore": 73,
+      "status": "official_pick",
+      "pitcherEdge": {
+        "team": "Tampa Bay Rays",
+        "gap": 8,
+        "conflict": false,
+        "away_score": 64,
+        "home_score": 72,
+        "away_pitcher": "Gerrit Cole",
+        "home_pitcher": "Shane McClanahan",
+        "away_era": 4.01,
+        "home_era": 3.05,
+        "away_whip": 1.2,
+        "home_whip": 1.17
+      },
+      "bullpen": {
+        "pick_team": {
+          "score": 97,
+          "label": "High risk",
+          "last_game_bp_ip": 3.7,
+          "last3_bp_ip": 10,
+          "last_game_relievers": 4,
+          "back_to_back_arms": 0
+        },
+        "opponent": {
+          "score": 95,
+          "label": "High risk",
+          "last_game_bp_ip": 4,
+          "last3_bp_ip": 10,
+          "last_game_relievers": 3,
+          "back_to_back_arms": 0
+        },
+        "label": "Neutral",
+        "major_caution": false
+      },
+      "moneyline": {
+        "pick": "Tampa Bay Rays",
+        "side": "home",
+        "prob": 0.6675,
+        "mktProb": 0.5373,
+        "bestAm": -123,
+        "valueTag": "QUALIFIED SETUP",
+        "isPass": false,
+        "tier": "Qualified Setup",
+        "edgeScore": 73,
+        "rawEdge": 0.1302,
+        "why": "Tampa Bay Rays cleared the model, market, pitcher, and bullpen checks with a Lab Score of 73.",
+        "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+      }
+    },
+    {
+      "gamePk": 822710,
+      "away": "Houston Astros",
+      "home": "Washington Nationals",
+      "time": "2026-07-08T22:45:00Z",
+      "labScore": 73,
+      "status": "official_pick",
+      "pitcherEdge": {
+        "team": "Washington Nationals",
+        "gap": 13,
+        "conflict": false,
+        "away_score": 65,
+        "home_score": 78,
+        "away_pitcher": "Spencer Arrighetti",
+        "home_pitcher": "Foster Griffin",
+        "away_era": 3.81,
+        "home_era": 2.87,
+        "away_whip": 1.23,
+        "home_whip": 1.04
+      },
+      "bullpen": {
+        "pick_team": {
+          "score": 100,
+          "label": "High risk",
+          "last_game_bp_ip": 3.3,
+          "last3_bp_ip": 13,
+          "last_game_relievers": 4,
+          "back_to_back_arms": 0
+        },
+        "opponent": {
+          "score": 100,
+          "label": "High risk",
+          "last_game_bp_ip": 5.3,
+          "last3_bp_ip": 12.3,
+          "last_game_relievers": 6,
+          "back_to_back_arms": 1
+        },
+        "label": "Neutral",
+        "major_caution": false
+      },
+      "moneyline": {
+        "pick": "Washington Nationals",
+        "side": "home",
+        "prob": 0.6214,
+        "mktProb": 0.5562,
+        "bestAm": -134,
+        "valueTag": "QUALIFIED SETUP",
+        "isPass": false,
+        "tier": "Qualified Setup",
+        "edgeScore": 73,
+        "rawEdge": 0.0652,
+        "why": "Washington Nationals cleared the model, market, pitcher, and bullpen checks with a Lab Score of 73.",
+        "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+      }
+    },
+    {
+      "gamePk": 823032,
+      "away": "Milwaukee Brewers",
+      "home": "St. Louis Cardinals",
+      "time": "2026-07-08T23:45:00Z",
+      "labScore": 73,
+      "status": "official_pick",
+      "pitcherEdge": {
+        "team": "Milwaukee Brewers",
+        "gap": 6,
+        "conflict": false,
+        "away_score": 79,
+        "home_score": 73,
+        "away_pitcher": "Kyle Harrison",
+        "home_pitcher": "Michael McGreevy",
+        "away_era": 2.82,
+        "home_era": 3.12,
+        "away_whip": 1.08,
+        "home_whip": 1.11
+      },
+      "bullpen": {
+        "pick_team": {
+          "score": 87,
+          "label": "High risk",
+          "last_game_bp_ip": 2,
+          "last3_bp_ip": 11.3,
+          "last_game_relievers": 2,
+          "back_to_back_arms": 1
+        },
+        "opponent": {
+          "score": 100,
+          "label": "High risk",
+          "last_game_bp_ip": 8,
+          "last3_bp_ip": 19.3,
+          "last_game_relievers": 4,
+          "back_to_back_arms": 4
+        },
+        "label": "Neutral",
+        "major_caution": false
+      },
+      "moneyline": {
+        "pick": "Milwaukee Brewers",
+        "side": "away",
+        "prob": 0.6662,
+        "mktProb": 0.5532,
+        "bestAm": -132,
+        "valueTag": "QUALIFIED SETUP",
+        "isPass": false,
+        "tier": "Qualified Setup",
+        "edgeScore": 73,
+        "rawEdge": 0.113,
+        "why": "Milwaukee Brewers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 73.",
+        "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+      }
+    },
+    {
+      "gamePk": 823848,
+      "away": "Seattle Mariners",
+      "home": "Miami Marlins",
+      "time": "2026-07-08T22:40:00Z",
+      "labScore": 68,
+      "status": "official_pick",
+      "pitcherEdge": {
+        "team": "Seattle Mariners",
+        "gap": 4,
+        "conflict": false,
+        "away_score": 65,
+        "home_score": 61,
+        "away_pitcher": "George Kirby",
+        "home_pitcher": "Tyler Phillips",
+        "away_era": 3.81,
+        "home_era": 3.52,
+        "away_whip": 1.32,
+        "home_whip": 1.38
+      },
+      "bullpen": {
+        "pick_team": {
+          "score": 100,
+          "label": "High risk",
+          "last_game_bp_ip": 5,
+          "last3_bp_ip": 7,
+          "last_game_relievers": 5,
+          "back_to_back_arms": 0
+        },
+        "opponent": {
+          "score": 94,
+          "label": "High risk",
+          "last_game_bp_ip": 4.3,
+          "last3_bp_ip": 6.3,
+          "last_game_relievers": 5,
+          "back_to_back_arms": 0
+        },
+        "label": "Neutral",
+        "major_caution": false
+      },
+      "moneyline": {
+        "pick": "Miami Marlins",
+        "side": "home",
+        "prob": 0.5757,
+        "mktProb": 0.4535,
+        "bestAm": 118,
+        "valueTag": "QUALIFIED SETUP",
+        "isPass": false,
+        "tier": "Qualified Setup",
+        "edgeScore": 68,
+        "rawEdge": 0.1222,
+        "why": "Miami Marlins cleared the model, market, pitcher, and bullpen checks with a Lab Score of 68.",
+        "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+      }
+    },
+    {
+      "gamePk": 824578,
+      "away": "Boston Red Sox",
+      "home": "Chicago White Sox",
+      "time": "2026-07-08T23:40:00Z",
+      "labScore": 63,
+      "status": "official_pick",
+      "pitcherEdge": {
+        "team": "No clear SP edge",
+        "gap": 3,
+        "conflict": false,
+        "away_score": 74,
+        "home_score": 71,
+        "away_pitcher": "Jake Bennett",
+        "home_pitcher": "Davis Martin",
+        "away_era": 3.1,
+        "home_era": 3.08,
+        "away_whip": 0.98,
+        "home_whip": 1.26
+      },
+      "bullpen": {
+        "pick_team": {
+          "score": 87,
+          "label": "High risk",
+          "last_game_bp_ip": 3,
+          "last3_bp_ip": 9.3,
+          "last_game_relievers": 4,
+          "back_to_back_arms": 0
+        },
+        "opponent": {
+          "score": 100,
+          "label": "High risk",
+          "last_game_bp_ip": 4,
+          "last3_bp_ip": 12.3,
+          "last_game_relievers": 4,
+          "back_to_back_arms": 0
+        },
+        "label": "Neutral",
+        "major_caution": false
+      },
+      "moneyline": {
+        "pick": "Boston Red Sox",
+        "side": "away",
+        "prob": 0.5307,
+        "mktProb": 0.4706,
+        "bestAm": 108,
+        "valueTag": "QUALIFIED SETUP",
+        "isPass": false,
+        "tier": "Qualified Setup",
+        "edgeScore": 63,
+        "rawEdge": 0.0601,
+        "why": "Boston Red Sox cleared the model, market, pitcher, and bullpen checks with a Lab Score of 63.",
+        "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+      }
+    }
+  ]
 }

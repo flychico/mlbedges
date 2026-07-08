@@ -380,9 +380,9 @@
     "2026-07-07": {
       "date": "2026-07-07",
       "wins": 4,
-      "losses": 2,
-      "ungraded": 1,
-      "units": 1.33,
+      "losses": 3,
+      "ungraded": 0,
+      "units": 0.33,
       "picks": [
         {
           "gamePk": 823847,
@@ -618,7 +618,11 @@
             "why": "Los Angeles Dodgers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
             "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
           },
-          "result": "NG"
+          "mlResult": "L",
+          "totResult": "NG",
+          "rlResult": "NG",
+          "finalAway": 4,
+          "finalHome": 3
         },
         {
           "gamePk": 824254,
