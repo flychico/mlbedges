@@ -376,6 +376,431 @@
           "finalHome": 8
         }
       ]
+    },
+    "2026-07-07": {
+      "date": "2026-07-07",
+      "wins": 4,
+      "losses": 2,
+      "ungraded": 1,
+      "units": 1.33,
+      "picks": [
+        {
+          "gamePk": 823847,
+          "away": "Seattle Mariners",
+          "home": "Miami Marlins",
+          "time": "2026-07-07T22:40:00Z",
+          "labScore": 88,
+          "status": "official_pick",
+          "pitcherEdge": {
+            "team": "Miami Marlins",
+            "gap": 29,
+            "conflict": false,
+            "away_score": 50,
+            "home_score": 79,
+            "away_pitcher": "TBD",
+            "home_pitcher": "Max Meyer",
+            "away_era": null,
+            "home_era": 2.53,
+            "away_whip": null,
+            "home_whip": 1.11
+          },
+          "bullpen": {
+            "pick_team": {
+              "score": 47,
+              "label": "Normal",
+              "last_game_bp_ip": 2,
+              "last3_bp_ip": 3,
+              "last_game_relievers": 3,
+              "back_to_back_arms": 0
+            },
+            "opponent": {
+              "score": 45,
+              "label": "Normal",
+              "last_game_bp_ip": 2,
+              "last3_bp_ip": 3.7,
+              "last_game_relievers": 2,
+              "back_to_back_arms": 0
+            },
+            "label": "Neutral",
+            "major_caution": false
+          },
+          "moneyline": {
+            "pick": "Miami Marlins",
+            "side": "home",
+            "prob": 0.6293,
+            "mktProb": 0.5306,
+            "bestAm": -119,
+            "valueTag": "STRONG SETUP",
+            "isPass": false,
+            "tier": "Strong Setup",
+            "edgeScore": 88,
+            "rawEdge": 0.0987,
+            "why": "Miami Marlins cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+            "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+          },
+          "mlResult": "W",
+          "totResult": "NG",
+          "rlResult": "NG",
+          "finalAway": 5,
+          "finalHome": 6
+        },
+        {
+          "gamePk": 822713,
+          "away": "Houston Astros",
+          "home": "Washington Nationals",
+          "time": "2026-07-07T22:45:00Z",
+          "labScore": 88,
+          "status": "official_pick",
+          "pitcherEdge": {
+            "team": "Washington Nationals",
+            "gap": 23,
+            "conflict": false,
+            "away_score": 43,
+            "home_score": 66,
+            "away_pitcher": "Tatsuya Imai",
+            "home_pitcher": "Andrew Alvarez",
+            "away_era": 6.14,
+            "home_era": 3.05,
+            "away_whip": 1.47,
+            "home_whip": 1.38
+          },
+          "bullpen": {
+            "pick_team": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 3,
+              "last3_bp_ip": 17.7,
+              "last_game_relievers": 2,
+              "back_to_back_arms": 0
+            },
+            "opponent": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 3.7,
+              "last3_bp_ip": 12,
+              "last_game_relievers": 3,
+              "back_to_back_arms": 2
+            },
+            "label": "Neutral",
+            "major_caution": false
+          },
+          "moneyline": {
+            "pick": "Washington Nationals",
+            "side": "home",
+            "prob": 0.7343,
+            "mktProb": 0.5529,
+            "bestAm": -130,
+            "valueTag": "STRONG SETUP",
+            "isPass": false,
+            "tier": "Strong Setup",
+            "edgeScore": 88,
+            "rawEdge": 0.1815,
+            "why": "Washington Nationals cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+            "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+          },
+          "mlResult": "L",
+          "totResult": "NG",
+          "rlResult": "NG",
+          "finalAway": 6,
+          "finalHome": 3
+        },
+        {
+          "gamePk": 824579,
+          "away": "Boston Red Sox",
+          "home": "Chicago White Sox",
+          "time": "2026-07-07T23:40:00Z",
+          "labScore": 88,
+          "status": "official_pick",
+          "pitcherEdge": {
+            "team": "Boston Red Sox",
+            "gap": 26,
+            "conflict": false,
+            "away_score": 71,
+            "home_score": 45,
+            "away_pitcher": "Payton Tolle",
+            "home_pitcher": "Noah Schultz",
+            "away_era": 3.39,
+            "home_era": 5.86,
+            "away_whip": 1.12,
+            "home_whip": 1.35
+          },
+          "bullpen": {
+            "pick_team": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 6.3,
+              "last3_bp_ip": 9.3,
+              "last_game_relievers": 5,
+              "back_to_back_arms": 1
+            },
+            "opponent": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 8.3,
+              "last3_bp_ip": 11.3,
+              "last_game_relievers": 3,
+              "back_to_back_arms": 0
+            },
+            "label": "Neutral",
+            "major_caution": false
+          },
+          "moneyline": {
+            "pick": "Boston Red Sox",
+            "side": "away",
+            "prob": 0.6152,
+            "mktProb": 0.4655,
+            "bestAm": 113,
+            "valueTag": "STRONG SETUP",
+            "isPass": false,
+            "tier": "Strong Setup",
+            "edgeScore": 88,
+            "rawEdge": 0.1497,
+            "why": "Boston Red Sox cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+            "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+          },
+          "mlResult": "W",
+          "totResult": "NG",
+          "rlResult": "NG",
+          "finalAway": 8,
+          "finalHome": 1
+        },
+        {
+          "gamePk": 823929,
+          "away": "Colorado Rockies",
+          "home": "Los Angeles Dodgers",
+          "time": "2026-07-08T02:10:00Z",
+          "labScore": 88,
+          "status": "official_pick",
+          "pitcherEdge": {
+            "team": "Los Angeles Dodgers",
+            "gap": 46,
+            "conflict": false,
+            "away_score": 32,
+            "home_score": 78,
+            "away_pitcher": "Michael Lorenzen",
+            "home_pitcher": "Justin Wrobleski",
+            "away_era": 6.91,
+            "home_era": 2.8,
+            "away_whip": 1.81,
+            "home_whip": 1.01
+          },
+          "bullpen": {
+            "pick_team": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 5,
+              "last3_bp_ip": 11.7,
+              "last_game_relievers": 4,
+              "back_to_back_arms": 0
+            },
+            "opponent": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 5.3,
+              "last3_bp_ip": 12.7,
+              "last_game_relievers": 4,
+              "back_to_back_arms": 3
+            },
+            "label": "Neutral",
+            "major_caution": false
+          },
+          "moneyline": {
+            "pick": "Los Angeles Dodgers",
+            "side": "home",
+            "prob": 0.8712,
+            "mktProb": 0.661,
+            "bestAm": -212,
+            "valueTag": "STRONG SETUP",
+            "isPass": false,
+            "tier": "Strong Setup",
+            "edgeScore": 88,
+            "rawEdge": 0.2102,
+            "why": "Los Angeles Dodgers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+            "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+          },
+          "result": "NG"
+        },
+        {
+          "gamePk": 824254,
+          "away": "Athletics",
+          "home": "Detroit Tigers",
+          "time": "2026-07-07T22:40:00Z",
+          "labScore": 79,
+          "status": "official_pick",
+          "pitcherEdge": {
+            "team": "Detroit Tigers",
+            "gap": 8,
+            "conflict": false,
+            "away_score": 70,
+            "home_score": 78,
+            "away_pitcher": "J.T. Ginn",
+            "home_pitcher": "Tarik Skubal",
+            "away_era": 3.04,
+            "home_era": 3.15,
+            "away_whip": 1.23,
+            "home_whip": 0.91
+          },
+          "bullpen": {
+            "pick_team": {
+              "score": 61,
+              "label": "Tired",
+              "last_game_bp_ip": 2.3,
+              "last3_bp_ip": 5.7,
+              "last_game_relievers": 3,
+              "back_to_back_arms": 0
+            },
+            "opponent": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 6,
+              "last3_bp_ip": 10.3,
+              "last_game_relievers": 5,
+              "back_to_back_arms": 1
+            },
+            "label": "Supports LyDia side",
+            "major_caution": false
+          },
+          "moneyline": {
+            "pick": "Detroit Tigers",
+            "side": "home",
+            "prob": 0.6688,
+            "mktProb": 0.5869,
+            "bestAm": -148,
+            "valueTag": "STRONG SETUP",
+            "isPass": false,
+            "tier": "Strong Setup",
+            "edgeScore": 79,
+            "rawEdge": 0.0819,
+            "why": "Detroit Tigers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 79.",
+            "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+          },
+          "mlResult": "W",
+          "totResult": "NG",
+          "rlResult": "NG",
+          "finalAway": 2,
+          "finalHome": 6
+        },
+        {
+          "gamePk": 822881,
+          "away": "Los Angeles Angels",
+          "home": "Texas Rangers",
+          "time": "2026-07-08T00:05:00Z",
+          "labScore": 76,
+          "status": "official_pick",
+          "pitcherEdge": {
+            "team": "Texas Rangers",
+            "gap": 10,
+            "conflict": false,
+            "away_score": 67,
+            "home_score": 77,
+            "away_pitcher": "José Soriano",
+            "home_pitcher": "Jacob deGrom",
+            "away_era": 3.42,
+            "home_era": 3.48,
+            "away_whip": 1.32,
+            "home_whip": 0.99
+          },
+          "bullpen": {
+            "pick_team": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 4.7,
+              "last3_bp_ip": 8.7,
+              "last_game_relievers": 4,
+              "back_to_back_arms": 0
+            },
+            "opponent": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 5,
+              "last3_bp_ip": 10,
+              "last_game_relievers": 5,
+              "back_to_back_arms": 1
+            },
+            "label": "Neutral",
+            "major_caution": false
+          },
+          "moneyline": {
+            "pick": "Texas Rangers",
+            "side": "home",
+            "prob": 0.6703,
+            "mktProb": 0.5857,
+            "bestAm": -146,
+            "valueTag": "STRONG SETUP",
+            "isPass": false,
+            "tier": "Strong Setup",
+            "edgeScore": 76,
+            "rawEdge": 0.0846,
+            "why": "Texas Rangers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 76.",
+            "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+          },
+          "mlResult": "W",
+          "totResult": "NG",
+          "rlResult": "NG",
+          "finalAway": 3,
+          "finalHome": 8
+        },
+        {
+          "gamePk": 823280,
+          "away": "Arizona Diamondbacks",
+          "home": "San Diego Padres",
+          "time": "2026-07-08T01:40:00Z",
+          "labScore": 70,
+          "status": "official_pick",
+          "pitcherEdge": {
+            "team": "No clear SP edge",
+            "gap": 2,
+            "conflict": false,
+            "away_score": 40,
+            "home_score": 42,
+            "away_pitcher": "Zac Gallen",
+            "home_pitcher": "Germán Márquez",
+            "away_era": 6.36,
+            "home_era": 5.79,
+            "away_whip": 1.57,
+            "home_whip": 1.47
+          },
+          "bullpen": {
+            "pick_team": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 4,
+              "last3_bp_ip": 11,
+              "last_game_relievers": 2,
+              "back_to_back_arms": 1
+            },
+            "opponent": {
+              "score": 100,
+              "label": "High risk",
+              "last_game_bp_ip": 4,
+              "last3_bp_ip": 15,
+              "last_game_relievers": 2,
+              "back_to_back_arms": 1
+            },
+            "label": "Neutral",
+            "major_caution": false
+          },
+          "moneyline": {
+            "pick": "Arizona Diamondbacks",
+            "side": "away",
+            "prob": 0.5561,
+            "mktProb": 0.4197,
+            "bestAm": 133,
+            "valueTag": "QUALIFIED SETUP",
+            "isPass": false,
+            "tier": "Qualified Setup",
+            "edgeScore": 70,
+            "rawEdge": 0.1364,
+            "why": "Arizona Diamondbacks cleared the model, market, pitcher, and bullpen checks with a Lab Score of 70.",
+            "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+          },
+          "mlResult": "L",
+          "totResult": "NG",
+          "rlResult": "NG",
+          "finalAway": 1,
+          "finalHome": 4
+        }
+      ]
     }
   }
 }
