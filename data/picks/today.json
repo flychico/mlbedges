@@ -1,6 +1,6 @@
 {
   "date": "2026-07-08",
-  "generated": "2026-07-08T18:20:13.714Z",
+  "generated": "2026-07-08T18:30:02.040Z",
   "source_of_truth": "scripts/generate-member-lab.js",
   "note": "Official picks are created only after pitcher matchup, bullpen fatigue, market pricing, and Lab Score checks.",
   "picks": [
@@ -48,14 +48,69 @@
         "pick": "Detroit Tigers",
         "side": "home",
         "prob": 0.827,
-        "mktProb": 0.5554,
-        "bestAm": -129,
+        "mktProb": 0.5785,
+        "bestAm": -142,
         "valueTag": "STRONG SETUP",
         "isPass": false,
         "tier": "Strong Setup",
         "edgeScore": 90,
-        "rawEdge": 0.2717,
+        "rawEdge": 0.2485,
         "why": "Detroit Tigers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 90.",
+        "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
+      }
+    },
+    {
+      "gamePk": 824496,
+      "away": "Philadelphia Phillies",
+      "home": "Cincinnati Reds",
+      "time": "2026-07-08T23:10:00Z",
+      "labScore": 90,
+      "status": "official_pick",
+      "pitcherEdge": {
+        "team": "Cincinnati Reds",
+        "gap": 30,
+        "conflict": false,
+        "away_score": 50,
+        "home_score": 80,
+        "away_pitcher": "TBD",
+        "home_pitcher": "Chase Burns",
+        "away_era": null,
+        "home_era": 2.4,
+        "away_whip": null,
+        "home_whip": 1.08
+      },
+      "bullpen": {
+        "pick_team": {
+          "score": 74,
+          "label": "Tired",
+          "last_game_bp_ip": 3,
+          "last3_bp_ip": 6,
+          "last_game_relievers": 4,
+          "back_to_back_arms": 0
+        },
+        "opponent": {
+          "score": 90,
+          "label": "High risk",
+          "last_game_bp_ip": 2,
+          "last3_bp_ip": 7.7,
+          "last_game_relievers": 3,
+          "back_to_back_arms": 2
+        },
+        "label": "Supports LyDia side",
+        "major_caution": false
+      },
+      "moneyline": {
+        "pick": "Cincinnati Reds",
+        "side": "home",
+        "prob": 0.5112,
+        "mktProb": 0.4071,
+        "bestAm": 139,
+        "valueTag": "STRONG SETUP",
+        "isPass": false,
+        "tier": "Strong Setup",
+        "edgeScore": 90,
+        "rawEdge": 0.1042,
+        "why": "Cincinnati Reds cleared the model, market, pitcher, and bullpen checks with a Lab Score of 90.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
     },
@@ -213,13 +268,13 @@
         "pick": "Milwaukee Brewers",
         "side": "away",
         "prob": 0.6662,
-        "mktProb": 0.5788,
-        "bestAm": -145,
+        "mktProb": 0.5356,
+        "bestAm": -121,
         "valueTag": "QUALIFIED SETUP",
         "isPass": false,
         "tier": "Qualified Setup",
         "edgeScore": 73,
-        "rawEdge": 0.0874,
+        "rawEdge": 0.1307,
         "why": "Milwaukee Brewers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 73.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
@@ -323,13 +378,13 @@
         "pick": "Miami Marlins",
         "side": "home",
         "prob": 0.5757,
-        "mktProb": 0.4571,
+        "mktProb": 0.4578,
         "bestAm": 116,
         "valueTag": "QUALIFIED SETUP",
         "isPass": false,
         "tier": "Qualified Setup",
         "edgeScore": 68,
-        "rawEdge": 0.1186,
+        "rawEdge": 0.1179,
         "why": "Miami Marlins cleared the model, market, pitcher, and bullpen checks with a Lab Score of 68.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }

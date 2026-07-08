@@ -1,9 +1,9 @@
 {
   "date": "2026-07-08",
-  "generated_at": "2026-07-08T18:20:13.714Z",
+  "generated_at": "2026-07-08T18:30:02.040Z",
   "snapshot_type": "posted",
   "source_of_truth": "scripts/generate-member-lab.js",
-  "summary": "6 official picks cleared the full Lab process. 0 additional games landed on the watchlist.",
+  "summary": "7 official picks cleared the full Lab process. 0 additional games landed on the watchlist.",
   "games": [
     {
       "game_pk": 824253,
@@ -20,7 +20,7 @@
       "pick_team": "Detroit Tigers",
       "side": "home",
       "model_probability": 0.827,
-      "edge": 0.2717,
+      "edge": 0.2485,
       "status": "official_pick",
       "value_tag": "STRONG SETUP",
       "lab_score": 90,
@@ -60,9 +60,69 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.5554,
-        "best_price": -129,
-        "books": 9
+        "no_vig_probability": 0.5785,
+        "best_price": -142,
+        "books": 3
+      }
+    },
+    {
+      "game_pk": 824496,
+      "game_id": "philadelphia-phillies-cincinnati-reds-2026-07-08",
+      "game": "Philadelphia Phillies @ Cincinnati Reds",
+      "time": "7:10 PM",
+      "game_time_iso": "2026-07-08T23:10:00Z",
+      "away_team": "Philadelphia Phillies",
+      "home_team": "Cincinnati Reds",
+      "away_record": "51-41",
+      "home_record": "41-49",
+      "away_l10": "5-5",
+      "home_l10": "3-7",
+      "pick_team": "Cincinnati Reds",
+      "side": "home",
+      "model_probability": 0.5112,
+      "edge": 0.1042,
+      "status": "official_pick",
+      "value_tag": "STRONG SETUP",
+      "lab_score": 90,
+      "pass_reason": null,
+      "read": "Cincinnati Reds cleared the model, market, pitcher, and bullpen checks with a Lab Score of 90.",
+      "pitcher_edge": {
+        "team": "Cincinnati Reds",
+        "gap": 30,
+        "conflict": false,
+        "away_score": 50,
+        "home_score": 80,
+        "away_pitcher": "TBD",
+        "home_pitcher": "Chase Burns",
+        "away_era": null,
+        "home_era": 2.4,
+        "away_whip": null,
+        "home_whip": 1.08
+      },
+      "bullpen": {
+        "pick_team": {
+          "score": 74,
+          "label": "Tired",
+          "last_game_bp_ip": 3,
+          "last3_bp_ip": 6,
+          "last_game_relievers": 4,
+          "back_to_back_arms": 0
+        },
+        "opponent": {
+          "score": 90,
+          "label": "High risk",
+          "last_game_bp_ip": 2,
+          "last3_bp_ip": 7.7,
+          "last_game_relievers": 3,
+          "back_to_back_arms": 2
+        },
+        "label": "Supports LyDia side",
+        "major_caution": false
+      },
+      "market": {
+        "no_vig_probability": 0.4071,
+        "best_price": 139,
+        "books": 3
       }
     },
     {
@@ -200,7 +260,7 @@
       "pick_team": "Milwaukee Brewers",
       "side": "away",
       "model_probability": 0.6662,
-      "edge": 0.0874,
+      "edge": 0.1307,
       "status": "official_pick",
       "value_tag": "QUALIFIED SETUP",
       "lab_score": 73,
@@ -240,9 +300,9 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.5788,
-        "best_price": -145,
-        "books": 9
+        "no_vig_probability": 0.5356,
+        "best_price": -121,
+        "books": 3
       }
     },
     {
@@ -320,7 +380,7 @@
       "pick_team": "Miami Marlins",
       "side": "home",
       "model_probability": 0.5757,
-      "edge": 0.1186,
+      "edge": 0.1179,
       "status": "official_pick",
       "value_tag": "QUALIFIED SETUP",
       "lab_score": 68,
@@ -360,69 +420,69 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.4571,
+        "no_vig_probability": 0.4578,
         "best_price": 116,
         "books": 9
       }
     },
     {
-      "game_pk": 823279,
-      "game_id": "arizona-diamondbacks-san-diego-padres-2026-07-08",
-      "game": "Arizona Diamondbacks @ San Diego Padres",
-      "time": "10:10 PM",
-      "game_time_iso": "2026-07-09T02:10:00Z",
-      "away_team": "Arizona Diamondbacks",
-      "home_team": "San Diego Padres",
-      "away_record": "45-46",
-      "home_record": "45-46",
-      "away_l10": "4-6",
-      "home_l10": "2-8",
-      "pick_team": "Arizona Diamondbacks",
-      "side": "away",
-      "model_probability": 0.5002,
-      "edge": 0.0655,
+      "game_pk": 822880,
+      "game_id": "los-angeles-angels-texas-rangers-2026-07-08",
+      "game": "Los Angeles Angels @ Texas Rangers",
+      "time": "8:05 PM",
+      "game_time_iso": "2026-07-09T00:05:00Z",
+      "away_team": "Los Angeles Angels",
+      "home_team": "Texas Rangers",
+      "away_record": "36-56",
+      "home_record": "46-45",
+      "away_l10": "2-8",
+      "home_l10": "7-3",
+      "pick_team": "Texas Rangers",
+      "side": "home",
+      "model_probability": 0.6464,
+      "edge": 0.0764,
       "status": "pass",
       "value_tag": "PASS",
-      "lab_score": 60,
-      "pass_reason": "Starting pitcher edge conflicts with the model side.",
-      "read": "Starting pitcher edge conflicts with the model side.",
+      "lab_score": 63,
+      "pass_reason": "Bullpen fatigue adds too much late-game caution.",
+      "read": "Bullpen fatigue adds too much late-game caution.",
       "pitcher_edge": {
-        "team": "San Diego Padres",
-        "gap": 22,
-        "conflict": true,
-        "away_score": 47,
-        "home_score": 69,
-        "away_pitcher": "Jose Cabrera",
-        "home_pitcher": "Michael King",
-        "away_era": 4.73,
-        "home_era": 3.52,
-        "away_whip": 1.58,
-        "home_whip": 1.16
+        "team": "Los Angeles Angels",
+        "gap": 4,
+        "conflict": false,
+        "away_score": 67,
+        "home_score": 63,
+        "away_pitcher": "Walbert Ureña",
+        "home_pitcher": "MacKenzie Gore",
+        "away_era": 3.03,
+        "home_era": 4.31,
+        "away_whip": 1.31,
+        "home_whip": 1.27
       },
       "bullpen": {
         "pick_team": {
-          "score": 78,
-          "label": "High risk",
-          "last_game_bp_ip": 2,
-          "last3_bp_ip": 9,
-          "last_game_relievers": 2,
-          "back_to_back_arms": 1
-        },
-        "opponent": {
-          "score": 100,
+          "score": 95,
           "label": "High risk",
           "last_game_bp_ip": 4,
-          "last3_bp_ip": 12,
+          "last3_bp_ip": 8.7,
           "last_game_relievers": 4,
           "back_to_back_arms": 0
         },
-        "label": "Supports LyDia side",
-        "major_caution": false
+        "opponent": {
+          "score": 63,
+          "label": "Tired",
+          "last_game_bp_ip": 2,
+          "last3_bp_ip": 7,
+          "last_game_relievers": 3,
+          "back_to_back_arms": 0
+        },
+        "label": "Adds caution",
+        "major_caution": true
       },
       "market": {
-        "no_vig_probability": 0.4347,
-        "best_price": 125,
-        "books": 9
+        "no_vig_probability": 0.57,
+        "best_price": -142,
+        "books": 3
       }
     },
     {
@@ -440,7 +500,7 @@
       "pick_team": "Chicago Cubs",
       "side": "away",
       "model_probability": 0.5715,
-      "edge": 0.109,
+      "edge": 0.0984,
       "status": "pass",
       "value_tag": "PASS",
       "lab_score": 59,
@@ -480,69 +540,69 @@
         "major_caution": true
       },
       "market": {
-        "no_vig_probability": 0.4625,
-        "best_price": 112,
-        "books": 9
+        "no_vig_probability": 0.4731,
+        "best_price": 108,
+        "books": 3
       }
     },
     {
-      "game_pk": 822880,
-      "game_id": "los-angeles-angels-texas-rangers-2026-07-08",
-      "game": "Los Angeles Angels @ Texas Rangers",
-      "time": "8:05 PM",
-      "game_time_iso": "2026-07-09T00:05:00Z",
-      "away_team": "Los Angeles Angels",
-      "home_team": "Texas Rangers",
-      "away_record": "36-56",
-      "home_record": "46-45",
-      "away_l10": "2-8",
-      "home_l10": "7-3",
-      "pick_team": "Texas Rangers",
-      "side": "home",
-      "model_probability": 0.6464,
-      "edge": 0.0649,
+      "game_pk": 824578,
+      "game_id": "boston-red-sox-chicago-white-sox-2026-07-08",
+      "game": "Boston Red Sox @ Chicago White Sox",
+      "time": "7:40 PM",
+      "game_time_iso": "2026-07-08T23:40:00Z",
+      "away_team": "Boston Red Sox",
+      "home_team": "Chicago White Sox",
+      "away_record": "41-48",
+      "home_record": "47-43",
+      "away_l10": "8-2",
+      "home_l10": "5-5",
+      "pick_team": "Boston Red Sox",
+      "side": "away",
+      "model_probability": 0.5307,
+      "edge": 0.0496,
       "status": "pass",
       "value_tag": "PASS",
-      "lab_score": 58,
-      "pass_reason": "Bullpen fatigue adds too much late-game caution.",
-      "read": "Bullpen fatigue adds too much late-game caution.",
+      "lab_score": 59,
+      "pass_reason": "The combined Lab Score did not clear the official threshold.",
+      "read": "The combined Lab Score did not clear the official threshold.",
       "pitcher_edge": {
-        "team": "Los Angeles Angels",
-        "gap": 4,
+        "team": "No clear SP edge",
+        "gap": 3,
         "conflict": false,
-        "away_score": 67,
-        "home_score": 63,
-        "away_pitcher": "Walbert Ureña",
-        "home_pitcher": "MacKenzie Gore",
-        "away_era": 3.03,
-        "home_era": 4.31,
-        "away_whip": 1.31,
-        "home_whip": 1.27
+        "away_score": 74,
+        "home_score": 71,
+        "away_pitcher": "Jake Bennett",
+        "home_pitcher": "Davis Martin",
+        "away_era": 3.1,
+        "home_era": 3.08,
+        "away_whip": 0.98,
+        "home_whip": 1.26
       },
       "bullpen": {
         "pick_team": {
-          "score": 95,
+          "score": 87,
           "label": "High risk",
-          "last_game_bp_ip": 4,
-          "last3_bp_ip": 8.7,
+          "last_game_bp_ip": 3,
+          "last3_bp_ip": 9.3,
           "last_game_relievers": 4,
           "back_to_back_arms": 0
         },
         "opponent": {
-          "score": 63,
-          "label": "Tired",
-          "last_game_bp_ip": 2,
-          "last3_bp_ip": 7,
-          "last_game_relievers": 3,
+          "score": 100,
+          "label": "High risk",
+          "last_game_bp_ip": 4,
+          "last3_bp_ip": 12.3,
+          "last_game_relievers": 4,
           "back_to_back_arms": 0
         },
-        "label": "Adds caution",
-        "major_caution": true
+        "label": "Neutral",
+        "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.5815,
-        "best_price": -145,
-        "books": 9
+        "no_vig_probability": 0.4811,
+        "best_price": 105,
+        "books": 3
       }
     },
     {
@@ -606,66 +666,6 @@
       }
     },
     {
-      "game_pk": 824578,
-      "game_id": "boston-red-sox-chicago-white-sox-2026-07-08",
-      "game": "Boston Red Sox @ Chicago White Sox",
-      "time": "7:40 PM",
-      "game_time_iso": "2026-07-08T23:40:00Z",
-      "away_team": "Boston Red Sox",
-      "home_team": "Chicago White Sox",
-      "away_record": "41-48",
-      "home_record": "47-43",
-      "away_l10": "8-2",
-      "home_l10": "5-5",
-      "pick_team": "Boston Red Sox",
-      "side": "away",
-      "model_probability": 0.5307,
-      "edge": 0.0403,
-      "status": "pass",
-      "value_tag": "PASS",
-      "lab_score": 54,
-      "pass_reason": "The combined Lab Score did not clear the official threshold.",
-      "read": "The combined Lab Score did not clear the official threshold.",
-      "pitcher_edge": {
-        "team": "No clear SP edge",
-        "gap": 3,
-        "conflict": false,
-        "away_score": 74,
-        "home_score": 71,
-        "away_pitcher": "Jake Bennett",
-        "home_pitcher": "Davis Martin",
-        "away_era": 3.1,
-        "home_era": 3.08,
-        "away_whip": 0.98,
-        "home_whip": 1.26
-      },
-      "bullpen": {
-        "pick_team": {
-          "score": 87,
-          "label": "High risk",
-          "last_game_bp_ip": 3,
-          "last3_bp_ip": 9.3,
-          "last_game_relievers": 4,
-          "back_to_back_arms": 0
-        },
-        "opponent": {
-          "score": 100,
-          "label": "High risk",
-          "last_game_bp_ip": 4,
-          "last3_bp_ip": 12.3,
-          "last_game_relievers": 4,
-          "back_to_back_arms": 0
-        },
-        "label": "Neutral",
-        "major_caution": false
-      },
-      "market": {
-        "no_vig_probability": 0.4904,
-        "best_price": -101,
-        "books": 9
-      }
-    },
-    {
       "game_pk": 823202,
       "game_id": "toronto-blue-jays-san-francisco-giants-2026-07-08",
       "game": "Toronto Blue Jays @ San Francisco Giants",
@@ -680,10 +680,10 @@
       "pick_team": "San Francisco Giants",
       "side": "home",
       "model_probability": 0.5087,
-      "edge": 0.0455,
+      "edge": 0.0478,
       "status": "pass",
       "value_tag": "PASS",
-      "lab_score": 53,
+      "lab_score": 54,
       "pass_reason": "Starting pitcher edge conflicts with the model side.",
       "read": "Starting pitcher edge conflicts with the model side.",
       "pitcher_edge": {
@@ -720,7 +720,7 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.4632,
+        "no_vig_probability": 0.4609,
         "best_price": 112,
         "books": 9
       }
@@ -740,7 +740,7 @@
       "pick_team": "Los Angeles Dodgers",
       "side": "home",
       "model_probability": 0.7111,
-      "edge": 0.0345,
+      "edge": 0.0332,
       "status": "pass",
       "value_tag": "PASS",
       "lab_score": 50,
@@ -780,69 +780,69 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.6766,
+        "no_vig_probability": 0.6779,
         "best_price": -225,
         "books": 9
       }
     },
     {
-      "game_pk": 824496,
-      "game_id": "philadelphia-phillies-cincinnati-reds-2026-07-08",
-      "game": "Philadelphia Phillies @ Cincinnati Reds",
-      "time": "7:10 PM",
-      "game_time_iso": "2026-07-08T23:10:00Z",
-      "away_team": "Philadelphia Phillies",
-      "home_team": "Cincinnati Reds",
-      "away_record": "51-41",
-      "home_record": "41-49",
-      "away_l10": "5-5",
-      "home_l10": "3-7",
-      "pick_team": "Cincinnati Reds",
-      "side": "home",
-      "model_probability": 0.5112,
-      "edge": -0.0534,
+      "game_pk": 823279,
+      "game_id": "arizona-diamondbacks-san-diego-padres-2026-07-08",
+      "game": "Arizona Diamondbacks @ San Diego Padres",
+      "time": "10:10 PM",
+      "game_time_iso": "2026-07-09T02:10:00Z",
+      "away_team": "Arizona Diamondbacks",
+      "home_team": "San Diego Padres",
+      "away_record": "45-46",
+      "home_record": "45-46",
+      "away_l10": "4-6",
+      "home_l10": "2-8",
+      "pick_team": "Arizona Diamondbacks",
+      "side": "away",
+      "model_probability": 0.5002,
+      "edge": 0.0305,
       "status": "pass",
       "value_tag": "PASS",
-      "lab_score": 41,
-      "pass_reason": "Market is higher than LyDia's model probability.",
-      "read": "Market is higher than LyDia's model probability.",
+      "lab_score": 45,
+      "pass_reason": "Starting pitcher edge conflicts with the model side.",
+      "read": "Starting pitcher edge conflicts with the model side.",
       "pitcher_edge": {
-        "team": "Cincinnati Reds",
-        "gap": 30,
-        "conflict": false,
-        "away_score": 50,
-        "home_score": 80,
-        "away_pitcher": "TBD",
-        "home_pitcher": "Chase Burns",
-        "away_era": null,
-        "home_era": 2.4,
-        "away_whip": null,
-        "home_whip": 1.08
+        "team": "San Diego Padres",
+        "gap": 22,
+        "conflict": true,
+        "away_score": 47,
+        "home_score": 69,
+        "away_pitcher": "Jose Cabrera",
+        "home_pitcher": "Michael King",
+        "away_era": 4.73,
+        "home_era": 3.52,
+        "away_whip": 1.58,
+        "home_whip": 1.16
       },
       "bullpen": {
         "pick_team": {
-          "score": 74,
-          "label": "Tired",
-          "last_game_bp_ip": 3,
-          "last3_bp_ip": 6,
-          "last_game_relievers": 4,
-          "back_to_back_arms": 0
-        },
-        "opponent": {
-          "score": 90,
+          "score": 78,
           "label": "High risk",
           "last_game_bp_ip": 2,
-          "last3_bp_ip": 7.7,
-          "last_game_relievers": 3,
-          "back_to_back_arms": 2
+          "last3_bp_ip": 9,
+          "last_game_relievers": 2,
+          "back_to_back_arms": 1
+        },
+        "opponent": {
+          "score": 100,
+          "label": "High risk",
+          "last_game_bp_ip": 4,
+          "last3_bp_ip": 12,
+          "last_game_relievers": 4,
+          "back_to_back_arms": 0
         },
         "label": "Supports LyDia side",
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.5646,
-        "best_price": -139,
-        "books": 9
+        "no_vig_probability": 0.4697,
+        "best_price": 110,
+        "books": 3
       }
     },
     {
