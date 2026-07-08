@@ -1,32 +1,27 @@
-name: Daily content
+name: Daily recap and grading
+
+# Backward-looking only. Safe to run unattended.
+# Grades yesterday's finished games and builds the recap/SEO pages.
+# It does NOT generate today's picks or email members. That happens in
+# publish-picks.yml, after LyDia's analysis and approval.
 
 on:
   schedule:
-    # 7:35 AM Eastern during MLB daylight-saving months.
-    # GitHub cron runs in UTC, so 11:35 UTC = 7:35 AM ET during DST.
+    # GitHub Actions cron is ALWAYS UTC and does not observe DST or accept a timezone key.
+    # 11:35 UTC = 7:35 AM EDT (summer) / 6:35 AM EST (winter). Runs after all games are final.
     - cron: "35 11 * * *"
-  workflow_dispatch:
-    inputs:
-      date:
-        description: "YYYY-MM-DD date to generate/email. Leave blank for today."
-        required: false
-        default: ""
-      snapshot:
-        description: "posted, current, or closing. Morning daily run should use posted."
-        required: false
-        default: "posted"
+  workflow_dispatch: {}
 
 permissions:
   contents: write
 
 concurrency:
-  group: daily-content
+  group: daily-recap
   cancel-in-progress: false
 
 jobs:
-  daily:
+  recap:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -40,10 +35,8 @@ jobs:
 
       - name: Show run time
         run: |
-          echo "UTC time:"
-          date -u
-          echo "Eastern time:"
-          TZ="America/New_York" date
+          echo "UTC:"; date -u
+          echo "Eastern:"; TZ="America/New_York" date
 
       - name: Grade yesterday's picks
         run: node scripts/grade-results.js
@@ -51,97 +44,21 @@ jobs:
       - name: Generate yesterday's recap
         run: node scripts/generate-recap.js
 
-      - name: Generate today's source-of-truth picks, member brief, market snapshot, and preview
-        env:
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      - name: Verify recap generated
         run: |
-          DATE_INPUT="${{ github.event.inputs.date }}"
-          SNAPSHOT_INPUT="${{ github.event.inputs.snapshot }}"
-          if [ -n "$DATE_INPUT" ]; then
-            node scripts/generate-member-lab.js --date "$DATE_INPUT" --snapshot "${SNAPSHOT_INPUT:-posted}"
-          else
-            node scripts/generate-member-lab.js --snapshot "posted"
-          fi
+          test -f results/index.html || { echo "ERROR: results/index.html missing"; exit 1; }
+          grep -q "<table" results/index.html || { echo "ERROR: no results table in results/index.html"; exit 1; }
+          echo "Recap and results look good."
 
-      - name: Verify generated source-of-truth files
-        run: |
-          echo "Checking generated content..."
-
-          echo "Results folder:"
-          ls -la results || true
-
-          echo "Recaps folder:"
-          ls -la recaps || true
-
-          echo "Previews folder:"
-          ls -la previews || true
-
-          echo "Data folder:"
-          ls -la data || true
-          ls -la data/member-brief || true
-          ls -la data/picks || true
-          ls -la data/market || true
-
-          if [ ! -f "results/index.html" ]; then
-            echo "ERROR: results/index.html was not generated."
-            exit 1
-          fi
-
-          if ! grep -q "<table" results/index.html; then
-            echo "ERROR: results/index.html exists, but no results table was found."
-            exit 1
-          fi
-
-          if [ ! -f "previews/index.html" ]; then
-            echo "ERROR: previews/index.html was not generated."
-            exit 1
-          fi
-
-          if [ ! -f "data/member-brief/today.json" ]; then
-            echo "ERROR: data/member-brief/today.json was not generated."
-            exit 1
-          fi
-
-          if [ ! -f "data/picks/today.json" ]; then
-            echo "ERROR: data/picks/today.json was not generated."
-            exit 1
-          fi
-
-          if [ ! -f "data/market/today.json" ]; then
-            echo "ERROR: data/market/today.json was not generated."
-            exit 1
-          fi
-
-          echo "Generated files look good."
-
-      - name: Commit and push generated site files if changed
+      - name: Commit and push if changed
         run: |
           git config user.name "lydia-bot"
           git config user.email "actions@users.noreply.github.com"
-
-          git add results/ recaps/ previews/ data/ sitemap.xml
-
+          git add results/ recaps/ data/ sitemap.xml
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Daily content $(TZ='America/New_York' date +%F)"
+            git commit -m "Daily recap $(TZ='America/New_York' date +%F)"
             git pull --rebase
             git push
-          fi
-
-      - name: Email today's Daily Member Brief to paid members
-        continue-on-error: true
-        env:
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
-          EMAIL_REPLY_TO: ${{ secrets.EMAIL_REPLY_TO }}
-          OWNER_EMAIL: ${{ secrets.OWNER_EMAIL }}
-          NETLIFY_API_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: |
-          DATE_INPUT="${{ github.event.inputs.date }}"
-          if [ -n "$DATE_INPUT" ]; then
-            node scripts/send-member-emails.js "$DATE_INPUT"
-          else
-            node scripts/send-member-emails.js
           fi

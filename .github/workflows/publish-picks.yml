@@ -1,0 +1,95 @@
+name: Publish picks (after LyDia analysis)
+
+# Forward-looking. MANUAL only, on purpose.
+# Run this AFTER LyDia has reviewed the tools, checked competitors, verified the slate,
+# and confirmed the data is current (games, confirmed pitchers, bullpen, odds).
+# Every command here already runs successfully in the repo's existing workflows.
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "YYYY-MM-DD to generate. Leave blank for today."
+        required: false
+        default: ""
+      snapshot:
+        description: "posted, current, or closing"
+        required: false
+        default: "posted"
+      send_email:
+        description: "Email picks to paid members? Only set true after approval."
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-picks
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Show run time (confirm this is the freshest-data window)
+        run: |
+          echo "UTC:"; date -u
+          echo "Eastern:"; TZ="America/New_York" date
+
+      # Source of truth: recompute picks/market/member-brief from fresh data.
+      - name: Generate source-of-truth picks
+        run: |
+          DATE_INPUT="${{ github.event.inputs.date }}"
+          SNAPSHOT_INPUT="${{ github.event.inputs.snapshot }}"
+          if [ -n "$DATE_INPUT" ]; then
+            node scripts/generate-member-lab.js --date "$DATE_INPUT" --snapshot "${SNAPSHOT_INPUT:-posted}"
+          else
+            node scripts/generate-member-lab.js --snapshot "${SNAPSHOT_INPUT:-posted}"
+          fi
+
+      # Render the public preview and picks pages from the fresh source of truth.
+      - name: Generate today's previews and picks pages
+        run: node scripts/generate-previews.js
+
+      - name: Verify previews and picks generated
+        run: |
+          test -f previews/index.html || { echo "ERROR: previews/index.html missing"; exit 1; }
+          echo "Previews and picks look good."
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "lydia-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add previews/ picks/ data/ sitemap.xml
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Publish picks $(TZ='America/New_York' date +%F)"
+            git pull --rebase
+            git push
+          fi
+
+      # Approval gate: emails send ONLY when send_email is explicitly true.
+      # No continue-on-error, so a failed send fails the run loudly instead of silently.
+      - name: Email picks to paid members
+        if: ${{ github.event.inputs.send_email == 'true' }}
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_REPLY_TO: ${{ secrets.EMAIL_REPLY_TO }}
+          NETLIFY_API_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: node scripts/send-member-emails.js
