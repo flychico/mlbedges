@@ -1,6 +1,6 @@
 {
   "date": "2026-07-08",
-  "generated_at": "2026-07-08T18:17:13.446Z",
+  "generated_at": "2026-07-08T18:20:13.714Z",
   "snapshot_type": "posted",
   "source_of_truth": "scripts/generate-member-lab.js",
   "summary": "6 official picks cleared the full Lab process. 0 additional games landed on the watchlist.",
@@ -80,7 +80,7 @@
       "pick_team": "Tampa Bay Rays",
       "side": "home",
       "model_probability": 0.6675,
-      "edge": 0.1488,
+      "edge": 0.149,
       "status": "official_pick",
       "value_tag": "QUALIFIED SETUP",
       "lab_score": 73,
@@ -120,7 +120,7 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.5187,
+        "no_vig_probability": 0.5185,
         "best_price": -110,
         "books": 9
       }
@@ -320,7 +320,7 @@
       "pick_team": "Miami Marlins",
       "side": "home",
       "model_probability": 0.5757,
-      "edge": 0.1179,
+      "edge": 0.1186,
       "status": "official_pick",
       "value_tag": "QUALIFIED SETUP",
       "lab_score": 68,
@@ -360,7 +360,7 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.4578,
+        "no_vig_probability": 0.4571,
         "best_price": 116,
         "books": 9
       }
@@ -680,10 +680,10 @@
       "pick_team": "San Francisco Giants",
       "side": "home",
       "model_probability": 0.5087,
-      "edge": 0.0442,
+      "edge": 0.0455,
       "status": "pass",
       "value_tag": "PASS",
-      "lab_score": 52,
+      "lab_score": 53,
       "pass_reason": "Starting pitcher edge conflicts with the model side.",
       "read": "Starting pitcher edge conflicts with the model side.",
       "pitcher_edge": {
@@ -720,7 +720,7 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.4645,
+        "no_vig_probability": 0.4632,
         "best_price": 112,
         "books": 9
       }
@@ -740,7 +740,7 @@
       "pick_team": "Los Angeles Dodgers",
       "side": "home",
       "model_probability": 0.7111,
-      "edge": 0.0332,
+      "edge": 0.0345,
       "status": "pass",
       "value_tag": "PASS",
       "lab_score": 50,
@@ -780,7 +780,7 @@
         "major_caution": false
       },
       "market": {
-        "no_vig_probability": 0.6779,
+        "no_vig_probability": 0.6766,
         "best_price": -225,
         "books": 9
       }
