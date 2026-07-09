@@ -1,6 +1,6 @@
 {
   "date": "2026-07-09",
-  "generated_at": "2026-07-09T19:28:02.000Z",
+  "generated_at": "2026-07-09T21:17:08.301Z",
   "snapshot_type": "auto",
   "note": "Automated market snapshots update current_price before close and closing_price near game time. Official picks remain locked separately.",
   "items": [
@@ -77,10 +77,10 @@
       "pick_team": "Detroit Tigers",
       "lab_score": 83,
       "posted_price": -123,
-      "current_price": -123,
+      "current_price": -124,
       "closing_price": null,
       "posted_at": "2026-07-09T18:38:12.743Z",
-      "last_checked_at": "2026-07-09T19:28:02.000Z",
+      "last_checked_at": "2026-07-09T21:17:08.301Z",
       "movement": "stable",
       "read": "Market tracking compares LyDia's posted number against later current and closing snapshots.",
       "game_time_iso": "2026-07-09T22:40:00Z",
@@ -88,7 +88,7 @@
       "market_probability": 0.5392,
       "raw_edge": 0.2692,
       "books": 9,
-      "market_probability_latest": 0.5383
+      "market_probability_latest": 0.5425
     }
   ]
 }
