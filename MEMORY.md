@@ -1,13 +1,15 @@
 # MEMORY.md
 
-## 2026-07-08 - LyDia full cleanup decision
+## 2026-07-09 nav hard clean
 
-The repo had a working locked-picks concept, but July 8 was run after games were no longer in Preview state. The engine created empty public artifacts for a real slate. That is not acceptable.
+Decision: `js/app.js` must be the only navigation and footer source for the public site.
 
-Decision: LyDia must not create or publish official pick records after games have started. If a slate has games but none are still in Preview state, the publish workflow must fail loudly and write nothing.
+Problem found: Existing historical static pages, especially older dated files under `previews/`, still contained hardcoded nav HTML. Future generators were improved, but the old already-committed pages were still live and could show missing tabs such as Lab, Stats, and Join.
 
-Decision: public pages must not expose internal script names, internal file paths, raw ISO timestamps, or implementation labels. Public wording should say LyDia Daily Engine and use reader-friendly Eastern time.
+Fix direction:
+- Add `scripts/normalize-public-shell.js` to scan existing public HTML files and replace hardcoded nav/footer with shared shell placeholders.
+- Run the normalizer inside `Site maintenance cleanup` before the public-clean verifier.
+- Strengthen `scripts/assert-public-clean.js` so hardcoded nav/footer fails the workflow.
+- Fix `scripts/generate-recap.js` so future recap pages use shared nav/footer directly.
 
-Decision: clean generated site artifacts with a maintenance workflow instead of hand-editing files. Empty generated slates are deleted from generated data folders, preview archive, and sitemap. Results history is not deleted by this cleanup.
-
-Decision: shared navigation belongs in js/app.js. Generated recap, preview, and results pages should render nav and footer through js/app.js instead of hardcoded nav HTML.
+Important: Do not manually patch individual old preview pages. The repo needs a repeatable shell normalization step.

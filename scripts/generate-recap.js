@@ -1,5 +1,15 @@
 #!/usr/bin/env node
-/* LyDia static daily recap generator. */
+/* LyDia — static daily recap generator.
+   Usage: node scripts/generate-recap.js [YYYY-MM-DD]
+   Default date: yesterday in US Eastern time.
+   Writes: recaps/<date>.html, recaps/index.html, sitemap.xml
+   Exits 0 with no writes if there are no completed games.
+
+   Public shell rule:
+   - Nav and footer come only from js/app.js.
+   - Generated pages must not hardcode nav/footer links.
+*/
+
 const fs = require("fs");
 const path = require("path");
 
@@ -13,8 +23,10 @@ function etYesterday() {
   et.setDate(et.getDate() - 1);
   return `${et.getFullYear()}-${String(et.getMonth() + 1).padStart(2, "0")}-${String(et.getDate()).padStart(2, "0")}`;
 }
+
 const DATE = process.argv[2] || etYesterday();
 if (!/^\d{4}-\d{2}-\d{2}$/.test(DATE)) { console.error("Bad date arg:", DATE); process.exit(1); }
+
 function niceDate(iso) {
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(y, m - 1, d).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
@@ -62,6 +74,7 @@ function recapSentence(g) {
   if (wr && lr) s += ` The win moves them to ${wr.wins}-${wr.losses}; the ${teamShort(loser.team.name)} fall to ${lr.wins}-${lr.losses}.`;
   return s;
 }
+
 function pageShell(title, desc, body) {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -86,12 +99,12 @@ function pageShell(title, desc, body) {
 ${body}
 </main>
 <footer id="footer"></footer>
-<script src="/js/app.js"></script>
-<script>renderNav("/recaps/"); renderFooter();</script>
+<script src="/js/app.js"></script><script>renderNav("/recaps/"); renderFooter();</script>
 </body>
 </html>
 `;
 }
+
 async function main() {
   const url = `https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${DATE}&hydrate=linescore`;
   const res = await fetch(url);
@@ -99,43 +112,54 @@ async function main() {
   const sched = await res.json();
   const games = (((sched.dates || [])[0]) || {}).games || [];
   const finals = games.filter(g => g.status.abstractGameState === "Final" && g.teams.away.score !== undefined);
-  if (!finals.length) { console.log(`No completed games for ${DATE}. Nothing to publish.`); return; }
+  if (!finals.length) { console.log(`No completed games for ${DATE} — nothing to publish.`); return; }
+
   const nice = niceDate(DATE);
   const facts = finals.map(gameFacts);
   const totalRuns = facts.reduce((s, f) => s + f.winner.score + f.loser.score, 0);
   const blow = facts.reduce((x, f) => f.margin > x.margin ? f : x, facts[0]);
   const close = facts.filter(f => f.margin === 1).length;
   const extras = facts.filter(f => f.innings > 9).length;
+
   const intro = `${finals.length} games went final on ${nice}, producing ${totalRuns} total runs. ` +
     `The biggest margin of the day belonged to the ${teamShort(blow.winner.team.name)}, who ${marginPhrase(blow.margin)} the ${teamShort(blow.loser.team.name)} by ${blow.margin}. ` +
     `${close ? `${close} game${close > 1 ? "s were" : " was"} decided by a single run` : "No one-run games"}${extras ? `, and ${extras} went to extra innings` : ""}.`;
-  let body = `<h1>MLB Recap - ${esc(nice)}</h1>\n<p class="roundup">${esc(intro)}</p>\n`;
+
+  let body = `<h1>MLB Recap — ${esc(nice)}</h1>\n<p class="roundup">${esc(intro)}</p>\n`;
   for (const g of finals) {
     const { a, h } = gameFacts(g);
     const head = `${teamShort(a.team.name)} ${a.score}, ${teamShort(h.team.name)} ${h.score}`;
     body += `<div class="recap-game"><h3>${esc(head)}</h3><p>${esc(recapSentence(g))}</p></div>\n`;
   }
   body += `<p class="dim small">Generated from official MLB data. <a href="/recaps/">All recaps</a> · <a href="/picks/">Today's model picks</a> · <a href="/odds/">Live odds</a></p>`;
+
   fs.mkdirSync(RECAP_DIR, { recursive: true });
   const outFile = path.join(RECAP_DIR, `${DATE}.html`);
   fs.writeFileSync(outFile, pageShell(
-    `MLB Recap ${nice} - every final score | LyDia`,
+    `MLB Recap ${nice} — every final score | LyDia`,
     `MLB results for ${nice}: ${finals.length} finals, ${totalRuns} runs. ${intro.slice(0, 120)}`,
     body));
   console.log("wrote", path.relative(ROOT, outFile));
+
   const posts = fs.readdirSync(RECAP_DIR).filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f)).sort().reverse();
   const list = posts.map(f => {
     const d = f.replace(".html", "");
-    return `<a href="/recaps/${f}">MLB Recap - ${esc(niceDate(d))}</a>`;
+    return `<a href="/recaps/${f}">MLB Recap — ${esc(niceDate(d))}</a>`;
   }).join("\n");
   fs.writeFileSync(path.join(RECAP_DIR, "index.html"), pageShell(
-    "Daily MLB Recaps archive | LyDia",
+    "Daily MLB Recaps — archive | LyDia",
     "Archive of daily MLB recaps: every final score, every day of the season.",
     `<h1>Daily Recaps</h1>\n<p class="subtitle">Every day of the season, recapped.</p>\n<div class="card archive-list">\n${list}\n</div>`));
-  const staticPages = ["", "dashboard/", "picks/", "odds/", "tools/", "stats/", "articles/", "membership/", "results/", "recaps/", "previews/", "member-brief/", "tools/market/"];
-  const urls = staticPages.map(p => `${SITE}/${p}`).concat(posts.map(f => `${SITE}/recaps/${f}`));
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` + urls.map(u => `  <url><loc>${u}</loc></url>`).join("\n") + `\n</urlset>\n`;
+  console.log("wrote recaps/index.html");
+
+  const staticPages = ["", "dashboard/", "picks/", "previews/", "results/", "odds/", "tools/", "stats/", "recaps/", "articles/", "membership/", "member-brief/", "tools/market/"];
+  const previewDir = path.join(ROOT, "previews");
+  const previewPosts = fs.existsSync(previewDir) ? fs.readdirSync(previewDir).filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f)).sort().reverse().map(f => `previews/${f}`) : [];
+  const urls = staticPages.map(p => `${SITE}/${p}`).concat(posts.map(f => `${SITE}/recaps/${f}`)).concat(previewPosts.map(p => `${SITE}/${p}`));
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+    [...new Set(urls)].map(u => `  <url><loc>${u}</loc></url>`).join("\n") + `\n</urlset>\n`;
   fs.writeFileSync(path.join(ROOT, "sitemap.xml"), sitemap);
   console.log("wrote sitemap.xml with", urls.length, "urls");
 }
+
 main().catch(e => { console.error(e); process.exit(1); });
