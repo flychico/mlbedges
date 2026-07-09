@@ -1,6 +1,6 @@
 {
   "date": "2026-07-09",
-  "generated_at": "2026-07-09T21:17:08.301Z",
+  "generated_at": "2026-07-09T23:05:39.960Z",
   "snapshot_type": "auto",
   "note": "Automated market snapshots update current_price before close and closing_price near game time. Official picks remain locked separately.",
   "items": [
@@ -78,17 +78,17 @@
       "lab_score": 83,
       "posted_price": -123,
       "current_price": -124,
-      "closing_price": null,
+      "closing_price": -145,
       "posted_at": "2026-07-09T18:38:12.743Z",
-      "last_checked_at": "2026-07-09T21:17:08.301Z",
-      "movement": "stable",
+      "last_checked_at": "2026-07-09T23:05:39.960Z",
+      "movement": "toward_lydia",
       "read": "Market tracking compares LyDia's posted number against later current and closing snapshots.",
       "game_time_iso": "2026-07-09T22:40:00Z",
       "model_probability": 0.8084,
       "market_probability": 0.5392,
       "raw_edge": 0.2692,
-      "books": 9,
-      "market_probability_latest": 0.5425
+      "books": 6,
+      "market_probability_latest": 0.5663
     }
   ]
 }
