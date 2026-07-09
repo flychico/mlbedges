@@ -2,14 +2,15 @@ name: Publish picks (after LyDia analysis)
 
 # Forward-looking. MANUAL only, on purpose.
 # Run this AFTER LyDia has reviewed the tools, checked competitors, verified the slate,
-# and confirmed the data is current (games, confirmed pitchers, bullpen, odds).
-# Every command here already runs successfully in the repo's existing workflows.
+# and confirmed the data is current: games, confirmed pitchers, bullpen, and odds.
+# Source of truth is scripts/generate-member-lab.js.
+# Previews render from the generated member brief and locked published-picks file.
 
 on:
   workflow_dispatch:
     inputs:
       date:
-        description: "YYYY-MM-DD to generate. Leave blank for today."
+        description: "YYYY-MM-DD to generate. Leave blank for today in America/New_York."
         required: false
         default: ""
       snapshot:
@@ -44,46 +45,49 @@ jobs:
         with:
           node-version: 20
 
-      - name: Show run time (confirm this is the freshest-data window)
+      - name: Resolve publish date
+        id: publish_date
         run: |
           echo "UTC:"; date -u
           echo "Eastern:"; TZ="America/New_York" date
-
-      # Source of truth: recompute picks/market/member-brief from fresh data.
-      - name: Generate source-of-truth picks
-        run: |
           DATE_INPUT="${{ github.event.inputs.date }}"
-          SNAPSHOT_INPUT="${{ github.event.inputs.snapshot }}"
-          if [ -n "$DATE_INPUT" ]; then
-            node scripts/generate-member-lab.js --date "$DATE_INPUT" --snapshot "${SNAPSHOT_INPUT:-posted}"
-          else
-            node scripts/generate-member-lab.js --snapshot "${SNAPSHOT_INPUT:-posted}"
+          if [ -z "$DATE_INPUT" ]; then
+            DATE_INPUT=$(TZ="America/New_York" date +%F)
           fi
+          echo "date=$DATE_INPUT" >> "$GITHUB_OUTPUT"
+          echo "Resolved publish date: $DATE_INPUT"
 
-      # Render the public preview and picks pages from the fresh source of truth.
-      - name: Generate today's previews and picks pages
-        run: node scripts/generate-previews.js
-
-      - name: Verify previews and picks generated
+      - name: Generate source-of-truth member lab and published picks
         run: |
-          test -f previews/index.html || { echo "ERROR: previews/index.html missing"; exit 1; }
-          echo "Previews and picks look good."
+          SNAPSHOT_INPUT="${{ github.event.inputs.snapshot }}"
+          node scripts/generate-member-lab.js --date "${{ steps.publish_date.outputs.date }}" --snapshot "${SNAPSHOT_INPUT:-posted}"
+
+      - name: Render previews from source-of-truth files
+        run: node scripts/generate-previews.js "${{ steps.publish_date.outputs.date }}"
+
+      - name: Verify source-of-truth outputs
+        run: |
+          DATE_INPUT="${{ steps.publish_date.outputs.date }}"
+          test -f "data/member-brief/$DATE_INPUT.json" || { echo "ERROR: member brief missing"; exit 1; }
+          test -f "data/published-picks/$DATE_INPUT.json" || { echo "ERROR: published-picks missing"; exit 1; }
+          test -f "previews/$DATE_INPUT.html" || { echo "ERROR: preview page missing"; exit 1; }
+          node -e "const fs=require('fs'); const p=JSON.parse(fs.readFileSync('data/published-picks/$DATE_INPUT.json','utf8')); if(!Array.isArray(p.picks)) throw new Error('published-picks has no picks array'); console.log('Published picks:', p.picks.length);"
+          echo "Source-of-truth outputs verified."
 
       - name: Commit and push if changed
         run: |
+          DATE_INPUT="${{ steps.publish_date.outputs.date }}"
           git config user.name "lydia-bot"
           git config user.email "actions@users.noreply.github.com"
           git add previews/ picks/ data/ sitemap.xml
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Publish picks $(TZ='America/New_York' date +%F)"
+            git commit -m "Publish picks $DATE_INPUT"
             git pull --rebase
             git push
           fi
 
-      # Approval gate: emails send ONLY when send_email is explicitly true.
-      # No continue-on-error, so a failed send fails the run loudly instead of silently.
       - name: Email picks to paid members
         if: ${{ github.event.inputs.send_email == 'true' }}
         env:
@@ -92,4 +96,4 @@ jobs:
           EMAIL_REPLY_TO: ${{ secrets.EMAIL_REPLY_TO }}
           NETLIFY_API_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: node scripts/send-member-emails.js
+        run: node scripts/send-member-emails.js "${{ steps.publish_date.outputs.date }}"
