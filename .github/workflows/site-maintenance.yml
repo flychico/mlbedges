@@ -27,6 +27,9 @@ jobs:
       - name: Remove invalid generated artifacts
         run: node scripts/site-health-cleanup.js --fix
 
+      - name: Normalize public nav and footer
+        run: node scripts/normalize-public-shell.js
+
       - name: Verify public pages are clean
         run: node scripts/assert-public-clean.js
 
@@ -34,12 +37,11 @@ jobs:
         run: |
           git config user.name "lydia-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add previews/ data/ sitemap.xml
-          git add -u
+          git add .
           if git diff --cached --quiet; then
             echo "No cleanup changes to commit."
           else
-            git commit -m "Clean generated site artifacts"
+            git commit -m "Normalize public site shell"
             git pull --rebase
             git push
           fi
