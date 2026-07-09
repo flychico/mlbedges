@@ -1,11 +1,5 @@
 name: Publish picks (after LyDia analysis)
 
-# Forward-looking. MANUAL only, on purpose.
-# Run this AFTER LyDia has reviewed the tools, checked competitors, verified the slate,
-# and confirmed the data is current: games, confirmed pitchers, bullpen, and odds.
-# Source of truth is scripts/generate-member-lab.js.
-# Previews render from the generated member brief and locked published-picks file.
-
 on:
   workflow_dispatch:
     inputs:
@@ -57,22 +51,26 @@ jobs:
           echo "date=$DATE_INPUT" >> "$GITHUB_OUTPUT"
           echo "Resolved publish date: $DATE_INPUT"
 
-      - name: Generate source-of-truth member lab and published picks
+      - name: Clean invalid generated artifacts
+        run: node scripts/site-health-cleanup.js --fix
+
+      - name: Generate source data and locked official picks
         run: |
           SNAPSHOT_INPUT="${{ github.event.inputs.snapshot }}"
           node scripts/generate-member-lab.js --date "${{ steps.publish_date.outputs.date }}" --snapshot "${SNAPSHOT_INPUT:-posted}"
 
-      - name: Render previews from source-of-truth files
+      - name: Render previews from source data
         run: node scripts/generate-previews.js "${{ steps.publish_date.outputs.date }}"
 
-      - name: Verify source-of-truth outputs
+      - name: Verify generated data and public copy
         run: |
           DATE_INPUT="${{ steps.publish_date.outputs.date }}"
           test -f "data/member-brief/$DATE_INPUT.json" || { echo "ERROR: member brief missing"; exit 1; }
-          test -f "data/published-picks/$DATE_INPUT.json" || { echo "ERROR: published-picks missing"; exit 1; }
+          test -f "data/published-picks/$DATE_INPUT.json" || { echo "ERROR: official pick file missing"; exit 1; }
           test -f "previews/$DATE_INPUT.html" || { echo "ERROR: preview page missing"; exit 1; }
-          node -e "const fs=require('fs'); const p=JSON.parse(fs.readFileSync('data/published-picks/$DATE_INPUT.json','utf8')); if(!Array.isArray(p.picks)) throw new Error('published-picks has no picks array'); console.log('Published picks:', p.picks.length);"
-          echo "Source-of-truth outputs verified."
+          node -e "const fs=require('fs'); const b=JSON.parse(fs.readFileSync('data/member-brief/$DATE_INPUT.json','utf8')); const p=JSON.parse(fs.readFileSync('data/published-picks/$DATE_INPUT.json','utf8')); if(!Array.isArray(b.games)||b.games.length===0) throw new Error('member brief has zero games'); if(!Array.isArray(p.picks)) throw new Error('official pick file has no picks array'); console.log('Games:', b.games.length, 'Official picks:', p.picks.length);"
+          node scripts/assert-public-clean.js
+          echo "Source data and public copy verified."
 
       - name: Commit and push if changed
         run: |
