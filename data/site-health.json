@@ -1,16 +1,10 @@
 {
-  "checked_at": "2026-07-09T03:56:57.865Z",
-  "cleanup_version": "lydia-site-health-v1",
-  "removed_empty_dates": [
-    "2026-07-08"
-  ],
+  "checked_at": "2026-07-09T04:48:24.344Z",
+  "cleanup_version": "lydia-site-health-v2-strict-gates",
+  "removed_invalid_dates": [],
   "deleted_artifacts": [
-    "data/member-brief/2026-07-08.json",
-    "data/published-picks/2026-07-08.json",
-    "data/picks/2026-07-08.json",
-    "data/market/2026-07-08.json",
-    "data/bullpen/2026-07-08.json",
-    "previews/2026-07-08.html",
-    "data/market/today.json"
+    "data/member-brief/today.json",
+    "data/picks/today.json",
+    "data/bullpen/today.json"
   ]
 }
