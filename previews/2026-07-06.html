@@ -39,18 +39,7 @@
 </style>
 </head>
 <body>
-<nav><div class="nav-inner">
-  <a class="brand" href="/"><span class="brand-ly">Ly</span><span class="brand-dia">Dia</span></a>
-  <a class="navlink" href="/">Home</a>
-  <a class="navlink" href="/dashboard/">Dashboard</a>
-  <a class="navlink" href="/picks/">Picks</a>
-  <a class="navlink active" href="/previews/">Previews</a>
-  <a class="navlink" href="/results/">Results</a>
-  <a class="navlink" href="/odds/">Odds</a>
-  <a class="navlink" href="/recaps/">Recaps</a>
-  <a class="navlink" href="/articles/">Articles</a>
-  <a class="navlink navlink-cta" href="/membership/">Join $30/mo</a>
-</div></nav>
+<nav id="nav"></nav>
 <main>
 <h1>MLB Game Previews — Monday, July 6, 2026</h1>
 <p class="subtitle">Every matchup, the pitching duel, and the model's lean across moneyline, total, and run line. Methodology: Pythagorean strength (75%) + last-10 form (25%), log5, home-field bump, starter-ERA adjustment, and a public-signal check against tracked competitor sources.</p>
@@ -190,7 +179,7 @@
 </div>
 
 </main>
-<footer>LyDia — analysis and education only, not betting advice. Please bet responsibly. If gambling stops being fun, call 1-800-GAMBLER.</footer>
+<footer id="footer"></footer>
 <script>
 (function(){
   var f = document.getElementById("lead-preview20260706");
@@ -204,5 +193,6 @@
   });
 })();
 </script>
+<script src="/js/app.js"></script><script>renderNav("/previews/"); renderFooter();</script>
 </body>
 </html>

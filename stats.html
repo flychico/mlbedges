@@ -44,7 +44,7 @@ td.team-cell { font-weight: 600; white-space: nowrap; }
 <footer id="footer"></footer>
 <script src="js/app.js"></script>
 <script>
-renderNav("stats.html"); renderFooter();
+renderNav("/articles/"); renderFooter();
 
 const season = new Date().getMonth() >= 2 ? new Date().getFullYear() : new Date().getFullYear() - 1;
 const PYTH_EXP = 1.83;
@@ -130,5 +130,6 @@ function renderDivision(rec) {
   </div>`;
 }
 </script>
+<script src="/js/app.js"></script>
 </body>
 </html>
