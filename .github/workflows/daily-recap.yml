@@ -44,10 +44,16 @@ jobs:
       - name: Generate yesterday's recap
         run: node scripts/generate-recap.js
 
+      - name: Keep live results block on Results page
+        run: |
+          node scripts/dedupe-clv.js
+          node scripts/inject-live-results.js
+
       - name: Verify recap generated
         run: |
           test -f results/index.html || { echo "ERROR: results/index.html missing"; exit 1; }
           grep -q "<table" results/index.html || { echo "ERROR: no results table in results/index.html"; exit 1; }
+          grep -q "Today's Pick Status" results/index.html || { echo "ERROR: live pick status block missing"; exit 1; }
           echo "Recap and results look good."
 
       - name: Commit and push if changed
