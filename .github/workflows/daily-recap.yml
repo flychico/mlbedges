@@ -1,9 +1,8 @@
 name: Daily recap and grading
 
 # Backward-looking only. Safe to run unattended.
-# Grades yesterday's finished games and builds the recap/SEO pages.
-# It does NOT generate today's picks or email members. That happens in
-# publish-picks.yml, after LyDia's analysis and approval.
+# Grades yesterday's finished games, builds recap/SEO pages, and generates the learning summary.
+# It does NOT generate today's picks or email members. That happens in publish-picks.yml.
 
 on:
   schedule:
@@ -44,27 +43,32 @@ jobs:
       - name: Generate yesterday's recap
         run: node scripts/generate-recap.js
 
+      - name: Generate learning summary
+        run: node scripts/generate-learning-summary.js
+
       - name: Keep live results block on Results page
         run: |
           node scripts/dedupe-clv.js
           node scripts/inject-live-results.js
 
-      - name: Verify recap generated
+      - name: Verify recap and learning generated
         run: |
           test -f results/index.html || { echo "ERROR: results/index.html missing"; exit 1; }
           grep -q "<table" results/index.html || { echo "ERROR: no results table in results/index.html"; exit 1; }
           grep -q "Today's Pick Status" results/index.html || { echo "ERROR: live pick status block missing"; exit 1; }
-          echo "Recap and results look good."
+          test -f learning/index.html || { echo "ERROR: learning/index.html missing"; exit 1; }
+          test -f data/learning-summary.json || { echo "ERROR: learning summary missing"; exit 1; }
+          echo "Recap, results, and learning summary look good."
 
       - name: Commit and push if changed
         run: |
           git config user.name "lydia-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add results/ recaps/ data/ sitemap.xml
+          git add results/ recaps/ learning/ data/ sitemap.xml
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Daily recap $(TZ='America/New_York' date +%F)"
+            git commit -m "Daily recap and learning $(TZ='America/New_York' date +%F)"
             git pull --rebase
             git push
           fi
