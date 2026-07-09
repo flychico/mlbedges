@@ -127,7 +127,6 @@ async function loadBrief() {
   if (!data || !Array.isArray(data.games) || data.games.length === 0) {
     statusEl.innerHTML = `<div class="notice warn">
       <strong>No member brief is available for ${escapeHtml(date)}.</strong><br>
-      LyDia does not create official picks after a slate has already started. Check Results for completed cards or publish the daily card before games begin.
     </div>`;
     return;
   }
