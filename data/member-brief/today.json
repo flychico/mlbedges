@@ -1,6 +1,6 @@
 {
   "date": "2026-07-09",
-  "generated_at": "2026-07-09T00:35:38.417Z",
+  "generated_at": "2026-07-09T00:39:14.515Z",
   "snapshot_type": "posted",
   "source_of_truth": "scripts/generate-member-lab.js",
   "summary": "5 official picks cleared the full Lab process. 1 additional game landed on the watchlist.",
@@ -999,7 +999,7 @@
       "pick_team": "Tampa Bay Rays",
       "side": "home",
       "model_probability": 0.6876,
-      "edge": -0.2201,
+      "edge": -0.2341,
       "status": "pass",
       "value_tag": "PASS",
       "lab_score": 37,
@@ -1068,9 +1068,9 @@
         "absolute_risk": "Normal"
       },
       "market": {
-        "no_vig_probability": 0.9077,
+        "no_vig_probability": 0.9217,
         "best_price": -1667,
-        "books": 6
+        "books": 5
       }
     },
     {

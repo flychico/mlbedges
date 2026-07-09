@@ -1,6 +1,6 @@
 {
   "date": "2026-07-09",
-  "generated": "2026-07-09T00:35:38.417Z",
+  "generated": "2026-07-09T00:39:14.515Z",
   "source_of_truth": "scripts/generate-member-lab.js",
   "note": "Official picks are created only after pitcher matchup, bullpen fatigue, market pricing, and Lab Score checks.",
   "picks": [
