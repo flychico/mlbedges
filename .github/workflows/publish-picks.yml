@@ -1,6 +1,9 @@
 name: Publish picks (after LyDia analysis)
 
 on:
+  schedule:
+    # GitHub cron is UTC. 15:05 UTC = 11:05am ET in season — after morning odds post, before first pitch.
+    - cron: "5 15 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -91,7 +94,9 @@ jobs:
           fi
 
       - name: Email picks to paid members
-        if: ${{ github.event.inputs.send_email == 'true' }}
+        # Scheduled runs deliver automatically; manual runs still require send_email=true.
+        # The script exits cleanly if the email secrets are not configured yet.
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.send_email == 'true' }}
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
@@ -99,3 +104,16 @@ jobs:
           NETLIFY_API_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: node scripts/send-member-emails.js "${{ steps.publish_date.outputs.date }}"
+
+      - name: Normalize public shell and head tags
+        run: node scripts/normalize-public-shell.js
+
+      - name: Email free daily preview to the free list
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.send_email == 'true' }}
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_REPLY_TO: ${{ secrets.EMAIL_REPLY_TO }}
+          NETLIFY_API_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: node scripts/send-free-preview-emails.js "${{ steps.publish_date.outputs.date }}"

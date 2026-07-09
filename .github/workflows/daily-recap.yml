@@ -77,6 +77,9 @@ jobs:
       - name: Refresh LyDia Research Desk
         run: node scripts/generate-research-desk.js
 
+      - name: Normalize public shell and head tags
+        run: node scripts/normalize-public-shell.js
+
       - name: Keep live results block on Results page
         run: |
           node scripts/dedupe-clv.js
