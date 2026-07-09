@@ -1,7 +1,7 @@
 "use strict";
 
 /*
-  LyDia Bullpen Fatigue Core v2.0-clean
+  LyDia Bullpen Fatigue Core v2.1-locked-formula
 
   One source of truth for bullpen workload scoring.
   Used by:
@@ -9,11 +9,19 @@
   - scripts/generate-member-lab.js
   - tools/bullpen-fatigue/index.html through generated JSON only
 
+  Locked scoring rule:
+  Score = 45
+    + ((Last 3 BP IP - 9) × 3.5)
+    + ((Last game BP IP - 3) × 4)
+    + (Back-to-back arms × 6)
+
+  Reliever counts are context only. They are displayed, but they do not add hidden points.
+
   Design rule:
   Browser pages display generated bullpen data. They do not maintain a separate scoring model.
 */
 
-const VERSION = "bullpen-fatigue-v2.0-clean";
+const VERSION = "bullpen-fatigue-v2.1-locked-formula";
 const SOURCE_OF_TRUTH = "scripts/lib/bullpen-fatigue-core.js";
 const LOOKBACK_DAYS = 3;
 
@@ -140,24 +148,24 @@ function scoreTeam(team) {
   const b2b = countBackToBackArms(team.pitcherDates);
   const gamesTracked = games.length;
 
-  // Clean v2 scoring model:
-  // Start at normal workload, then add/subtract capped components.
-  // This prevents every normal-heavy team from pinning at 100 while still allowing true extreme spots.
+  // Locked audit formula. Do not add reliever-count points here.
   const components = {
     baseline: 45,
-    last3_bp_ip: clamp((last3BP - 9) * 2.8, -22, 32),
-    last_game_bp_ip: clamp((last.bpIP - 3) * 4.5, -16, 22),
-    back_to_back_arms: clamp(b2b * 5, 0, 20),
-    last3_relievers: clamp((last3Relievers - 9) * 1.2, -8, 10),
+    last3_bp_ip: (last3BP - 9) * 3.5,
+    last_game_bp_ip: (last.bpIP - 3) * 4,
+    back_to_back_arms: b2b * 6,
+    reliever_counts_context_only: 0,
     no_recent_games_credit: gamesTracked === 0 ? -18 : 0
   };
 
-  const rawScore = Object.values(components).reduce((s, v) => s + v, 0);
-  const extremeWorkload = last3BP >= 18 || (last.bpIP >= 7 && b2b >= 2) || (last3BP >= 15 && last3Relievers >= 14 && b2b >= 3);
-  let score = Math.round(clamp(rawScore, 0, 100));
+  const rawScore = components.baseline
+    + components.last3_bp_ip
+    + components.last_game_bp_ip
+    + components.back_to_back_arms
+    + components.reliever_counts_context_only
+    + components.no_recent_games_credit;
 
-  // 100 should mean extreme, not simply above average.
-  if (score >= 97 && !extremeWorkload) score = 96;
+  const score = Math.round(clamp(rawScore, 0, 100));
 
   let label = "Normal";
   if (score >= 82) label = "High risk";
@@ -176,6 +184,7 @@ function scoreTeam(team) {
     label,
     workload_read: workloadRead(label),
     score_reason: scoreReason({ label, score, last, last3BP, last3Relievers, b2b, gamesTracked }),
+    formula: "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6)",
     last_game_date: last.date,
     last_game_bp_ip: round(last.bpIP, 1),
     last3_bp_ip: round(last3BP, 1),
@@ -183,15 +192,19 @@ function scoreTeam(team) {
     last3_relievers: last3Relievers,
     back_to_back_arms: b2b,
     recent_games_tracked: gamesTracked,
+    context_only: {
+      last_game_relievers: last.relievers || 0,
+      last3_relievers: last3Relievers,
+      note: "Reliever counts are displayed for context only and do not add score points."
+    },
     component_scores: {
       baseline: round(components.baseline, 1),
       last3_bp_ip: round(components.last3_bp_ip, 1),
       last_game_bp_ip: round(components.last_game_bp_ip, 1),
       back_to_back_arms: round(components.back_to_back_arms, 1),
-      last3_relievers: round(components.last3_relievers, 1),
+      reliever_counts_context_only: 0,
       no_recent_games_credit: round(components.no_recent_games_credit, 1),
-      raw_score: round(rawScore, 1),
-      extreme_workload: extremeWorkload
+      raw_score: round(rawScore, 1)
     }
   };
 }
@@ -207,10 +220,11 @@ function scoreReason({ label, score, last, last3BP, last3Relievers, b2b, gamesTr
   if (!gamesTracked) return `Score ${score}/100. No recent completed games found in the three-day lookback, so bullpen fatigue is treated as fresh unless later news says otherwise.`;
   const pieces = [
     `Score ${score}/100 (${label}).`,
+    `Formula: 45 + ((${round(last3BP, 1)} - 9) x 3.5) + ((${round(last.bpIP, 1)} - 3) x 4) + (${b2b} x 6).`,
     `Last game bullpen IP: ${round(last.bpIP, 1)}.`,
     `Three-day bullpen IP: ${round(last3BP, 1)}.`,
-    `Three-day relievers used: ${last3Relievers}.`,
-    `Back-to-back arms: ${b2b}.`
+    `Back-to-back arms: ${b2b}.`,
+    `Relievers used: ${last.relievers || 0} last game, ${last3Relievers} over three days. Context only, not score points.`
   ];
   return pieces.join(" ");
 }
@@ -228,6 +242,8 @@ function buildTeamsByName(rows) {
       back_to_back_arms: row.back_to_back_arms,
       workload_read: row.workload_read,
       score_reason: row.score_reason,
+      formula: row.formula,
+      context_only: row.context_only,
       component_scores: row.component_scores,
       source_version: VERSION
     };
@@ -278,7 +294,8 @@ async function buildBullpenSource({ date, todayGames, fetchJson, generatedAt }) 
     source_of_truth: SOURCE_OF_TRUTH,
     version: VERSION,
     method: "Generated single source of truth. Website pages display this JSON and do not calculate separate bullpen scores in the browser.",
-    note: "Use this file for Bullpen Fatigue Index, Daily Member Brief, and LyDia model consumption.",
+    note: "Uses the locked audit formula. Reliever counts are context only and do not add hidden score points.",
+    formula: "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6)",
     lookback_days: LOOKBACK_DAYS,
     summary: {
       teams_tracked: teamsRows.length,
