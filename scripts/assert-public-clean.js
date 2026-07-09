@@ -10,6 +10,7 @@ const forbidden = [
   { re: /Official record source/i, label: "internal source label" },
   { re: /Source:\s*scripts/i, label: "script source label" },
   { re: /Generated\s+20\d{2}-\d{2}-\d{2}T/i, label: "raw timestamp" },
+  { re: /Generated:\s*20\d{2}-\d{2}-\d{2}T/i, label: "raw timestamp" },
   { re: /<nav(?![^>]*id=["']nav["'])/i, label: "hardcoded nav instead of shared nav" },
   { re: /<footer(?![^>]*id=["']footer["'])/i, label: "hardcoded footer instead of shared footer" }
 ];
@@ -29,7 +30,8 @@ for (const file of [...new Set(files)]) {
 
 if (hits.length) {
   console.error("Public-clean check failed:");
-  for (const hit of hits) console.error(`- ${hit}`);
+  for (const hit of hits.slice(0, 50)) console.error(`- ${hit}`);
+  if (hits.length > 50) console.error(`...and ${hits.length - 50} more`);
   process.exit(1);
 }
 

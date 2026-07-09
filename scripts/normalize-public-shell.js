@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 /*
-  LyDia public shell normalizer.
+  LyDia public shell and language normalizer.
 
   Purpose:
   - Fix existing static/generated HTML pages that still contain old hardcoded nav/footer markup.
   - Enforce js/app.js as the single source of truth for nav and footer.
+  - Remove public-facing internal implementation language from old generated pages.
   - Keep future site maintenance from leaving historical pages with missing tabs.
 
-  This does not change page content, picks, results, forms, analytics, or data.
+  This does not change picks, results, forms, analytics, or data.
 */
 const fs = require("fs");
 const path = require("path");
@@ -47,12 +48,12 @@ for (const file of [...new Set(files)]) {
   const after = normalizeHtml(before, rel);
   if (after !== before) {
     fs.writeFileSync(file, after, "utf8");
-    console.log(`normalized shell: ${rel}`);
+    console.log(`normalized public shell/text: ${rel}`);
     changed++;
   }
 }
 
-console.log(`Public shell normalization complete. Checked ${files.length} HTML file(s). Changed ${changed}.`);
+console.log(`Public normalization complete. Checked ${files.length} HTML file(s). Changed ${changed}.`);
 
 function collect(target) {
   if (!fs.existsSync(target)) return;
@@ -90,19 +91,32 @@ function normalizeHtml(html, rel) {
   const active = activeFor(rel);
   let out = html;
 
-  // Normalize the first navigation block. Old generated pages hardcoded a smaller nav.
-  if (/<nav\b[\s\S]*?<\/nav>/i.test(out)) {
-    out = out.replace(/<nav\b[\s\S]*?<\/nav>/i, '<nav id="nav"></nav>');
-  } else {
-    out = out.replace(/<body([^>]*)>/i, '<body$1>\n<nav id="nav"></nav>');
-  }
+  out = normalizeNav(out);
+  out = normalizeFooter(out);
+  out = normalizeAppScript(out, active);
+  out = sanitizePublicLanguage(out);
 
-  // Normalize the first footer block so footer text also has one source of truth.
-  if (/<footer\b[\s\S]*?<\/footer>/i.test(out)) {
-    out = out.replace(/<footer\b[\s\S]*?<\/footer>/i, '<footer id="footer"></footer>');
-  } else {
-    out = out.replace(/<\/body>/i, '<footer id="footer"></footer>\n</body>');
+  // Clean up accidental whitespace caused by replacement.
+  out = out.replace(/<footer id="footer"><\/footer>\s*<script src="\/js\/app\.js"><\/script>/i, '<footer id="footer"></footer><script src="/js/app.js"></script>');
+  return out;
+}
+
+function normalizeNav(html) {
+  if (/<nav\b[\s\S]*?<\/nav>/i.test(html)) {
+    return html.replace(/<nav\b[\s\S]*?<\/nav>/i, '<nav id="nav"></nav>');
   }
+  return html.replace(/<body([^>]*)>/i, '<body$1>\n<nav id="nav"></nav>');
+}
+
+function normalizeFooter(html) {
+  if (/<footer\b[\s\S]*?<\/footer>/i.test(html)) {
+    return html.replace(/<footer\b[\s\S]*?<\/footer>/i, '<footer id="footer"></footer>');
+  }
+  return html.replace(/<\/body>/i, '<footer id="footer"></footer>\n</body>');
+}
+
+function normalizeAppScript(html, active) {
+  let out = html;
 
   // Remove old one-line render calls so the active path can be set correctly once.
   out = out.replace(/<script>\s*renderNav\(["'][^"']*["']\);\s*renderFooter\(\);\s*<\/script>/g, "");
@@ -112,15 +126,41 @@ function normalizeHtml(html, rel) {
     out = out.replace(/<\/body>/i, '<script src="/js/app.js"></script>\n</body>');
   }
 
-  // Add or correct the render call. Keep page-specific scripts untouched.
   const renderCall = `<script>renderNav("${active}"); renderFooter();</script>`;
   if (/renderNav\(["'][^"']*["']\);\s*renderFooter\(\);/i.test(out)) {
     out = out.replace(/renderNav\(["'][^"']*["']\);\s*renderFooter\(\);/i, `renderNav("${active}"); renderFooter();`);
   } else {
     out = out.replace(/(<script\s+src=["']\/js\/app\.js["']><\/script>)/i, `$1${renderCall}`);
   }
+  return out;
+}
 
-  // Clean up accidental whitespace caused by replacement.
-  out = out.replace(/<footer id="footer"><\/footer>\s*<script src="\/js\/app\.js"><\/script>/i, '<footer id="footer"></footer><script src="/js/app.js"></script>');
+function sanitizePublicLanguage(html) {
+  let out = html;
+
+  // Remove internal script paths from public pages.
+  out = out.replace(/<code>node\s+scripts\/generate-[^<]+<\/code>/gi, "the daily workflow");
+  out = out.replace(/scripts\/generate-[a-z0-9_.-]+\.js/gi, "LyDia daily engine");
+  out = out.replace(/source_of_truth/gi, "daily_source");
+  out = out.replace(/source-of-truth/gi, "daily");
+
+  // Replace raw ISO timestamps in old generated pages with public wording.
+  out = out.replace(/Generated\s+20\d{2}-\d{2}-\d{2}T[0-9:.]+Z\s*·\s*/g, "Updated by LyDia · ");
+  out = out.replace(/Generated:\s*20\d{2}-\d{2}-\d{2}T[0-9:.]+Z/gi, "Updated by LyDia");
+  out = out.replace(/Generated\s+20\d{2}-\d{2}-\d{2}T[0-9:.]+Z/gi, "Updated by LyDia");
+
+  // Replace internal source labels with public language.
+  out = out.replace(/Official record source:\s*<code>[^<]+<\/code>\.?/gi, "Official card record is locked before first pitch.");
+  out = out.replace(/<strong>Source:<\/strong>\s*generated bullpen file\s*<code>[^<]+<\/code>/gi, "<strong>Bullpen data loaded.</strong>");
+  out = out.replace(/<strong>Source:<\/strong>\s*[^<]*LyDia daily engine[^<]*/gi, "<strong>LyDia Daily Engine</strong>");
+
+
+  // Avoid dynamic raw timestamps in public tool status messages.
+  out = out.replace(/<br><span class="small dim">Version:\s*\$\{esc\(data\.version[\s\S]*?Generated:\s*\$\{esc\(data\.generated_at[\s\S]*?<\/span>/gi, '<br><span class="small dim">Updated from the latest daily bullpen run.</span>');
+
+  // Make tool fallback instructions user-facing instead of developer-facing.
+  out = out.replace(/Run the daily content workflow or\s*the daily workflow\s*to generate\s*<code>\/data\/bullpen\/\$\{esc\(date\)\}\.json<\/code>\./gi, "Run the daily publish workflow before opening this date.");
+  out = out.replace(/Run the daily workflow or\s*the daily workflow\s*before opening this tool\./gi, "Run the daily publish workflow before opening this tool.");
+
   return out;
 }
