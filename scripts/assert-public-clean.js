@@ -45,7 +45,7 @@ function collect(dir) {
     return;
   }
   for (const item of fs.readdirSync(dir)) {
-    if ([".git", "node_modules"].includes(item)) continue;
+    if ([".git", "node_modules", "gym"].includes(item)) continue;
     collect(path.join(dir, item));
   }
 }

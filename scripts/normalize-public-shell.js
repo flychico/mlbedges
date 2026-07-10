@@ -14,7 +14,7 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
-const SKIP_DIRS = new Set([".git", "node_modules", ".netlify", "dist", "build"]);
+const SKIP_DIRS = new Set([".git", "node_modules", ".netlify", "dist", "build", "gym"]);
 const ROOTS = [
   ".",
   "dashboard",
