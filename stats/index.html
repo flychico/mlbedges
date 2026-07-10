@@ -36,6 +36,8 @@ td.team-cell { font-weight: 600; white-space: nowrap; }
 .card.game-card{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .card.game-card table{min-width:640px}
 .tier{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1px 7px;margin-left:5px;white-space:nowrap}
+.fpill{border:1px solid var(--border);background:var(--bg-card);border-radius:16px;padding:3px 10px;font-size:.76rem;font-weight:700;cursor:pointer;color:var(--text-dim);white-space:nowrap}
+.fpill.on{background:var(--accent2);border-color:var(--accent2);color:#fff}
 </style>
 </head>
 <body>
@@ -54,6 +56,7 @@ td.team-cell { font-weight: 600; white-space: nowrap; }
     <b>K%</b> and <b>BB%</b> are strikeout and walk rates over the window. Click any column header to sort.
     Recent form is signal, not destiny — 15 days is roughly 13 games.
   </div>
+  <div id="off-filter" style="margin-bottom:8px"></div>
   <div id="off-status" class="loading">Loading offense trends…</div>
   <div id="offense"></div>
 
@@ -80,6 +83,31 @@ const season = new Date().getMonth() >= 2 ? new Date().getFullYear() : new Date(
 // ---------- Offense trends (last 15 days vs season) ----------
 const OFF_DAYS = 15;
 let offRows = [], offSort = { key: "dOps", dir: -1 };
+let offFilter = new Set(); // team names; empty = show all
+
+function shortTeam(name) {
+  // "New York Yankees" -> "Yankees", "Boston Red Sox" -> "Red Sox", "Toronto Blue Jays" -> "Blue Jays"
+  const two = ["Red Sox", "White Sox", "Blue Jays"];
+  for (const t of two) if (name.endsWith(t)) return t;
+  return name.split(" ").pop();
+}
+function renderOffFilter() {
+  const el = document.getElementById("off-filter");
+  if (!el || !offRows.length) return;
+  const teams = [...offRows].sort((a, b) => shortTeam(a.team).localeCompare(shortTeam(b.team)));
+  el.innerHTML = `<div class="small dim" style="margin-bottom:4px">Compare teams — tap as many as you want${offFilter.size ? ` · showing ${offFilter.size} · ` : ""}${offFilter.size ? '<a style="cursor:pointer;color:var(--accent2);font-weight:700" onclick="offFilter.clear();renderOffFilter();renderOffense()">clear</a>' : ""}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px">
+      <span class="fpill ${offFilter.size ? "" : "on"}" onclick="offFilter.clear();renderOffFilter();renderOffense()">All</span>
+      ${teams.map((t, i) => `<span class="fpill ${offFilter.has(t.team) ? "on" : ""}" onclick="toggleTeam(${i})" data-team="${escapeHtml(t.team)}">${escapeHtml(shortTeam(t.team))}</span>`).join("")}
+    </div>`;
+}
+function toggleTeam(i) {
+  const pills = document.querySelectorAll("#off-filter .fpill[data-team]");
+  const name = pills[i] && pills[i].dataset.team;
+  if (!name) return;
+  if (offFilter.has(name)) offFilter.delete(name); else offFilter.add(name);
+  renderOffFilter(); renderOffense();
+}
 
 async function loadOffense() {
   const el = document.getElementById("offense");
@@ -118,6 +146,7 @@ async function loadOffense() {
     // rank every team's delta so the table can say "#1 hottest in MLB"
     const ranked = [...offRows].sort((a, b) => b.dOps - a.dOps);
     ranked.forEach((r, i) => { r.heatRank = i + 1; });
+    renderOffFilter();
     renderOffense();
     buildStories();
   } catch (e) {
@@ -148,7 +177,8 @@ function rpgTier(v){ if(!Number.isFinite(v))return null;
 
 function renderOffense() {
   const el = document.getElementById("offense");
-  const rows = [...offRows].sort((a, b) => (a[offSort.key] < b[offSort.key] ? 1 : -1) * offSort.dir * -1);
+  const pool = offFilter.size ? offRows.filter(r => offFilter.has(r.team)) : offRows;
+  const rows = [...pool].sort((a, b) => (a[offSort.key] < b[offSort.key] ? 1 : -1) * offSort.dir * -1);
   const dCut = 0.040; // ±40 OPS points = meaningfully hot/cold
   const cols = [
     ["team", "Team", "Team name"],
