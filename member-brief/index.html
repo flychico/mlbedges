@@ -12,18 +12,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Member Brief | LyDia</title>
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="LyDia">
-<meta property="og:title" content="Daily Member Brief | LyDia">
-<meta property="og:description" content="LyDia">
-<meta property="og:url" content="https://mlbedges.com/member-brief/">
-<meta property="og:image" content="https://mlbedges.com/img/og-card.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Daily Member Brief | LyDia">
-<meta name="twitter:description" content="LyDia">
-<meta name="twitter:image" content="https://mlbedges.com/img/og-card.png">
-
-<meta name="description" content="LyDia's Daily Member Brief organizes the MLB card by official picks, value watch setups, Lab Score, pitcher edges, bullpen flags, and market movement notes.">
+<meta name="description" content="LyDia's Daily Member Brief organizes the MLB card by official picks, value watch setups, Lab Rating, pitcher edges, bullpen flags, and market movement notes.">
 <link rel="canonical" href="https://mlbedges.com/member-brief/">
 <link rel="stylesheet" href="/css/style.css">
 <style>
@@ -51,10 +40,10 @@
 <main>
   <p class="eyebrow">LyDia's Lab</p>
   <h1>Daily Member Brief</h1>
-  <p class="subtitle">One morning view of the card: official moneyline picks, value watch setups, Lab Score, pitcher edges, bullpen flags, and market notes.</p>
+  <p class="subtitle">One morning view of the card: official moneyline picks, value watch setups, Lab Rating, pitcher edges, bullpen flags, and market notes.</p>
 
   <div class="notice">
-    <strong>Lab Score is not win probability.</strong> Win probability estimates how often LyDia thinks a team wins. Lab Score grades the full setup: model edge versus market, pitcher support, bullpen condition, market availability, and risk checks. A strong Lab Score with a low win probability becomes a value watch, not an official pick.
+    <strong>Lab Rating is not win probability.</strong> Win probability estimates how often LyDia thinks a team wins. Lab Rating grades the full setup: model edge versus market, pitcher support, bullpen condition, market availability, and risk checks. A strong Lab Rating with a low win probability becomes a value watch, not an official pick.
   </div>
 
   <div class="controls">
@@ -94,6 +83,7 @@ function shiftDay(n) {
 function pct(v) { return typeof v === "number" ? (v * 100).toFixed(1) + "%" : "-"; }
 function edge(v) { return typeof v === "number" ? (v >= 0 ? "+" : "") + (v * 100).toFixed(1) + "%" : "-"; }
 function odds(v) { return typeof v === "number" ? Odds.fmtAm(v) : "-"; }
+function labRating(v) { return typeof v === "number" ? (v / 10).toFixed(1) + "/10" : "-"; }
 function friendlyTime(iso) {
   if (!iso) return "";
   const d = new Date(iso);
@@ -138,7 +128,7 @@ async function loadBrief() {
   if (!data || !Array.isArray(data.games) || data.games.length === 0) {
     statusEl.innerHTML = `<div class="notice warn">
       <strong>No member brief is available for ${escapeHtml(date)}.</strong><br>
-    </div>`;
+          </div>`;
     return;
   }
 
@@ -152,7 +142,7 @@ async function loadBrief() {
   statusEl.innerHTML = "";
   kpisEl.innerHTML = `
     <div class="kpi"><div class="label">Games</div><div class="value">${games.length}</div><div class="small dim">${escapeHtml(data.date || date)}</div></div>
-    <div class="kpi"><div class="label">Official picks</div><div class="value">${official.length}</div><div class="small dim">72% model prob + 80 Lab Score</div></div>
+    <div class="kpi"><div class="label">Official picks</div><div class="value">${official.length}</div><div class="small dim">72% model prob + 8.0 Lab Rating</div></div>
     <div class="kpi"><div class="label">Value watch</div><div class="value">${valueWatch.length}</div><div class="small dim">good setup, not official</div></div>
     <div class="kpi"><div class="label">Market tracked</div><div class="value">${games.filter(g => g.market && g.market.best_price !== null).length}</div><div class="small dim">priced games</div></div>`;
 
@@ -161,7 +151,7 @@ async function loadBrief() {
     ${updated ? `<br><span class="small dim">Updated ${escapeHtml(updated)}</span>` : ""}
   </div>`;
 
-  officialEl.innerHTML = section("Official Picks", official, "No official picks cleared the stricter model-probability and Lab Score gates for this slate.");
+  officialEl.innerHTML = section("Official Picks", official, "No official picks cleared the stricter model-probability and Lab Rating gates for this slate.");
   watchEl.innerHTML = section("Value Watch / Research Setups", valueWatch.concat(watch), "No extra games reached the research range.");
   passesEl.innerHTML = section("Pass / No Clear Setup", passes.slice(0, 12), "No pass notes available.");
 }
@@ -183,8 +173,8 @@ function renderCard(g) {
     </div>
     <div class="brief-line">
       <span class="badge ${cls}">${labelStatus(g.status)}</span>
-      <span><b>LyDia side:</b> ${escapeHtml(g.pick_team || "-")}</span>
-      <span class="score-pill">Lab Score: ${g.lab_score ?? "-"}/100</span>
+      <span><b>LyDia side:</b> ${escapeHtml(g.pick_team || "-")} Money Line</span>
+      <span class="score-pill">Lab Rating: ${labRating(g.lab_score)}</span>
     </div>
     <div class="metric-grid">
       <div class="metric-box"><div class="label">Model probability</div><div class="value">${pct(g.model_probability)}</div></div>
