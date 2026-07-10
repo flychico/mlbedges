@@ -35,6 +35,7 @@ th.sortable { cursor: default; }
 td.team-cell { font-weight: 600; white-space: nowrap; }
 .card.game-card{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .card.game-card table{min-width:640px}
+.tier{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1px 7px;margin-left:5px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -124,6 +125,27 @@ async function loadOffense() {
   }
 }
 
+/* Tier labels — translate the decimals into weight classes (team-level calibration) */
+function tierChip(t){ return t ? ` <span class="tier ${t.cls}">${t.t}</span>` : ""; }
+function avgTier(v){ if(!Number.isFinite(v))return null;
+  if(v>=.280)return{t:"scorching",cls:"pos-text"}; if(v>=.265)return{t:"great",cls:"pos-text"}; if(v>=.252)return{t:"above avg",cls:"pos-text"};
+  if(v>=.240)return{t:"average",cls:""}; if(v>=.228)return{t:"light",cls:"neg-text"}; return{t:"punchless",cls:"neg-text"}; }
+function obpTier(v){ if(!Number.isFinite(v))return null;
+  if(v>=.345)return{t:"elite",cls:"pos-text"}; if(v>=.330)return{t:"good",cls:"pos-text"}; if(v>=.318)return{t:"average",cls:""};
+  if(v>=.305)return{t:"below avg",cls:"neg-text"}; return{t:"poor",cls:"neg-text"}; }
+function slgTier(v){ if(!Number.isFinite(v))return null;
+  if(v>=.480)return{t:"monster power",cls:"pos-text"}; if(v>=.445)return{t:"big power",cls:"pos-text"}; if(v>=.420)return{t:"good pop",cls:"pos-text"};
+  if(v>=.395)return{t:"average",cls:""}; if(v>=.375)return{t:"light",cls:"neg-text"}; return{t:"no thump",cls:"neg-text"}; }
+function opsTier(v){ if(!Number.isFinite(v))return null;
+  if(v>=.900)return{t:"elite",cls:"pos-text"}; if(v>=.850)return{t:"All-Star level",cls:"pos-text"}; if(v>=.800)return{t:"good",cls:"pos-text"};
+  if(v>=.750)return{t:"solid",cls:""}; if(v>=.700)return{t:"below avg",cls:"neg-text"}; if(v>=.640)return{t:"weak",cls:"neg-text"}; return{t:"broken",cls:"neg-text"}; }
+function kTier(v){ if(!Number.isFinite(v))return null;
+  if(v<.19)return{t:"great contact",cls:"pos-text"}; if(v<.215)return{t:"good contact",cls:"pos-text"}; if(v<.24)return{t:"average",cls:""};
+  if(v<.27)return{t:"whiff-prone",cls:"neg-text"}; return{t:"severe whiffs",cls:"neg-text"}; }
+function rpgTier(v){ if(!Number.isFinite(v))return null;
+  if(v>=5.5)return{t:"big scoring",cls:"pos-text"}; if(v>=4.8)return{t:"above avg",cls:"pos-text"}; if(v>=4.2)return{t:"average",cls:""};
+  if(v>=3.6)return{t:"light",cls:"neg-text"}; return{t:"starved",cls:"neg-text"}; }
+
 function renderOffense() {
   const el = document.getElementById("offense");
   const rows = [...offRows].sort((a, b) => (a[offSort.key] < b[offSort.key] ? 1 : -1) * offSort.dir * -1);
@@ -148,15 +170,15 @@ function renderOffense() {
     return `<tr>
       <td class="team-cell">${escapeHtml(r.team)}</td>
       <td class="num">${r.g}</td>
-      <td class="num">${f3(r.avg)}</td>
-      <td class="num">${f3(r.obp)}</td>
-      <td class="num">${f3(r.slg)}</td>
-      <td class="num"><b>${f3(r.ops)}</b></td>
+      <td class="num"><b>${f3(r.avg)}</b>${tierChip(avgTier(r.avg))}</td>
+      <td class="num"><b>${f3(r.obp)}</b>${tierChip(obpTier(r.obp))}</td>
+      <td class="num"><b>${f3(r.slg)}</b>${tierChip(slgTier(r.slg))}</td>
+      <td class="num"><b>${f3(r.ops)}</b>${tierChip(opsTier(r.ops))}</td>
       <td class="num dim">${f3(r.seasonOps)}</td>
       <td class="num ${dCls}"><b>${r.dOps > 0 ? "+" : ""}${f3(r.dOps)}</b>${r.heatRank === 1 ? '<div class="small" style="color:var(--good);font-weight:700">hottest in MLB</div>' : r.heatRank === 30 ? '<div class="small neg-text" style="font-weight:700">coldest in MLB</div>' : r.heatRank <= 3 ? `<div class="small dim">#${r.heatRank} hottest</div>` : r.heatRank >= 28 ? `<div class="small dim">#${31 - r.heatRank} coldest</div>` : ""}</td>
-      <td class="num">${r.rpg.toFixed(1)}</td>
+      <td class="num">${r.rpg.toFixed(1)}${tierChip(rpgTier(r.rpg))}</td>
       <td class="num">${r.hr}</td>
-      <td class="num">${(r.kPct * 100).toFixed(1)}%</td>
+      <td class="num">${(r.kPct * 100).toFixed(1)}%${tierChip(kTier(r.kPct))}</td>
       <td class="num">${(r.bbPct * 100).toFixed(1)}%</td>
     </tr>`;
   }).join("");
@@ -288,8 +310,8 @@ function renderDivision(rec) {
       <td class="num">${pyth.toFixed(3)}</td>
       <td class="num dim">${Math.round(xW)}-${Math.round(xL)}</td>
       <td class="num ${dCls}" title="${dTip}">${delta > 0 ? "+" : ""}${delta.toFixed(1)}</td>
-      <td class="num">${l10 ? `${l10.wins}-${l10.losses}` : "—"}</td>
-      <td class="num dim">${escapeHtml((t.streak && t.streak.streakCode) || "-")}</td>
+      <td class="num ${l10 && l10.wins >= 7 ? "pos-text" : l10 && l10.wins <= 3 ? "neg-text" : ""}" style="${l10 && (l10.wins >= 7 || l10.wins <= 3) ? "font-weight:700" : ""}">${l10 ? `${l10.wins}-${l10.losses}` : "—"}${l10 && l10.wins >= 8 ? " 🔥" : l10 && l10.wins <= 2 ? " 🧊" : ""}</td>
+      <td class="num ${(() => { const m = /^([WL])(\d+)$/.exec((t.streak && t.streak.streakCode) || ""); return m && Number(m[2]) >= 4 ? (m[1] === "W" ? "pos-text" : "neg-text") : "dim"; })()}" style="${(() => { const m = /^([WL])(\d+)$/.exec((t.streak && t.streak.streakCode) || ""); return m && Number(m[2]) >= 4 ? "font-weight:800" : ""; })()}">${escapeHtml((t.streak && t.streak.streakCode) || "-")}${(() => { const m = /^([WL])(\d+)$/.exec((t.streak && t.streak.streakCode) || ""); return m && Number(m[2]) >= 5 ? (m[1] === "W" ? " 🔥" : " 🧊") : ""; })()}</td>
     </tr>`;
   }).join("");
   return `<div class="card game-card">

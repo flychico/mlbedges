@@ -28,7 +28,7 @@
   <h1>Model v3 — Shadow View</h1>
   <p class="subtitle">What the new method (FIP-based pitcher input + offense form) says about today's card, next to the locked official v2. This page never affects picks — it's the A/B test made visible.</p>
   <div class="notice">
-    <strong>Reading it:</strong> v2 is the locked number the site published. v3 is recomputed here from live data (or the locked value once the daily run records it). A <b>v3 pick?</b> tag means v3 clears the probability (72%) and market-edge (3%) gates — Lab Score and bullpen gates are not applied on this view. Cards with a pink border are games where the two models pick different sides — those are the games that decide the A/B. Each starter shows both grades: the live <b>LyDia Pitcher Score</b> (ERA/WHIP-based) and the <b>v3 skill score</b> (FIP, K-BB%, HR — luck stripped out). Big gaps between the two are the model disagreement, explained.
+    <strong>Reading it:</strong> v2 is the locked number the site published. v3 is recomputed here from live data (or the locked value once the daily run records it). A <b>v3 pick?</b> tag means v3 clears ALL official gates — probability (72%), market edge (3%), and a v3 Lab Score of 80+ (computed with v3's skill-based pitcher gap and the same bullpen/market buckets as the live engine). Cards with a pink border are games where the two models pick different sides — those are the games that decide the A/B. Each starter shows both grades: the live <b>LyDia Pitcher Score</b> (ERA/WHIP-based) and the <b>v3 skill score</b> (FIP, K-BB%, HR — luck stripped out). Big gaps between the two are the model disagreement, explained.
   </div>
   <div id="summary"></div>
   <div id="status"><div class="loading">Computing both models…</div></div>
@@ -80,6 +80,22 @@ function scoreV3(st) {
   const hrS = clampN(70 - (hr9 - 1.1) * 25, 20, 90);
   const sampS = clampN(35 + Math.min(st.ip, 100) * 0.35, 35, 70);
   return Math.round(fipS * .40 + kbbS * .30 + hrS * .15 + sampS * .15);
+}
+/* v3 Lab Score — same buckets as the live engine, fed v3 ingredients:
+   edge from v3 prob, pitcher points from the v3 skill-score gap, bullpen from
+   the brief (swapped if v3 picks the other side), market from v3 edge. */
+function labV3(v3prob, v3edge, pitchGap, gapSupports, bpPick, bpOpp) {
+  const clampN = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
+  const modelPts = v3edge === null ? 0 : clampN(v3edge / 0.08, 0, 1) * 35;
+  const pitcherPts = gapSupports ? clampN(pitchGap / 20, 0, 1) * 25 : Math.max(0, 8 - clampN(pitchGap / 20, 0, 1) * 8);
+  let bullpenPts = 7;
+  if (Number.isFinite(bpPick) && Number.isFinite(bpOpp)) {
+    bullpenPts = 8 + clampN((bpOpp - bpPick) / 45, -1, 1) * 7;
+    if (bpPick >= 78) bullpenPts -= 2;
+    if (bpPick >= 78 && bpOpp >= 78) bullpenPts -= 1;
+  }
+  const marketPts = v3edge === null ? 0 : v3edge >= VALUE_EDGE ? 15 : v3edge >= 0 ? 10 : v3edge > -VALUE_EDGE ? 5 : 1;
+  return Math.round(clampN(modelPts + pitcherPts + bullpenPts + marketPts + 5, 0, 100));
 }
 const pct = v => (v * 100).toFixed(1) + "%";
 const f3 = v => Number.isFinite(v) ? v.toFixed(3).replace(/^0/, "") : "—";
@@ -164,6 +180,10 @@ async function load() {
         fA, fH, eA, eH, dA, dH,
         pHome2, pHome3: pHome3Final, v3locked: locked3 !== null,
         mktHome: mkt, status: b ? b.status : null,
+        lab2: b && Number.isFinite(b.lab_score) ? b.lab_score : null,
+        v2side: b ? b.side : (pHome2live >= 0.5 ? "home" : "away"),
+        bpPick: b && b.bullpen && b.bullpen.pick_team ? b.bullpen.pick_team.score : null,
+        bpOpp: b && b.bullpen && b.bullpen.opponent ? b.bullpen.opponent.score : null,
         time: new Date(g.gameDate).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
       });
     }
@@ -192,7 +212,14 @@ function render(rows) {
     if (disagree) disagreements.push(`${r.away} @ ${r.home}: v2 → ${v2.team}, v3 → ${v3.team}`);
     const mktV3 = r.mktHome !== null ? (r.pHome3 >= 0.5 ? r.mktHome : 1 - r.mktHome) : null;
     const v3edge = mktV3 !== null ? v3.p - mktV3 : null;
-    const v3official = v3.p >= OFFICIAL_PROB && v3edge !== null && v3edge >= VALUE_EDGE;
+    // v3 Lab Score: pitcher gap from v3 skill scores; bullpen swapped if v3 flips sides
+    const v3sideKey = r.pHome3 >= 0.5 ? "home" : "away";
+    const sameSide = v3sideKey === r.v2side;
+    const bpPick = sameSide ? r.bpPick : r.bpOpp, bpOpp = sameSide ? r.bpOpp : r.bpPick;
+    const gap3 = (Number.isFinite(r.sA3) && Number.isFinite(r.sH3)) ? Math.abs(r.sH3 - r.sA3) : 0;
+    const gapSupports = (Number.isFinite(r.sA3) && Number.isFinite(r.sH3)) ? ((r.sH3 >= r.sA3) === (v3sideKey === "home")) : false;
+    const lab3 = labV3(v3.p, v3edge, gap3, gapSupports, bpPick, bpOpp);
+    const v3official = v3.p >= OFFICIAL_PROB && v3edge !== null && v3edge >= VALUE_EDGE && lab3 >= 80;
     if (v3official) v3picks.push(`${v3.team} (${pct(v3.p)}${v3edge !== null ? ", edge " + pct(v3edge) : ""})`);
     if (r.status === "official_pick") v2picks.push(v2.team);
     return `<div class="card match-card ${disagree ? "disagree" : ""}">
@@ -203,10 +230,10 @@ function render(rows) {
         offense form: ${escapeHtml(r.away)} ${r.dA >= 0 ? "+" : ""}${f3(r.dA)} · ${escapeHtml(r.home)} ${r.dH >= 0 ? "+" : ""}${f3(r.dH)}
       </div>
       <div class="probgrid">
-        <div class="probbox"><div class="dim small">OFFICIAL MODEL (v2)</div><div class="big v2c">${escapeHtml(v2.team)} ${pct(v2.p)}</div></div>
+        <div class="probbox"><div class="dim small">OFFICIAL MODEL (v2)</div><div class="big v2c">${escapeHtml(v2.team)} ${pct(v2.p)}</div>${r.lab2 !== null ? `<div class="small dim">Lab Score ${r.lab2}/100</div>` : ""}</div>
         <div class="probbox"><div class="dim small">SHADOW MODEL (v3) ${r.v3locked ? "· locked" : "· live compute"}</div>
           <div class="big v3c">${escapeHtml(v3.team)} ${pct(v3.p)}${v3official ? '<span class="tag pick">v3 pick?</span>' : ""}${disagree ? '<span class="tag diff">disagrees</span>' : ""}</div>
-          ${v3edge !== null ? `<div class="small dim">edge vs market: ${v3edge >= 0 ? "+" : ""}${pct(v3edge)}</div>` : ""}
+          <div class="small dim">v3 Lab Score <b>${lab3}</b>/100${r.lab2 !== null ? ` <span class="dim">(v2: ${r.lab2})</span>` : ""}${v3edge !== null ? ` · edge vs market ${v3edge >= 0 ? "+" : ""}${pct(v3edge)}` : ""}</div>
         </div>
       </div>
     </div>`;
@@ -217,7 +244,7 @@ function render(rows) {
     <div class="exline"><span><b>v2 official picks</b> (published)</span><span>${v2picks.length ? v2picks.map(escapeHtml).join(" · ") : "none"}</span></div>
     <div class="exline"><span><b>v3 would-be picks</b> (prob + edge gates only)</span><span>${v3picks.length ? v3picks.map(escapeHtml).join(" · ") : "none"}</span></div>
     <div class="exline"><span><b>Disagreements</b></span><span>${disagreements.length ? disagreements.map(escapeHtml).join(" · ") : "models agree on every game"}</span></div>
-    <div class="small-note">v3 would-be picks skip the Lab Score and bullpen gates — treat them as "probability + price cleared," not full official criteria.</div>
+    <div class="small-note">v3 would-be picks clear the same three gates as official picks — probability, market edge, and Lab Score — with every pitcher-dependent ingredient swapped for the v3 skill version.</div>
   </div>`;
 }
 load();
