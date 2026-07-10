@@ -218,13 +218,30 @@ async function fetchPitchers(games) {
         ip: ipToNum(st.inningsPitched),
         so: Number(st.strikeOuts || 0),
         bb: Number(st.baseOnBalls || 0),
-        gs: Number(st.gamesStarted || 0)
+        gs: Number(st.gamesStarted || 0),
+        w: Number(st.wins || 0),
+        l: Number(st.losses || 0),
+        bf: Number(st.battersFaced || 0),
+        go: Number(st.groundOuts || 0),
+        ao: Number(st.airOuts || 0),
+        h: Number(st.hits || 0),
+        ab: Number(st.atBats || 0),
+        sf: Number(st.sacFlies || 0),
+        hr: Number(st.homeRuns || 0)
       };
     }
   } catch (e) {
     console.warn("Pitcher stats unavailable:", e.message);
   }
   return out;
+}
+function advStats(st) {
+  if (!st) return null;
+  const kbb = st.bf ? Number((((st.so - st.bb) / st.bf)).toFixed(4)) : null;
+  const gb = (st.go + st.ao) ? Number((st.go / (st.go + st.ao)).toFixed(4)) : null;
+  const den = st.ab - st.so - st.hr + (st.sf || 0);
+  const babip = den > 0 ? Number(((st.h - st.hr) / den).toFixed(4)) : null;
+  return { w: st.w ?? null, l: st.l ?? null, kbb_pct: kbb, gb_pct: gb, babip, hr9: st.ip ? Number(((st.hr / st.ip) * 9).toFixed(2)) : null, ip_per_start: st.gs ? Number((st.ip / st.gs).toFixed(1)) : null };
 }
 function pitcherScore(st) {
   if (!st || !Number.isFinite(st.era)) return { score: 50, label: "Unknown", k9: null, bb9: null };
@@ -383,7 +400,12 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen) {
       away_era: awayStats && Number.isFinite(awayStats.era) ? awayStats.era : null,
       home_era: homeStats && Number.isFinite(homeStats.era) ? homeStats.era : null,
       away_whip: awayStats && Number.isFinite(awayStats.whip) ? awayStats.whip : null,
-      home_whip: homeStats && Number.isFinite(homeStats.whip) ? homeStats.whip : null
+      home_whip: homeStats && Number.isFinite(homeStats.whip) ? homeStats.whip : null,
+      // Advanced stats captured daily for relevance analysis (NOT in any score yet).
+      // Once enough graded games accumulate, the learning pass can test whether
+      // K-BB%, GB%, or BABIP separation predicts outcomes better than ERA/WHIP.
+      away_advanced: advStats(awayStats),
+      home_advanced: advStats(homeStats)
     },
     bullpen: {
       pick_team: pickBullpen,
