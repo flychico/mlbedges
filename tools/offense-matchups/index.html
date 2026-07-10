@@ -56,7 +56,7 @@
   </div>
 
   <div class="notice">
-    <strong>How to read it:</strong> <b>OPS (window)</b> is quality right now; <b>Δ vs season</b> is heat — a bad offense can be hot and an elite one can be cold. Tier labels translate the decimals: every ~25 OPS points is one class of offense (.700 below avg · .750 solid · .800 good · .850 All-Star · .900 elite). <b>HOW a team is hot matters</b>: contact-driven heat holds up; strikeout-heavy power binges collapse. The <b>vs-hand line</b> is each lineup's full-season OPS against tonight's opposing starter's throwing hand. Data only — no score. The learning system decides later what earns a place in the model.
+    <strong>How to read it:</strong> <b>OPS (window)</b> is quality right now; <b>Δ vs season</b> is heat — a bad offense can be hot and an elite one can be cold. Tier labels translate the decimals: every ~25 OPS points is one class of offense (.700 below avg · .750 solid · .800 good · .850 All-Star · .900 elite). <b>HOW a team is hot matters</b>: contact-driven heat holds up; strikeout-heavy power binges collapse. The <b>vs-hand line</b> is each lineup's full-season OPS against tonight's opposing starter's throwing hand.
   </div>
 
   <div id="status"></div>
@@ -235,6 +235,75 @@ function teamBox(teamName, id, win, season, oppStarter) {
   </div>`;
 }
 
+/* Compose a specific, actionable read from this game's actual numbers.
+   Sentences are only included when the data earns them — no boilerplate. */
+function buildRead(aT, hT, aWin, hWin, aSn, hSn, aOpp, hOpp) {
+  if (!aWin || !hWin || !aSn || !hSn || !Number.isFinite(aWin.ops) || !Number.isFinite(hWin.ops)) {
+    return "Window data unavailable for one or both teams.";
+  }
+  const A = { name: aT.name, id: aT.id, w: aWin, sn: aSn, d: aWin.ops - aSn.ops, opp: aOpp };
+  const H = { name: hT.name, id: hT.id, w: hWin, sn: hSn, d: hWin.ops - hSn.ops, opp: hOpp };
+  const lead = A.w.ops >= H.w.ops ? A : H;
+  const trail = lead === A ? H : A;
+  const gap = lead.w.ops - trail.w.ops;
+  const parts = [];
+
+  // 1. What is happening
+  if (gap < 0.030) {
+    parts.push(`Neither lineup separates itself over the last ${WINDOW} days (${f3(A.w.ops)} vs ${f3(H.w.ops)} OPS).`);
+  } else {
+    const lt = opsTier(lead.w.ops), tt = opsTier(trail.w.ops);
+    parts.push(`${lead.name} have hit like a${lt && /^[aeiou]/i.test(lt.t) ? "n" : ""} ${lt ? lt.t : ""} offense over the last ${WINDOW} days (${f3(lead.w.ops)} OPS, ${Number.isFinite(lead.w.rpg) ? lead.w.rpg.toFixed(1) : "—"} R/G) while ${trail.name} have been ${tt ? tt.t : "quiet"} (${f3(trail.w.ops)}).`);
+  }
+
+  // 2. HOW it's happening — contact contrast, only when the K% gap is real
+  const aK = A.w.kPct, hK = H.w.kPct;
+  if (Number.isFinite(aK) && Number.isFinite(hK) && Math.abs(aK - hK) >= 0.05) {
+    const contact = aK < hK ? A : H, whiff = contact === A ? H : A;
+    if (contact === lead) {
+      parts.push(`The shape favors it holding: ${contact.name} are doing this with contact (${(contact.w.kPct * 100).toFixed(1)}% K) while ${whiff.name} are swinging through pitches (${(whiff.w.kPct * 100).toFixed(1)}%).`);
+    } else {
+      parts.push(`One caution: ${lead.name}'s production is strikeout-heavy (${(lead.w.kPct * 100).toFixed(1)}% K vs ${trail.name}'s ${(trail.w.kPct * 100).toFixed(1)}%) — power-binge heat fades fastest.`);
+    }
+  }
+
+  // 3. Sustainability — only for extreme deltas
+  for (const t of [lead, trail]) {
+    if (t.d >= 0.120) {
+      const cooled = (t.sn.ops + 0.030);
+      parts.push(`+${f3(t.d)} above their own baseline never holds — expect ${t.name} to cool toward the ${f3(t.sn.ops)} season level${cooled > trail.w.ops && t === lead && gap >= 0.03 ? ", though even the cooled version out-hits what " + trail.name + " are doing right now" : ""}.`);
+    } else if (t.d <= -0.120) {
+      parts.push(`${t.name} sitting ${f3(Math.abs(t.d))} under their own baseline are in a slump, not at a talent level, not a talent level — snapback is coming, it just keeps no schedule.`);
+    }
+  }
+
+  // 4. Tonight's matchup check — vs-hand vs the window story
+  for (const t of [lead, trail]) {
+    if (!t.opp || !t.opp.hand) continue;
+    const sp = splitsBy && splitsBy[t.id] ? splitsBy[t.id] : {};
+    const vs = t.opp.hand === "L" ? sp.vl : sp.vr;
+    if (!Number.isFinite(vs)) continue;
+    const lg = t.opp.hand === "L" ? "lefties" : "righties";
+    if (t === lead && t.d >= 0.05 && vs < t.sn.ops - 0.020) {
+      parts.push(`A check on the heat: against ${lg} like ${t.opp.name}, ${t.name} have hit just ${f3(vs)} all season — tonight's matchup blunts some of it.`);
+    } else if (t === trail && vs >= t.sn.ops + 0.030) {
+      parts.push(`${t.name}'s counter: they hit ${lg} well (${f3(vs)} season) and get one in ${t.opp.name}.`);
+    }
+  }
+
+  // 5. The angle — derived, not canned
+  const bothHot = A.d >= 0.05 && H.d >= 0.05, bothCold = A.d <= -0.05 && H.d <= -0.05;
+  if (bothHot) parts.push(`With both lineups above their baselines, this reads more like an over angle than a side.`);
+  else if (bothCold) parts.push(`Two cold lineups is an under profile until one of them proves otherwise.`);
+  else if (gap >= 0.080 && lead.d >= 0.025 && Number.isFinite(lead.w.kPct) && lead.w.kPct < 0.24) {
+    parts.push(`Form, quality, and contact profile all point the same way: ${lead.name}.`);
+  } else if (gap >= 0.030 && lead.d < trail.d) {
+    parts.push(`Split signal — ${lead.name} own the window but ${trail.name} are the ones trending up. Thin edge either way.`);
+  }
+
+  return parts.join(" ");
+}
+
 function renderGame(g, windowBy, hands) {
   const a = g.teams.away, h = g.teams.home;
   const aWin = windowBy[a.team.id], hWin = windowBy[h.team.id];
@@ -243,24 +312,7 @@ function renderGame(g, windowBy, hands) {
   const hOpp = a.probablePitcher ? (hands[a.probablePitcher.id] || null) : null;
   const time = new Date(g.gameDate).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 
-  // plain-English read: quality (window OPS) and heat (delta) called out separately
-  let read = "";
-  if (aWin && hWin && aSn && hSn && Number.isFinite(aWin.ops) && Number.isFinite(hWin.ops)) {
-    const qLead = aWin.ops > hWin.ops ? a.team.name : h.team.name;
-    const qGap = Math.abs(aWin.ops - hWin.ops);
-    const aD = aWin.ops - aSn.ops, hD = hWin.ops - hSn.ops;
-    const heatLead = aD > hD ? a.team.name : h.team.name;
-    const gapWord = qGap >= 0.150 ? "a massive" : qGap >= 0.080 ? "a full class of offense" : qGap >= 0.030 ? "about one tier" : "negligible";
-    if (qGap < 0.030) read = `Offenses are close over the last ${WINDOW} days (gap ${f3(qGap)} OPS). No meaningful edge either way.`;
-    else if (qLead === heatLead) read = `${qLead} is both the better and the hotter offense right now — the ${f3(qGap)} OPS gap is ${gapWord} of separation.`;
-    else read = `${qLead} has the better window numbers, but ${heatLead} is trending up harder. Quality and heat point different ways — worth a closer look before leaning on either.`;
-    const bothCold = aD <= -0.05 && hD <= -0.05, bothHot = aD >= 0.05 && hD >= 0.05;
-    if (bothCold) read += " Both lineups are cold — an under lean until proven otherwise.";
-    if (bothHot) read += " Both lineups are hot — more relevant for the over than either side.";
-    read += ` Next: check the starters on the Pitcher tool, then the price — a read everyone can see is already in the line.`;
-  } else {
-    read = "Window data unavailable for one or both teams.";
-  }
+  const read = buildRead(a.team, h.team, aWin, hWin, aSn, hSn, aOpp, hOpp);
 
   return `<div class="card match-card" id="og-${g.gamePk}" style="scroll-margin-top:70px">
     <div class="match-head">
