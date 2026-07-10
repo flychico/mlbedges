@@ -9,11 +9,14 @@
   - scripts/generate-member-lab.js
   - tools/bullpen-fatigue/index.html through generated JSON only
 
-  Locked scoring rule:
+  Scoring rule (v3, runs-aware):
   Score = 45
     + ((Last 3 BP IP - 9) × 3.5)
     + ((Last game BP IP - 3) × 4)
     + (Back-to-back arms × 6)
+    + clamp((Last 3 BP runs allowed - 4) × 1.5, -6, 12)
+  A shelled pen is a stressed pen: runs allowed capture blown leads, long
+  outings from leverage arms, and manager trust burned — workload IP alone misses that.
 
   Reliever counts are context only. They are displayed, but they do not add hidden points.
 
@@ -21,7 +24,7 @@
   Browser pages display generated bullpen data. They do not maintain a separate scoring model.
 */
 
-const VERSION = "bullpen-fatigue-v2.1-locked-formula";
+const VERSION = "bullpen-fatigue-v3-runs-aware";
 const SOURCE_OF_TRUTH = "scripts/lib/bullpen-fatigue-core.js";
 const LOOKBACK_DAYS = 3;
 
@@ -98,6 +101,7 @@ function processBoxSide(box, side, teamId, date, teams) {
   let totalIP = 0;
   let starterIP = 0;
   let relievers = 0;
+  let bpRuns = 0;
   const relieverIds = [];
 
   for (let i = 0; i < tb.pitchers.length; i++) {
@@ -110,6 +114,7 @@ function processBoxSide(box, side, teamId, date, teams) {
       starterIP = ip;
     } else {
       relievers += 1;
+      bpRuns += Number(player && player.stats && player.stats.pitching && player.stats.pitching.runs) || 0;
       relieverIds.push(id);
       if (!team.pitcherDates[id]) team.pitcherDates[id] = new Set();
       team.pitcherDates[id].add(date);
@@ -120,6 +125,7 @@ function processBoxSide(box, side, teamId, date, teams) {
     date,
     bpIP: Math.max(0, totalIP - starterIP),
     relievers,
+    bpRuns,
     relieverIds
   });
 }
@@ -142,18 +148,20 @@ function countBackToBackArms(pitcherDates) {
 
 function scoreTeam(team) {
   const games = [...(team.games || [])].sort((a, b) => new Date(b.date) - new Date(a.date));
-  const last = games[0] || { bpIP: 0, relievers: 0, date: null };
+  const last = games[0] || { bpIP: 0, relievers: 0, bpRuns: 0, date: null };
   const last3BP = games.reduce((s, g) => s + g.bpIP, 0);
+  const last3Runs = games.reduce((s, g) => s + (g.bpRuns || 0), 0);
   const last3Relievers = games.reduce((s, g) => s + g.relievers, 0);
   const b2b = countBackToBackArms(team.pitcherDates);
   const gamesTracked = games.length;
 
-  // Locked audit formula. Do not add reliever-count points here.
+  // Audit formula v3. Reliever counts remain context-only.
   const components = {
     baseline: 45,
     last3_bp_ip: (last3BP - 9) * 3.5,
     last_game_bp_ip: (last.bpIP - 3) * 4,
     back_to_back_arms: b2b * 6,
+    bp_runs_allowed_3d: gamesTracked ? clamp((last3Runs - 4) * 1.5, -6, 12) : 0,
     reliever_counts_context_only: 0,
     no_recent_games_credit: gamesTracked === 0 ? -18 : 0
   };
@@ -162,6 +170,7 @@ function scoreTeam(team) {
     + components.last3_bp_ip
     + components.last_game_bp_ip
     + components.back_to_back_arms
+    + components.bp_runs_allowed_3d
     + components.reliever_counts_context_only
     + components.no_recent_games_credit;
 
@@ -183,11 +192,12 @@ function scoreTeam(team) {
     score,
     label,
     workload_read: workloadRead(label),
-    score_reason: scoreReason({ label, score, last, last3BP, last3Relievers, b2b, gamesTracked }),
-    formula: "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6)",
+    score_reason: scoreReason({ label, score, last, last3BP, last3Runs, last3Relievers, b2b, gamesTracked }),
+    formula: "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
     last_game_date: last.date,
     last_game_bp_ip: round(last.bpIP, 1),
     last3_bp_ip: round(last3BP, 1),
+    last3_bp_runs: last3Runs,
     last_game_relievers: last.relievers || 0,
     last3_relievers: last3Relievers,
     back_to_back_arms: b2b,
@@ -202,6 +212,7 @@ function scoreTeam(team) {
       last3_bp_ip: round(components.last3_bp_ip, 1),
       last_game_bp_ip: round(components.last_game_bp_ip, 1),
       back_to_back_arms: round(components.back_to_back_arms, 1),
+      bp_runs_allowed_3d: round(components.bp_runs_allowed_3d, 1),
       reliever_counts_context_only: 0,
       no_recent_games_credit: round(components.no_recent_games_credit, 1),
       raw_score: round(rawScore, 1)
@@ -216,17 +227,15 @@ function workloadRead(label) {
   return "Manageable recent workload. Bullpen should still be part of the full-game read.";
 }
 
-function scoreReason({ label, score, last, last3BP, last3Relievers, b2b, gamesTracked }) {
-  if (!gamesTracked) return `Score ${score}/100. No recent completed games found in the three-day lookback, so bullpen fatigue is treated as fresh unless later news says otherwise.`;
-  const pieces = [
-    `Score ${score}/100 (${label}).`,
-    `Formula: 45 + ((${round(last3BP, 1)} - 9) x 3.5) + ((${round(last.bpIP, 1)} - 3) x 4) + (${b2b} x 6).`,
-    `Last game bullpen IP: ${round(last.bpIP, 1)}.`,
-    `Three-day bullpen IP: ${round(last3BP, 1)}.`,
-    `Back-to-back arms: ${b2b}.`,
-    `Relievers used: ${last.relievers || 0} last game, ${last3Relievers} over three days. Context only, not score points.`
-  ];
-  return pieces.join(" ");
+function scoreReason({ label, score, last, last3BP, last3Runs, last3Relievers, b2b, gamesTracked }) {
+  if (!gamesTracked) return `${label} (${score}/100). No completed games in the last three days — the pen comes in rested.`;
+  const bits = [];
+  bits.push(`${round(last3BP, 1)} relief innings over the last three days` + (last.bpIP >= 4 ? ` — ${round(last.bpIP, 1)} of them in the last game` : ""));
+  if (b2b > 0) bits.push(`${b2b} arm${b2b === 1 ? "" : "s"} pitched back-to-back days`);
+  if (last3Runs >= 6) bits.push(`and the pen was hit hard for ${last3Runs} runs in that stretch`);
+  else if (last3Runs >= 1) bits.push(`allowing ${last3Runs} run${last3Runs === 1 ? "" : "s"}`);
+  else bits.push(`without allowing a run`);
+  return `${label} (${score}/100): ` + bits.join(", ") + `. ${last3Relievers} reliever appearances in the window.`;
 }
 
 function buildTeamsByName(rows) {
@@ -237,6 +246,7 @@ function buildTeamsByName(rows) {
       label: row.label,
       last_game_bp_ip: row.last_game_bp_ip,
       last3_bp_ip: row.last3_bp_ip,
+      last3_bp_runs: row.last3_bp_runs,
       last_game_relievers: row.last_game_relievers,
       last3_relievers: row.last3_relievers,
       back_to_back_arms: row.back_to_back_arms,
@@ -294,8 +304,8 @@ async function buildBullpenSource({ date, todayGames, fetchJson, generatedAt }) 
     source_of_truth: SOURCE_OF_TRUTH,
     version: VERSION,
     method: "Generated single source of truth. Website pages display this JSON and do not calculate separate bullpen scores in the browser.",
-    note: "Uses the locked audit formula. Reliever counts are context only and do not add hidden score points.",
-    formula: "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6)",
+    note: "v3 runs-aware formula. Reliever counts are context only and do not add hidden score points.",
+    formula: "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
     lookback_days: LOOKBACK_DAYS,
     summary: {
       teams_tracked: teamsRows.length,

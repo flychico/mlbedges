@@ -39,7 +39,7 @@
 /* Constants mirrored from the daily engine — keep in sync if the engine's change. */
 const HFA = 54/46, PYTH_EXP = 1.83, FORM_WEIGHT = 0.25, ERA_K = 0.20, LEAGUE_ERA = 4.20;
 const ERA_CLAMP = [2.75, 6.00], MIN_IP = 20, OFFICIAL_PROB = 0.72, VALUE_EDGE = 0.03;
-const V3_FIP_C = 3.15, V3_OFF_K = 0.8;
+const V3_FIP_C = 3.15, V3_OFF_K = 0.8, V3_BP_K = 0.3;
 
 const pythag = (rs, ra) => Math.pow(rs, PYTH_EXP) / (Math.pow(rs, PYTH_EXP) + Math.pow(ra, PYTH_EXP));
 function log5Home(sH, sA) {
@@ -108,8 +108,9 @@ async function load() {
   try {
     const yr = seasonYear();
     const date = new Date().toLocaleDateString("en-CA");
-    const [brief, sched, standings, offSeason, offWin] = await Promise.all([
+    const [brief, bullpen, sched, standings, offSeason, offWin] = await Promise.all([
       j("/data/member-brief/today.json").catch(() => null),
+      j("/data/bullpen/today.json").catch(() => null),
       j(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${date}&hydrate=probablePitcher`),
       j(`https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=${yr}&standingsTypes=regularSeason`),
       j(`https://statsapi.mlb.com/api/v1/teams/stats?sportId=1&group=hitting&season=${yr}&stats=season`),
@@ -165,6 +166,12 @@ async function load() {
       const dA = Number.isFinite(winOps[aT.id]) && Number.isFinite(snOps[aT.id]) ? Math.max(-.1, Math.min(.1, winOps[aT.id] - snOps[aT.id])) : 0;
       const dH = Number.isFinite(winOps[hT.id]) && Number.isFinite(snOps[hT.id]) ? Math.max(-.1, Math.min(.1, winOps[hT.id] - snOps[hT.id])) : 0;
       o3 *= Math.exp(V3_OFF_K * (dH - dA));
+      // v3.1: bullpen fatigue differential (mirrors the daily engine)
+      const bpMap = (bullpen && bullpen.teams_by_name) || {};
+      const bpA = bpMap[aT.name] ? bpMap[aT.name].score : null;
+      const bpH = bpMap[hT.name] ? bpMap[hT.name].score : null;
+      const bpGap = (Number.isFinite(bpA) && Number.isFinite(bpH)) ? Math.max(-50, Math.min(50, bpA - bpH)) : 0;
+      o3 *= Math.exp(V3_BP_K * (bpGap / 100));
       const pHome3 = o3 / (1 + o3);
 
       const b = briefBy[g.gamePk];
@@ -177,7 +184,7 @@ async function load() {
         gamePk: g.gamePk, away: aT.name, home: hT.name,
         spA: pa ? pa.name : "TBD", spH: ph ? ph.name : "TBD",
         sA2: scoreV2(pa), sA3: scoreV3(pa), sH2: scoreV2(ph), sH3: scoreV3(ph),
-        fA, fH, eA, eH, dA, dH,
+        fA, fH, eA, eH, dA, dH, bpA, bpH,
         pHome2, pHome3: pHome3Final, v3locked: locked3 !== null,
         mktHome: mkt, status: b ? b.status : null,
         lab2: b && Number.isFinite(b.lab_score) ? b.lab_score : null,
@@ -227,7 +234,7 @@ function render(rows) {
       <div class="dim small" style="margin-top:4px">
         ${escapeHtml(r.spA)}: LyDia Pitcher Score <b>${r.sA2 ?? "—"}</b> → v3 skill score <b class="v3c">${r.sA3 ?? "—"}</b>${scoreShift(r.sA2, r.sA3)} (ERA-in ${r.eA.toFixed(2)} → FIP-in ${r.fA.toFixed(2)})<br>
         ${escapeHtml(r.spH)}: LyDia Pitcher Score <b>${r.sH2 ?? "—"}</b> → v3 skill score <b class="v3c">${r.sH3 ?? "—"}</b>${scoreShift(r.sH2, r.sH3)} (${r.eH.toFixed(2)} → ${r.fH.toFixed(2)})<br>
-        offense form: ${escapeHtml(r.away)} ${r.dA >= 0 ? "+" : ""}${f3(r.dA)} · ${escapeHtml(r.home)} ${r.dH >= 0 ? "+" : ""}${f3(r.dH)}
+        offense form: ${escapeHtml(r.away)} ${r.dA >= 0 ? "+" : ""}${f3(r.dA)} · ${escapeHtml(r.home)} ${r.dH >= 0 ? "+" : ""}${f3(r.dH)}${Number.isFinite(r.bpA) && Number.isFinite(r.bpH) ? ` · pen fatigue ${Math.round(r.bpA)} vs ${Math.round(r.bpH)}` : ""}
       </div>
       <div class="probgrid">
         <div class="probbox"><div class="dim small">OFFICIAL MODEL (v2)</div><div class="big v2c">${escapeHtml(v2.team)} ${pct(v2.p)}</div>${r.lab2 !== null ? `<div class="small dim">Lab Score ${r.lab2}/100</div>` : ""}</div>

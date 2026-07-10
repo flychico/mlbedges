@@ -349,6 +349,7 @@ function offenseFormFor(teamId, oppPitcher, offense) {
    v3 probabilities are recorded next to v2 in the brief and graded nightly in
    data/calibration/shadow_v3_log.csv. Promotion requires beating v2 there. */
 const V3_OFF_K = 0.8;      // log-odds per full point of OPS-delta difference (capped ±0.1 → max ~±2%)
+const V3_BP_K = 0.3;       // log-odds per 100 pts of bullpen-fatigue gap (gap capped ±50 → max ~±3.7%)
 const V3_FIP_C = 3.15;     // FIP constant
 function fipLite(st) {
   if (!st || !st.ip || st.ip < 10) return LEAGUE_ERA;
@@ -356,14 +357,18 @@ function fipLite(st) {
   const wt = Math.min(st.ip, 80) / 80; // regress small samples toward league
   return clampEra(fip * wt + LEAGUE_ERA * (1 - wt));
 }
-function modelV3(pBase, awayStats, homeStats, offAway, offHome) {
+function modelV3(pBase, awayStats, homeStats, offAway, offHome, bpAway, bpHome) {
   const spA = fipLite(awayStats), spH = fipLite(homeStats);
   let odds = (pBase / (1 - pBase)) * Math.exp(ERA_K * (spA - spH));
   const dA = offAway && Number.isFinite(offAway.delta_ops) ? Math.max(-0.1, Math.min(0.1, offAway.delta_ops)) : 0;
   const dH = offHome && Number.isFinite(offHome.delta_ops) ? Math.max(-0.1, Math.min(0.1, offHome.delta_ops)) : 0;
   odds *= Math.exp(V3_OFF_K * (dH - dA));
+  // v3.1: bullpen fatigue differential — home gains when the AWAY pen is the tired one
+  const bpGap = (Number.isFinite(bpAway) && Number.isFinite(bpHome)) ? Math.max(-50, Math.min(50, bpAway - bpHome)) : 0;
+  const bpAdj = V3_BP_K * (bpGap / 100);
+  odds *= Math.exp(bpAdj);
   const pHome = odds / (1 + odds);
-  return { p_home: Number(pHome.toFixed(4)), fip_away: Number(spA.toFixed(2)), fip_home: Number(spH.toFixed(2)), off_adj: Number((V3_OFF_K * (dH - dA)).toFixed(4)) };
+  return { p_home: Number(pHome.toFixed(4)), fip_away: Number(spA.toFixed(2)), fip_home: Number(spH.toFixed(2)), off_adj: Number((V3_OFF_K * (dH - dA)).toFixed(4)), bp_adj: Number(bpAdj.toFixed(4)), version: "v3.1-bullpen" };
 }
 function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
   const aT = g.teams.away.team;
@@ -482,7 +487,9 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
     },
     model_v3: (() => {
       const oa = offenseFormFor(aT.id, null, offense), oh = offenseFormFor(hT.id, null, offense);
-      const v3 = modelV3(pBase, awayStats, homeStats, oa, oh);
+      const bpA = bullpen[aT.name] ? bullpen[aT.name].score : null;
+      const bpH = bullpen[hT.name] ? bullpen[hT.name].score : null;
+      const v3 = modelV3(pBase, awayStats, homeStats, oa, oh, bpA, bpH);
       return { ...v3, p_home_v2: Number(pHome.toFixed(4)), note: "shadow A/B — does not drive picks" };
     })(),
     bullpen: {
