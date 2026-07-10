@@ -341,6 +341,30 @@ function offenseFormFor(teamId, oppPitcher, offense) {
     ops_vs_opp_hand: Number.isFinite(vs) ? vs : null
   };
 }
+/* ============ Shadow model v3 (A/B test — NEVER drives official picks) ============
+   Differences from v2:
+   1. Pitcher input is FIP-lite (K, BB, HR per IP) instead of raw ERA — skill-based,
+      immune to the BABIP/sequencing luck that inflates or flatters ERA.
+   2. Small offensive-form adjustment from each lineup's 15-day OPS delta (capped).
+   v3 probabilities are recorded next to v2 in the brief and graded nightly in
+   data/calibration/shadow_v3_log.csv. Promotion requires beating v2 there. */
+const V3_OFF_K = 0.8;      // log-odds per full point of OPS-delta difference (capped ±0.1 → max ~±2%)
+const V3_FIP_C = 3.15;     // FIP constant
+function fipLite(st) {
+  if (!st || !st.ip || st.ip < 10) return LEAGUE_ERA;
+  const fip = (13 * (st.hr || 0) + 3 * (st.bb || 0) - 2 * (st.so || 0)) / st.ip + V3_FIP_C;
+  const wt = Math.min(st.ip, 80) / 80; // regress small samples toward league
+  return clampEra(fip * wt + LEAGUE_ERA * (1 - wt));
+}
+function modelV3(pBase, awayStats, homeStats, offAway, offHome) {
+  const spA = fipLite(awayStats), spH = fipLite(homeStats);
+  let odds = (pBase / (1 - pBase)) * Math.exp(ERA_K * (spA - spH));
+  const dA = offAway && Number.isFinite(offAway.delta_ops) ? Math.max(-0.1, Math.min(0.1, offAway.delta_ops)) : 0;
+  const dH = offHome && Number.isFinite(offHome.delta_ops) ? Math.max(-0.1, Math.min(0.1, offHome.delta_ops)) : 0;
+  odds *= Math.exp(V3_OFF_K * (dH - dA));
+  const pHome = odds / (1 + odds);
+  return { p_home: Number(pHome.toFixed(4)), fip_away: Number(spA.toFixed(2)), fip_home: Number(spH.toFixed(2)), off_adj: Number((V3_OFF_K * (dH - dA)).toFixed(4)) };
+}
 function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
   const aT = g.teams.away.team;
   const hT = g.teams.home.team;
@@ -456,6 +480,11 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
       home: offenseFormFor(hT.id, awayPitcher ? pitchers[awayPitcher.id] : null, offense),
       window_days: 15
     },
+    model_v3: (() => {
+      const oa = offenseFormFor(aT.id, null, offense), oh = offenseFormFor(hT.id, null, offense);
+      const v3 = modelV3(pBase, awayStats, homeStats, oa, oh);
+      return { ...v3, p_home_v2: Number(pHome.toFixed(4)), note: "shadow A/B — does not drive picks" };
+    })(),
     bullpen: {
       pick_team: pickBullpen,
       opponent: oppBullpen,

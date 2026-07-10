@@ -112,6 +112,11 @@ async function loadLearning() {
         <thead><tr><th>Model probability</th><th class="num">Games</th><th class="num">Expected win%</th><th class="num">Actual win%</th></tr></thead>
         <tbody>${(cal.buckets || []).map(b => `<tr><td>${esc(b.range)}</td><td class="num">${b.games}</td><td class="num">${(b.expected_win_rate * 100).toFixed(0)}%</td><td class="num">${(b.actual_win_rate * 100).toFixed(0)}%</td></tr>`).join("")}</tbody>
       </table>
+      ${cal.shadow_model && cal.shadow_model.status === "ready" ? `
+      <div style="margin-top:12px;padding:10px;border:1px solid var(--border);border-radius:8px">
+        <b>Model A/B — official v2 vs shadow v3</b> <span class="dim small">(v3: skill-based pitcher input + offense form)</span><br>
+        <span class="small">${cal.shadow_model.games} games · Brier v2 <b>${cal.shadow_model.brier_v2}</b> vs v3 <b>${cal.shadow_model.brier_v3}</b> → <b>${cal.shadow_model.leader}</b> leads · ${cal.shadow_model.disagreements} disagreement${cal.shadow_model.disagreements === 1 ? "" : "s"}${cal.shadow_model.disagreements ? `, v3 right in ${cal.shadow_model.v3_wins_disagreements}` : ""}</span>
+      </div>` : ""}
       <table style="margin-top:10px">
         <thead><tr><th>Tier</th><th class="num">Record</th><th class="num">Shadow units (flat 1u)</th></tr></thead>
         <tbody>${Object.entries(cal.shadow_by_status || {}).map(([k, v]) => `<tr><td>${esc(k.replace(/_/g, " "))}</td><td class="num">${v.wins}-${v.games - v.wins}</td><td class="num">${v.units > 0 ? "+" : ""}${v.units}</td></tr>`).join("")}</tbody>

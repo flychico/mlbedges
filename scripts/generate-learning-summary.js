@@ -488,10 +488,35 @@ function buildCalibration() {
   }
   for (const k of Object.keys(byStatus)) byStatus[k].units = Number(byStatus[k].units.toFixed(2));
 
+  // shadow model A/B: v2 vs v3 on identical games
+  let shadow = { status: "no_data" };
+  const sPath = path.join(ROOT, "data", "calibration", "shadow_v3_log.csv");
+  if (fs.existsSync(sPath)) {
+    const sRows = fs.readFileSync(sPath, "utf8").split("\n").slice(1).filter(Boolean).map(l => {
+      const [d, pk, p2, p3, hw] = l.split(",");
+      return { p2: parseFloat(p2), p3: parseFloat(p3), hw: Number(hw) };
+    }).filter(r => isFinite(r.p2) && isFinite(r.p3) && (r.hw === 0 || r.hw === 1));
+    if (sRows.length) {
+      const b = (rowsArr, key) => Number((rowsArr.reduce((a, r) => a + Math.pow(r[key] - r.hw, 2), 0) / rowsArr.length).toFixed(4));
+      const diff = sRows.filter(r => (r.p2 >= 0.5) !== (r.p3 >= 0.5));
+      shadow = {
+        status: "ready",
+        games: sRows.length,
+        brier_v2: b(sRows, "p2"),
+        brier_v3: b(sRows, "p3"),
+        leader: b(sRows, "p3") < b(sRows, "p2") ? "v3" : b(sRows, "p3") > b(sRows, "p2") ? "v2" : "tied",
+        disagreements: diff.length,
+        v3_wins_disagreements: diff.filter(r => (r.p3 >= 0.5) === (r.hw === 1)).length,
+        note: "v3 = FIP-based pitcher input + offense form. Promote only if v3 leads over 200+ games."
+      };
+    }
+  }
+
   return {
     status: "ready",
     games_graded: rows.length,
     brier_score: brier,
+    shadow_model: shadow,
     note: "Shadow ledger for learning only — never part of the public record. Official picks stay the only published record.",
     buckets,
     shadow_by_status: byStatus

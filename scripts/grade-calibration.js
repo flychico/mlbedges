@@ -77,7 +77,22 @@ async function main() {
     added++;
   }
   if (rows.length) fs.appendFileSync(LOG, rows.join("\n") + "\n");
-  console.log(`Calibration ${DATE}: logged ${added}, already-logged ${skippedDone}, not-final ${notFinal}, slate ${games.length}.`);
+
+  // ---- shadow model v3 ledger (A/B vs the official v2) ----
+  const SLOG = path.join(ROOT, "data", "calibration", "shadow_v3_log.csv");
+  if (!fs.existsSync(SLOG)) fs.writeFileSync(SLOG, "date,gamePk,p_home_v2,p_home_v3,home_won\n");
+  const sExisting = new Set(fs.readFileSync(SLOG, "utf8").split("\n").slice(1).map(l => l.split(",").slice(0, 2).join(",")).filter(Boolean));
+  const sRows = [];
+  for (const g of games) {
+    const key = `${DATE},${g.game_pk}`;
+    if (sExisting.has(key)) continue;
+    const f = finals[g.game_pk];
+    const v3 = g.model_v3;
+    if (!f || !v3 || !Number.isFinite(v3.p_home) || !Number.isFinite(v3.p_home_v2)) continue;
+    sRows.push([DATE, g.game_pk, v3.p_home_v2, v3.p_home, f.homeScore > f.awayScore ? 1 : 0].join(","));
+  }
+  if (sRows.length) fs.appendFileSync(SLOG, sRows.join("\n") + "\n");
+  console.log(`Calibration ${DATE}: logged ${added}, already-logged ${skippedDone}, not-final ${notFinal}, slate ${games.length}. Shadow v3: ${sRows.length} graded.`);
 }
 
 main().catch(e => { console.error("calibration error:", e.message); process.exit(0); });
