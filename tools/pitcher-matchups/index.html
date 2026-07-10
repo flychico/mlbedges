@@ -63,7 +63,7 @@
     <button onclick="shiftDay(0)">Today</button>
     <button class="secondary" onclick="shiftDay(1)">Tomorrow</button>
     <div>
-      <label for="game-jump">Jump to game</label>
+      <label for="game-jump">Filter games</label>
       <select id="game-jump" onchange="jumpToGame(this.value)"><option value="">All games…</option></select>
     </div>
     <button class="secondary" onclick="load()">Refresh</button>
@@ -89,9 +89,10 @@ datePick.addEventListener("change", load);
 load();
 
 function jumpToGame(pk) {
-  if (!pk) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-  const el = document.getElementById("game-" + pk);
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Filter, not scroll: show only the chosen game; "All games…" clears it.
+  document.querySelectorAll(".match-card").forEach(c => {
+    c.style.display = (!pk || c.id === "game-" + pk) ? "" : "none";
+  });
 }
 function localISODate(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
