@@ -108,6 +108,7 @@ function buildLearningSummary({ date, day, allDays, clvRows }) {
   );
 
   const multiDay = buildMultiDayView(allDays);
+  const coach = buildCoach(allDays);
   const findings = buildFindings({
     gradedMoneyline,
     wins,
@@ -163,7 +164,6 @@ function buildLearningSummary({ date, day, allDays, clvRows }) {
       pitcher_conflict_count: pitcherConflict.length
     },
     findings,
-    calibration: buildCalibration(),
     buckets: {
       strong_official: strongOfficial.map(publicPickRow),
       protected_by_probability_gate: protectedByGate.map(publicPickRow),
@@ -172,6 +172,7 @@ function buildLearningSummary({ date, day, allDays, clvRows }) {
       all_moneyline: gradedMoneyline.map(publicPickRow)
     },
     multi_day: multiDay,
+    coach,
     next_review: [
       "Do not change thresholds from one slate.",
       "Watch whether official picks with model probability >= 72% beat low-probability value watches over a larger sample.",
@@ -285,6 +286,61 @@ function buildFindings(ctx) {
   });
 
   return findings;
+}
+
+
+function buildCoach(days) {
+  const currentDays = [];
+  const rows = [];
+
+  for (const day of days) {
+    const dayRows = (day.picks || [])
+      .map(p => normalizePickForLearning(p, day.source))
+      .filter(p => p.pick && p.result !== "NG" && p.model_version !== "legacy" && (day.current_official_model === "moneyline_only" || day.source === "published-picks"));
+    if (dayRows.length) {
+      currentDays.push(day.date);
+      rows.push(...dayRows);
+    }
+  }
+
+  const ready = currentDays.length >= 7;
+  const recommendations = [];
+  const wins = rows.filter(r => r.result === "W").length;
+  const losses = rows.filter(r => r.result === "L").length;
+  const strict = rows.filter(r => num(r.model_probability) >= 0.72 && num(r.lab_score) >= 80);
+  const highProb = rows.filter(r => num(r.model_probability) >= 0.78);
+  const bullpenCaution = rows.filter(r => num(r.pick_side_bullpen_score) >= 70);
+  const pitcherSupported = rows.filter(r => r.pitcher_edge_team && r.pitcher_edge_team === r.pick_team && num(r.pitcher_gap) >= 8);
+
+  if (!ready) {
+    recommendations.push(`Keep collecting current-model results. ${Math.max(0, 7 - currentDays.length)} more graded day${Math.max(0, 7 - currentDays.length) === 1 ? "" : "s"} needed before the first weekly review.`);
+    recommendations.push("Do not adjust the 72% probability or 8.0/10 Lab Rating gates from a partial week.");
+  } else {
+    recommendations.push(`Review the first ${currentDays.length} current-model days as one sample. Current record: ${wins}-${losses}.`);
+    if (strict.length < 10) recommendations.push("The strict official-pick sample is still small. Treat any threshold conclusion as preliminary.");
+    if (highProb.length >= 5) recommendations.push(`Compare the 78%+ probability bucket (${bucketRecord(highProb)}) with the full official set before considering a higher probability gate.`);
+    if (pitcherSupported.length >= 5) recommendations.push(`Pitcher-supported picks are ${bucketRecord(pitcherSupported)}. Review whether the pitcher gap is adding useful separation.`);
+    if (bullpenCaution.length >= 3) recommendations.push(`Bullpen-caution picks are ${bucketRecord(bullpenCaution)}. Review these individually before changing the bullpen gate.`);
+    recommendations.push("Any model change requires human approval and should be recorded as a new model version.");
+  }
+
+  return {
+    status: ready ? "weekly_review_ready" : "collecting_first_week",
+    title: ready ? "First weekly model review is ready" : "Collecting the first full week",
+    summary: ready
+      ? `LyDia has ${currentDays.length} graded current-model days and ${rows.length} graded current-model moneyline picks. The coach is ready to surface review questions, not automatic changes.`
+      : `LyDia has ${currentDays.length} graded current-model day${currentDays.length === 1 ? "" : "s"}. Learning is being recorded, but model-change recommendations stay paused until seven days are available.`,
+    current_model_days: currentDays.length,
+    current_model_picks: rows.length,
+    date_range: currentDays.length ? { start: currentDays[0], end: currentDays[currentDays.length - 1] } : null,
+    recommendations
+  };
+}
+
+function bucketRecord(rows) {
+  const w = rows.filter(r => r.result === "W").length;
+  const l = rows.filter(r => r.result === "L").length;
+  return `${w}-${l}`;
 }
 
 function buildMultiDayView(days) {
@@ -438,87 +494,4 @@ function round(n, dp = 4) {
 
 function pct(v) {
   return typeof v === "number" && Number.isFinite(v) ? `${(v * 100).toFixed(1)}%` : "-";
-}
-
-// ---- Full-slate calibration (data/calibration/calibration_log.csv) ----
-// Every analyzed game — official, value watch, watchlist, pass — graded nightly.
-// Measures whether model probabilities are honest (does 65% mean 65%?) and
-// what the games below the official gates would have returned.
-function buildCalibration() {
-  const logPath = path.join(ROOT, "data", "calibration", "calibration_log.csv");
-  if (!fs.existsSync(logPath)) return { status: "no_data", games_graded: 0 };
-  const lines = fs.readFileSync(logPath, "utf8").split("\n").slice(1).filter(Boolean);
-  const rows = [];
-  for (const line of lines) {
-    // simple CSV parse (quoted matchup field)
-    const m = line.match(/^([^,]*),([^,]*),("(?:[^"]|"")*"|[^,]*),("(?:[^"]|"")*"|[^,]*),([^,]*),([^,]*),([^,]*),([^,]*),([^,]*),([^,]*),(.*)$/);
-    if (!m) continue;
-    const prob = parseFloat(m[6]);
-    const result = m[10];
-    if (!isFinite(prob) || (result !== "W" && result !== "L")) continue;
-    rows.push({ status: m[5], prob, mkt: parseFloat(m[7]), price: parseFloat(m[9]), won: result === "W" });
-  }
-  if (!rows.length) return { status: "no_data", games_graded: 0 };
-
-  // Probability buckets
-  const edges = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 1.01];
-  const buckets = [];
-  for (let i = 0; i < edges.length - 1; i++) {
-    const inB = rows.filter(r => r.prob >= edges[i] && r.prob < edges[i + 1]);
-    if (!inB.length) continue;
-    buckets.push({
-      range: `${Math.round(edges[i] * 100)}-${edges[i + 1] > 1 ? 100 : Math.round(edges[i + 1] * 100)}%`,
-      games: inB.length,
-      wins: inB.filter(r => r.won).length,
-      expected_win_rate: Number((inB.reduce((a, r) => a + r.prob, 0) / inB.length).toFixed(3)),
-      actual_win_rate: Number((inB.filter(r => r.won).length / inB.length).toFixed(3))
-    });
-  }
-
-  // Brier score (lower is better; 0.25 = coin-flip guessing)
-  const brier = Number((rows.reduce((a, r) => a + Math.pow(r.prob - (r.won ? 1 : 0), 2), 0) / rows.length).toFixed(4));
-
-  // Shadow record by status: what the non-official tiers would have returned (flat 1u at best price)
-  const byStatus = {};
-  for (const r of rows) {
-    const b = byStatus[r.status] || (byStatus[r.status] = { games: 0, wins: 0, units: 0 });
-    b.games++;
-    if (r.won) { b.wins++; b.units += isFinite(r.price) ? (r.price > 0 ? r.price / 100 : 100 / Math.abs(r.price)) : 0; }
-    else b.units -= 1;
-  }
-  for (const k of Object.keys(byStatus)) byStatus[k].units = Number(byStatus[k].units.toFixed(2));
-
-  // shadow model A/B: v2 vs v3 on identical games
-  let shadow = { status: "no_data" };
-  const sPath = path.join(ROOT, "data", "calibration", "shadow_v3_log.csv");
-  if (fs.existsSync(sPath)) {
-    const sRows = fs.readFileSync(sPath, "utf8").split("\n").slice(1).filter(Boolean).map(l => {
-      const [d, pk, p2, p3, hw] = l.split(",");
-      return { p2: parseFloat(p2), p3: parseFloat(p3), hw: Number(hw) };
-    }).filter(r => isFinite(r.p2) && isFinite(r.p3) && (r.hw === 0 || r.hw === 1));
-    if (sRows.length) {
-      const b = (rowsArr, key) => Number((rowsArr.reduce((a, r) => a + Math.pow(r[key] - r.hw, 2), 0) / rowsArr.length).toFixed(4));
-      const diff = sRows.filter(r => (r.p2 >= 0.5) !== (r.p3 >= 0.5));
-      shadow = {
-        status: "ready",
-        games: sRows.length,
-        brier_v2: b(sRows, "p2"),
-        brier_v3: b(sRows, "p3"),
-        leader: b(sRows, "p3") < b(sRows, "p2") ? "v3" : b(sRows, "p3") > b(sRows, "p2") ? "v2" : "tied",
-        disagreements: diff.length,
-        v3_wins_disagreements: diff.filter(r => (r.p3 >= 0.5) === (r.hw === 1)).length,
-        note: "v3 = FIP-based pitcher input + offense form. Promote only if v3 leads over 200+ games."
-      };
-    }
-  }
-
-  return {
-    status: "ready",
-    games_graded: rows.length,
-    brier_score: brier,
-    shadow_model: shadow,
-    note: "Shadow ledger for learning only — never part of the public record. Official picks stay the only published record.",
-    buckets,
-    shadow_by_status: byStatus
-  };
 }

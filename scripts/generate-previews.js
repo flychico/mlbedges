@@ -34,6 +34,7 @@ function prettyDateTime(iso) {
 function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c])); }
 function pct(v, dp = 1) { return typeof v === "number" && Number.isFinite(v) ? `${(v * 100).toFixed(dp)}%` : "-"; }
 function edge(v) { return typeof v === "number" && Number.isFinite(v) ? `${v >= 0 ? "+" : ""}${pct(v)}` : "-"; }
+function labRating(v) { return typeof v === "number" && Number.isFinite(v) ? `${(v / 10).toFixed(1)}/10` : "-"; }
 function odds(v) { if (typeof v !== "number" || !Number.isFinite(v)) return "-"; return v > 0 ? `+${Math.round(v)}` : String(Math.round(v)); }
 function readJson(file) { return JSON.parse(fs.readFileSync(file, "utf8")); }
 function statusLabel(s) { if (s === "official_pick") return "Official Pick"; if (s === "value_watch") return "Value Watch"; if (s === "watchlist") return "Watchlist"; return "Pass"; }
@@ -140,7 +141,7 @@ function renderPreviewPage(brief, published) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MLB Game Previews and Lab Scores ${esc(titleDate)} | LyDia</title>
+<title>MLB Game Previews and Lab Ratings ${esc(titleDate)} | LyDia</title>
 <meta name="description" content="LyDia MLB previews for ${esc(titleDate)} with bettor-friendly moneyline reasoning, model probability, pitcher matchup, bullpen workload, and market value.">
 <link rel="canonical" href="${SITE}/previews/${esc(DATE)}.html">
 <link rel="stylesheet" href="/css/style.css">
@@ -177,12 +178,12 @@ function renderCard(g, featured) {
   const m = g.market || {};
   const isPass = g.status === "pass";
   return `<div class="${featured ? "pv featured" : "pv"}" data-lab-score="${esc(g.lab_score ?? "")}">
-  ${featured ? `<span class="featured-flag">Top Lab Score</span>` : ""}<h2>${esc(g.game || "")}</h2>
+  ${featured ? `<span class="featured-flag">Top Lab Rating</span>` : ""}<h2>${esc(g.game || "")}</h2>
   <div class="meta">${esc(g.time || "")} ET · ${esc(pe.away_pitcher || "TBD")} vs ${esc(pe.home_pitcher || "TBD")}</div>
   <span class="status-badge ${statusClass(g.status)}">${statusLabel(g.status)}</span>
   <dl class="field-grid">
     <dt>LyDia side</dt><dd>${esc(g.pick_team || "-")} Money Line</dd>
-    <dt>Lab Score</dt><dd>${esc(g.lab_score ?? "-")}/100</dd>
+    <dt>Lab Rating</dt><dd>${labRating(g.lab_score)}</dd>
     <dt>Model probability</dt><dd>${pct(g.model_probability)}</dd>
     <dt>Market probability</dt><dd>${pct(m.no_vig_probability)}</dd>
     <dt>Model vs market</dt><dd>${edge(g.edge)}</dd>
@@ -213,7 +214,7 @@ ${links.join("\n")}
 }
 
 function updateSitemap() {
-  const staticPages = ["", "dashboard/", "picks/", "tools/", "stats/", "recaps/", "articles/", "membership/", "results/", "previews/", "member-brief/", "learning/",
+  const staticPages = ["", "dashboard/", "picks/", "odds/", "tools/", "stats/", "recaps/", "articles/", "membership/", "results/", "previews/", "member-brief/", "tools/market/", "learning/",
     "mlb-betting-edge-explained/", "no-vig-odds-calculator-guide/", "how-to-find-value-in-mlb-moneylines/",
     "closing-line-value-mlb-betting/", "mlb-run-line-vs-moneyline/", "mlb-bullpen-fatigue-betting/",
     "mlb-park-factors-betting-guide/", "mlb-pitching-metrics-for-betting/"];
