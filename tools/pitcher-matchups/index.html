@@ -60,6 +60,10 @@
     </div>
     <button onclick="shiftDay(0)">Today</button>
     <button class="secondary" onclick="shiftDay(1)">Tomorrow</button>
+    <div>
+      <label for="game-jump">Jump to game</label>
+      <select id="game-jump" onchange="jumpToGame(this.value)"><option value="">All games…</option></select>
+    </div>
     <button class="secondary" onclick="load()">Refresh</button>
   </div>
 
@@ -82,6 +86,11 @@ datePick.value = localISODate(new Date());
 datePick.addEventListener("change", load);
 load();
 
+function jumpToGame(pk) {
+  if (!pk) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  const el = document.getElementById("game-" + pk);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 function localISODate(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
@@ -133,6 +142,10 @@ async function load() {
   statusEl.innerHTML = "";
   gamesEl.innerHTML = cards.join("");
 
+  const jump = document.getElementById("game-jump");
+  jump.innerHTML = '<option value="">All games…</option>' + games.map(g =>
+    `<option value="${g.gamePk}">${escapeHtml(g.teams.away.team.name)} @ ${escapeHtml(g.teams.home.team.name)}</option>`).join("");
+
   const withEdges = games.map(g => matchupData(g, pitcherStats));
   const strong = withEdges.filter(x => x.strength === "Strong").length;
   const moderate = withEdges.filter(x => x.strength === "Moderate").length;
@@ -162,7 +175,15 @@ async function fetchPitchers(ids) {
         so: num(st.strikeOuts, 0),
         bb: num(st.baseOnBalls, 0),
         hr: num(st.homeRuns, 0),
-        gs: num(st.gamesStarted, 0)
+        gs: num(st.gamesStarted, 0),
+        w: num(st.wins, 0),
+        l: num(st.losses, 0),
+        bf: num(st.battersFaced, 0),
+        go: num(st.groundOuts, 0),
+        ao: num(st.airOuts, 0),
+        h: num(st.hits, 0),
+        ab: num(st.atBats, 0),
+        sf: num(st.sacFlies, 0)
       };
     }
   } catch(e) {}
@@ -201,7 +222,15 @@ function scorePitcher(st) {
   else if (score < 55) grade = "Below avg";
 
   const note = ip < 20 ? "limited innings; treat score with caution" : null;
-  return { ...st, score, grade, note, k9, bb9 };
+  // Display-only advanced stats — NOT in the score yet. The learning system
+  // needs to establish their predictive relevance before the rating changes.
+  const kbbPct = st.bf ? (st.so - st.bb) / st.bf : null;
+  const gbPct = (st.go + st.ao) ? st.go / (st.go + st.ao) : null;
+  const babipDen = st.ab - st.so - st.hr + (st.sf || 0);
+  const babip = babipDen > 0 ? (st.h - st.hr) / babipDen : null;
+  const hr9 = ip ? (st.hr / ip) * 9 : null;
+  const ipStart = st.gs ? ip / st.gs : null;
+  return { ...st, score, grade, note, k9, bb9, kbbPct, gbPct, babip, hr9, ipStart };
 }
 
 function matchupData(g, stats) {
@@ -227,8 +256,14 @@ function renderPitcherBox(label, team, p) {
     <div class="stat-row"><span>ERA</span><b>${fmt(p.era)}</b></div>
     <div class="stat-row"><span>WHIP</span><b>${fmt(p.whip)}</b></div>
     <div class="stat-row"><span>IP</span><b>${p.ip ? Math.round(p.ip) : "—"}</b></div>
+    <div class="stat-row"><span>W-L</span><b>${Number.isFinite(p.w) ? p.w + "-" + p.l : "—"}</b></div>
     <div class="stat-row"><span>K/9</span><b>${p.k9 ? fmt(p.k9, 1) : "—"}</b></div>
     <div class="stat-row"><span>BB/9</span><b>${p.bb9 ? fmt(p.bb9, 1) : "—"}</b></div>
+    <div class="stat-row" title="Strikeout rate minus walk rate — one of the most predictive pitcher skills"><span>K-BB%</span><b>${Number.isFinite(p.kbbPct) ? (p.kbbPct * 100).toFixed(1) + "%" : "—"}</b></div>
+    <div class="stat-row" title="Ground-out share of outs in play — higher keeps the ball in the park"><span>GB%</span><b>${Number.isFinite(p.gbPct) ? (p.gbPct * 100).toFixed(0) + "%" : "—"}</b></div>
+    <div class="stat-row" title="Batting average on balls in play against — far from ~.300 often signals luck due to regress"><span>BABIP</span><b>${Number.isFinite(p.babip) ? p.babip.toFixed(3).replace(/^0/, "") : "—"}</b></div>
+    <div class="stat-row" title="Home runs allowed per 9 innings"><span>HR/9</span><b>${Number.isFinite(p.hr9) ? fmt(p.hr9, 1) : "—"}</b></div>
+    <div class="stat-row" title="Average innings per start — how deep he goes before the bullpen"><span>IP/start</span><b>${Number.isFinite(p.ipStart) ? fmt(p.ipStart, 1) : "—"}</b></div>
     ${p.note ? `<div class="small dim" style="margin-top:8px">${escapeHtml(p.note)}</div>` : ""}
   </div>`;
 }
@@ -243,7 +278,7 @@ function renderGame(g, stats) {
     ? "The starting pitcher matchup does not create a meaningful separation by itself."
     : `${d.edgeTeam} holds the starting pitcher edge. This is most relevant early; full-game reads still need bullpen and lineup context.`;
 
-  return `<div class="card match-card">
+  return `<div class="card match-card" id="game-${g.gamePk}" style="scroll-margin-top:70px">
     <div class="match-head">
       <span class="matchup">${escapeHtml(awayTeam)} @ ${escapeHtml(homeTeam)}</span>
       <span class="dim small">${time}</span>
