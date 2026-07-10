@@ -50,13 +50,13 @@
       </div>
     </div>
     <div>
-      <label for="game-jump">Filter games</label>
+      <label for="game-jump">Jump to game</label>
       <select id="game-jump" onchange="jumpToGame(this.value)"><option value="">All games…</option></select>
     </div>
   </div>
 
   <div class="notice">
-    <strong>How to read it:</strong> <b>OPS (window)</b> is quality right now; <b>Δ vs season</b> is heat — a bad offense can be hot and an elite one can be cold. Tier labels translate the decimals: every ~25 OPS points is one class of offense (.700 below avg · .750 solid · .800 good · .850 All-Star · .900 elite). <b>HOW a team is hot matters</b>: contact-driven heat holds up; strikeout-heavy power binges collapse. The <b>vs-hand line</b> is each lineup's full-season OPS against tonight's opposing starter's throwing hand.
+    <strong>How to read it:</strong> <b>OPS (window)</b> is quality right now; <b>Δ vs season</b> is heat — a bad offense can be hot and an elite one can be cold. Tier labels translate the decimals: every ~25 OPS points is one class of offense (.700 below avg · .750 average · .800 good · .850 great · .900 elite). <b>HOW a team is hot matters</b>: contact-driven heat holds up; strikeout-heavy power binges collapse. The <b>vs-hand line</b> is each lineup's full-season OPS against tonight's opposing starter's throwing hand.
   </div>
 
   <div id="status"></div>
@@ -85,10 +85,9 @@ function setWindow(w) {
   load();
 }
 function jumpToGame(pk) {
-  // Filter, not scroll: show only the chosen game; "All games…" clears it.
-  document.querySelectorAll(".match-card").forEach(c => {
-    c.style.display = (!pk || c.id === "og-" + pk) ? "" : "none";
-  });
+  if (!pk) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  const el = document.getElementById("og-" + pk);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 function f3(v){ return Number.isFinite(v) ? v.toFixed(3).replace(/^0/, "") : "—"; }
 function seasonYear(){ const d = new Date(datePick.value + "T12:00"); return d.getMonth() >= 2 ? d.getFullYear() : d.getFullYear() - 1; }
@@ -165,28 +164,28 @@ async function load() {
 function opsTier(v) {
   if (!Number.isFinite(v)) return null;
   if (v >= 0.900) return { t: "elite", cls: "pos-text" };
-  if (v >= 0.850) return { t: "All-Star level", cls: "pos-text" };
+  if (v >= 0.850) return { t: "great", cls: "pos-text" };
   if (v >= 0.800) return { t: "good", cls: "pos-text" };
-  if (v >= 0.750) return { t: "solid", cls: "" };
+  if (v >= 0.750) return { t: "average", cls: "" };
   if (v >= 0.700) return { t: "below avg", cls: "neg-text" };
-  if (v >= 0.640) return { t: "weak", cls: "neg-text" };
-  return { t: "broken", cls: "neg-text" };
+  if (v >= 0.640) return { t: "poor", cls: "neg-text" };
+  return { t: "very poor", cls: "neg-text" };
 }
 function kTier(v) { // league K% ≈ 22%
   if (!Number.isFinite(v)) return null;
   if (v < 0.19) return { t: "great contact", cls: "pos-text" };
   if (v < 0.215) return { t: "good contact", cls: "pos-text" };
   if (v < 0.24) return { t: "average", cls: "" };
-  if (v < 0.27) return { t: "whiff-prone", cls: "neg-text" };
-  return { t: "severe whiffs", cls: "neg-text" };
+  if (v < 0.27) return { t: "high strikeouts", cls: "neg-text" };
+  return { t: "very high strikeouts", cls: "neg-text" };
 }
 function rpgTier(v) { // league ≈ 4.5 R/G
   if (!Number.isFinite(v)) return null;
-  if (v >= 5.5) return { t: "big scoring", cls: "pos-text" };
+  if (v >= 5.5) return { t: "high scoring", cls: "pos-text" };
   if (v >= 4.8) return { t: "above avg", cls: "pos-text" };
   if (v >= 4.2) return { t: "average", cls: "" };
-  if (v >= 3.6) return { t: "light", cls: "neg-text" };
-  return { t: "starved", cls: "neg-text" };
+  if (v >= 3.6) return { t: "below avg", cls: "neg-text" };
+  return { t: "low scoring", cls: "neg-text" };
 }
 function tierChip(tier) {
   return tier ? ` <span class="tier ${tier.cls}">${tier.t}</span>` : "";

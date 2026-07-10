@@ -250,28 +250,28 @@ function matchupData(g, stats) {
 
 /* ---- Tiers: pitcher calibration (league ~4.20 ERA, ~1.30 WHIP, ~13% K-BB) ---- */
 function tEra(v){ if(!Number.isFinite(v))return null;
-  if(v<2.75)return{t:"ace",c:"pos-text"}; if(v<3.25)return{t:"frontline",c:"pos-text"}; if(v<3.75)return{t:"good",c:"pos-text"};
-  if(v<4.25)return{t:"average",c:""}; if(v<4.90)return{t:"shaky",c:"neg-text"}; return{t:"bad",c:"neg-text"}; }
+  if(v<2.75)return{t:"elite",c:"pos-text"}; if(v<3.25)return{t:"great",c:"pos-text"}; if(v<3.75)return{t:"good",c:"pos-text"};
+  if(v<4.25)return{t:"average",c:""}; if(v<4.90)return{t:"below avg",c:"neg-text"}; return{t:"poor",c:"neg-text"}; }
 function tWhip(v){ if(!Number.isFinite(v))return null;
-  if(v<1.00)return{t:"elite",c:"pos-text"}; if(v<1.10)return{t:"excellent",c:"pos-text"}; if(v<1.20)return{t:"good",c:"pos-text"};
-  if(v<1.32)return{t:"average",c:""}; if(v<1.45)return{t:"leaky",c:"neg-text"}; return{t:"crowded bases",c:"neg-text"}; }
+  if(v<1.00)return{t:"elite",c:"pos-text"}; if(v<1.10)return{t:"great",c:"pos-text"}; if(v<1.20)return{t:"good",c:"pos-text"};
+  if(v<1.32)return{t:"average",c:""}; if(v<1.45)return{t:"below avg",c:"neg-text"}; return{t:"poor",c:"neg-text"}; }
 function tK9(v){ if(!Number.isFinite(v))return null;
-  if(v>=10.5)return{t:"elite whiffs",c:"pos-text"}; if(v>=9.3)return{t:"high-K",c:"pos-text"}; if(v>=8.3)return{t:"above avg",c:"pos-text"};
-  if(v>=7.3)return{t:"average",c:""}; return{t:"low-K",c:"neg-text"}; }
+  if(v>=10.5)return{t:"elite",c:"pos-text"}; if(v>=9.3)return{t:"great",c:"pos-text"}; if(v>=8.3)return{t:"above avg",c:"pos-text"};
+  if(v>=7.3)return{t:"average",c:""}; return{t:"below avg",c:"neg-text"}; }
 function tBb9(v){ if(!Number.isFinite(v))return null;
   if(v<2.0)return{t:"elite command",c:"pos-text"}; if(v<2.7)return{t:"good command",c:"pos-text"};
-  if(v<3.4)return{t:"average",c:""}; if(v<4.1)return{t:"loose",c:"neg-text"}; return{t:"wild",c:"neg-text"}; }
+  if(v<3.4)return{t:"average",c:""}; if(v<4.1)return{t:"below avg",c:"neg-text"}; return{t:"poor command",c:"neg-text"}; }
 function tKbb(v){ if(!Number.isFinite(v))return null;
-  if(v>=0.22)return{t:"elite skill",c:"pos-text"}; if(v>=0.17)return{t:"very good",c:"pos-text"}; if(v>=0.12)return{t:"average",c:""};
+  if(v>=0.22)return{t:"elite",c:"pos-text"}; if(v>=0.17)return{t:"great",c:"pos-text"}; if(v>=0.12)return{t:"average",c:""};
   if(v>=0.08)return{t:"below avg",c:"neg-text"}; return{t:"poor",c:"neg-text"}; }
 function tGb(v){ if(!Number.isFinite(v))return null;
   if(v>=0.50)return{t:"ground-ball",c:""}; if(v>=0.43)return{t:"neutral",c:""}; return{t:"fly-ball",c:""}; }
 function tBabip(v){ if(!Number.isFinite(v))return null;
-  if(v<0.270)return{t:"running lucky",c:"neg-text"}; if(v<=0.330)return{t:"normal",c:""}; return{t:"unlucky",c:"pos-text"}; }
+  if(v<0.270)return{t:"lucky — due to correct",c:"neg-text"}; if(v<=0.330)return{t:"normal",c:""}; return{t:"unlucky — better than ERA",c:"pos-text"}; }
 function tHr9(v){ if(!Number.isFinite(v))return null;
-  if(v<0.8)return{t:"keeps it in",c:"pos-text"}; if(v<1.15)return{t:"average",c:""}; if(v<1.45)return{t:"homer-prone",c:"neg-text"}; return{t:"gopher-ball",c:"neg-text"}; }
+  if(v<0.8)return{t:"excellent",c:"pos-text"}; if(v<1.15)return{t:"average",c:""}; if(v<1.45)return{t:"high HR risk",c:"neg-text"}; return{t:"very high HR",c:"neg-text"}; }
 function tIpStart(v){ if(!Number.isFinite(v))return null;
-  if(v>=6.0)return{t:"workhorse",c:"pos-text"}; if(v>=5.3)return{t:"solid length",c:""}; if(v>=4.7)return{t:"short outings",c:"neg-text"}; return{t:"quick hook",c:"neg-text"}; }
+  if(v>=6.0)return{t:"goes deep",c:"pos-text"}; if(v>=5.3)return{t:"average length",c:""}; if(v>=4.7)return{t:"short outings",c:"neg-text"}; return{t:"very short",c:"neg-text"}; }
 function chip(tier){ return tier ? ` <span class="tier ${tier.c}">${tier.t}</span>` : ""; }
 
 /* Compose the game read from this matchup's actual numbers. */
@@ -290,7 +290,7 @@ function buildPitcherRead(d, awayTeam, homeTeam) {
 
   const lt = tEra(lead.era), tt = tEra(trail.era);
   if (gap < 4) parts.push(`LyDia scores this nearly even (${A.score}–${H.score}) — ${A.name} and ${H.name} are the same class of starter tonight.`);
-  else parts.push(`LyDia scores it ${lead.score}–${trail.score} for ${lead.name}: a ${lt ? lt.t : ""}-level arm (${fmt(lead.era)} ERA, ${fmt(lead.whip)} WHIP) against a ${tt ? tt.t : ""} one (${fmt(trail.era)}, ${fmt(trail.whip)}).`);
+  else { const an = t => /^[aeiou]/i.test(t) ? "an" : "a"; parts.push(`LyDia scores it ${lead.score}–${trail.score} for ${lead.name}: ${lt ? an(lt.t) + " " + lt.t : "a"}-level arm (${fmt(lead.era)} ERA, ${fmt(lead.whip)} WHIP) against ${tt ? an(tt.t) + " " + tt.t : "a"} one (${fmt(trail.era)}, ${fmt(trail.whip)}).`); }
 
   if (Number.isFinite(lead.kbbPct) && Number.isFinite(trail.kbbPct)) {
     const kg = lead.kbbPct - trail.kbbPct;

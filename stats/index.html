@@ -157,23 +157,23 @@ async function loadOffense() {
 /* Tier labels — translate the decimals into weight classes (team-level calibration) */
 function tierChip(t){ return t ? ` <span class="tier ${t.cls}">${t.t}</span>` : ""; }
 function avgTier(v){ if(!Number.isFinite(v))return null;
-  if(v>=.280)return{t:"scorching",cls:"pos-text"}; if(v>=.265)return{t:"great",cls:"pos-text"}; if(v>=.252)return{t:"above avg",cls:"pos-text"};
-  if(v>=.240)return{t:"average",cls:""}; if(v>=.228)return{t:"light",cls:"neg-text"}; return{t:"punchless",cls:"neg-text"}; }
+  if(v>=.280)return{t:"elite",cls:"pos-text"}; if(v>=.265)return{t:"great",cls:"pos-text"}; if(v>=.252)return{t:"above avg",cls:"pos-text"};
+  if(v>=.240)return{t:"average",cls:""}; if(v>=.228)return{t:"below avg",cls:"neg-text"}; return{t:"poor",cls:"neg-text"}; }
 function obpTier(v){ if(!Number.isFinite(v))return null;
   if(v>=.345)return{t:"elite",cls:"pos-text"}; if(v>=.330)return{t:"good",cls:"pos-text"}; if(v>=.318)return{t:"average",cls:""};
   if(v>=.305)return{t:"below avg",cls:"neg-text"}; return{t:"poor",cls:"neg-text"}; }
 function slgTier(v){ if(!Number.isFinite(v))return null;
-  if(v>=.480)return{t:"monster power",cls:"pos-text"}; if(v>=.445)return{t:"big power",cls:"pos-text"}; if(v>=.420)return{t:"good pop",cls:"pos-text"};
-  if(v>=.395)return{t:"average",cls:""}; if(v>=.375)return{t:"light",cls:"neg-text"}; return{t:"no thump",cls:"neg-text"}; }
+  if(v>=.480)return{t:"elite power",cls:"pos-text"}; if(v>=.445)return{t:"great power",cls:"pos-text"}; if(v>=.420)return{t:"good",cls:"pos-text"};
+  if(v>=.395)return{t:"average",cls:""}; if(v>=.375)return{t:"below avg",cls:"neg-text"}; return{t:"poor",cls:"neg-text"}; }
 function opsTier(v){ if(!Number.isFinite(v))return null;
-  if(v>=.900)return{t:"elite",cls:"pos-text"}; if(v>=.850)return{t:"All-Star level",cls:"pos-text"}; if(v>=.800)return{t:"good",cls:"pos-text"};
-  if(v>=.750)return{t:"solid",cls:""}; if(v>=.700)return{t:"below avg",cls:"neg-text"}; if(v>=.640)return{t:"weak",cls:"neg-text"}; return{t:"broken",cls:"neg-text"}; }
+  if(v>=.900)return{t:"elite",cls:"pos-text"}; if(v>=.850)return{t:"great",cls:"pos-text"}; if(v>=.800)return{t:"good",cls:"pos-text"};
+  if(v>=.750)return{t:"average",cls:""}; if(v>=.700)return{t:"below avg",cls:"neg-text"}; if(v>=.640)return{t:"poor",cls:"neg-text"}; return{t:"very poor",cls:"neg-text"}; }
 function kTier(v){ if(!Number.isFinite(v))return null;
   if(v<.19)return{t:"great contact",cls:"pos-text"}; if(v<.215)return{t:"good contact",cls:"pos-text"}; if(v<.24)return{t:"average",cls:""};
-  if(v<.27)return{t:"whiff-prone",cls:"neg-text"}; return{t:"severe whiffs",cls:"neg-text"}; }
+  if(v<.27)return{t:"high strikeouts",cls:"neg-text"}; return{t:"very high strikeouts",cls:"neg-text"}; }
 function rpgTier(v){ if(!Number.isFinite(v))return null;
-  if(v>=5.5)return{t:"big scoring",cls:"pos-text"}; if(v>=4.8)return{t:"above avg",cls:"pos-text"}; if(v>=4.2)return{t:"average",cls:""};
-  if(v>=3.6)return{t:"light",cls:"neg-text"}; return{t:"starved",cls:"neg-text"}; }
+  if(v>=5.5)return{t:"high scoring",cls:"pos-text"}; if(v>=4.8)return{t:"above avg",cls:"pos-text"}; if(v>=4.2)return{t:"average",cls:""};
+  if(v>=3.6)return{t:"below avg",cls:"neg-text"}; return{t:"low scoring",cls:"neg-text"}; }
 
 function renderOffense() {
   const el = document.getElementById("offense");
@@ -269,18 +269,40 @@ let rsCut = { hi: 0, lo: 0 }, raCut = { hi: 0, lo: 0 };
 
 loadStandings();
 
+/* Resilient fetch: 8s timeout + one retry; every success is cached in the
+   browser so the table always has something to show instantly. */
+const CACHE_KEY = "lydia-standings-v1";
+async function fetchWithTimeout(url, ms) {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), ms);
+  try { const r = await fetch(url, { signal: ctl.signal }); if (!r.ok) throw new Error("HTTP " + r.status); return await r.json(); }
+  finally { clearTimeout(timer); }
+}
+function readCache() {
+  try { const c = JSON.parse(localStorage.getItem(CACHE_KEY)); if (c && c.data) return c; } catch (e) {}
+  return null;
+}
 async function loadStandings() {
-  let data;
-  try {
-    const res = await fetch(`https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=${season}&standingsTypes=regularSeason&hydrate=team,division`);
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    data = await res.json();
-  } catch (e) {
-    document.getElementById("status").innerHTML =
-      `<div class="notice warn">Could not load MLB standings (${escapeHtml(e.message)}). Try refreshing.</div>`;
-    return;
+  const url = `https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=${season}&standingsTypes=regularSeason&hydrate=team,division`;
+  // 1. paint instantly from the last good copy, if we have one
+  const cached = readCache();
+  if (cached) {
+    renderStandings(cached.data);
+    document.getElementById("status").innerHTML = `<div class="dim small" style="margin-bottom:8px">Updating standings… showing data from ${new Date(cached.t).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}.</div>`;
   }
+  // 2. fetch fresh (timeout + one retry), replace silently
+  let data = null;
+  for (let attempt = 0; attempt < 2 && !data; attempt++) {
+    try { data = await fetchWithTimeout(url, 8000); } catch (e) { if (attempt === 1 && !cached) {
+      document.getElementById("status").innerHTML = `<div class="notice warn">MLB's standings feed is slow right now (${escapeHtml(e.message || "timeout")}). Try refreshing in a minute.</div>`;
+      return; } }
+  }
+  if (!data) { if (cached) document.getElementById("status").innerHTML = `<div class="dim small" style="margin-bottom:8px">MLB feed is slow — showing standings from ${new Date(cached.t).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}.</div>`; return; }
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), data })); } catch (e) {}
   document.getElementById("status").innerHTML = "";
+  renderStandings(data);
+}
+function renderStandings(data) {
 
   // stash flat team records for the storylines banner
   window._standRows = [];
