@@ -1,6 +1,12 @@
 {
-  "checked_at": "2026-07-09T22:41:59.389Z",
+  "checked_at": "2026-07-10T16:04:23.532Z",
   "cleanup_version": "lydia-site-health-v2-strict-gates",
   "removed_invalid_dates": [],
-  "deleted_artifacts": []
+  "deleted_artifacts": [
+    "data/member-brief/today.json",
+    "data/published-picks/today.json",
+    "data/picks/today.json",
+    "data/market/today.json",
+    "data/bullpen/today.json"
+  ]
 }
