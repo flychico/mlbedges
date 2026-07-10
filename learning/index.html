@@ -102,7 +102,23 @@ async function loadLearning() {
     </div>
   `).join("");
 
-  bucketsEl.innerHTML = `
+  const cal = data.calibration || {};
+  const calHtml = cal.status === "ready" ? `
+    <h2>Full-slate calibration</h2>
+    <div class="card" style="margin-bottom:14px">
+      <p class="dim small">Every analyzed game — official picks, value watches, watchlist, and passes — is graded nightly into a learning-only shadow ledger. This measures whether the model's probabilities are honest and what the games below the official gates would have returned. It is not the public record.</p>
+      <p><strong>${cal.games_graded}</strong> games graded · Brier score <strong>${cal.brier_score}</strong> <span class="dim small">(lower is better; 0.25 = coin flip)</span></p>
+      <table>
+        <thead><tr><th>Model probability</th><th class="num">Games</th><th class="num">Expected win%</th><th class="num">Actual win%</th></tr></thead>
+        <tbody>${(cal.buckets || []).map(b => `<tr><td>${esc(b.range)}</td><td class="num">${b.games}</td><td class="num">${(b.expected_win_rate * 100).toFixed(0)}%</td><td class="num">${(b.actual_win_rate * 100).toFixed(0)}%</td></tr>`).join("")}</tbody>
+      </table>
+      <table style="margin-top:10px">
+        <thead><tr><th>Tier</th><th class="num">Record</th><th class="num">Shadow units (flat 1u)</th></tr></thead>
+        <tbody>${Object.entries(cal.shadow_by_status || {}).map(([k, v]) => `<tr><td>${esc(k.replace(/_/g, " "))}</td><td class="num">${v.wins}-${v.games - v.wins}</td><td class="num">${v.units > 0 ? "+" : ""}${v.units}</td></tr>`).join("")}</tbody>
+      </table>
+    </div>` : "";
+
+  bucketsEl.innerHTML = calHtml + `
     <h2>Review buckets</h2>
     ${bucket("Strong official", (data.buckets || {}).strong_official || [], "Picks that cleared the strict 72% model probability and 80 Lab Score gates.")}
     ${bucket("Protected by probability gate", (data.buckets || {}).protected_by_probability_gate || [], "High setup quality, but model probability below the official-pick gate. These should stay value watch.")}

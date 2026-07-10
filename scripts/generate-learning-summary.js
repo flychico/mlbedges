@@ -163,6 +163,7 @@ function buildLearningSummary({ date, day, allDays, clvRows }) {
       pitcher_conflict_count: pitcherConflict.length
     },
     findings,
+    calibration: buildCalibration(),
     buckets: {
       strong_official: strongOfficial.map(publicPickRow),
       protected_by_probability_gate: protectedByGate.map(publicPickRow),
@@ -437,4 +438,62 @@ function round(n, dp = 4) {
 
 function pct(v) {
   return typeof v === "number" && Number.isFinite(v) ? `${(v * 100).toFixed(1)}%` : "-";
+}
+
+// ---- Full-slate calibration (data/calibration/calibration_log.csv) ----
+// Every analyzed game — official, value watch, watchlist, pass — graded nightly.
+// Measures whether model probabilities are honest (does 65% mean 65%?) and
+// what the games below the official gates would have returned.
+function buildCalibration() {
+  const logPath = path.join(ROOT, "data", "calibration", "calibration_log.csv");
+  if (!fs.existsSync(logPath)) return { status: "no_data", games_graded: 0 };
+  const lines = fs.readFileSync(logPath, "utf8").split("\n").slice(1).filter(Boolean);
+  const rows = [];
+  for (const line of lines) {
+    // simple CSV parse (quoted matchup field)
+    const m = line.match(/^([^,]*),([^,]*),("(?:[^"]|"")*"|[^,]*),("(?:[^"]|"")*"|[^,]*),([^,]*),([^,]*),([^,]*),([^,]*),([^,]*),([^,]*),(.*)$/);
+    if (!m) continue;
+    const prob = parseFloat(m[6]);
+    const result = m[10];
+    if (!isFinite(prob) || (result !== "W" && result !== "L")) continue;
+    rows.push({ status: m[5], prob, mkt: parseFloat(m[7]), price: parseFloat(m[9]), won: result === "W" });
+  }
+  if (!rows.length) return { status: "no_data", games_graded: 0 };
+
+  // Probability buckets
+  const edges = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 1.01];
+  const buckets = [];
+  for (let i = 0; i < edges.length - 1; i++) {
+    const inB = rows.filter(r => r.prob >= edges[i] && r.prob < edges[i + 1]);
+    if (!inB.length) continue;
+    buckets.push({
+      range: `${Math.round(edges[i] * 100)}-${edges[i + 1] > 1 ? 100 : Math.round(edges[i + 1] * 100)}%`,
+      games: inB.length,
+      wins: inB.filter(r => r.won).length,
+      expected_win_rate: Number((inB.reduce((a, r) => a + r.prob, 0) / inB.length).toFixed(3)),
+      actual_win_rate: Number((inB.filter(r => r.won).length / inB.length).toFixed(3))
+    });
+  }
+
+  // Brier score (lower is better; 0.25 = coin-flip guessing)
+  const brier = Number((rows.reduce((a, r) => a + Math.pow(r.prob - (r.won ? 1 : 0), 2), 0) / rows.length).toFixed(4));
+
+  // Shadow record by status: what the non-official tiers would have returned (flat 1u at best price)
+  const byStatus = {};
+  for (const r of rows) {
+    const b = byStatus[r.status] || (byStatus[r.status] = { games: 0, wins: 0, units: 0 });
+    b.games++;
+    if (r.won) { b.wins++; b.units += isFinite(r.price) ? (r.price > 0 ? r.price / 100 : 100 / Math.abs(r.price)) : 0; }
+    else b.units -= 1;
+  }
+  for (const k of Object.keys(byStatus)) byStatus[k].units = Number(byStatus[k].units.toFixed(2));
+
+  return {
+    status: "ready",
+    games_graded: rows.length,
+    brier_score: brier,
+    note: "Shadow ledger for learning only — never part of the public record. Official picks stay the only published record.",
+    buckets,
+    shadow_by_status: byStatus
+  };
 }

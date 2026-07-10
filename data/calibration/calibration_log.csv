@@ -1,0 +1,4 @@
+date,gamePk,matchup,model_side,status,model_prob,market_prob,lab_score,best_price,result,final_score
+2026-07-09,824251,Athletics @ Detroit Tigers,Detroit Tigers,official_pick,0.8084,0.5392,83,-123,W,1-4
+2026-07-09,824494,Philadelphia Phillies @ Cincinnati Reds,Philadelphia Phillies,pass,0.6122,0.5964,51,-156,W,1-0
+2026-07-09,823846,Seattle Mariners @ Miami Marlins,Seattle Mariners,pass,0.512,0.5365,48,-120,L,4-8
