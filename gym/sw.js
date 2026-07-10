@@ -1,5 +1,5 @@
-/* Forge offline cache */
-const C = "forge-v1";
+/* Michelangelo offline cache */
+const C = "mangelo-v1";
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(C).then(c => c.addAll(["/gym/", "/gym/index.html", "/gym/manifest.json"])));
   self.skipWaiting();

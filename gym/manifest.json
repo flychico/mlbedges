@@ -1,11 +1,11 @@
 {
-  "name": "Forge — Workout Planner & Log",
-  "short_name": "Forge",
+  "name": "MichelAngelo — Workout Planner & Log",
+  "short_name": "Angelo",
   "start_url": "/gym/",
   "scope": "/gym/",
   "display": "standalone",
-  "background_color": "#0d1220",
-  "theme_color": "#0d1220",
+  "background_color": "#f6f8fa",
+  "theme_color": "#f6f8fa",
   "icons": [
     { "src": "/gym/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/gym/icon-512.png", "sizes": "512x512", "type": "image/png" }
