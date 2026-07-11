@@ -129,8 +129,29 @@ async function gradeDay() {
   }
 
   const marketMap = loadMarketMap();
+
+  // Listed-pitcher rule (sportsbook convention): if the starter the model
+  // analyzed was scratched, the official pick is VOID — shown, never counted.
+  async function actualStarters(gamePk) {
+    try {
+      const res = await fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/boxscore`);
+      if (!res.ok) return null;
+      const box = await res.json();
+      const first = side => {
+        const tb = box.teams && box.teams[side];
+        const id = tb && tb.pitchers && tb.pitchers[0];
+        return id ? (((tb.players || {})["ID" + id] || {}).person || {}).fullName || null : null;
+      };
+      return { away: first("away"), home: first("home") };
+    } catch (e) { return null; }
+  }
+  function scratched(analyzed, actual) {
+    if (!analyzed || analyzed === "TBD" || !actual) return false; // TBD was known; missing data never voids
+    return analyzed.trim().toLowerCase() !== actual.trim().toLowerCase();
+  }
+
   const graded = [];
-  let wins = 0, losses = 0, ungraded = 0, units = 0, unitsCounted = 0;
+  let wins = 0, losses = 0, ungraded = 0, voided = 0, units = 0, unitsCounted = 0;
   const clvRows = [];
 
   for (const raw of picks) {
@@ -149,6 +170,22 @@ async function gradeDay() {
     const margin = f.homeScore - f.awayScore;
 
     let mlResult = "NG";
+    let voidReason = null;
+    if (p.moneyline && p.moneyline.pick && !p.moneyline.isPass && p.pitcherEdge) {
+      const actual = await actualStarters(p.gamePk);
+      if (actual) {
+        if (scratched(p.pitcherEdge.away_pitcher, actual.away)) voidReason = `listed starter scratched: ${p.pitcherEdge.away_pitcher} → ${actual.away}`;
+        else if (scratched(p.pitcherEdge.home_pitcher, actual.home)) voidReason = `listed starter scratched: ${p.pitcherEdge.home_pitcher} → ${actual.home}`;
+      }
+    }
+    if (voidReason) {
+      mlResult = "VOID";
+      voided++;
+      const learningV = buildLearning(p, "NG", marketItem, loaded.source);
+      learningV.lesson_tag = "voided_starter_scratched";
+      graded.push({ ...p, mlResult, totResult: "NG", rlResult: "NG", finalAway: f.awayScore, finalHome: f.homeScore, voidReason, learning: learningV });
+      continue;
+    }
     if (p.moneyline && p.moneyline.pick && !p.moneyline.isPass) {
       const won = (p.moneyline.side === "home") === homeWon;
       mlResult = won ? "W" : "L";
@@ -202,7 +239,7 @@ async function gradeDay() {
     fs.appendFileSync(CLV_PATH, lines);
   }
 
-  return { date: DATE, wins, losses, ungraded, units: unitsCounted ? Number(units.toFixed(2)) : null, source: loaded.source, current_official_model: loaded.source === "published-picks" ? "moneyline_only" : "legacy_mixed_markets", picks: graded };
+  return { date: DATE, wins, losses, ungraded, voided, units: unitsCounted ? Number(units.toFixed(2)) : null, source: loaded.source, current_official_model: loaded.source === "published-picks" ? "moneyline_only" : "legacy_mixed_markets", picks: graded };
 }
 
 function rebuildResultsPage(results) {
@@ -220,12 +257,12 @@ function rebuildResultsPage(results) {
 
   const pickLine = p => {
     const parts = [];
-    if (p.moneyline && p.moneyline.pick && !p.moneyline.isPass) parts.push(`${p.mlResult === "W" ? "✅" : p.mlResult === "L" ? "❌" : "⏸"} ML ${esc(p.moneyline.pick)} (${(p.moneyline.prob * 100).toFixed(0)}%${p.moneyline.bestAm ? `, ${fmtAm(p.moneyline.bestAm)}` : ""})`);
+    if (p.moneyline && p.moneyline.pick && !p.moneyline.isPass) parts.push(`${p.mlResult === "W" ? "✅" : p.mlResult === "L" ? "❌" : p.mlResult === "VOID" ? "∅" : "⏸"} ML ${esc(p.moneyline.pick)} (${(p.moneyline.prob * 100).toFixed(0)}%${p.moneyline.bestAm ? `, ${fmtAm(p.moneyline.bestAm)}` : ""})`);
     if (p.total && p.total.pick) parts.push(`${p.totResult === "W" ? "✅" : p.totResult === "L" ? "❌" : p.totResult === "PUSH" ? "➖" : "⏸"} Total ${esc(p.total.pick)} ${p.total.line}`);
     if (p.runLine && p.runLine.pick) parts.push(`${p.rlResult === "W" ? "✅" : p.rlResult === "L" ? "❌" : p.rlResult === "PUSH" ? "➖" : "⏸"} RL ${esc(p.runLine.pick)} ${p.runLine.point > 0 ? "+" : ""}${p.runLine.point}`);
     if (!parts.length) return `<div class="small dim">No official play — ${esc(p.away)} @ ${esc(p.home)}</div>`;
-    const lessonTag = p.learning && p.learning.lesson_tag ? p.learning.lesson_tag : "";
-    const lessonText = lessonTag === "not_graded" ? "official grade posts each morning" : lessonTag.replace(/_/g, " ");
+    const lessonTag = p.voidReason ? "" : (p.learning && p.learning.lesson_tag ? p.learning.lesson_tag : "");
+    const lessonText = p.voidReason ? "VOID — " + p.voidReason : (lessonTag === "not_graded" ? "official grade posts each morning" : lessonTag.replace(/_/g, " "));
     const lesson = lessonText ? ` <span class="dim">· ${esc(lessonText)}</span>` : "";
     return `<div class="small">${parts.join(" · ")} — ${esc(p.away)} @ ${esc(p.home)}${p.finalAway !== undefined ? ` · ${p.finalAway}-${p.finalHome}` : ""}${lesson}</div>`;
   };
@@ -253,7 +290,7 @@ function rebuildResultsPage(results) {
 <nav id="nav"></nav>
 <main>
 <h1>Results</h1>
-<p class="subtitle">Current official LyDia picks are moneyline-only and require both a high model probability and a strong Lab Score. Older results may include legacy totals and run-line outputs from earlier model versions. Wins and losses alike stay visible.</p>
+<p class="subtitle">Current official LyDia picks are moneyline-only and require both a high model probability and a strong Lab Score. If the listed starting pitcher is scratched after a pick is published, the pick is voided (∅) — the standard sportsbook listed-pitcher rule — and stays visible without counting in the record. Older results may include legacy totals and run-line outputs from earlier model versions. Wins, losses, and voids alike stay visible.</p>
 <section id="live-pick-results" class="card" style="margin:16px 0 24px">
   <h2 style="margin-top:0">Today's Pick Status</h2>
   <div class="loading">Loading live pick results...</div>

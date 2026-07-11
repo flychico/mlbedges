@@ -48,6 +48,35 @@ async function main() {
     }
   }
 
+  // Scratched-starter detection: a game where the analyzed starter never pitched
+  // is voided from the learning ledgers — grading it would measure roster news, not the model.
+  const starterCache = {};
+  async function actualStarters(gamePk) {
+    if (starterCache[gamePk]) return starterCache[gamePk];
+    try {
+      const res = await fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/boxscore`);
+      if (!res.ok) return null;
+      const box = await res.json();
+      const first = side => {
+        const tb = box.teams && box.teams[side];
+        const id = tb && tb.pitchers && tb.pitchers[0];
+        return id ? (((tb.players || {})["ID" + id] || {}).person || {}).fullName || null : null;
+      };
+      return (starterCache[gamePk] = { away: first("away"), home: first("home") });
+    } catch (e) { return null; }
+  }
+  const isScratched = (analyzed, actual) => analyzed && analyzed !== "TBD" && actual && analyzed.trim().toLowerCase() !== actual.trim().toLowerCase();
+  const VOIDLOG = path.join(ROOT, "data", "calibration", "voided_log.csv");
+  const voidRows = [];
+  async function gameVoided(g) {
+    const pe = g.pitcher_edge || {};
+    const actual = await actualStarters(g.game_pk);
+    if (!actual) return false;
+    if (isScratched(pe.away_pitcher, actual.away)) { voidRows.push(`${DATE},${g.game_pk},away,${csvField(pe.away_pitcher)},${csvField(actual.away)}`); return true; }
+    if (isScratched(pe.home_pitcher, actual.home)) { voidRows.push(`${DATE},${g.game_pk},home,${csvField(pe.home_pitcher)},${csvField(actual.home)}`); return true; }
+    return false;
+  }
+
   fs.mkdirSync(path.dirname(LOG), { recursive: true });
   if (!fs.existsSync(LOG)) fs.writeFileSync(LOG, HEADER);
   const existing = new Set(
@@ -64,6 +93,7 @@ async function main() {
     const f = finals[g.game_pk];
     if (!f || f.awayScore == null || f.homeScore == null) { notFinal++; continue; }
     if (!g.side || typeof g.model_probability !== "number") continue;
+    if (await gameVoided(g)) continue;
     const homeWon = f.homeScore > f.awayScore;
     const pickWon = g.side === "home" ? homeWon : !homeWon;
     rows.push([
@@ -89,9 +119,17 @@ async function main() {
     const f = finals[g.game_pk];
     const v3 = g.model_v3;
     if (!f || !v3 || !Number.isFinite(v3.p_home) || !Number.isFinite(v3.p_home_v2)) continue;
+    if (await gameVoided(g)) continue;
     sRows.push([DATE, g.game_pk, v3.p_home_v2, v3.p_home, f.homeScore > f.awayScore ? 1 : 0].join(","));
   }
   if (sRows.length) fs.appendFileSync(SLOG, sRows.join("\n") + "\n");
+  if (voidRows.length) {
+    if (!fs.existsSync(VOIDLOG)) fs.writeFileSync(VOIDLOG, "date,gamePk,side,analyzed_starter,actual_starter\n");
+    const seen = new Set(fs.readFileSync(VOIDLOG, "utf8").split("\n"));
+    const fresh = [...new Set(voidRows)].filter(r => !seen.has(r));
+    if (fresh.length) fs.appendFileSync(VOIDLOG, fresh.join("\n") + "\n");
+    console.log(`Voided ${new Set(voidRows).size} game(s) — starter scratched (see voided_log.csv).`);
+  }
   console.log(`Calibration ${DATE}: logged ${added}, already-logged ${skippedDone}, not-final ${notFinal}, slate ${games.length}. Shadow v3: ${sRows.length} graded.`);
 }
 
