@@ -5,6 +5,7 @@
 */
 const fs = require("fs");
 const path = require("path");
+const LyDiaRead = require("../js/client-facing-read.js");
 
 const SITE = "https://mlbedges.com";
 const ROOT = path.join(__dirname, "..");
@@ -34,7 +35,7 @@ function prettyDateTime(iso) {
 function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c])); }
 function pct(v, dp = 1) { return typeof v === "number" && Number.isFinite(v) ? `${(v * 100).toFixed(dp)}%` : "-"; }
 function edge(v) { return typeof v === "number" && Number.isFinite(v) ? `${v >= 0 ? "+" : ""}${pct(v)}` : "-"; }
-function labRating(v) { return typeof v === "number" && Number.isFinite(v) ? `${(v / 10).toFixed(1)}/10` : "-"; }
+function labRating(v) { return LyDiaRead.labRating(v); }
 function odds(v) { if (typeof v !== "number" || !Number.isFinite(v)) return "-"; return v > 0 ? `+${Math.round(v)}` : String(Math.round(v)); }
 function readJson(file) { return JSON.parse(fs.readFileSync(file, "utf8")); }
 function statusLabel(s) { if (s === "official_pick") return "Official Pick"; if (s === "value_watch") return "Value Watch"; if (s === "watchlist") return "Watchlist"; return "Pass"; }
@@ -191,7 +192,7 @@ function renderCard(g, featured) {
     <dt>Pitcher edge</dt><dd>${esc(pe.team || "-")}${pe.gap ? ` by ${esc(pe.gap)} points` : ""}</dd>
     <dt>Bullpen read</dt><dd>${esc(bullpenAnalysis(g))}</dd>
   </dl>
-  <div class="why-block"><b>Why LyDia made this decision</b>${esc(clientRead(g))}</div>
+  <div class="why-block"><b>Why LyDia made this decision</b>${esc(LyDiaRead.clientRead(g))}</div>
   ${isPass ? `<div class="risk-block"><b>Pass reason</b>${esc(g.pass_reason || "No clear setup.")}</div>` : `<div class="risk-block"><b>Risk note</b>${esc(riskNote(g))}</div>`}
 </div>`;
 }
