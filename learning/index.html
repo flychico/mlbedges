@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XVWTMDNBJK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XVWTMDNBJK');
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Learning Summary | LyDia</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LyDia">
+<meta property="og:title" content="Learning Summary | LyDia">
+<meta property="og:description" content="LyDia learning summary: what the model learned from graded moneyline picks, market movement, pitcher signals, bullpen signals, and results.">
+<meta property="og:url" content="https://mlbedges.com/learning/">
+<meta property="og:image" content="https://mlbedges.com/img/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Learning Summary | LyDia">
+<meta name="twitter:description" content="LyDia learning summary: what the model learned from graded moneyline picks, market movement, pitcher signals, bullpen signals, and results.">
+<meta name="twitter:image" content="https://mlbedges.com/img/og-card.png">
+
 <meta name="description" content="LyDia learning summary: what the model learned from graded moneyline picks, market movement, pitcher signals, bullpen signals, and results.">
 <link rel="canonical" href="https://mlbedges.com/learning/">
 <link rel="stylesheet" href="/css/style.css">
@@ -36,10 +56,9 @@
   <div id="findings"></div>
   <div id="buckets"></div>
 </main>
-<footer id="footer"></footer>
-<script src="/js/app.js"></script>
+<footer id="footer"></footer><script src="/js/app.js"></script>
 <script>
-renderNav("/results/"); renderFooter();
+renderNav("/articles/"); renderFooter();
 
 loadLearning();
 

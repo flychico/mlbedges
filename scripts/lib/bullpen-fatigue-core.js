@@ -1,7 +1,7 @@
 "use strict";
 
 /*
-  LyDia Bullpen Fatigue Core v2.1-locked-formula
+  LyDia Bullpen Fatigue Core v3-runs-aware
 
   One source of truth for bullpen workload scoring.
   Used by:
@@ -9,7 +9,7 @@
   - scripts/generate-member-lab.js
   - tools/bullpen-fatigue/index.html through generated JSON only
 
-  Scoring rule (v3, runs-aware):
+  Active owned scoring rule (v3, runs-aware):
   Score = 45
     + ((Last 3 BP IP - 9) × 3.5)
     + ((Last game BP IP - 3) × 4)
@@ -171,7 +171,7 @@ function scoreTeam(team) {
   const b2b = countBackToBackArms(team.pitcherDates);
   const gamesTracked = games.length;
 
-  // Audit formula v3. Reliever counts remain context-only.
+  // Active owned formula v3. Reliever counts remain context-only.
   const components = {
     baseline: 45,
     last3_bp_ip: (last3BP - 9) * 3.5,

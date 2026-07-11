@@ -1,6 +1,6 @@
 {
   "date": "2026-07-11",
-  "generated_at": "2026-07-11T05:58:52.185Z",
+  "generated_at": "2026-07-11T06:25:15.373Z",
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
   "warnings": [],
@@ -136,19 +136,6 @@
       "lydia_takeaway": "This article matches Cleveland Guardians @ Miami Marlins, but the headline and summary do not clearly identify a selected side. LyDia currently has Miami Marlins Money Line at 63.0% model probability and 6.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
-      "title": "MLB Best Bets Today: Predictions & Picks for Phillies vs Tigers, Rockies vs Giants, More for Friday, July 10 - Action Network",
-      "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOdXo2cEtPQ3NqUlJiS0d4QnBfeUpxZ1B6QjFXcURJMVRxaFZSTTZuN1pFZDAtMDFLbC1IQ0hRQ3RudVJhd2NhSGtKbDRTMW9LUU5tZE15M2ZxYjRCWENyMzJ1TzgtSElvWTVGUnpmbkhrdkdfMlJGaEF5Q0tSWUdvbmRBZkR1M3NZLVJlQTFfU3U1TDF6bEl3dG82WlpycXFvYkdZWGo4Z1FvY25wWTZKcDJPUV9KTWg4THBRWTFzdVc5TXBxUVU0?oc=5",
-      "published_at": "2026-07-10T22:40:00.000Z",
-      "description": "MLB Best Bets Today: Predictions & Picks for Phillies vs Tigers, Rockies vs Giants, More for Friday, July 10 &nbsp;&nbsp; Action Network",
-      "source": "Action Network",
-      "published_label": "Jul 10, 2026",
-      "section": "unable_to_classify",
-      "classification_confidence": "no_explicit_side",
-      "game": "Philadelphia Phillies @ Detroit Tigers",
-      "selected_side": null,
-      "lydia_takeaway": "This article matches Philadelphia Phillies @ Detroit Tigers, but the headline and summary do not clearly identify a selected side. LyDia currently has Detroit Tigers Money Line at 67.6% model probability and 7.4/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
-    },
-    {
       "title": "Washington Nationals Odds & Betting Lines - Action Network",
       "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE05TXV3TGMxSXdHRjF6dHczakh0eTZoelZONHNRbzJjVHFNVHk3VThOUHViQ2pKZXM2aVZQQTl6aGtVd0xMRFlTcG5JZ1U3S24wU2xYZGR4SFp1dzN0amMtcGJNLUkyMWhTcGlR?oc=5",
       "published_at": "2026-07-10T22:38:59.000Z",
@@ -232,6 +219,19 @@
       "published_at": "2026-07-10T20:41:00.000Z",
       "description": "MLB Picks, Predictions Today: Kev’s Best Bets for Friday, July 10 &nbsp;&nbsp; Action Network",
       "source": "Action Network",
+      "published_label": "Jul 10, 2026",
+      "section": "market_context",
+      "classification_confidence": "no_game_match",
+      "game": null,
+      "selected_side": null,
+      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+    },
+    {
+      "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Friday, July 10 - Covers.com",
+      "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9FQUZUT1R4ZFcxbzdNS3JHanJGTXpfYjZtX2ZWM29pSTRaRXYyU3dMM3dITFpDbURvM3ZqbzUtdENRZUFVLVphQ1dlSldvTTFmU3BIZERDU2VpcmJrbXZGemxOMlg1RWxHOTkzYW1RWnhoSkxuNGswNDdTdFFyeWc?oc=5",
+      "published_at": "2026-07-10T20:18:00.000Z",
+      "description": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Friday, July 10 &nbsp;&nbsp; Covers.com",
+      "source": "Covers.com",
       "published_label": "Jul 10, 2026",
       "section": "market_context",
       "classification_confidence": "no_game_match",
@@ -347,6 +347,19 @@
         "game": null,
         "selected_side": null,
         "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      },
+      {
+        "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Friday, July 10 - Covers.com",
+        "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9FQUZUT1R4ZFcxbzdNS3JHanJGTXpfYjZtX2ZWM29pSTRaRXYyU3dMM3dITFpDbURvM3ZqbzUtdENRZUFVLVphQ1dlSldvTTFmU3BIZERDU2VpcmJrbXZGemxOMlg1RWxHOTkzYW1RWnhoSkxuNGswNDdTdFFyeWc?oc=5",
+        "published_at": "2026-07-10T20:18:00.000Z",
+        "description": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Friday, July 10 &nbsp;&nbsp; Covers.com",
+        "source": "Covers.com",
+        "published_label": "Jul 10, 2026",
+        "section": "market_context",
+        "classification_confidence": "no_game_match",
+        "game": null,
+        "selected_side": null,
+        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
       }
     ],
     "unable_to_classify": [
@@ -414,19 +427,6 @@
         "game": "Cleveland Guardians @ Miami Marlins",
         "selected_side": null,
         "lydia_takeaway": "This article matches Cleveland Guardians @ Miami Marlins, but the headline and summary do not clearly identify a selected side. LyDia currently has Miami Marlins Money Line at 63.0% model probability and 6.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-      },
-      {
-        "title": "MLB Best Bets Today: Predictions & Picks for Phillies vs Tigers, Rockies vs Giants, More for Friday, July 10 - Action Network",
-        "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOdXo2cEtPQ3NqUlJiS0d4QnBfeUpxZ1B6QjFXcURJMVRxaFZSTTZuN1pFZDAtMDFLbC1IQ0hRQ3RudVJhd2NhSGtKbDRTMW9LUU5tZE15M2ZxYjRCWENyMzJ1TzgtSElvWTVGUnpmbkhrdkdfMlJGaEF5Q0tSWUdvbmRBZkR1M3NZLVJlQTFfU3U1TDF6bEl3dG82WlpycXFvYkdZWGo4Z1FvY25wWTZKcDJPUV9KTWg4THBRWTFzdVc5TXBxUVU0?oc=5",
-        "published_at": "2026-07-10T22:40:00.000Z",
-        "description": "MLB Best Bets Today: Predictions & Picks for Phillies vs Tigers, Rockies vs Giants, More for Friday, July 10 &nbsp;&nbsp; Action Network",
-        "source": "Action Network",
-        "published_label": "Jul 10, 2026",
-        "section": "unable_to_classify",
-        "classification_confidence": "no_explicit_side",
-        "game": "Philadelphia Phillies @ Detroit Tigers",
-        "selected_side": null,
-        "lydia_takeaway": "This article matches Philadelphia Phillies @ Detroit Tigers, but the headline and summary do not clearly identify a selected side. LyDia currently has Detroit Tigers Money Line at 67.6% model probability and 7.4/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Washington Nationals Odds & Betting Lines - Action Network",

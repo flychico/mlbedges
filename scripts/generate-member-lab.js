@@ -91,7 +91,7 @@ async function main() {
       minimum_model_probability: OFFICIAL_MODEL_PROB,
       minimum_lab_score: OFFICIAL_LAB_SCORE,
       minimum_market_edge: VALUE_EDGE,
-      note: "Lab Score is setup quality. It is not win probability. Official picks require both strong win probability and strong setup quality."
+      note: "Lab Rating is setup quality. It is not win probability. Official picks require both strong win probability and strong setup quality."
     },
     summary: summarize(rows, Boolean(ODDS_API_KEY)),
     games: rows
@@ -526,7 +526,7 @@ function calcLabScore({ edge, pitchGap, pitchEdgeSupports, pickBullpen, oppBullp
     bullpen_points: round(bullpenPts, 2),
     market_points: round(marketPts, 2),
     base_points: basePts,
-    note: "Lab Score grades setup quality. It is not win probability."
+    note: "Lab Rating grades setup quality. It is not win probability."
   };
 }
 
@@ -584,8 +584,8 @@ function summarize(rows, hasOdds) {
   const watch = rows.filter(r => r.status === "watchlist").length;
   const high = rows.filter(r => r.lab_score >= VALUE_WATCH_LAB_SCORE).length;
   if (!hasOdds) return "Brief generated without live market pricing. Treat the card as research-only until pricing is checked.";
-  if (official) return `${official} official moneyline pick${official === 1 ? "" : "s"} cleared the stricter model-probability and Lab Score gates. ${valueWatch} value-watch setup${valueWatch === 1 ? "" : "s"} had good price math but did not clear official-pick probability rules.`;
-  return `No official picks cleared the stricter rules. ${valueWatch} value-watch setup${valueWatch === 1 ? "" : "s"} and ${watch} watchlist game${watch === 1 ? "" : "s"} remain research-only. ${high} game${high === 1 ? "" : "s"} reached a Lab Score of ${VALUE_WATCH_LAB_SCORE}+ but did not clear every official gate.`;
+  if (official) return `${official} official moneyline pick${official === 1 ? "" : "s"} cleared the stricter model-probability and Lab Rating gates. ${valueWatch} value-watch setup${valueWatch === 1 ? "" : "s"} had good price math but did not clear official-pick probability rules.`;
+  return `No official picks cleared the stricter rules. ${valueWatch} value-watch setup${valueWatch === 1 ? "" : "s"} and ${watch} watchlist game${watch === 1 ? "" : "s"} remain research-only. ${high} game${high === 1 ? "" : "s"} reached a Lab Rating of ${VALUE_WATCH_LAB_SCORE}+ but did not clear every official gate.`;
 }
 function riskNote(r) {
   const notes = [];
@@ -608,7 +608,7 @@ function buildPicksFile(rows, generatedAt) {
     source_of_truth: "LyDia Daily Engine",
     current_official_model: "moneyline_only",
     lock_policy: "Dated official pick files are append-only. Re-running the engine for the same date reuses the existing dated file instead of changing official picks.",
-    note: "Official picks require market edge, model probability >= 72%, Lab Score >= 80, pitcher support, and no major bullpen caution.",
+    note: "Official picks require market edge, model probability >= 72%, Lab Rating >= 8.0/10, pitcher support, and no major bullpen caution.",
     picks: official.map(r => ({
       gamePk: r.game_pk,
       away: r.away_team,
