@@ -74,7 +74,7 @@
   </div>
 
   <div class="notice">
-    <strong>How to read it:</strong> the big number is the <b>LyDia Pitcher Score</b> (0–100) — run prevention, WHIP, K/BB profile, and sample size in one grade. Tier labels translate the decimals: every ~0.50 of ERA and ~0.10 of WHIP is roughly one class of pitcher. <b>K-BB%</b> is the most skill-driven stat on the card; <b>BABIP</b> far from ~.300 flags luck that usually corrects; <b>IP/start</b> is how much of the game the bullpen inherits.
+    <strong>How to read it:</strong> the big number is the <b>LyDia Pitcher Score</b> (out of 10) — run prevention, WHIP, K/BB profile, and sample size in one grade. Tier labels translate the decimals: every ~0.50 of ERA and ~0.10 of WHIP is roughly one class of pitcher. <b>K-BB%</b> is the most skill-driven stat on the card; <b>BABIP</b> far from ~.300 flags luck that usually corrects; <b>IP/start</b> is how much of the game the bullpen inherits.
   </div>
 
   <div id="kpis" class="kpis"></div>
@@ -304,8 +304,8 @@ function buildPitcherRead(d, awayTeam, homeTeam) {
   const parts = [];
 
   const lt = tEra(lead.era), tt = tEra(trail.era);
-  if (gap < 4) parts.push(`LyDia scores this nearly even (${A.score}–${H.score}) — ${A.name} and ${H.name} are the same class of starter tonight.`);
-  else { const an = t => /^[aeiou]/i.test(t) ? "an" : "a"; parts.push(`LyDia scores it ${lead.score}–${trail.score} for ${lead.name}: ${lt ? an(lt.t) + " " + lt.t : "a"}-level arm (${fmt(lead.era)} ERA, ${fmt(lead.whip)} WHIP) against ${tt ? an(tt.t) + " " + tt.t : "a"} one (${fmt(trail.era)}, ${fmt(trail.whip)}).`); }
+  if (gap < 4) parts.push(`LyDia scores this nearly even (${(A.score/10).toFixed(1)}–${(H.score/10).toFixed(1)}) — ${A.name} and ${H.name} are the same class of starter tonight.`);
+  else { const an = t => /^[aeiou]/i.test(t) ? "an" : "a"; parts.push(`LyDia scores it ${(lead.score/10).toFixed(1)}–${(trail.score/10).toFixed(1)} for ${lead.name}: ${lt ? an(lt.t) + " " + lt.t : "a"}-level arm (${fmt(lead.era)} ERA, ${fmt(lead.whip)} WHIP) against ${tt ? an(tt.t) + " " + tt.t : "a"} one (${fmt(trail.era)}, ${fmt(trail.whip)}).`); }
 
   if (Number.isFinite(lead.kbbPct) && Number.isFinite(trail.kbbPct)) {
     const kg = lead.kbbPct - trail.kbbPct;
@@ -343,7 +343,7 @@ function renderPitcherBox(label, team, p) {
     <div class="dim small">${escapeHtml(label)} starter</div>
     <div style="display:flex;justify-content:space-between;gap:10px;align-items:end">
       <div><b>${escapeHtml(p.name || "TBD")}</b><div class="small dim">${escapeHtml(p.grade || "Unknown")}</div></div>
-      <div><div class="score-label">LyDia Pitcher Score</div><div class="score" style="text-align:right">${p.score}</div></div>
+      <div><div class="score-label">LyDia Pitcher Score</div><div class="score" style="text-align:right">${(p.score/10).toFixed(1)}<span style="font-size:.85rem;color:var(--text-dim)">/10</span></div></div>
     </div>
     <div class="stat-row"><span>ERA</span><span><b>${fmt(p.era)}</b>${chip(tEra(p.era))}</span></div>
     <div class="stat-row"><span>WHIP</span><span><b>${fmt(p.whip)}</b>${chip(tWhip(p.whip))}</span></div>
@@ -376,7 +376,7 @@ function renderGame(g, stats) {
     <div class="edge-line">
       <span class="badge ${badgeClass}">${escapeHtml(d.strength)}</span>
       <span><b>Edge:</b> ${escapeHtml(d.edgeTeam)}</span>
-      <span class="dim small">Score gap: ${d.gap}</span>
+      <span class="dim small">Score gap: ${(d.gap/10).toFixed(1)}</span>
     </div>
     <div class="pitcher-grid">
       ${renderPitcherBox("Away", awayTeam, d.away)}
@@ -387,7 +387,7 @@ function renderGame(g, stats) {
   </div>`;
 }
 
-/* Bullpens are pitchers too: same-page condition strip (today only — /100 scale, higher = more fatigued). */
+/* Bullpens are pitchers too: same-page condition strip (today only — /10 scale, higher = more fatigued). */
 function bullpenStrip(awayTeam, homeTeam) {
   if (!BP) return "";
   const a = BP[awayTeam], h = BP[homeTeam];
@@ -395,13 +395,13 @@ function bullpenStrip(awayTeam, homeTeam) {
   const box = (team, b) => {
     const cls = b.score >= 82 ? "neg-text" : b.score >= 62 ? "neg-text" : b.score < 35 ? "pos-text" : "";
     return `<div style="flex:1;min-width:150px"><b>${escapeHtml(team)}</b> pen:
-      <b class="${cls}">${b.score}/100 ${escapeHtml(b.label)}</b>
+      <b class="${cls}">${(b.score/10).toFixed(1)}/10 ${escapeHtml(b.label)}</b>
       <span class="dim small">· ${b.last3_bp_ip ?? "—"} IP${Number.isFinite(b.last3_bp_runs) ? ", " + b.last3_bp_runs + " runs allowed" : ""} last 3d</span></div>`;
   };
   const gap = Math.abs(a.score - h.score);
   const fresher = a.score < h.score ? awayTeam : homeTeam;
-  const edgeLine = gap >= 20 ? `<div class="small" style="margin-top:4px;color:var(--accent)">${escapeHtml(fresher)} has the meaningfully fresher pen (gap ${gap}) — late innings lean their way.</div>`
-    : gap >= 10 ? `<div class="small dim" style="margin-top:4px">${escapeHtml(fresher)}'s pen is somewhat fresher (gap ${gap}).</div>` : "";
+  const edgeLine = gap >= 20 ? `<div class="small" style="margin-top:4px;color:var(--accent)">${escapeHtml(fresher)} has the meaningfully fresher pen (gap ${(gap/10).toFixed(1)}) — late innings lean their way.</div>`
+    : gap >= 10 ? `<div class="small dim" style="margin-top:4px">${escapeHtml(fresher)}'s pen is somewhat fresher (gap ${(gap/10).toFixed(1)}).</div>` : "";
   return `<div style="margin-top:10px;background:var(--bg-elev);border:1px solid var(--border);border-radius:8px;padding:9px 12px">
     <div class="dim small" style="text-transform:uppercase;letter-spacing:.04em;font-size:.7rem;margin-bottom:4px">Bullpen condition (last 3 days · <a href="/tools/bullpen-fatigue/">full index</a>)</div>
     <div style="display:flex;gap:14px;flex-wrap:wrap">${box(awayTeam, a)}${box(homeTeam, h)}</div>

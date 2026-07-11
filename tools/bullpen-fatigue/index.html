@@ -207,7 +207,7 @@ function penBox(t) {
   const runs = Number.isFinite(t.last3_bp_runs) ? t.last3_bp_runs : null;
   return `<div class="pen-box">
     <div style="display:flex;justify-content:space-between;align-items:baseline"><b>${esc(t.team)}</b>
-      <span><b style="font-size:1.2rem">${t.score ?? "—"}</b><span class="dim small">/100</span> <span class="badge ${t.label === "High risk" || t.label === "Tired" ? "neg" : t.label === "Fresh" ? "pos" : "neutral"}">${esc(t.label || "?")}</span></span></div>
+      <span><b style="font-size:1.2rem">${Number.isFinite(t.score) ? (t.score/10).toFixed(1) : "—"}</b><span class="dim small">/10</span> <span class="badge ${t.label === "High risk" || t.label === "Tired" ? "neg" : t.label === "Fresh" ? "pos" : "neutral"}">${esc(t.label || "?")}</span></span></div>
     <div class="gauge"><i style="width:${Math.min(100, t.score ?? 0)}%;background:${gaugeColor(t.score ?? 0)}"></i></div>
     <div class="small dim" style="margin-top:6px">${fmt(t.last3_bp_ip)} IP · ${t.last3_relievers ?? "—"} appearances · ${t.back_to_back_arms ?? 0} b2b arm${t.back_to_back_arms === 1 ? "" : "s"}${runs !== null ? ` · <b class="${runs >= 6 ? "neg-text" : ""}">${runs} runs allowed</b>` : ""}</div>
     <div class="small dim" style="margin-top:4px">${esc(teamRead(t))}</div>
@@ -226,9 +226,9 @@ function renderTeams() {
       const [x, y] = pair[0].side === "away" ? pair : [pair[1], pair[0]];
       const gap = Math.abs(x.score - y.score);
       const fresher = x.score < y.score ? x.team : y.team;
-      const verdict = gap >= 20 ? `<b>${esc(fresher)}</b> has the meaningfully fresher pen — a real late-inning lean (gap ${gap}).`
-        : gap >= 10 ? `${esc(fresher)}'s pen is somewhat fresher (gap ${gap}).`
-        : `No meaningful bullpen edge either way (gap ${gap}).`;
+      const verdict = gap >= 20 ? `<b>${esc(fresher)}</b> has the meaningfully fresher pen — a real late-inning lean (gap ${(gap/10).toFixed(1)}).`
+        : gap >= 10 ? `${esc(fresher)}'s pen is somewhat fresher (gap ${(gap/10).toFixed(1)}).`
+        : `No meaningful bullpen edge either way (gap ${(gap/10).toFixed(1)}).`;
       cards.push(`<div class="card team-card">
         <div class="team-head"><span class="matchup">${esc(x.game || x.team + " vs " + y.team)}</span></div>
         <div class="pen-grid">${penBox(x)}${penBox(y)}</div>
@@ -244,7 +244,7 @@ function renderTeams() {
 /* Plain-English read composed from fields — never shows internal formula text,
    works with both old and new generated files. */
 function teamRead(t) {
-  if (!t.recent_games_tracked) return `${t.label} (${t.score}/100). No completed games in the last three days — the pen comes in rested.`;
+  if (!t.recent_games_tracked) return `${t.label} (${(t.score/10).toFixed(1)}/10). No completed games in the last three days — the pen comes in rested.`;
   const bits = [];
   bits.push(`${fmt(t.last3_bp_ip)} relief innings over the last three days` + (t.last_game_bp_ip >= 4 ? ` — ${fmt(t.last_game_bp_ip)} in the last game` : ""));
   if (t.back_to_back_arms > 0) bits.push(`${t.back_to_back_arms} arm${t.back_to_back_arms === 1 ? "" : "s"} worked back-to-back days`);
@@ -253,7 +253,7 @@ function teamRead(t) {
     else if (t.last3_bp_runs >= 1) bits.push(`allowing ${t.last3_bp_runs} run${t.last3_bp_runs === 1 ? "" : "s"}`);
     else bits.push(`without allowing a run`);
   }
-  return `${t.label} (${t.score}/100): ` + bits.join(", ") + ".";
+  return `${t.label} (${(t.score/10).toFixed(1)}/10): ` + bits.join(", ") + ".";
 }
 
 function renderTeam(t) {
@@ -265,7 +265,7 @@ function renderTeam(t) {
     </div>
     <div class="grade-line">
       <span class="badge ${cls}">${esc(t.label || "Unknown")}</span>
-      <span><b>Fatigue score:</b> ${t.score ?? "—"}/100</span>
+      <span><b>Fatigue score:</b> ${Number.isFinite(t.score) ? (t.score/10).toFixed(1) : "—"}/10</span>
       <span class="dim small">${t.recent_games_tracked ?? 0} recent game${t.recent_games_tracked === 1 ? "" : "s"} tracked</span>
     </div>
     <div class="metric-grid">

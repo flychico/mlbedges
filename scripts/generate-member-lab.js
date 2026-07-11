@@ -565,10 +565,10 @@ function buildRead(ctx) {
     ? "The starting pitcher matchup does not create a meaningful separation."
     : `${ctx.pitchEdgeTeam} owns the starting pitcher edge by ${ctx.pitchGap} points.`;
   const bullpenLine = `Bullpen read: ${ctx.bullpenRead}.`;
-  const labLine = `Lab Score ${ctx.lab.score}/100: model edge ${ctx.lab.model_edge_points}, pitcher ${ctx.lab.pitcher_points}, bullpen ${ctx.lab.bullpen_points}, market ${ctx.lab.market_points}, base ${ctx.lab.base_points}.`;
+  const labLine = `Lab Rating ${(ctx.lab.score/10).toFixed(1)}/10: model edge ${ctx.lab.model_edge_points}, pitcher ${ctx.lab.pitcher_points}, bullpen ${ctx.lab.bullpen_points}, market ${ctx.lab.market_points}, base ${ctx.lab.base_points}.`;
 
   if (ctx.status === "official_pick") {
-    return `${ctx.pickTeam} is an official moneyline pick because it clears both gates: ${fmtPct(ctx.modelProb)} model win probability and ${ctx.lab.score}/100 Lab Score. ${valueLine} ${pitcherLine} ${bullpenLine}`;
+    return `${ctx.pickTeam} is an official moneyline pick because it clears both gates: ${fmtPct(ctx.modelProb)} model win probability and ${(ctx.lab.score/10).toFixed(1)}/10 Lab Rating. ${valueLine} ${pitcherLine} ${bullpenLine}`;
   }
   if (ctx.status === "value_watch") {
     return `${ctx.pickTeam} is a value watch, not an official pick. ${valueLine} ${labLine} The setup is strong, but official picks require at least ${fmtPct(OFFICIAL_MODEL_PROB)} model probability and ${OFFICIAL_LAB_SCORE}/100 Lab Score.`;

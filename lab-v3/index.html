@@ -48,7 +48,7 @@
   <h1>Model v3 — Shadow View</h1>
   <p class="subtitle">What the new method (FIP-based pitcher input + offense form) says about today's card, next to the locked official v2. This page never affects picks — it's the A/B test made visible.</p>
   <div class="notice">
-    <strong>Reading it:</strong> v2 is the locked number the site published. v3 is recomputed here from live data (or the locked value once the daily run records it). A <b>v3 pick?</b> tag means v3 clears ALL official gates — probability (72%), market edge (3%), and a v3 Lab Score of 80+ (computed with v3's skill-based pitcher gap and the same bullpen/market buckets as the live engine). Cards with a pink border are games where the two models pick different sides — those are the games that decide the A/B. Each starter shows both grades: the live <b>LyDia Pitcher Score</b> (ERA/WHIP-based) and the <b>v3 skill score</b> (FIP, K-BB%, HR — luck stripped out). Big gaps between the two are the model disagreement, explained.
+    <strong>Reading it:</strong> v2 is the locked number the site published. v3 is recomputed here from live data (or the locked value once the daily run records it). A <b>v3 pick?</b> tag means v3 clears ALL official gates — probability (72%), market edge (3%), and a v3 Lab Rating of 8.0+ (computed with v3's skill-based pitcher gap and the same bullpen/market buckets as the live engine). Cards with a pink border are games where the two models pick different sides — those are the games that decide the A/B. Each starter shows both grades: the live <b>LyDia Pitcher Score</b> (ERA/WHIP-based) and the <b>v3 skill score</b> (FIP, K-BB%, HR — luck stripped out). Big gaps between the two are the model disagreement, explained.
   </div>
   <div id="summary"></div>
   <div id="status"><div class="loading">Computing both models…</div></div>
@@ -254,15 +254,15 @@ function render(rows) {
     return `<div class="card match-card ${disagree ? "disagree" : ""}">
       <div class="vhead"><span class="matchup">${escapeHtml(r.away)} @ ${escapeHtml(r.home)}</span><span class="dim small">${r.time}${r.status === "official_pick" ? ' · <b>v2 OFFICIAL PICK</b>' : ""}</span></div>
       <div class="dim small" style="margin-top:4px">
-        ${escapeHtml(r.spA)}: LyDia Pitcher Score <b>${r.sA2 ?? "—"}</b> → v3 skill score <b class="v3c">${r.sA3 ?? "—"}</b>${scoreShift(r.sA2, r.sA3)} (ERA-in ${r.eA.toFixed(2)} → FIP-in ${r.fA.toFixed(2)})<br>
-        ${escapeHtml(r.spH)}: LyDia Pitcher Score <b>${r.sH2 ?? "—"}</b> → v3 skill score <b class="v3c">${r.sH3 ?? "—"}</b>${scoreShift(r.sH2, r.sH3)} (${r.eH.toFixed(2)} → ${r.fH.toFixed(2)})<br>
-        offense form: ${escapeHtml(r.away)} ${r.dA >= 0 ? "+" : ""}${f3(r.dA)} · ${escapeHtml(r.home)} ${r.dH >= 0 ? "+" : ""}${f3(r.dH)}${Number.isFinite(r.bpA) && Number.isFinite(r.bpH) ? ` · pen fatigue ${Math.round(r.bpA)} vs ${Math.round(r.bpH)}` : ""}
+        ${escapeHtml(r.spA)}: LyDia Pitcher Score <b>${Number.isFinite(r.sA2) ? (r.sA2/10).toFixed(1) : "—"}</b> → v3 skill score <b class="v3c">${Number.isFinite(r.sA3) ? (r.sA3/10).toFixed(1) : "—"}</b>${scoreShift(r.sA2, r.sA3)} (ERA-in ${r.eA.toFixed(2)} → FIP-in ${r.fA.toFixed(2)})<br>
+        ${escapeHtml(r.spH)}: LyDia Pitcher Score <b>${Number.isFinite(r.sH2) ? (r.sH2/10).toFixed(1) : "—"}</b> → v3 skill score <b class="v3c">${Number.isFinite(r.sH3) ? (r.sH3/10).toFixed(1) : "—"}</b>${scoreShift(r.sH2, r.sH3)} (${r.eH.toFixed(2)} → ${r.fH.toFixed(2)})<br>
+        offense form: ${escapeHtml(r.away)} ${r.dA >= 0 ? "+" : ""}${f3(r.dA)} · ${escapeHtml(r.home)} ${r.dH >= 0 ? "+" : ""}${f3(r.dH)}${Number.isFinite(r.bpA) && Number.isFinite(r.bpH) ? ` · pen fatigue ${(r.bpA/10).toFixed(1)} vs ${(r.bpH/10).toFixed(1)}` : ""}
       </div>
       <div class="probgrid">
-        <div class="probbox"><div class="dim small">OFFICIAL MODEL (v2)</div><div class="big v2c">${escapeHtml(v2.team)} ${pct(v2.p)}</div>${r.lab2 !== null ? `<div class="small dim">Lab Score ${r.lab2}/100</div>` : ""}</div>
+        <div class="probbox"><div class="dim small">OFFICIAL MODEL (v2)</div><div class="big v2c">${escapeHtml(v2.team)} ${pct(v2.p)}</div>${r.lab2 !== null ? `<div class="small dim">Lab Rating ${(r.lab2/10).toFixed(1)}/10</div>` : ""}</div>
         <div class="probbox"><div class="dim small">SHADOW MODEL (v3) ${r.v3locked ? "· locked" : "· live compute"}</div>
           <div class="big v3c">${escapeHtml(v3.team)} ${pct(v3.p)}${v3official ? '<span class="tag pick">v3 pick?</span>' : ""}${disagree ? '<span class="tag diff">disagrees</span>' : ""}</div>
-          <div class="small dim">v3 Lab Score <b>${lab3}</b>/100${r.lab2 !== null ? ` <span class="dim">(v2: ${r.lab2})</span>` : ""}${v3edge !== null ? ` · edge vs market ${v3edge >= 0 ? "+" : ""}${pct(v3edge)}` : ""}</div>
+          <div class="small dim">v3 Lab Rating <b>${(lab3/10).toFixed(1)}</b>/10${r.lab2 !== null ? ` <span class="dim">(v2: ${(r.lab2/10).toFixed(1)})</span>` : ""}${v3edge !== null ? ` · edge vs market ${v3edge >= 0 ? "+" : ""}${pct(v3edge)}` : ""}</div>
         </div>
       </div>
     </div>`;
