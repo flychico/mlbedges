@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-11T12:28:40.934Z",
+  "generated_at": "2026-07-11T16:23:35.838Z",
   "status": "ready",
   "latest_date": "2026-07-10",
   "days_reviewed": 6,
@@ -65,6 +65,88 @@
       "read": "No major starting-pitcher conflicts showed up in the graded moneyline set."
     }
   ],
+  "calibration": {
+    "status": "ready",
+    "games_graded": 20,
+    "brier_score": 0.2259,
+    "shadow_model": {
+      "status": "ready",
+      "games": 14,
+      "brier_v2": 0.2563,
+      "brier_v3": 0.2575,
+      "leader": "v2",
+      "disagreements": 2,
+      "v3_wins_disagreements": 1,
+      "note": "v3 = FIP-based pitcher input + offense form. Promote only if v3 leads over 200+ games."
+    },
+    "note": "Shadow ledger for learning only — never part of the public record. Official picks stay the only published record.",
+    "buckets": [
+      {
+        "range": "50-55%",
+        "games": 4,
+        "wins": 3,
+        "expected_win_rate": 0.514,
+        "actual_win_rate": 0.75
+      },
+      {
+        "range": "55-60%",
+        "games": 2,
+        "wins": 1,
+        "expected_win_rate": 0.573,
+        "actual_win_rate": 0.5
+      },
+      {
+        "range": "60-65%",
+        "games": 7,
+        "wins": 3,
+        "expected_win_rate": 0.63,
+        "actual_win_rate": 0.429
+      },
+      {
+        "range": "65-70%",
+        "games": 4,
+        "wins": 4,
+        "expected_win_rate": 0.668,
+        "actual_win_rate": 1
+      },
+      {
+        "range": "70-75%",
+        "games": 1,
+        "wins": 0,
+        "expected_win_rate": 0.749,
+        "actual_win_rate": 0
+      },
+      {
+        "range": "75-100%",
+        "games": 2,
+        "wins": 2,
+        "expected_win_rate": 0.794,
+        "actual_win_rate": 1
+      }
+    ],
+    "shadow_by_status": {
+      "official_pick": {
+        "games": 3,
+        "wins": 2,
+        "units": 0.79
+      },
+      "pass": {
+        "games": 7,
+        "wins": 5,
+        "units": 2.42
+      },
+      "value_watch": {
+        "games": 7,
+        "wins": 4,
+        "units": 0.76
+      },
+      "watchlist": {
+        "games": 3,
+        "wins": 2,
+        "units": 0.97
+      }
+    }
+  },
   "buckets": {
     "strong_official": [
       {
@@ -141,18 +223,6 @@
     "strict_gate_candidates": 8,
     "high_lab_low_probability_entries": 11,
     "note": "Multi-day view includes whatever historical data exists. Older days may include legacy model behavior."
-  },
-  "coach": {
-    "status": "collecting",
-    "title": "Collecting a trustworthy current-model sample",
-    "summary": "LyDia has 2 of 7 required current-model days and 3 of 20 required current-model official picks. Recommendations remain paused until both minimums are reached.",
-    "current_model_days": 2,
-    "current_model_picks": 3,
-    "minimum_days": 7,
-    "minimum_picks": 20,
-    "bullpen_model_owner": "bullpen-fatigue-v3-runs-aware",
-    "recommendations": [],
-    "hard_stop": "Coach findings are review prompts only. No automatic threshold, weight, formula, publishing, or betting change is permitted."
   },
   "next_review": [
     "Do not change thresholds from one slate.",
