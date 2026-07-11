@@ -85,6 +85,7 @@ const OFF_DAYS = 15;
 function f3(v){ return isFinite(v) ? v.toFixed(3).replace(/^0/, "") : "—"; }
 let offRows = [], offSort = { key: "dOps", dir: -1 };
 let offFilter = new Set(); // team names; empty = show all
+let offFetchedAt = null;
 
 function shortTeam(name) {
   // "New York Yankees" -> "Yankees", "Boston Red Sox" -> "Red Sox", "Toronto Blue Jays" -> "Blue Jays"
@@ -119,6 +120,7 @@ async function loadOffense() {
     const c = JSON.parse(localStorage.getItem(OFF_CACHE_KEY));
     if (c && Array.isArray(c.rows) && c.rows.length) {
       offRows = c.rows;
+      offFetchedAt = c.t || null;
       status.textContent = "Updating…";
       renderOffFilter(); renderOffense(); buildStories();
     }
@@ -157,12 +159,13 @@ async function loadOffense() {
     // rank every team's delta so the table can say "#1 hottest in MLB"
     const ranked = [...offRows].sort((a, b) => b.dOps - a.dOps);
     ranked.forEach((r, i) => { r.heatRank = i + 1; });
-    try { localStorage.setItem(OFF_CACHE_KEY, JSON.stringify({ t: Date.now(), rows: offRows })); } catch (e) {}
+    offFetchedAt = Date.now();
+    try { localStorage.setItem(OFF_CACHE_KEY, JSON.stringify({ t: offFetchedAt, rows: offRows })); } catch (e) {}
     renderOffFilter();
     renderOffense();
     buildStories();
   } catch (e) {
-    if (offRows.length) { if (status.parentNode) status.remove(); } // cached copy is on screen — stay quiet
+    if (offRows.length) { status.textContent = "MLB stats feed didn\u2019t respond — showing your last saved copy (timestamp under the table)."; }
     else status.textContent = "Offense trends unavailable right now — MLB stats API did not respond.";
   }
 }
@@ -225,7 +228,8 @@ function renderOffense() {
       <td class="num">${(r.bbPct * 100).toFixed(1)}%</td>
     </tr>`;
   }).join("");
-  el.innerHTML = `<div class="card game-card"><table>
+  const age = offFetchedAt ? `<div class="small dim" style="margin:4px 2px 6px">Batting data as of ${new Date(offFetchedAt).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })} — MLB finalizes hitting stats shortly after each game ends; reload to refresh.</div>` : "";
+  el.innerHTML = age + `<div class="card game-card"><table>
     <thead><tr>${cols.map(c =>
       `<th class="${c[0] === "team" ? "" : "num"}" style="cursor:pointer" title="${c[2]}" onclick="sortOffense('${c[0]}')">${c[1]}${offSort.key === c[0] ? (offSort.dir === -1 ? " ▾" : " ▴") : ""}</th>`
     ).join("")}</tr></thead>
