@@ -1,6 +1,6 @@
 {
   "date": "2026-07-11",
-  "generated_at": "2026-07-11T21:42:38.904Z",
+  "generated_at": "2026-07-11T22:40:30.804Z",
   "snapshot_type": "auto",
   "note": "Automated market snapshots update current_price before close and closing_price near game time. Official picks remain locked separately.",
   "items": [
@@ -20,7 +20,7 @@
       "current_price": -165,
       "closing_price": -132,
       "posted_at": "2026-07-11T15:59:33.765Z",
-      "last_checked_at": "2026-07-11T21:42:38.904Z",
+      "last_checked_at": "2026-07-11T22:40:30.804Z",
       "movement": "away_from_lydia",
       "read": "Market tracking compares LyDia's posted number against later current and closing snapshots.",
       "books": 8,
