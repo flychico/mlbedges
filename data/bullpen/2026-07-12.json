@@ -1,6 +1,6 @@
 {
   "date": "2026-07-12",
-  "generated_at": "2026-07-12T04:46:24.442Z",
+  "generated_at": "2026-07-12T16:02:32.854Z",
   "source_of_truth": "scripts/lib/bullpen-fatigue-core.js",
   "version": "bullpen-fatigue-v3-runs-aware",
   "method": "Generated single source of truth. Website pages display this JSON and do not calculate separate bullpen scores in the browser.",
@@ -8,88 +8,14 @@
   "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
   "lookback_days": 3,
   "summary": {
-    "teams_tracked": 30,
-    "high_risk": 9,
+    "teams_tracked": 28,
+    "high_risk": 7,
     "tired": 8,
     "fresh": 2,
     "normal": 11
   },
   "warnings": [],
   "teams": [
-    {
-      "team_id": 158,
-      "team": "Milwaukee Brewers",
-      "side": "away",
-      "opponent": "Pittsburgh Pirates",
-      "game": "Milwaukee Brewers @ Pittsburgh Pirates",
-      "game_pk": 823358,
-      "game_time_iso": "2026-07-12T16:15:00Z",
-      "score": 100,
-      "label": "High risk",
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (10.0/10): 15.3 relief innings over the last three days — 5 of them in the last game, 4 arms pitched back-to-back days, and the pen was hit hard for 9 runs in that stretch. 13 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "last_game_date": "2026-07-11",
-      "last_game_bp_ip": 5,
-      "last3_bp_ip": 15.3,
-      "last3_bp_runs": 9,
-      "last_game_relievers": 4,
-      "last3_relievers": 13,
-      "back_to_back_arms": 4,
-      "recent_games_tracked": 4,
-      "context_only": {
-        "last_game_relievers": 4,
-        "last3_relievers": 13,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 22.2,
-        "last_game_bp_ip": 8,
-        "back_to_back_arms": 24,
-        "bp_runs_allowed_3d": 7.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 106.7
-      }
-    },
-    {
-      "team_id": 134,
-      "team": "Pittsburgh Pirates",
-      "side": "home",
-      "opponent": "Milwaukee Brewers",
-      "game": "Milwaukee Brewers @ Pittsburgh Pirates",
-      "game_pk": 823358,
-      "game_time_iso": "2026-07-12T16:15:00Z",
-      "score": 100,
-      "label": "High risk",
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (10.0/10): 18.3 relief innings over the last three days — 4 of them in the last game, 2 arms pitched back-to-back days, and the pen was hit hard for 9 runs in that stretch. 14 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "last_game_date": "2026-07-11",
-      "last_game_bp_ip": 4,
-      "last3_bp_ip": 18.3,
-      "last3_bp_runs": 9,
-      "last_game_relievers": 2,
-      "last3_relievers": 14,
-      "back_to_back_arms": 2,
-      "recent_games_tracked": 4,
-      "context_only": {
-        "last_game_relievers": 2,
-        "last3_relievers": 14,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 32.7,
-        "last_game_bp_ip": 4,
-        "back_to_back_arms": 12,
-        "bp_runs_allowed_3d": 7.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 101.2
-      }
-    },
     {
       "team_id": 135,
       "team": "San Diego Padres",
@@ -1128,64 +1054,6 @@
     }
   ],
   "teams_by_name": {
-    "Milwaukee Brewers": {
-      "score": 100,
-      "label": "High risk",
-      "last_game_bp_ip": 5,
-      "last3_bp_ip": 15.3,
-      "last3_bp_runs": 9,
-      "last_game_relievers": 4,
-      "last3_relievers": 13,
-      "back_to_back_arms": 4,
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (10.0/10): 15.3 relief innings over the last three days — 5 of them in the last game, 4 arms pitched back-to-back days, and the pen was hit hard for 9 runs in that stretch. 13 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "context_only": {
-        "last_game_relievers": 4,
-        "last3_relievers": 13,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 22.2,
-        "last_game_bp_ip": 8,
-        "back_to_back_arms": 24,
-        "bp_runs_allowed_3d": 7.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 106.7
-      },
-      "source_version": "bullpen-fatigue-v3-runs-aware"
-    },
-    "Pittsburgh Pirates": {
-      "score": 100,
-      "label": "High risk",
-      "last_game_bp_ip": 4,
-      "last3_bp_ip": 18.3,
-      "last3_bp_runs": 9,
-      "last_game_relievers": 2,
-      "last3_relievers": 14,
-      "back_to_back_arms": 2,
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (10.0/10): 18.3 relief innings over the last three days — 4 of them in the last game, 2 arms pitched back-to-back days, and the pen was hit hard for 9 runs in that stretch. 14 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "context_only": {
-        "last_game_relievers": 2,
-        "last3_relievers": 14,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 32.7,
-        "last_game_bp_ip": 4,
-        "back_to_back_arms": 12,
-        "bp_runs_allowed_3d": 7.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 101.2
-      },
-      "source_version": "bullpen-fatigue-v3-runs-aware"
-    },
     "San Diego Padres": {
       "score": 100,
       "label": "High risk",
