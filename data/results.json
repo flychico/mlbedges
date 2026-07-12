@@ -2080,7 +2080,7 @@
             "opponent_bullpen_score": 78,
             "posted_price": -165,
             "current_price": -165,
-            "closing_price": -132,
+            "closing_price": -131,
             "clv_result": "lost_to_close",
             "result": "W",
             "lesson_tag": "result_win_price_warning"
