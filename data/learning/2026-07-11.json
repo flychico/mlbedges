@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-12T04:44:50.906Z",
+  "generated_at": "2026-07-12T12:13:07.373Z",
   "status": "ready",
   "latest_date": "2026-07-11",
-  "days_reviewed": 6,
+  "days_reviewed": 7,
   "source_files": {
     "results": "data/results.json",
     "clv": "data/clv/clv_log.csv"
