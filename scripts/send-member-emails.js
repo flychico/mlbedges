@@ -26,7 +26,7 @@ const ROOT = path.join(__dirname, "..");
 const RESEND_API_KEY = (process.env.RESEND_API_KEY || "").trim();
 const NETLIFY_API_TOKEN = (process.env.NETLIFY_API_TOKEN || "").trim();
 const NETLIFY_SITE_ID = (process.env.NETLIFY_SITE_ID || "").trim();
-const EMAIL_FROM = (process.env.EMAIL_FROM || "LyDia Picks <picks@mlbedges.com>").trim();
+const EMAIL_FROM = (process.env.EMAIL_FROM || "LyDia Picks <picks@lydiaslab.com>").trim();
 const EMAIL_REPLY_TO = (process.env.EMAIL_REPLY_TO || "").trim();
 
 // Important:
@@ -175,10 +175,10 @@ function buildFromBrief(dateStr, brief, isPreview) {
     ${watchHtml}
     ${passHtml}
     <p style="font-size:13px;color:#888;margin-top:20px">
-      Full member brief: <a href="https://mlbedges.com/member-brief/" style="color:#4d9fdc">mlbedges.com/member-brief/</a><br>
-      Public preview: <a href="https://mlbedges.com/previews/${dateStr}.html" style="color:#4d9fdc">mlbedges.com/previews/${dateStr}.html</a><br>
-      Market tracker: <a href="https://mlbedges.com/tools/market/" style="color:#4d9fdc">mlbedges.com/tools/market/</a><br>
-      Results history: <a href="https://mlbedges.com/results/" style="color:#4d9fdc">mlbedges.com/results/</a>
+      Full member brief: <a href="https://lydiaslab.com/member-brief/" style="color:#4d9fdc">lydiaslab.com/member-brief/</a><br>
+      Public preview: <a href="https://lydiaslab.com/previews/${dateStr}.html" style="color:#4d9fdc">lydiaslab.com/previews/${dateStr}.html</a><br>
+      Market tracker: <a href="https://lydiaslab.com/tools/market/" style="color:#4d9fdc">lydiaslab.com/tools/market/</a><br>
+      Results history: <a href="https://lydiaslab.com/results/" style="color:#4d9fdc">lydiaslab.com/results/</a>
     </p>
     <p style="font-size:12px;color:#aaa;margin-top:24px;border-top:1px solid #eee;padding-top:10px">
       LyDia — analysis and education only, not betting advice. No win rate is guaranteed. Please bet responsibly;
@@ -211,10 +211,10 @@ ${officialText}${watchText}
 
 Passes / no clear setup: ${passes.length}
 
-Full member brief: https://mlbedges.com/member-brief/
-Public preview: https://mlbedges.com/previews/${dateStr}.html
-Market tracker: https://mlbedges.com/tools/market/
-Results history: https://mlbedges.com/results/
+Full member brief: https://lydiaslab.com/member-brief/
+Public preview: https://lydiaslab.com/previews/${dateStr}.html
+Market tracker: https://lydiaslab.com/tools/market/
+Results history: https://lydiaslab.com/results/
 
 LyDia — analysis and education only, not betting advice. 1-800-GAMBLER.`;
 
@@ -248,8 +248,8 @@ function buildFromLegacyPicks(dateStr, picksFile, isPreview) {
     <p style="color:#666;font-size:14px">${active.length ? `${active.length} official pick${active.length > 1 ? "s" : ""}.` : `No official picks today.`}</p>
     ${rowsHtml || `<p style="color:#888;font-style:italic">Nothing cleared the bar today.</p>`}
     <p style="font-size:13px;color:#888;margin-top:20px">
-      Full reasoning: <a href="https://mlbedges.com/previews/${dateStr}.html" style="color:#4d9fdc">mlbedges.com/previews/${dateStr}.html</a><br>
-      Results history: <a href="https://mlbedges.com/results/" style="color:#4d9fdc">mlbedges.com/results/</a>
+      Full reasoning: <a href="https://lydiaslab.com/previews/${dateStr}.html" style="color:#4d9fdc">lydiaslab.com/previews/${dateStr}.html</a><br>
+      Results history: <a href="https://lydiaslab.com/results/" style="color:#4d9fdc">lydiaslab.com/results/</a>
     </p>
     <p style="font-size:12px;color:#aaa;margin-top:24px;border-top:1px solid #eee;padding-top:10px">
       LyDia — analysis and education only, not betting advice. 1-800-GAMBLER.
@@ -260,7 +260,7 @@ function buildFromLegacyPicks(dateStr, picksFile, isPreview) {
     (active.length
       ? active.map(p => `${p.away} @ ${p.home}\n  Moneyline: ${p.moneyline.pick} (${pct(p.moneyline.prob)}, ${fmtAm(p.moneyline.bestAm)})`).join("\n\n")
       : "Nothing cleared the bar today.") +
-    `\n\nFull reasoning: https://mlbedges.com/previews/${dateStr}.html\nResults history: https://mlbedges.com/results/`;
+    `\n\nFull reasoning: https://lydiaslab.com/previews/${dateStr}.html\nResults history: https://lydiaslab.com/results/`;
 
   return { subject, html, text };
 }

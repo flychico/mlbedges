@@ -13,7 +13,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const SITE = "https://mlbedges.com";
+const SITE = "https://lydiaslab.com";
 const ROOT = path.join(__dirname, "..");
 const HFA = 54 / 46, PYTH_EXP = 1.83, FORM_WEIGHT = 0.25, ERA_K = 0.20;
 const LEAGUE_ERA = 4.20, MIN_IP = 20, ERA_CLAMP = [2.75, 6.00], VALUE_EDGE = 0.03;

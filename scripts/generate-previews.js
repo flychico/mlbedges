@@ -7,7 +7,7 @@ const fs = require("fs");
 const path = require("path");
 const LyDiaRead = require("../js/client-facing-read.js");
 
-const SITE = "https://mlbedges.com";
+const SITE = "https://lydiaslab.com";
 const ROOT = path.join(__dirname, "..");
 const DATE = process.argv[2] || etToday();
 

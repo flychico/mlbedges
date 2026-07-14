@@ -28,9 +28,9 @@ pick for every MLB game on the slate: the team, the win probability, and the rea
 A few things worth knowing right away:
 
 - Every pick is public and graded — see the full track record, wins and losses alike,
-  on the [Results page](https://mlbedges.com/results.html).
+  on the [Results page](https://lydiaslab.com/results.html).
 - You can see today's picks right now, without waiting for tomorrow's email, on the
-  [Picks page](https://mlbedges.com/picks.html).
+  [Picks page](https://lydiaslab.com/picks.html).
 - This is analysis and education, not betting advice — no model wins every day.
 
 Talk soon,
@@ -53,14 +53,14 @@ model gets there, so the numbers mean something:
    market by 3+ points.
 
 Full writeups on each of these are on the [Articles page]
-(https://mlbedges.com/articles.html) if you want the long version.
+(https://lydiaslab.com/articles.html) if you want the long version.
 
 ## Email 3 — The track record (day 7)
 
 **Subject:** How are the picks actually doing?
 
 One week in — here's where to check the answer yourself, always: the
-[Results page](https://mlbedges.com/results.html) shows every graded pick, broken
+[Results page](https://lydiaslab.com/results.html) shows every graded pick, broken
 down by day, with nothing removed. Good stretches and bad ones both stay up.
 
 A quick note on how to judge it: any real model has losing days and losing weeks —
@@ -69,7 +69,7 @@ long-run record over hundreds of picks, not any single week. If you want to dig 
 one day's picks in detail, click into a date on the Results table to see each game.
 
 If you want the picks delivered with zero effort (no checking the site), that's what
-[Membership](https://mlbedges.com/membership.html) is for.
+[Membership](https://lydiaslab.com/membership.html) is for.
 
 ---
 

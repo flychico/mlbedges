@@ -6,7 +6,7 @@ const path = require("path");
 const LyDiaRead = require("../js/client-facing-read.js");
 
 const ROOT = path.join(__dirname, "..");
-const SITE = "https://mlbedges.com";
+const SITE = "https://lydiaslab.com";
 const MAX_ITEMS = 18;
 const QUERIES = [
   "MLB betting picks Action Network",

@@ -16,10 +16,10 @@ running exactly as before — this step only adds the email send.
 ## Step 1 — Resend account (sends the emails)
 
 1. Create a free account at https://resend.com (3,000 emails/month free).
-2. Add your domain: **Domains → Add Domain** → enter `mlbedges.com`.
+2. Add your domain: **Domains → Add Domain** → enter `lydiaslab.com`.
 3. Resend will show you 2-3 DNS records (usually a couple of TXT/CNAME records
    for domain verification + DKIM). Add those at whichever registrar/DNS host
-   manages mlbedges.com. This can take a few minutes to a few hours to verify —
+   manages lydiaslab.com. This can take a few minutes to a few hours to verify —
    Resend's dashboard will show a green check when it's done.
 4. Once verified, go to **API Keys → Create API Key** (full access is fine,
    or restrict to "Sending" if offered). Copy the key — you'll only see it once.
@@ -39,7 +39,7 @@ repository secret**. Add each of these:
 | Secret name          | Value                                                   |
 |-----------------------|----------------------------------------------------------|
 | `RESEND_API_KEY`     | the API key from Resend (Step 1.4)                      |
-| `EMAIL_FROM`         | e.g. `LyDia Picks <picks@mlbedges.com>`                  |
+| `EMAIL_FROM`         | e.g. `LyDia Picks <picks@lydiaslab.com>`                  |
 | `EMAIL_REPLY_TO`     | your own email, so member replies reach you (optional)  |
 | `NETLIFY_API_TOKEN`  | the personal access token from Netlify (Step 2.1)        |
 | `NETLIFY_SITE_ID`    | your site ID from Netlify (Step 2.2)                     |
