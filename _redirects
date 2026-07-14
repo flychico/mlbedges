@@ -1,3 +1,7 @@
+# Domain migration — send every mlbedges.com request to the same path on lydiaslab.com.
+https://mlbedges.com/*      https://lydiaslab.com/:splat  301!
+https://www.mlbedges.com/*  https://lydiaslab.com/:splat  301!
+
 # Clean URLs — 301 old .html links to their new extensionless paths.
 /index.html          /                  301
 /dashboard.html      /dashboard/        301
