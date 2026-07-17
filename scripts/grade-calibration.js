@@ -108,6 +108,44 @@ async function main() {
   }
   if (rows.length) fs.appendFileSync(LOG, rows.join("\n") + "\n");
 
+  // ---- Attribution ledger: the INPUTS behind each graded game, for the
+  // n>=150 weight-relevance analysis. All values are pick-side relative. ----
+  const ALOG = path.join(ROOT, "data", "calibration", "attribution_log.csv");
+  const AHEAD = "date,gamePk,status,result,model_prob,lab,pitcher_gap,kbb_diff,gb_pick,babip_pick,off_delta_diff,bullpen_gap\n";
+  if (!fs.existsSync(ALOG)) fs.writeFileSync(ALOG, AHEAD);
+  const aSeen = new Set(fs.readFileSync(ALOG, "utf8").split("\n").slice(1).map(l => l.split(",").slice(0, 2).join(",")).filter(Boolean));
+  const aRows = [];
+  const n2 = v => (typeof v === "number" && isFinite(v)) ? v : "";
+  for (const g of games) {
+    const key = `${DATE},${g.game_pk}`;
+    if (aSeen.has(key)) continue;
+    const f = finals[g.game_pk];
+    if (!f || f.awayScore == null || f.homeScore == null || !g.side) continue;
+    if (await gameVoided(g)) continue;
+    const homeWon = f.homeScore > f.awayScore;
+    const won = (g.side === "home") === homeWon;
+    const pe = g.pitcher_edge || {};
+    const pickHome = g.side === "home";
+    const pAdv = pickHome ? pe.home_advanced : pe.away_advanced;
+    const oAdv = pickHome ? pe.away_advanced : pe.home_advanced;
+    const pScore = pickHome ? pe.home_score : pe.away_score;
+    const oScore = pickHome ? pe.away_score : pe.home_score;
+    const of_ = g.offense_form || {};
+    const pOff = pickHome ? of_.home : of_.away;
+    const oOff = pickHome ? of_.away : of_.home;
+    const bp = g.bullpen || {};
+    aRows.push([DATE, g.game_pk, g.status || "", won ? "W" : "L",
+      n2(g.model_probability), n2(g.lab_score),
+      (isFinite(pScore) && isFinite(oScore)) ? pScore - oScore : "",
+      (pAdv && oAdv && isFinite(pAdv.kbb_pct) && isFinite(oAdv.kbb_pct)) ? Number((pAdv.kbb_pct - oAdv.kbb_pct).toFixed(4)) : "",
+      pAdv && isFinite(pAdv.gb_pct) ? pAdv.gb_pct : "",
+      pAdv && isFinite(pAdv.babip) ? pAdv.babip : "",
+      (pOff && oOff && isFinite(pOff.delta_ops) && isFinite(oOff.delta_ops)) ? Number((pOff.delta_ops - oOff.delta_ops).toFixed(3)) : "",
+      (bp.opponent && bp.pick_team && isFinite(bp.opponent.score) && isFinite(bp.pick_team.score)) ? bp.opponent.score - bp.pick_team.score : ""
+    ].join(","));
+  }
+  if (aRows.length) fs.appendFileSync(ALOG, aRows.join("\n") + "\n");
+
   // ---- shadow model v3 ledger (A/B vs the official v2) ----
   const SLOG = path.join(ROOT, "data", "calibration", "shadow_v3_log.csv");
   if (!fs.existsSync(SLOG)) fs.writeFileSync(SLOG, "date,gamePk,p_home_v2,p_home_v3,home_won\n");

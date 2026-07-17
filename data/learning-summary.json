@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-17T20:49:43.159Z",
+  "generated_at": "2026-07-17T21:00:05.652Z",
   "status": "ready",
   "latest_date": "2026-07-16",
   "days_reviewed": 9,
@@ -56,6 +56,11 @@
       "disagreements": 6,
       "v3_wins_disagreements": 1,
       "note": "v3 = FIP-based pitcher input + offense form. Promote only if v3 leads over 200+ games."
+    },
+    "attribution": {
+      "status": "collecting",
+      "games": 50,
+      "needed": 150
     },
     "note": "Shadow ledger for learning only — never part of the public record. Official picks stay the only published record.",
     "buckets": [

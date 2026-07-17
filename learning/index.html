@@ -155,6 +155,18 @@ async function loadLearning() {
         <span class="small">${cal.shadow_model.games} games · Brier v2 <b>${cal.shadow_model.brier_v2}</b> vs v3 <b>${cal.shadow_model.brier_v3}</b> → <b>${cal.shadow_model.leader}</b> leads · ${cal.shadow_model.disagreements} disagreement${cal.shadow_model.disagreements === 1 ? "" : "s"}${cal.shadow_model.disagreements ? `, v3 right in ${cal.shadow_model.v3_wins_disagreements}` : ""}</span>
         <div id="ab-games"></div>
       </div>` : ""}
+      ${cal.attribution ? (cal.attribution.status === "ready" ? `
+      <div style="margin-top:12px;padding:10px;border:1px solid var(--border);border-radius:8px">
+        <b>Metric attribution — what actually separates winners from losers</b>
+        <p class="dim small" style="margin:4px 0 8px">${esc(cal.attribution.note || "")} n=${cal.attribution.games}.</p>
+        <table><thead><tr><th>Factor</th><th class="num">Low-band win%</th><th class="num">Mid</th><th class="num">High-band win%</th><th class="num">Spread</th></tr></thead><tbody>
+        ${cal.attribution.factors.map(f => `<tr><td>${esc(f.factor)}</td>${f.tertiles.map(t => `<td class="num">${(t.win_rate * 100).toFixed(0)}% <span class="dim small">(${t.games})</span></td>`).join("")}<td class="num ${f.spread >= 0.08 ? "pos-text" : f.spread <= -0.08 ? "neg-text" : "dim"}"><b>${f.spread > 0 ? "+" : ""}${(f.spread * 100).toFixed(0)}</b></td></tr>`).join("")}</tbody></table>
+      </div>` : `
+      <div style="margin-top:12px;padding:10px;border:1px dashed var(--border);border-radius:8px">
+        <b>Metric attribution</b> <span class="dim small">— dormant until the sample can support it</span>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px"><div style="flex:1;background:var(--bg-elev);border-radius:6px;height:12px"><div style="width:${Math.min(100, (cal.attribution.games / cal.attribution.needed * 100)).toFixed(0)}%;height:100%;background:var(--accent2);border-radius:6px"></div></div><span class="small dim">${cal.attribution.games}/${cal.attribution.needed} games</span></div>
+        <p class="dim small" style="margin:6px 0 0">When it wakes up: win rate by tertile for pitcher gap, K-BB% gap, offense form, bullpen fatigue, Lab Rating, and model probability — the evidence for re-weighting the model.</p>
+      </div>`) : ""}
       <table style="margin-top:10px">
         <thead><tr><th>Tier</th><th class="num">Record</th><th class="num">Shadow units (flat 1u)</th></tr></thead>
         <tbody>${Object.entries(cal.shadow_by_status || {}).map(([k, v]) => `<tr><td>${esc(k.replace(/_/g, " "))}</td><td class="num">${v.wins}-${v.games - v.wins}</td><td class="num">${v.units > 0 ? "+" : ""}${v.units}</td></tr><tr><td colspan="3" style="padding:0 6px">${gamesDetails(k.replace(/_/g, " ") + " games", G.filter(g => g.status === k && (g.result === "W" || g.result === "L")))}</td></tr>`).join("")}</tbody>

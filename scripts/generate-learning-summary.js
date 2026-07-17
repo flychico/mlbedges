@@ -522,11 +522,41 @@ function buildCalibration() {
     }
   }
 
+  // Attribution: input-metric relevance — dormant until n >= 150
+  let attribution = { status: "collecting", games: 0, needed: 150 };
+  const aPath = path.join(ROOT, "data", "calibration", "attribution_log.csv");
+  if (fs.existsSync(aPath)) {
+    const aRows = fs.readFileSync(aPath, "utf8").trim().split("\n").slice(1).map(l => l.split(",")).filter(r => r.length >= 12 && (r[3] === "W" || r[3] === "L"));
+    attribution.games = aRows.length;
+    if (aRows.length >= 150) {
+      const factor = (label, idx, fmt) => {
+        const have = aRows.filter(r => r[idx] !== "" && isFinite(Number(r[idx]))).map(r => ({ v: Number(r[idx]), won: r[3] === "W" }));
+        if (have.length < 100) return null;
+        const sorted = [...have].sort((a, b) => a.v - b.v);
+        const cut = n => sorted[Math.floor(sorted.length * n)].v;
+        const lo = cut(1 / 3), hi = cut(2 / 3);
+        const tert = [have.filter(x => x.v <= lo), have.filter(x => x.v > lo && x.v <= hi), have.filter(x => x.v > hi)];
+        return { factor: label, tertiles: tert.map((t, i) => ({ band: i === 0 ? "low" : i === 1 ? "mid" : "high", games: t.length, win_rate: Number((t.filter(x => x.won).length / t.length).toFixed(3)) })), spread: Number((tert[2].filter(x => x.won).length / tert[2].length - tert[0].filter(x => x.won).length / tert[0].length).toFixed(3)) };
+      };
+      const factors = [
+        factor("Pitcher score gap (pick − opp)", 6),
+        factor("K-BB% gap (pick − opp)", 7),
+        factor("Offense form gap (ΔOPS diff)", 10),
+        factor("Bullpen fatigue gap (opp − pick)", 11),
+        factor("Lab Rating", 5),
+        factor("Model probability", 4)
+      ].filter(Boolean).sort((a, b) => Math.abs(b.spread) - Math.abs(a.spread));
+      attribution = { status: "ready", games: aRows.length, factors,
+        note: "Win rate by input tertile, pick-side relative. |spread| = high-band win rate minus low-band — bigger magnitude = the metric separates winners from losers harder, and deserves weight. Read direction too: a NEGATIVE spread on a should-be-positive factor is a red flag." };
+    }
+  }
+
   return {
     status: "ready",
     games_graded: rows.length,
     brier_score: brier,
     shadow_model: shadow,
+    attribution,
     note: "Shadow ledger for learning only — never part of the public record. Official picks stay the only published record.",
     buckets,
     shadow_by_status: byStatus
