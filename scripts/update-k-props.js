@@ -27,8 +27,43 @@ const consensus = a => {
   return Number(Object.entries(counts).sort((x, y) => y[1] - x[1] || Math.abs(x[0] - mean) - Math.abs(y[0] - mean))[0][0]);
 };
 
+const IF_CHANGED = process.argv.includes("--if-changed");
+
+async function currentProbables() {
+  const sched = await j(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${DATE}&hydrate=probablePitcher`);
+  const out = {};
+  for (const g of (((sched.dates || [])[0]) || {}).games || []) {
+    if (!g.status || g.status.abstractGameState !== "Preview") continue;
+    out[g.gamePk] = {
+      away: (g.teams.away.probablePitcher || {}).fullName || "TBD",
+      home: (g.teams.home.probablePitcher || {}).fullName || "TBD"
+    };
+  }
+  return out;
+}
+
 async function main() {
   if (!KEY) { console.log("ODDS_API_KEY not set — strikeout props skipped."); return; }
+
+  if (IF_CHANGED) {
+    // Lines are captured once at publish and kept all day — only a pitcher change re-captures.
+    const todayPath = path.join(ROOT, "data", "k-props", "today.json");
+    if (!fs.existsSync(todayPath)) { console.log("No capture yet today — nothing to check."); return; }
+    let prev; try { prev = JSON.parse(fs.readFileSync(todayPath, "utf8")); } catch (e) { prev = null; }
+    if (!prev || prev.date !== DATE || !prev.probables) { console.log("No comparable capture — skipping."); return; }
+    const now = await currentProbables();
+    const changes = [];
+    for (const [pk, cur] of Object.entries(now)) {
+      const was = prev.probables[pk];
+      if (!was) continue;
+      for (const side of ["away", "home"]) {
+        if (was[side] !== "TBD" && cur[side] !== was[side]) changes.push(`${was[side]} → ${cur[side]}`);
+        if (was[side] === "TBD" && cur[side] !== "TBD") changes.push(`TBD → ${cur[side]}`);
+      }
+    }
+    if (!changes.length) { console.log("Probables unchanged — keeping the morning capture."); return; }
+    console.log(`Pitcher change detected (${changes.join("; ")}) — re-capturing prop lines.`);
+  }
   const events = await j(`https://api.the-odds-api.com/v4/sports/baseball_mlb/events?apiKey=${KEY}`);
   // keep events that start on DATE in ET
   const todays = (events || []).filter(e => new Date(e.commence_time).toLocaleDateString("en-CA", { timeZone: "America/New_York" }) === DATE);
@@ -74,7 +109,8 @@ async function main() {
     }
   }
 
-  const out = { date: DATE, generated_at: new Date().toISOString(), source: "the-odds-api pitcher_strikeouts (us region, consensus = median line, best price at line)", events_fetched: fetched, pitchers };
+  const probables = await currentProbables().catch(() => ({}));
+  const out = { date: DATE, generated_at: new Date().toISOString(), source: "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)", events_fetched: fetched, probables, pitchers };
   fs.mkdirSync(path.join(ROOT, "data", "k-props"), { recursive: true });
   fs.writeFileSync(path.join(ROOT, "data", "k-props", `${DATE}.json`), JSON.stringify(out, null, 1));
   fs.writeFileSync(path.join(ROOT, "data", "k-props", "today.json"), JSON.stringify(out, null, 1));

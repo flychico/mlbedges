@@ -177,7 +177,6 @@ function buildFromBrief(dateStr, brief, isPreview) {
     <p style="font-size:13px;color:#888;margin-top:20px">
       Full member brief: <a href="https://lydiaslab.com/member-brief/" style="color:#4d9fdc">lydiaslab.com/member-brief/</a><br>
       Public preview: <a href="https://lydiaslab.com/previews/${dateStr}.html" style="color:#4d9fdc">lydiaslab.com/previews/${dateStr}.html</a><br>
-      Market tracker: <a href="https://lydiaslab.com/tools/market/" style="color:#4d9fdc">lydiaslab.com/tools/market/</a><br>
       Results history: <a href="https://lydiaslab.com/results/" style="color:#4d9fdc">lydiaslab.com/results/</a>
     </p>
     <p style="font-size:12px;color:#aaa;margin-top:24px;border-top:1px solid #eee;padding-top:10px">
@@ -213,7 +212,6 @@ Passes / no clear setup: ${passes.length}
 
 Full member brief: https://lydiaslab.com/member-brief/
 Public preview: https://lydiaslab.com/previews/${dateStr}.html
-Market tracker: https://lydiaslab.com/tools/market/
 Results history: https://lydiaslab.com/results/
 
 LyDia — analysis and education only, not betting advice. 1-800-GAMBLER.`;
