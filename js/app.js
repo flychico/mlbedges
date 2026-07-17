@@ -86,7 +86,8 @@ function renderNav(active) {
             ["/member-brief/", "Daily Member Brief"],
             ["/tools/offense-matchups/", "Offense Matchup"],
             ["/tools/pitcher-matchups/", "Pitcher Matchup"],
-            ["/tools/bullpen-fatigue/", "Bullpen Fatigue"]
+            ["/tools/bullpen-fatigue/", "Bullpen Fatigue"],
+            ["/tools/strikeout-projections/", "Strikeout Projections"]
           ];
           return '<span class="nav-drop' + (active === "/tools/" ? ' active-wrap' : '') + '">'
             + '<a class="navlink' + (active === "/tools/" ? ' active' : '') + '" href="/tools/">Lab ▾</a>'
