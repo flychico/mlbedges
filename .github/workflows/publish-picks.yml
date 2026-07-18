@@ -73,6 +73,11 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: node scripts/update-k-props.js "${{ steps.publish_date.outputs.date }}"
 
+      - name: Update totals projections and lines
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: node scripts/update-totals.js "${{ steps.publish_date.outputs.date }}"
+
       - name: Verify generated data and public copy
         run: |
           DATE_INPUT="${{ steps.publish_date.outputs.date }}"
