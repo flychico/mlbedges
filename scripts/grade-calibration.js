@@ -51,12 +51,20 @@ async function main() {
   // Scratched-starter detection: a game where the analyzed starter never pitched
   // is voided from the learning ledgers — grading it would measure roster news, not the model.
   const starterCache = {};
+  const boxCache = {};
+  async function getBox(gamePk) {
+    if (boxCache[gamePk] !== undefined) return boxCache[gamePk];
+    try {
+      const res = await fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/boxscore`);
+      boxCache[gamePk] = res.ok ? await res.json() : null;
+    } catch (e) { boxCache[gamePk] = null; }
+    return boxCache[gamePk];
+  }
   async function actualStarters(gamePk) {
     if (starterCache[gamePk]) return starterCache[gamePk];
     try {
-      const res = await fetch(`https://statsapi.mlb.com/api/v1/game/${gamePk}/boxscore`);
-      if (!res.ok) return null;
-      const box = await res.json();
+      const box = await getBox(gamePk);
+      if (!box) return null;
       const first = side => {
         const tb = box.teams && box.teams[side];
         const id = tb && tb.pitchers && tb.pitchers[0];
@@ -145,6 +153,84 @@ async function main() {
     ].join(","));
   }
   if (aRows.length) fs.appendFileSync(ALOG, aRows.join("\n") + "\n");
+
+  // ---- K-props grading: projection vs market line vs actual strikeouts ----
+  const KLOG = path.join(ROOT, "data", "calibration", "kprops_log.csv");
+  const KHEAD = "date,pitcher,line,over_price,under_price,projection,actual_k,ou_result,lean,lean_result\n";
+  const kpPath = path.join(ROOT, "data", "k-props", `${DATE}.json`);
+  if (fs.existsSync(kpPath)) {
+    let kp; try { kp = JSON.parse(fs.readFileSync(kpPath, "utf8")); } catch (e) { kp = null; }
+    if (kp && kp.pitchers) {
+      if (!fs.existsSync(KLOG)) fs.writeFileSync(KLOG, KHEAD);
+      const kSeen = new Set(fs.readFileSync(KLOG, "utf8").split("\n").slice(1).map(l => l.split(",").slice(0, 2).join(",")).filter(Boolean));
+      const kRows = [];
+      let kGraded = 0, kScratched = 0;
+      for (const rec of Object.values(kp.pitchers)) {
+        if (!rec || !rec.name || !Number.isFinite(rec.line)) continue;
+        const key = `${DATE},${rec.name}`;
+        if (kSeen.has(key)) continue;
+        // find the pitcher's actual line in the boxscore
+        let gamePk = rec.game_pk;
+        if (!gamePk && kp.probables) {
+          for (const [pk, pr] of Object.entries(kp.probables)) if (pr.away === rec.name || pr.home === rec.name) { gamePk = pk; break; }
+        }
+        if (!gamePk) continue;
+        const box = await getBox(gamePk);
+        if (!box) continue;
+        let actual = null, pitched = false;
+        for (const side of ["away", "home"]) {
+          const tb = box.teams && box.teams[side];
+          if (!tb || !tb.players) continue;
+          for (const pl of Object.values(tb.players)) {
+            if (pl.person && pl.person.fullName === rec.name && pl.stats && pl.stats.pitching && pl.stats.pitching.inningsPitched !== undefined) {
+              actual = Number(pl.stats.pitching.strikeOuts) || 0;
+              pitched = true;
+            }
+          }
+        }
+        if (!pitched) { kScratched++; continue; } // scratched — listed-pitcher rule, no grade
+        const ou = actual > rec.line ? "O" : actual < rec.line ? "U" : "P";
+        const lean = Number.isFinite(rec.projection) ? Number((rec.projection - rec.line).toFixed(2)) : "";
+        let leanRes = "";
+        if (lean !== "" && Math.abs(lean) >= 0.7 && ou !== "P") leanRes = (lean > 0) === (ou === "O") ? "W" : "L";
+        kRows.push([DATE, rec.name, rec.line, rec.over ?? "", rec.under ?? "", Number.isFinite(rec.projection) ? rec.projection : "", actual, ou, lean, leanRes].join(","));
+        kGraded++;
+      }
+      if (kRows.length) fs.appendFileSync(KLOG, kRows.join("\n") + "\n");
+      console.log(`K-props: graded ${kGraded}, scratched ${kScratched}.`);
+    }
+  }
+
+  // ---- Totals grading: projection vs line vs actual final score ----
+  const TLOG = path.join(ROOT, "data", "calibration", "totals_log.csv");
+  const THEAD = "date,gamePk,line,over_price,under_price,projection,actual_total,ou_result,lean,lean_result\n";
+  const tPath = path.join(ROOT, "data", "totals", `${DATE}.json`);
+  if (fs.existsSync(tPath)) {
+    let tp; try { tp = JSON.parse(fs.readFileSync(tPath, "utf8")); } catch (e) { tp = null; }
+    if (tp && tp.games) {
+      if (!fs.existsSync(TLOG)) fs.writeFileSync(TLOG, THEAD);
+      const tSeen = new Set(fs.readFileSync(TLOG, "utf8").split("\n").slice(1).map(l => l.split(",").slice(0, 2).join(",")).filter(Boolean));
+      const tRows = [];
+      for (const [pk, g] of Object.entries(tp.games)) {
+        const key = `${DATE},${pk}`;
+        if (tSeen.has(key)) continue;
+        const f = finals[pk];
+        if (!f || f.awayScore == null || f.homeScore == null) continue;
+        // scratched-starter void applies to totals too
+        const briefG = games.find(x => String(x.game_pk) === String(pk));
+        if (briefG && await gameVoided(briefG)) continue;
+        const actual = f.awayScore + f.homeScore;
+        const hasLine = Number.isFinite(g.line);
+        const ou = hasLine ? (actual > g.line ? "O" : actual < g.line ? "U" : "P") : "";
+        const lean = (hasLine && Number.isFinite(g.projection)) ? Number((g.projection - g.line).toFixed(1)) : "";
+        let leanRes = "";
+        if (lean !== "" && Math.abs(lean) >= 0.5 && ou !== "P" && ou !== "") leanRes = (lean > 0) === (ou === "O") ? "W" : "L";
+        tRows.push([DATE, pk, hasLine ? g.line : "", g.over ?? "", g.under ?? "", Number.isFinite(g.projection) ? g.projection : "", actual, ou, lean, leanRes].join(","));
+      }
+      if (tRows.length) fs.appendFileSync(TLOG, tRows.join("\n") + "\n");
+      console.log(`Totals: graded ${tRows.length}.`);
+    }
+  }
 
   // ---- shadow model v3 ledger (A/B vs the official v2) ----
   const SLOG = path.join(ROOT, "data", "calibration", "shadow_v3_log.csv");

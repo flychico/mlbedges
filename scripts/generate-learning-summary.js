@@ -551,12 +551,61 @@ function buildCalibration() {
     }
   }
 
+  // K-props learning: projection accuracy + lean record
+  let kprops = { status: "no_data" };
+  const kPath = path.join(ROOT, "data", "calibration", "kprops_log.csv");
+  if (fs.existsSync(kPath)) {
+    const kRows = fs.readFileSync(kPath, "utf8").trim().split("\n").slice(1).map(l => l.split(",")).filter(r => r.length >= 10 && r[6] !== "");
+    const withProj = kRows.filter(r => r[5] !== "" && isFinite(Number(r[5])));
+    if (withProj.length) {
+      const errs = withProj.map(r => Number(r[6]) - Number(r[5]));
+      const leans = kRows.filter(r => r[9] === "W" || r[9] === "L");
+      const overLeans = leans.filter(r => Number(r[8]) > 0), underLeans = leans.filter(r => Number(r[8]) < 0);
+      const rec = a => `${a.filter(r => r[9] === "W").length}-${a.filter(r => r[9] === "L").length}`;
+      kprops = {
+        status: "ready",
+        graded: kRows.length,
+        with_projection: withProj.length,
+        bias: Number((errs.reduce((a, b) => a + b, 0) / errs.length).toFixed(2)),
+        mae: Number((errs.reduce((a, b) => a + Math.abs(b), 0) / errs.length).toFixed(2)),
+        lean_record: rec(leans),
+        over_lean_record: rec(overLeans),
+        under_lean_record: rec(underLeans),
+        no_lean: kRows.filter(r => r[8] !== "" && Math.abs(Number(r[8])) < 0.7).length,
+        note: "Bias = actual minus projection (positive means we under-project). Leans only counted at 0.7+ strikeout edges. Small samples early — a lean record means little before ~100 graded pitchers."
+      };
+    }
+  }
+
+  // Totals learning — mirrors the K-props tracker
+  let totals = { status: "no_data" };
+  const tPath2 = path.join(ROOT, "data", "calibration", "totals_log.csv");
+  if (fs.existsSync(tPath2)) {
+    const tRows = fs.readFileSync(tPath2, "utf8").trim().split("\n").slice(1).map(l => l.split(",")).filter(r => r.length >= 10 && r[6] !== "" && r[5] !== "");
+    if (tRows.length) {
+      const errs = tRows.map(r => Number(r[6]) - Number(r[5]));
+      const leans = tRows.filter(r => r[9] === "W" || r[9] === "L");
+      const rec = a => `${a.filter(r => r[9] === "W").length}-${a.filter(r => r[9] === "L").length}`;
+      totals = {
+        status: "ready", graded: tRows.length,
+        bias: Number((errs.reduce((a, b) => a + b, 0) / errs.length).toFixed(2)),
+        mae: Number((errs.reduce((a, b) => a + Math.abs(b), 0) / errs.length).toFixed(2)),
+        lean_record: rec(leans),
+        over_lean_record: rec(leans.filter(r => Number(r[8]) > 0)),
+        under_lean_record: rec(leans.filter(r => Number(r[8]) < 0)),
+        note: "Bias = actual total minus projection. Leans counted at 0.5+ run edges. Totals are the noisiest market — judge nothing before ~100 graded games."
+      };
+    }
+  }
+
   return {
     status: "ready",
     games_graded: rows.length,
     brier_score: brier,
     shadow_model: shadow,
     attribution,
+    kprops,
+    totals,
     note: "Shadow ledger for learning only — never part of the public record. Official picks stay the only published record.",
     buckets,
     shadow_by_status: byStatus

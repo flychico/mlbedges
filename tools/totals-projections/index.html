@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Totals Projections — LyDia's Lab</title>
+<meta name="description" content="A projected total-runs number for every MLB game today — lineups, starting pitchers, park, and bullpen condition — next to the market's over/under line.">
+<link rel="canonical" href="https://lydiaslab.com/tools/totals-projections/">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+.match-card { margin-bottom:14px; }
+.t-head { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; margin-bottom:6px; }
+.t-head .matchup { font-weight:800; font-size:1.05rem; }
+.t-grid { display:flex; gap:18px; flex-wrap:wrap; align-items:center; margin-top:6px; }
+.t-proj { font-size:1.9rem; font-weight:800; color:var(--accent); }
+.t-line { font-size:1.4rem; font-weight:800; }
+.lean { font-weight:800; }
+.t-meta { font-size:.84rem; color:var(--text-dim); margin-top:6px; }
+.tier { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:1px 7px; margin-left:6px; white-space:nowrap; }
+</style>
+</head>
+<body>
+<nav id="nav"></nav>
+<main>
+  <p class="eyebrow">LyDia's Lab</p>
+  <h1>Totals Projections</h1>
+  <p class="subtitle">How many runs should tonight's games produce? Each projection blends both lineups' scoring, the opposing starters' skill (FIP-based), the ballpark's run environment, and bullpen condition — shown next to the market's over/under line.</p>
+  <div class="notice">
+    <strong>How to read it:</strong> the projection is a median expectation — real games land within ±2.5 runs of it routinely, so only lean when the gap to the line is <b>0.5+ runs</b>, and treat leans as research, not picks. Lines are captured each morning and kept all day (re-captured only if a starter changes). Every projection is graded nightly against the final score on the learning ledger — this tool earns trust or loses it in public.
+  </div>
+  <div id="status"><div class="loading">Loading projections…</div></div>
+  <div id="games"></div>
+</main>
+<footer id="footer"></footer><script src="/js/app.js"></script><script>renderNav("/tools/"); renderFooter();</script>
+<script>
+async function load(){
+  const statusEl=document.getElementById("status"), gamesEl=document.getElementById("games");
+  try{
+    const d=await fetch("/data/totals/today.json?v="+Date.now(),{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("no capture");return r.json()});
+    const today=new Date().toLocaleDateString("en-CA");
+    const games=Object.values(d.games||{}).sort((a,b)=>new Date(a.game_time_iso)-new Date(b.game_time_iso));
+    if(!games.length){statusEl.innerHTML='<div class="notice">No capture for today yet — projections generate with the morning publish run.</div>';return;}
+    statusEl.innerHTML=d.date!==today?`<div class="notice warn">Showing the last capture (${escapeHtml(d.date)}) — today's generates at the morning publish.</div>`:"";
+    gamesEl.innerHTML=games.map(g=>{
+      const time=new Date(g.game_time_iso).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
+      const hasLine=Number.isFinite(g.line);
+      const lean=hasLine?g.projection-g.line:null;
+      const leanTag=!hasLine?"":Math.abs(lean)<0.5?`<span class="lean dim">no edge (${lean>=0?"+":""}${lean.toFixed(1)})</span>`:lean>0?`<span class="lean pos-text">OVER lean (+${lean.toFixed(1)})</span>`:`<span class="lean neg-text">UNDER lean (${lean.toFixed(1)})</span>`;
+      const parkTag=g.park_factor>=1.06?' <span class="tier pos-text">hitter-friendly park</span>':g.park_factor<=0.95?' <span class="tier neg-text">pitcher-friendly park</span>':"";
+      return `<div class="card match-card">
+        <div class="t-head"><span class="matchup">${escapeHtml(g.game)}</span><span class="dim small">${time}</span></div>
+        <div class="t-grid">
+          <div><div class="dim small" style="text-transform:uppercase;font-size:.7rem">LyDia projects</div><span class="t-proj">${g.projection.toFixed(1)}</span> <span class="dim small">runs (${g.proj_away.toFixed(1)} + ${g.proj_home.toFixed(1)})</span></div>
+          ${hasLine?`<div><div class="dim small" style="text-transform:uppercase;font-size:.7rem">Market line (${g.books} book${g.books===1?"":"s"})</div><span class="t-line">${g.line}</span> <span class="dim small">O ${g.over>0?"+":""}${g.over??"—"} / U ${g.under>0?"+":""}${g.under??"—"}</span></div>`:`<div class="dim small">No market line captured</div>`}
+          <div>${leanTag}</div>
+        </div>
+        <div class="t-meta">${escapeHtml(g.away_sp)} vs ${escapeHtml(g.home_sp)} · park factor ${g.park_factor}${parkTag}</div>
+      </div>`;
+    }).join("");
+  }catch(e){statusEl.innerHTML=`<div class="notice warn">No totals capture available yet (${escapeHtml(e.message)}). It generates with the daily publish run.</div>`;}
+}
+load();
+</script>
+</body>
+</html>

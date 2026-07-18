@@ -87,7 +87,8 @@ function renderNav(active) {
             ["/tools/offense-matchups/", "Offense Matchup"],
             ["/tools/pitcher-matchups/", "Pitcher Matchup"],
             ["/tools/bullpen-fatigue/", "Bullpen Fatigue"],
-            ["/tools/strikeout-projections/", "Strikeout Projections"]
+            ["/tools/strikeout-projections/", "Strikeout Projections"],
+            ["/tools/totals-projections/", "Totals Projections"]
           ];
           return '<span class="nav-drop' + (active === "/tools/" ? ' active-wrap' : '') + '">'
             + '<a class="navlink nav-drop-toggle' + (active === "/tools/" ? ' active' : '') + '" href="/tools/">Lab ▾</a>'

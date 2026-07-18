@@ -70,7 +70,7 @@ function bullpenAnalysis(g) {
     return `${team} carries the heavier bullpen workload, ${(pickScore/10).toFixed(1)}/10 versus ${(oppScore/10).toFixed(1)}/10, which adds late-game risk. ${detail}`.trim();
   }
   if (pickScore >= 60 || oppScore >= 60) return `Bullpen workload is elevated but not decisive. ${team} is ${(pickScore/10).toFixed(1)}/10 and ${opponent} is ${(oppScore/10).toFixed(1)}/10.`;
-  return `No meaningful bullpen fatigue edge. ${team} is ${(pickScore/10).toFixed(1)}/10 and ${opponent} is ${(oppScore/10).toFixed(1)}/10.`;
+  return `No meaningful bullpen fatigue edge — both pens come in comparable (${team} ${(pickScore/10).toFixed(1)}/10, ${opponent} ${(oppScore/10).toFixed(1)}/10${pickScore < 35 && oppScore < 35 ? ", both fresh" : ""}).`;
 }
 function pitcherSentence(g) {
   const p = g.pitcher_edge || {};
@@ -218,7 +218,7 @@ function updateSitemap() {
   const staticPages = ["", "dashboard/", "picks/", "odds/", "tools/", "stats/", "recaps/", "articles/", "membership/", "results/", "previews/", "member-brief/",
     "mlb-betting-edge-explained/", "no-vig-odds-calculator-guide/", "how-to-find-value-in-mlb-moneylines/",
     "closing-line-value-mlb-betting/", "mlb-run-line-vs-moneyline/", "mlb-bullpen-fatigue-betting/",
-    "mlb-park-factors-betting-guide/", "mlb-pitching-metrics-for-betting/", "how-to-bet-on-mlb/", "tools/offense-matchups/", "tools/pitcher-matchups/", "tools/bullpen-fatigue/", "tools/strikeout-projections/"];
+    "mlb-park-factors-betting-guide/", "mlb-pitching-metrics-for-betting/", "how-to-bet-on-mlb/", "tools/offense-matchups/", "tools/pitcher-matchups/", "tools/bullpen-fatigue/", "tools/strikeout-projections/", "tools/totals-projections/"];
   const recapsDir = path.join(ROOT, "recaps");
   const previewsDir = path.join(ROOT, "previews");
   const recapPosts = fs.existsSync(recapsDir) ? fs.readdirSync(recapsDir).filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f)).map(f => `recaps/${f}`) : [];
