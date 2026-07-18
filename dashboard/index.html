@@ -120,8 +120,8 @@ async function load() {
     if (!sRes.ok) throw new Error("Schedule HTTP " + sRes.status);
     sched = await sRes.json();
     if (oRes && oRes.ok) oddsMap = buildOddsMap(await oRes.json());
-    else if (oddsUrl) noteEl.innerHTML = `<div class="notice warn">Couldn't load odds (check your API key on the Live Odds page) — showing schedule only.</div>`;
-    else noteEl.innerHTML = `<div class="notice">No Odds API key saved — showing schedule only. Add your key on the <a href="/odds/">Live Odds</a> page to see market win probabilities here.</div>`;
+    else if (oddsUrl) noteEl.innerHTML = `<div class="notice warn">Live odds are unavailable right now — showing the schedule. </div>`;
+    else noteEl.innerHTML = `<div class="notice">Live odds are unavailable right now — showing the schedule. <a href="/odds/">Live Odds</a> page to see market win probabilities here.</div>`;
   } catch (e) {
     statusEl.innerHTML = `<div class="notice warn">Failed to load schedule (${escapeHtml(e.message)}).</div>`;
     return;

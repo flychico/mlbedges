@@ -147,7 +147,7 @@ for (const url of urls) {
 
   if (!data || !Array.isArray(data.teams)) {
     sourceEl.className = "notice warn";
-    sourceEl.innerHTML = `<strong>No generated bullpen file found for ${esc(date)}.</strong><br><span class="small dim">Run the daily publish workflow before opening this date.</span>`;
+    sourceEl.innerHTML = `<strong>No generated bullpen file found for ${esc(date)}.</strong><br><span class="small dim">This date’s bullpen data isn’t available — it arrives with each morning’s update.</span>`;
     statusEl.innerHTML = "";
     kpisEl.innerHTML = "";
     teamsEl.innerHTML = "";

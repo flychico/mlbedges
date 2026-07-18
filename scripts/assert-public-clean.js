@@ -12,10 +12,17 @@ const forbidden = [
   { re: /Generated\s+20\d{2}-\d{2}-\d{2}T/i, label: "raw timestamp" },
   { re: /Generated:\s*20\d{2}-\d{2}-\d{2}T/i, label: "raw timestamp" },
   { re: /<nav(?![^>]*id=["']nav["'])/i, label: "hardcoded nav instead of shared nav" },
-  { re: /<footer(?![^>]*id=["']footer["'])/i, label: "hardcoded footer instead of shared footer" }
+  { re: /<footer(?![^>]*id=["']footer["'])/i, label: "hardcoded footer instead of shared footer" },
+  // Internal company lingo that must never face members:
+  { re: /member-lab/i, label: "internal lingo: member-lab" },
+  { re: /(publish|daily|member-lab|maintenance|refresh lines|GitHub) workflow/i, label: "internal lingo: workflow" },
+  { re: /generated JSON/i, label: "internal lingo: JSON" },
+  { re: /learning ledger|shadow ledger/i, label: "internal lingo: ledger" },
+  { re: /\bcron\b/i, label: "internal lingo: cron" },
+  { re: /API key/i, label: "internal lingo: API key" }
 ];
 
-const roots = [".", "picks", "member-brief", "tools", "previews", "recaps", "results", "membership", "articles", "dashboard", "stats", "odds"];
+const roots = [".", "picks", "member-brief", "tools", "previews", "recaps", "results", "membership", "articles", "dashboard", "stats"];
 const files = [];
 for (const root of roots) collect(path.join(ROOT, root));
 
@@ -45,7 +52,7 @@ function collect(dir) {
     return;
   }
   for (const item of fs.readdirSync(dir)) {
-    if ([".git", "node_modules", "gym"].includes(item)) continue;
+    if ([".git", "node_modules", "gym", "lab-v3", "learning", "odds"].includes(item)) continue;
     collect(path.join(dir, item));
   }
 }

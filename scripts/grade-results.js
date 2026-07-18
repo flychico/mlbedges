@@ -302,7 +302,7 @@ function rebuildResultsPage(results) {
   <div class="card"><div class="dim small">DAYS TRACKED</div><div style="font-size:1.6rem;font-weight:700">${days.length}</div></div>
 </div>
 <div class="notice" style="margin-bottom:20px">
-  <strong>Current official model:</strong> moneyline only. <strong>Legacy history:</strong> earlier records may show totals or run lines. Learning fields are stored in <code>data/results.json</code> and <code>data/clv/clv_log.csv</code> for process review.
+  <strong>Current official model:</strong> moneyline only. <strong>Legacy history:</strong> earlier records may show totals or run lines. Every grade is archived and reviewed as part of LyDia's learning process.
 </div>
 <div class="card">
 <table>

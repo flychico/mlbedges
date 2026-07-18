@@ -160,8 +160,8 @@ function sanitizePublicLanguage(html) {
   out = out.replace(/<br><span class="small dim">Version:\s*\$\{esc\(data\.version[\s\S]*?Generated:\s*\$\{esc\(data\.generated_at[\s\S]*?<\/span>/gi, '<br><span class="small dim">Updated from the latest daily bullpen run.</span>');
 
   // Make tool fallback instructions user-facing instead of developer-facing.
-  out = out.replace(/Run the daily content workflow or\s*the daily workflow\s*to generate\s*<code>\/data\/bullpen\/\$\{esc\(date\)\}\.json<\/code>\./gi, "Run the daily publish workflow before opening this date.");
-  out = out.replace(/Run the daily workflow or\s*the daily workflow\s*before opening this tool\./gi, "Run the daily publish workflow before opening this tool.");
+  out = out.replace(/Run the daily content workflow or\s*the daily workflow\s*to generate\s*<code>\/data\/bullpen\/\$\{esc\(date\)\}\.json<\/code>\./gi, "This date\u2019s data isn\u2019t ready yet \u2014 check back after the morning update.");
+  out = out.replace(/Run the daily workflow or\s*the daily workflow\s*before opening this tool\./gi, "Today\u2019s data isn\u2019t ready yet \u2014 check back after the morning update.");
 
   return out;
 }
