@@ -1,298 +1,330 @@
 {
  "date": "2026-07-18",
- "generated_at": "2026-07-18T16:01:30.440Z",
+ "generated_at": "2026-07-18T21:12:33.969Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
- "events_fetched": 16,
+ "events_fetched": 15,
  "probables": {
-  "822790": {
-   "away": "Davis Martin",
-   "home": "Shane Bieber"
-  },
   "823116": {
    "away": "Logan Webb",
    "home": "Bryan Woo"
-  },
-  "823441": {
-   "away": "Sean Manaea",
-   "home": "Jesús Luzardo"
-  },
-  "823523": {
-   "away": "Emmet Sheehan",
-   "home": "Ryan Weathers"
-  },
-  "823763": {
-   "away": "Max Meyer",
-   "home": "Shane Drohan"
   },
   "824008": {
    "away": "Tarik Skubal",
    "home": "Grayson Rodriguez"
   },
-  "824088": {
-   "away": "Griffin Canning",
-   "home": "Randy Dobnak"
-  },
-  "824169": {
-   "away": "Trevor Rogers",
-   "home": "Spencer Arrighetti"
-  },
-  "824331": {
-   "away": "Rhett Lowder",
-   "home": "Tomoyuki Sugano"
-  },
   "824412": {
-   "away": "TBD",
+   "away": "Mason Montgomery",
    "home": "Logan Allen"
-  },
-  "824414": {
-   "away": "Jared Jones",
-   "home": "Gavin Williams"
-  },
-  "824657": {
-   "away": "Taj Bradley",
-   "home": "Matthew Boyd"
-  },
-  "824738": {
-   "away": "Ian Seymour",
-   "home": "Patrick Sandoval"
-  },
-  "824899": {
-   "away": "MacKenzie Gore",
-   "home": "Owen Murphy"
   },
   "824979": {
    "away": "Zack Littell",
    "home": "J.T. Ginn"
-  },
-  "825059": {
-   "away": "Dustin May",
-   "home": "Brandon Pfaadt"
   }
  },
  "pitchers": {
-  "jared jones": {
-   "name": "Jared Jones",
-   "line": 5.5,
-   "over": 120,
-   "under": -138,
-   "books": 5,
-   "game": "Pittsburgh Pirates @ Cleveland Guardians"
-  },
-  "gavin williams": {
-   "name": "Gavin Williams",
-   "line": 7.5,
-   "over": 118,
-   "under": -132,
-   "books": 5,
-   "game": "Pittsburgh Pirates @ Cleveland Guardians"
-  },
-  "matthew boyd": {
-   "name": "Matthew Boyd",
-   "line": 4.5,
-   "over": -155,
-   "under": 124,
-   "books": 5,
-   "game": "Minnesota Twins @ Chicago Cubs"
-  },
-  "taj bradley": {
-   "name": "Taj Bradley",
-   "line": 5.5,
-   "over": -140,
-   "under": 116,
-   "books": 5,
-   "game": "Minnesota Twins @ Chicago Cubs"
-  },
-  "jesus luzardo": {
-   "name": "Jesus Luzardo",
-   "line": 6.5,
-   "over": -143,
-   "under": 122,
-   "books": 5,
-   "game": "New York Mets @ Philadelphia Phillies"
-  },
-  "sean manaea": {
-   "name": "Sean Manaea",
-   "line": 5.5,
-   "over": 125,
-   "under": -154,
-   "books": 5,
-   "game": "New York Mets @ Philadelphia Phillies"
-  },
-  "shane bieber": {
-   "name": "Shane Bieber",
-   "line": 4.5,
-   "over": -146,
-   "under": 115,
-   "books": 4,
-   "game": "Chicago White Sox @ Toronto Blue Jays"
-  },
   "davis martin": {
    "name": "Davis Martin",
    "line": 3.5,
-   "over": -109,
-   "under": 106,
-   "books": 4,
-   "game": "Chicago White Sox @ Toronto Blue Jays"
-  },
-  "rhett lowder": {
-   "name": "Rhett Lowder",
-   "line": 3.5,
-   "over": 125,
-   "under": -140,
-   "books": 5,
-   "game": "Cincinnati Reds @ Colorado Rockies"
-  },
-  "tomoyuki sugano": {
-   "name": "Tomoyuki Sugano",
-   "line": 2.5,
-   "over": -136,
-   "under": 128,
-   "books": 5,
-   "game": "Cincinnati Reds @ Colorado Rockies"
+   "over": -170,
+   "under": 125,
+   "books": 1,
+   "game": "Chicago White Sox @ Toronto Blue Jays",
+   "projection": 4.51,
+   "game_pk": 822790
   },
   "dustin may": {
    "name": "Dustin May",
-   "line": 3.5,
-   "over": -141,
-   "under": 122,
-   "books": 5,
-   "game": "St. Louis Cardinals @ Arizona Diamondbacks"
+   "line": 5.5,
+   "over": 110,
+   "under": -145,
+   "books": 1,
+   "game": "St. Louis Cardinals @ Arizona Diamondbacks",
+   "projection": 4.67,
+   "game_pk": 825059
   },
   "brandon pfaadt": {
    "name": "Brandon Pfaadt",
    "line": 3.5,
-   "over": -110,
-   "under": 100,
-   "books": 5,
-   "game": "St. Louis Cardinals @ Arizona Diamondbacks"
+   "over": 110,
+   "under": -150,
+   "books": 2,
+   "game": "St. Louis Cardinals @ Arizona Diamondbacks",
+   "projection": 5.04,
+   "game_pk": 825059
   },
   "mackenzie gore": {
    "name": "MacKenzie Gore",
-   "line": 5.5,
-   "over": 103,
-   "under": -120,
-   "books": 5,
-   "game": "Texas Rangers @ Atlanta Braves"
-  },
-  "spencer arrighetti": {
-   "name": "Spencer Arrighetti",
-   "line": 5.5,
-   "over": -135,
-   "under": 118,
-   "books": 5,
-   "game": "Baltimore Orioles @ Houston Astros"
+   "line": 4.5,
+   "over": -120,
+   "under": -115,
+   "books": 1,
+   "game": "Texas Rangers @ Atlanta Braves",
+   "projection": 5.35,
+   "game_pk": 824899
   },
   "trevor rogers": {
    "name": "Trevor Rogers",
-   "line": 4.5,
-   "over": 112,
-   "under": -130,
-   "books": 5,
-   "game": "Baltimore Orioles @ Houston Astros"
-  },
-  "ian seymour": {
-   "name": "Ian Seymour",
-   "line": 4.5,
-   "over": -150,
-   "under": 126,
-   "books": 5,
-   "game": "Tampa Bay Rays @ Boston Red Sox"
-  },
-  "patrick sandoval": {
-   "name": "Patrick Sandoval",
-   "line": 3.5,
+   "line": 7.5,
    "over": -120,
-   "under": 118,
-   "books": 5,
-   "game": "Tampa Bay Rays @ Boston Red Sox"
+   "under": -115,
+   "books": 1,
+   "game": "Baltimore Orioles @ Houston Astros",
+   "projection": 3.85,
+   "game_pk": 824169
   },
   "griffin canning": {
    "name": "Griffin Canning",
-   "line": 3.5,
-   "over": -126,
-   "under": 110,
-   "books": 5,
-   "game": "San Diego Padres @ Kansas City Royals"
-  },
-  "max meyer": {
-   "name": "Max Meyer",
    "line": 5.5,
-   "over": -117,
-   "under": -106,
-   "books": 5,
-   "game": "Miami Marlins @ Milwaukee Brewers"
+   "over": 115,
+   "under": -155,
+   "books": 1,
+   "game": "San Diego Padres @ Kansas City Royals",
+   "projection": 5.11,
+   "game_pk": 824088
   },
   "shane drohan": {
    "name": "Shane Drohan",
    "line": 4.5,
-   "over": -115,
-   "under": 100,
-   "books": 5,
-   "game": "Miami Marlins @ Milwaukee Brewers"
+   "over": -195,
+   "under": 140,
+   "books": 1,
+   "game": "Miami Marlins @ Milwaukee Brewers",
+   "projection": 7.12,
+   "game_pk": 823763
+  },
+  "ian seymour": {
+   "name": "Ian Seymour",
+   "line": 4.5,
+   "over": -146,
+   "under": 117,
+   "books": 4,
+   "game": "Tampa Bay Rays @ Boston Red Sox",
+   "projection": 7.47,
+   "game_pk": 824738
+  },
+  "patrick sandoval": {
+   "name": "Patrick Sandoval",
+   "line": 3.5,
+   "over": -111,
+   "under": -108,
+   "books": 2,
+   "game": "Tampa Bay Rays @ Boston Red Sox"
+  },
+  "logan allen": {
+   "name": "Logan Allen",
+   "line": 4.5,
+   "over": -150,
+   "under": 120,
+   "books": 3,
+   "game": "Pittsburgh Pirates @ Cleveland Guardians"
   },
   "ryan weathers": {
    "name": "Ryan Weathers",
    "line": 5.5,
    "over": 102,
-   "under": -115,
-   "books": 5,
-   "game": "Los Angeles Dodgers @ New York Yankees"
+   "under": -120,
+   "books": 2,
+   "game": "Los Angeles Dodgers @ New York Yankees",
+   "projection": 5.7,
+   "game_pk": 823523
   },
   "emmet sheehan": {
    "name": "Emmet Sheehan",
    "line": 5.5,
    "over": -105,
-   "under": -113,
-   "books": 5,
-   "game": "Los Angeles Dodgers @ New York Yankees"
+   "under": 107,
+   "books": 3,
+   "game": "Los Angeles Dodgers @ New York Yankees",
+   "projection": 5.96,
+   "game_pk": 823523
   },
   "logan webb": {
    "name": "Logan Webb",
    "line": 5.5,
-   "over": 100,
-   "under": -117,
+   "over": 105,
+   "under": -128,
    "books": 5,
-   "game": "San Francisco Giants @ Seattle Mariners"
+   "game": "San Francisco Giants @ Seattle Mariners",
+   "projection": 5.42,
+   "game_pk": 823116
   },
   "bryan woo": {
    "name": "Bryan Woo",
    "line": 5.5,
-   "over": -120,
-   "under": 109,
+   "over": -125,
+   "under": 103,
    "books": 5,
-   "game": "San Francisco Giants @ Seattle Mariners"
+   "game": "San Francisco Giants @ Seattle Mariners",
+   "projection": 5.41,
+   "game_pk": 823116
   },
   "jt ginn": {
    "name": "JT Ginn",
    "line": 4.5,
-   "over": 120,
-   "under": -149,
+   "over": 118,
+   "under": -134,
    "books": 5,
    "game": "Washington Nationals @ Athletics"
   },
   "zack littell": {
    "name": "Zack Littell",
    "line": 2.5,
-   "over": -145,
-   "under": 124,
+   "over": -157,
+   "under": 129,
    "books": 3,
-   "game": "Washington Nationals @ Athletics"
+   "game": "Washington Nationals @ Athletics",
+   "projection": 4.4,
+   "game_pk": 824979
   },
   "grayson rodriguez": {
    "name": "Grayson Rodriguez",
    "line": 5.5,
-   "over": 145,
-   "under": -164,
+   "over": 130,
+   "under": -157,
    "books": 5,
-   "game": "Detroit Tigers @ Los Angeles Angels"
+   "game": "Detroit Tigers @ Los Angeles Angels",
+   "projection": 3.33,
+   "game_pk": 824008
   },
   "tarik skubal": {
    "name": "Tarik Skubal",
    "line": 8.5,
-   "over": 108,
-   "under": -125,
+   "over": 100,
+   "under": -108,
    "books": 5,
-   "game": "Detroit Tigers @ Los Angeles Angels"
+   "game": "Detroit Tigers @ Los Angeles Angels",
+   "projection": 8.44,
+   "game_pk": 824008
+  },
+  "jared jones": {
+   "name": "Jared Jones",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Pittsburgh Pirates @ Cleveland Guardians",
+   "projection": 5.67,
+   "game_pk": 824414
+  },
+  "gavin williams": {
+   "name": "Gavin Williams",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Pittsburgh Pirates @ Cleveland Guardians",
+   "projection": 8.05,
+   "game_pk": 824414
+  },
+  "mason montgomery": {
+   "name": "Mason Montgomery",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Pittsburgh Pirates @ Cleveland Guardians",
+   "projection": 10.66,
+   "game_pk": 824412
+  },
+  "taj bradley": {
+   "name": "Taj Bradley",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Minnesota Twins @ Chicago Cubs",
+   "projection": 6.48,
+   "game_pk": 824657
+  },
+  "matthew boyd": {
+   "name": "Matthew Boyd",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Minnesota Twins @ Chicago Cubs",
+   "projection": 5.29,
+   "game_pk": 824657
+  },
+  "sean manaea": {
+   "name": "Sean Manaea",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "New York Mets @ Philadelphia Phillies",
+   "projection": 7.34,
+   "game_pk": 823441
+  },
+  "jesús luzardo": {
+   "name": "Jesús Luzardo",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "New York Mets @ Philadelphia Phillies",
+   "projection": 7.4,
+   "game_pk": 823441
+  },
+  "shane bieber": {
+   "name": "Shane Bieber",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Chicago White Sox @ Toronto Blue Jays",
+   "projection": 3.77,
+   "game_pk": 822790
+  },
+  "rhett lowder": {
+   "name": "Rhett Lowder",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Cincinnati Reds @ Colorado Rockies",
+   "projection": 3.9,
+   "game_pk": 824331
+  },
+  "tomoyuki sugano": {
+   "name": "Tomoyuki Sugano",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Cincinnati Reds @ Colorado Rockies",
+   "projection": 3.44,
+   "game_pk": 824331
+  },
+  "spencer arrighetti": {
+   "name": "Spencer Arrighetti",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Baltimore Orioles @ Houston Astros",
+   "projection": 5.7,
+   "game_pk": 824169
+  },
+  "max meyer": {
+   "name": "Max Meyer",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Miami Marlins @ Milwaukee Brewers",
+   "projection": 5.88,
+   "game_pk": 823763
+  },
+  "j.t. ginn": {
+   "name": "J.T. Ginn",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Washington Nationals @ Athletics",
+   "projection": 4.87,
+   "game_pk": 824979
   }
  }
 }

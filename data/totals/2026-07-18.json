@@ -1,6 +1,6 @@
 {
  "date": "2026-07-18",
- "generated_at": "2026-07-18T20:34:26.870Z",
+ "generated_at": "2026-07-18T21:12:34.699Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.52,
  "probables": {
@@ -8,21 +8,13 @@
    "away": "Logan Webb",
    "home": "Bryan Woo"
   },
-  "823523": {
-   "away": "Emmet Sheehan",
-   "home": "Ryan Weathers"
-  },
   "824008": {
    "away": "Tarik Skubal",
    "home": "Grayson Rodriguez"
   },
   "824412": {
-   "away": "TBD",
+   "away": "Mason Montgomery",
    "home": "Logan Allen"
-  },
-  "824738": {
-   "away": "Ian Seymour",
-   "home": "Patrick Sandoval"
   },
   "824979": {
    "away": "Zack Littell",
@@ -33,16 +25,16 @@
   "822790": {
    "game": "Chicago White Sox @ Toronto Blue Jays",
    "game_time_iso": "2026-07-18T19:07:00Z",
-   "projection": 8.9,
+   "projection": 9,
    "proj_away": 5.5,
    "proj_home": 3.5,
    "park_factor": 1.03,
    "away_sp": "Davis Martin",
    "home_sp": "Shane Bieber",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 8,
+   "over": -113,
+   "under": -102,
+   "books": 6
   },
   "823116": {
    "game": "San Francisco Giants @ Seattle Mariners",
@@ -53,10 +45,10 @@
    "park_factor": 0.92,
    "away_sp": "Logan Webb",
    "home_sp": "Bryan Woo",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 7.5,
+   "over": 100,
+   "under": -115,
+   "books": 5
   },
   "823441": {
    "game": "New York Mets @ Philadelphia Phillies",
@@ -67,24 +59,10 @@
    "park_factor": 1.06,
    "away_sp": "Sean Manaea",
    "home_sp": "Jesús Luzardo",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
-  },
-  "823523": {
-   "game": "Los Angeles Dodgers @ New York Yankees",
-   "game_time_iso": "2026-07-19T00:08:00Z",
-   "projection": 10.2,
-   "proj_away": 5.2,
-   "proj_home": 5,
-   "park_factor": 1.05,
-   "away_sp": "Emmet Sheehan",
-   "home_sp": "Ryan Weathers",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 8.5,
+   "over": -122,
+   "under": 112,
+   "books": 6
   },
   "823763": {
    "game": "Miami Marlins @ Milwaukee Brewers",
@@ -95,10 +73,10 @@
    "park_factor": 1,
    "away_sp": "Max Meyer",
    "home_sp": "Shane Drohan",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 8,
+   "over": -106,
+   "under": 101,
+   "books": 6
   },
   "824008": {
    "game": "Detroit Tigers @ Los Angeles Angels",
@@ -109,24 +87,24 @@
    "park_factor": 1,
    "away_sp": "Tarik Skubal",
    "home_sp": "Grayson Rodriguez",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 9,
+   "over": -105,
+   "under": 100,
+   "books": 5
   },
   "824088": {
    "game": "San Diego Padres @ Kansas City Royals",
    "game_time_iso": "2026-07-18T20:10:00Z",
-   "projection": 8.2,
-   "proj_away": 3.9,
+   "projection": 8.3,
+   "proj_away": 4,
    "proj_home": 4.3,
    "park_factor": 0.96,
    "away_sp": "Griffin Canning",
    "home_sp": "Randy Dobnak",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 10,
+   "over": -113,
+   "under": -102,
+   "books": 6
   },
   "824169": {
    "game": "Baltimore Orioles @ Houston Astros",
@@ -137,10 +115,10 @@
    "park_factor": 0.99,
    "away_sp": "Trevor Rogers",
    "home_sp": "Spencer Arrighetti",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 8,
+   "over": -105,
+   "under": -108,
+   "books": 6
   },
   "824331": {
    "game": "Cincinnati Reds @ Colorado Rockies",
@@ -151,38 +129,24 @@
    "park_factor": 1.18,
    "away_sp": "Rhett Lowder",
    "home_sp": "Tomoyuki Sugano",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 11,
+   "over": -107,
+   "under": -107,
+   "books": 6
   },
   "824412": {
    "game": "Pittsburgh Pirates @ Cleveland Guardians",
    "game_time_iso": "2026-07-18T23:10:00Z",
-   "projection": 9.2,
+   "projection": 8.8,
    "proj_away": 5.3,
-   "proj_home": 3.9,
+   "proj_home": 3.5,
    "park_factor": 0.99,
-   "away_sp": "TBD",
+   "away_sp": "Mason Montgomery",
    "home_sp": "Logan Allen",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
-  },
-  "824657": {
-   "game": "Minnesota Twins @ Chicago Cubs",
-   "game_time_iso": "2026-07-18T18:20:00Z",
-   "projection": 9.6,
-   "proj_away": 4.6,
-   "proj_home": 4.9,
-   "park_factor": 1.02,
-   "away_sp": "Taj Bradley",
-   "home_sp": "Matthew Boyd",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 7.5,
+   "over": 103,
+   "under": -118,
+   "books": 5
   },
   "824738": {
    "game": "Tampa Bay Rays @ Boston Red Sox",
@@ -193,24 +157,24 @@
    "park_factor": 1.06,
    "away_sp": "Ian Seymour",
    "home_sp": "Patrick Sandoval",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 8,
+   "over": -113,
+   "under": -102,
+   "books": 5
   },
   "824899": {
    "game": "Texas Rangers @ Atlanta Braves",
    "game_time_iso": "2026-07-18T20:10:00Z",
-   "projection": 9.1,
+   "projection": 9.3,
    "proj_away": 4.3,
-   "proj_home": 4.8,
+   "proj_home": 4.9,
    "park_factor": 1.05,
    "away_sp": "MacKenzie Gore",
    "home_sp": "Owen Murphy",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 14,
+   "over": -113,
+   "under": -111,
+   "books": 6
   },
   "824979": {
    "game": "Washington Nationals @ Athletics",
@@ -221,24 +185,24 @@
    "park_factor": 1,
    "away_sp": "Zack Littell",
    "home_sp": "J.T. Ginn",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 10.5,
+   "over": -110,
+   "under": -102,
+   "books": 5
   },
   "825059": {
    "game": "St. Louis Cardinals @ Arizona Diamondbacks",
    "game_time_iso": "2026-07-18T20:10:00Z",
-   "projection": 8.6,
-   "proj_away": 4.8,
+   "projection": 8.5,
+   "proj_away": 4.7,
    "proj_home": 3.8,
    "park_factor": 1.02,
    "away_sp": "Dustin May",
    "home_sp": "Brandon Pfaadt",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0
+   "line": 9,
+   "over": -107,
+   "under": -107,
+   "books": 6
   }
  }
 }
