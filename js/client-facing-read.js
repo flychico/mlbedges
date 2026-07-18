@@ -70,7 +70,7 @@
       return `Bullpen workload is elevated but not decisive. ${team} is ${(pickScore/10).toFixed(1)}/10 and ${opponent} is ${(oppScore/10).toFixed(1)}/10.`;
     }
 
-    return `No meaningful bullpen fatigue edge. ${team} is ${(pickScore/10).toFixed(1)}/10 and ${opponent} is ${(oppScore/10).toFixed(1)}/10.`;
+    return `No meaningful bullpen fatigue edge — both pens come in comparable (${team} ${(pickScore/10).toFixed(1)}/10, ${opponent} ${(oppScore/10).toFixed(1)}/10${pickScore < 35 && oppScore < 35 ? ", both fresh" : ""}).`;
   }
 
   function pitcherSentence(g) {

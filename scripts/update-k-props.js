@@ -110,6 +110,46 @@ async function main() {
   }
 
   const probables = await currentProbables().catch(() => ({}));
+
+  // Our projection per pitcher, captured alongside the market line so the
+  // nightly grader can score projection vs line vs actual. Mirrors the tool math.
+  try {
+    const yr = Number(DATE.slice(0, 4));
+    const sched = await j(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${DATE}&hydrate=probablePitcher`);
+    const games = (((sched.dates || [])[0]) || {}).games || [];
+    const base = `https://statsapi.mlb.com/api/v1/teams/stats?sportId=1&group=hitting&season=${yr}&stats=statSplits&sitCodes=`;
+    const [vl, vr] = await Promise.all([j(base + "vl"), j(base + "vr")]);
+    const kv = { L: {}, R: {} }; let soT = 0, paT = 0;
+    for (const t of (vl.stats[0] || {}).splits || []) { const so = +t.stat.strikeOuts || 0, pa = +t.stat.plateAppearances || 0; if (pa) kv.L[t.team.id] = so / pa; }
+    for (const t of (vr.stats[0] || {}).splits || []) { const so = +t.stat.strikeOuts || 0, pa = +t.stat.plateAppearances || 0; if (pa) { kv.R[t.team.id] = so / pa; soT += so; paT += pa; } }
+    const leagueK = paT ? soT / paT : 0.223;
+    const pids = [...new Set(games.flatMap(g => ["away", "home"].map(sd => g.teams[sd].probablePitcher && g.teams[sd].probablePitcher.id).filter(Boolean)))];
+    if (pids.length) {
+      const pd = await j(`https://statsapi.mlb.com/api/v1/people?personIds=${pids.join(",")}&hydrate=stats(group=[pitching],type=[season])`);
+      const ps = {};
+      for (const pp of pd.people || []) {
+        const st = ((((pp.stats || [])[0] || {}).splits || [])[0] || {}).stat || {};
+        const ipToNum = ip => { if (!ip || ip === "-.--") return 0; const [w, f] = String(ip).split("."); return Number(w || 0) + Number(f || 0) / 3; };
+        ps[pp.id] = { name: pp.fullName, hand: (pp.pitchHand || {}).code || null, ip: ipToNum(st.inningsPitched), so: +st.strikeOuts || 0, gs: +st.gamesStarted || 0, bf: +st.battersFaced || 0 };
+      }
+      for (const g of games) {
+        for (const sd of ["away", "home"]) {
+          const pid = g.teams[sd].probablePitcher && g.teams[sd].probablePitcher.id;
+          const pit = pid && ps[pid];
+          if (!pit || !pit.ip || pit.ip < 15 || !pit.bf) continue;
+          const oppId = g.teams[sd === "away" ? "home" : "away"].team.id;
+          const expIP = Math.max(3.8, Math.min(6.8, pit.gs ? pit.ip / pit.gs : 5));
+          const oppK = pit.hand && kv[pit.hand] ? kv[pit.hand][oppId] : null;
+          const adj = (oppK && leagueK) ? Math.max(0.87, Math.min(1.13, oppK / leagueK)) : 1;
+          const proj = Number((expIP * 4.28 * (pit.so / pit.bf) * adj).toFixed(2));
+          const key = pit.name.toLowerCase();
+          const rec = pitchers[key] || (pitchers[key] = { name: pit.name, line: null, over: null, under: null, books: 0, game: `${g.teams.away.team.name} @ ${g.teams.home.team.name}` });
+          rec.projection = proj;
+          rec.game_pk = g.gamePk;
+        }
+      }
+    }
+  } catch (e) { console.warn("projection compute skipped:", e.message); }
   const out = { date: DATE, generated_at: new Date().toISOString(), source: "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)", events_fetched: fetched, probables, pitchers };
   fs.mkdirSync(path.join(ROOT, "data", "k-props"), { recursive: true });
   fs.writeFileSync(path.join(ROOT, "data", "k-props", `${DATE}.json`), JSON.stringify(out, null, 1));

@@ -427,9 +427,12 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
     ? passReasonFor({ edge, modelProb, pitchEdgeTeam, pickTeam, pitcherConflict, labScore: lab.score, market: m, majorBullpenCaution })
     : null;
 
+  const pickOffCtx = offenseFormFor(pickHome ? hT.id : aT.id, null, offense);
+  const oppOffCtx = offenseFormFor(pickHome ? aT.id : hT.id, null, offense);
   const read = buildRead({
-    status, pickTeam, modelProb, marketProb, edge, lab, pitchEdgeTeam, pitchGap,
-    pitcherConflict, bullpenRead, pickBullpen, oppBullpen, bestPrice, majorBullpenCaution, passReason
+    status, pickTeam, oppTeam, modelProb, marketProb, edge, lab, pitchEdgeTeam, pitchGap,
+    pitcherConflict, bullpenRead, pickBullpen, oppBullpen, bestPrice, majorBullpenCaution, passReason,
+    pickOff: pickOffCtx, oppOff: oppOffCtx
   });
 
   return {
@@ -565,16 +568,29 @@ function buildRead(ctx) {
     ? "The starting pitcher matchup does not create a meaningful separation."
     : `${ctx.pitchEdgeTeam} owns the starting pitcher edge by ${ctx.pitchGap} points.`;
   const bullpenLine = `Bullpen read: ${ctx.bullpenRead}.`;
+  // Lineup form context. Honest framing: season offense is already inside team
+  // strength (runs scored drive the Pythagorean base); this line covers the
+  // RECENT form the current model does not use (v3 is testing it).
+  const offenseLine = (() => {
+    const p = ctx.pickOff, o = ctx.oppOff;
+    if (!p || !o || !Number.isFinite(p.delta_ops) || !Number.isFinite(o.delta_ops)) return "";
+    const w = (t, d) => `${t} ${d >= 0.05 ? "is swinging a hot bat" : d >= 0.02 ? "is a touch above its season form" : d <= -0.05 ? "is in a cold stretch" : d <= -0.02 ? "is a touch below its season form" : "is near its season form"} (${d >= 0 ? "+" : ""}${d.toFixed(3)} OPS)`;
+    const diff = p.delta_ops - o.delta_ops;
+    let tail = "";
+    if (diff <= -0.06) tail = " Recent form leans against this side — noted, not modeled.";
+    else if (diff >= 0.06) tail = " Recent form supports this side as well.";
+    return ` Lineup check: ${w(ctx.pickTeam, p.delta_ops)}; ${w(ctx.oppTeam || "the opponent", o.delta_ops)}.${tail}`;
+  })();
   const labLine = `Lab Rating ${(ctx.lab.score/10).toFixed(1)}/10: model edge ${ctx.lab.model_edge_points}, pitcher ${ctx.lab.pitcher_points}, bullpen ${ctx.lab.bullpen_points}, market ${ctx.lab.market_points}, base ${ctx.lab.base_points}.`;
 
   if (ctx.status === "official_pick") {
-    return `${ctx.pickTeam} is an official moneyline pick because it clears both gates: ${fmtPct(ctx.modelProb)} model win probability and ${(ctx.lab.score/10).toFixed(1)}/10 Lab Rating. ${valueLine} ${pitcherLine} ${bullpenLine}`;
+    return `${ctx.pickTeam} is an official moneyline pick because it clears both gates: ${fmtPct(ctx.modelProb)} model win probability and ${(ctx.lab.score/10).toFixed(1)}/10 Lab Rating. ${valueLine} ${pitcherLine} ${bullpenLine}${offenseLine}`;
   }
   if (ctx.status === "value_watch") {
-    return `${ctx.pickTeam} is a value watch, not an official pick. ${valueLine} ${labLine} The setup is strong, but official picks require at least ${fmtPct(OFFICIAL_MODEL_PROB)} model probability and ${OFFICIAL_LAB_SCORE}/100 Lab Score.`;
+    return `${ctx.pickTeam} is a value watch, not an official pick. ${valueLine} ${labLine} The setup is strong, but official picks require at least ${fmtPct(OFFICIAL_MODEL_PROB)} model probability and ${(OFFICIAL_LAB_SCORE/10).toFixed(1)}/10 Lab Rating.${offenseLine}`;
   }
   if (ctx.status === "watchlist") {
-    return `${ctx.pickTeam} remains on the watchlist. ${labLine} ${valueLine} ${pitcherLine} ${bullpenLine}`;
+    return `${ctx.pickTeam} remains on the watchlist. ${labLine} ${valueLine} ${pitcherLine} ${bullpenLine}${offenseLine}`;
   }
   return ctx.passReason || "No clear setup.";
 }
