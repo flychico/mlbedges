@@ -4,18 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Totals Projections — LyDia's Lab</title>
-<meta name="description" content="A projected total-runs number for every MLB game today — lineups, starting pitchers, park, and bullpen condition — next to the market's over/under line.">
+<meta name="description" content="A projected total-runs number for every MLB game — lineups, starting pitchers, park, and bullpen condition — next to the market's over/under line, with leans at 0.5+ run edges.">
 <link rel="canonical" href="https://lydiaslab.com/tools/totals-projections/">
 <link rel="stylesheet" href="/css/style.css">
 <style>
+.controls { display:flex; gap:10px; align-items:end; flex-wrap:wrap; margin-bottom:16px; }
+.controls .field { margin-bottom:0; }
 .match-card { margin-bottom:14px; }
 .t-head { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; margin-bottom:6px; }
 .t-head .matchup { font-weight:800; font-size:1.05rem; }
-.t-grid { display:flex; gap:18px; flex-wrap:wrap; align-items:center; margin-top:6px; }
+.t-grid { display:flex; gap:22px; flex-wrap:wrap; align-items:flex-end; margin-top:6px; }
 .t-proj { font-size:1.9rem; font-weight:800; color:var(--accent); }
-.t-line { font-size:1.4rem; font-weight:800; }
+.t-label { color:var(--text-dim); font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; }
+.line-input { display:flex; gap:8px; align-items:center; }
+.line-input input { width:84px; text-align:center; font-weight:700; }
 .lean { font-weight:800; }
-.t-meta { font-size:.84rem; color:var(--text-dim); margin-top:6px; }
+.t-meta { font-size:.84rem; color:var(--text-dim); margin-top:8px; }
 .tier { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em; background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:1px 7px; margin-left:6px; white-space:nowrap; }
 </style>
 </head>
@@ -24,42 +28,89 @@
 <main>
   <p class="eyebrow">LyDia's Lab</p>
   <h1>Totals Projections</h1>
-  <p class="subtitle">How many runs should tonight's games produce? Each projection blends both lineups' scoring, the opposing starters' skill (FIP-based), the ballpark's run environment, and bullpen condition — shown next to the market's over/under line.</p>
-  <div class="notice">
-    <strong>How to read it:</strong> the projection is a median expectation — real games land within ±2.5 runs of it routinely, so only lean when the gap to the line is <b>0.5+ runs</b>, and treat leans as research, not picks. Lines are captured each morning and kept all day (re-captured only if a starter changes). Every projection is graded nightly against the final score on the learning ledger — this tool earns trust or loses it in public.
+  <p class="subtitle">How many runs should each game produce? Every projection blends both lineups' scoring, the opposing starters' skill (FIP-based), the ballpark, and bullpen condition — next to the market's over/under.</p>
+
+  <div class="controls">
+    <div class="field">
+      <label for="date-pick">Date</label>
+      <input type="date" id="date-pick">
+    </div>
+    <button onclick="shiftDay(0)">Today</button>
+    <button class="secondary" onclick="shiftDay(1)">Tomorrow</button>
+    <div>
+      <label for="game-jump">Filter games</label>
+      <select id="game-jump" onchange="filterGame(this.value)"><option value="">All games…</option></select>
+    </div>
   </div>
+
+  <div class="notice">
+    <strong>How to read it:</strong> the projection is a median expectation — real games land within ±2.5 runs of it routinely, so only lean when the gap to the line is <b>0.5+ runs</b>, and treat leans as research, not picks. Market lines are captured each morning and kept all day (re-captured only if a starter changes) — <b>edit the line box if your book differs</b> or before the capture lands. Every projection is graded nightly on the learning ledger — this tool earns trust or loses it in public.
+  </div>
+
   <div id="status"><div class="loading">Loading projections…</div></div>
   <div id="games"></div>
 </main>
 <footer id="footer"></footer><script src="/js/app.js"></script><script>renderNav("/tools/"); renderFooter();</script>
 <script>
+const datePick = document.getElementById("date-pick");
+datePick.value = localISODate(new Date());
+datePick.addEventListener("change", load);
+let PROJ = {};
+load();
+
+function localISODate(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+function shiftDay(n){ const d=new Date(); d.setDate(d.getDate()+n); datePick.value=localISODate(d); load(); }
+function filterGame(pk){ document.querySelectorAll(".match-card").forEach(c=>{ c.style.display = (!pk || c.id === "tg-"+pk) ? "" : "none"; }); }
+
 async function load(){
   const statusEl=document.getElementById("status"), gamesEl=document.getElementById("games");
+  statusEl.innerHTML='<div class="loading">Loading projections…</div>'; gamesEl.innerHTML="";
+  const date=datePick.value, today=localISODate(new Date());
   try{
-    const d=await fetch("/data/totals/today.json?v="+Date.now(),{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("no capture");return r.json()});
-    const today=new Date().toLocaleDateString("en-CA");
-    const games=Object.values(d.games||{}).sort((a,b)=>new Date(a.game_time_iso)-new Date(b.game_time_iso));
-    if(!games.length){statusEl.innerHTML='<div class="notice">No capture for today yet — projections generate with the morning publish run.</div>';return;}
-    statusEl.innerHTML=d.date!==today?`<div class="notice warn">Showing the last capture (${escapeHtml(d.date)}) — today's generates at the morning publish.</div>`:"";
+    const urls = date===today ? [`/data/totals/${date}.json`,`/data/totals/today.json`] : [`/data/totals/${date}.json`];
+    let d=null;
+    for(const u of urls){
+      try{ const r=await fetch(`${u}?v=${Date.now()}`,{cache:"no-store"}); if(!r.ok)continue;
+        const c=await r.json(); if(c && c.date===date && c.games){ d=c; break; } }catch(e){}
+    }
+    if(!d){ statusEl.innerHTML=`<div class="notice">No totals capture for ${date}${date>today?" yet — it generates with that morning's publish run":date===today?" yet — run the Refresh lines workflow or wait for the morning publish":""}.</div>`; return; }
+    const games=Object.entries(d.games).map(([pk,g])=>({pk,...g})).sort((a,b)=>new Date(a.game_time_iso)-new Date(b.game_time_iso));
+    if(!games.length){ statusEl.innerHTML='<div class="notice">No games in this capture.</div>'; return; }
+    statusEl.innerHTML="";
+    PROJ={};
     gamesEl.innerHTML=games.map(g=>{
+      PROJ[g.pk]=g.projection;
       const time=new Date(g.game_time_iso).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
       const hasLine=Number.isFinite(g.line);
-      const lean=hasLine?g.projection-g.line:null;
-      const leanTag=!hasLine?"":Math.abs(lean)<0.5?`<span class="lean dim">no edge (${lean>=0?"+":""}${lean.toFixed(1)})</span>`:lean>0?`<span class="lean pos-text">OVER lean (+${lean.toFixed(1)})</span>`:`<span class="lean neg-text">UNDER lean (${lean.toFixed(1)})</span>`;
       const parkTag=g.park_factor>=1.06?' <span class="tier pos-text">hitter-friendly park</span>':g.park_factor<=0.95?' <span class="tier neg-text">pitcher-friendly park</span>':"";
-      return `<div class="card match-card">
+      return `<div class="card match-card" id="tg-${g.pk}">
         <div class="t-head"><span class="matchup">${escapeHtml(g.game)}</span><span class="dim small">${time}</span></div>
         <div class="t-grid">
-          <div><div class="dim small" style="text-transform:uppercase;font-size:.7rem">LyDia projects</div><span class="t-proj">${g.projection.toFixed(1)}</span> <span class="dim small">runs (${g.proj_away.toFixed(1)} + ${g.proj_home.toFixed(1)})</span></div>
-          ${hasLine?`<div><div class="dim small" style="text-transform:uppercase;font-size:.7rem">Market line (${g.books} book${g.books===1?"":"s"})</div><span class="t-line">${g.line}</span> <span class="dim small">O ${g.over>0?"+":""}${g.over??"—"} / U ${g.under>0?"+":""}${g.under??"—"}</span></div>`:`<div class="dim small">No market line captured</div>`}
-          <div>${leanTag}</div>
+          <div><div class="t-label">LyDia projects</div><span class="t-proj">${g.projection.toFixed(1)}</span> <span class="dim small">runs (${g.proj_away.toFixed(1)} away + ${g.proj_home.toFixed(1)} home)</span></div>
+          <div><div class="t-label">Market line${hasLine?` (${g.books} book${g.books===1?"":"s"})`:""}</div>
+            <div class="line-input">
+              <input type="number" step="0.5" id="tl-${g.pk}" placeholder="e.g. 8.5" value="${hasLine?g.line:""}" oninput="lean('${g.pk}')">
+              ${hasLine?`<span class="dim small">O ${g.over>0?"+":""}${g.over??"—"} / U ${g.under>0?"+":""}${g.under??"—"}</span>`:`<span class="dim small">not captured — type your book's</span>`}
+            </div></div>
+          <div><span id="lean-${g.pk}" class="lean"></span></div>
         </div>
         <div class="t-meta">${escapeHtml(g.away_sp)} vs ${escapeHtml(g.home_sp)} · park factor ${g.park_factor}${parkTag}</div>
       </div>`;
     }).join("");
-  }catch(e){statusEl.innerHTML=`<div class="notice warn">No totals capture available yet (${escapeHtml(e.message)}). It generates with the daily publish run.</div>`;}
+    document.getElementById("game-jump").innerHTML='<option value="">All games…</option>'+
+      games.map(g=>`<option value="${g.pk}">${escapeHtml(g.game)}</option>`).join("");
+    games.forEach(g=>{ const el=document.getElementById("tl-"+g.pk); if(el&&el.value) lean(g.pk); });
+  }catch(e){ statusEl.innerHTML=`<div class="notice warn">Could not load (${escapeHtml(e.message)}).</div>`; }
 }
-load();
+function lean(pk){
+  const proj=PROJ[pk]; const el=document.getElementById("lean-"+pk);
+  const line=Number(document.getElementById("tl-"+pk).value);
+  if(!Number.isFinite(proj)||!isFinite(line)||line<=0){ el.textContent=""; return; }
+  const d=proj-line;
+  if(d>=0.5) el.innerHTML=`<span class="pos-text">OVER lean (+${d.toFixed(1)})</span>`;
+  else if(d<=-0.5) el.innerHTML=`<span class="neg-text">UNDER lean (${d.toFixed(1)})</span>`;
+  else el.innerHTML=`<span class="dim">no edge (${d>=0?"+":""}${d.toFixed(1)})</span>`;
+}
 </script>
 </body>
 </html>
