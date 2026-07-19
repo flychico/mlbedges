@@ -63,3 +63,18 @@ date,gamePk,matchup,model_side,status,model_prob,market_prob,lab_score,best_pric
 2026-07-17,824170,Baltimore Orioles @ Houston Astros,Baltimore Orioles,pass,0.5075,0.4856,39,101,W,3-2
 2026-07-17,824901,Texas Rangers @ Atlanta Braves,Atlanta Braves,pass,0.6428,0.6505,33,-200,W,1-15
 2026-07-17,824655,Minnesota Twins @ Chicago Cubs,Chicago Cubs,pass,0.5466,0.5686,23,-140,L,5-2
+2026-07-18,824899,Texas Rangers @ Atlanta Braves,Atlanta Braves,value_watch,0.6651,0.512,91,-109,L,7-6
+2026-07-18,822790,Chicago White Sox @ Toronto Blue Jays,Chicago White Sox,value_watch,0.6162,0.4932,89,100,L,0-1
+2026-07-18,824088,San Diego Padres @ Kansas City Royals,Kansas City Royals,value_watch,0.5764,0.4948,89,100,W,1-6
+2026-07-18,824008,Detroit Tigers @ Los Angeles Angels,Detroit Tigers,official_pick,0.766,0.6376,88,-189,W,7-0
+2026-07-18,823116,San Francisco Giants @ Seattle Mariners,San Francisco Giants,watchlist,0.5003,0.42,73,137,L,3-4
+2026-07-18,824657,Minnesota Twins @ Chicago Cubs,Minnesota Twins,watchlist,0.5113,0.4356,72,125,L,2-6
+2026-07-18,824979,Washington Nationals @ Athletics,Washington Nationals,watchlist,0.6142,0.5114,72,-110,L,1-15
+2026-07-18,824738,Tampa Bay Rays @ Boston Red Sox,Boston Red Sox,watchlist,0.7184,0.4986,69,-102,W,6-7
+2026-07-18,824169,Baltimore Orioles @ Houston Astros,Baltimore Orioles,pass,0.5572,0.5004,58,-105,W,4-2
+2026-07-18,825059,St. Louis Cardinals @ Arizona Diamondbacks,Arizona Diamondbacks,pass,0.5654,0.5215,51,-115,W,3-5
+2026-07-18,823763,Miami Marlins @ Milwaukee Brewers,Milwaukee Brewers,pass,0.6059,0.5685,48,-137,W,6-8
+2026-07-18,823441,New York Mets @ Philadelphia Phillies,Philadelphia Phillies,pass,0.6284,0.6129,45,-167,W,1-6
+2026-07-18,824412,Pittsburgh Pirates @ Cleveland Guardians,Pittsburgh Pirates,pass,0.5179,0.4975,36,-104,L,3-5
+2026-07-18,824414,Pittsburgh Pirates @ Cleveland Guardians,Cleveland Guardians,pass,0.5101,0.5025,35,-105,L,7-1
+2026-07-18,824331,Cincinnati Reds @ Colorado Rockies,Colorado Rockies,pass,0.5007,0.4918,33,100,W,3-10

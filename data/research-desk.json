@@ -1,9 +1,16 @@
 {
-  "date": "2026-07-18",
-  "generated_at": "2026-07-18T16:01:29.182Z",
+  "date": "2026-07-19",
+  "generated_at": "2026-07-19T12:13:41.485Z",
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
-  "warnings": [],
+  "warnings": [
+    "MLB betting picks Action Network: HTTP 503",
+    "MLB betting picks Covers: HTTP 503",
+    "MLB betting picks BettingPros: HTTP 503",
+    "MLB betting picks Sportsbook Review: HTTP 503",
+    "MLB betting picks VSiN: HTTP 503",
+    "MLB odds injuries probable pitchers betting: HTTP 503"
+  ],
   "items": [
     {
       "title": "MLB Home Run Picks Today: Predictions, Props for Giants vs Mariners, Dodgers vs Yankees, More for Saturday, July 18 - Action Network",
