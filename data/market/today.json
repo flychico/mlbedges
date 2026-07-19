@@ -1,6 +1,6 @@
 {
   "date": "2026-07-19",
-  "generated_at": "2026-07-19T18:57:24.039Z",
+  "generated_at": "2026-07-19T20:05:53.440Z",
   "snapshot_type": "auto",
   "note": "Automated market snapshots update current_price before close and closing_price near game time. Official picks remain locked separately.",
   "items": [
@@ -18,13 +18,13 @@
       "raw_edge": 0.1728,
       "posted_price": -138,
       "current_price": -145,
-      "closing_price": null,
+      "closing_price": -146,
       "posted_at": "2026-07-19T16:00:46.177Z",
-      "last_checked_at": "2026-07-19T18:57:24.039Z",
+      "last_checked_at": "2026-07-19T20:05:53.440Z",
       "movement": "toward_lydia",
       "read": "Market tracking compares LyDia's posted number against later current and closing snapshots.",
       "books": 9,
-      "market_probability_latest": 0.5762
+      "market_probability_latest": 0.5784
     },
     {
       "pick_id": "detroit-tigers-los-angeles-angels-2026-07-19-ml",
@@ -40,13 +40,13 @@
       "raw_edge": 0.2165,
       "posted_price": -149,
       "current_price": -138,
-      "closing_price": null,
+      "closing_price": -138,
       "posted_at": "2026-07-19T16:00:46.177Z",
-      "last_checked_at": "2026-07-19T18:57:24.039Z",
+      "last_checked_at": "2026-07-19T20:05:53.440Z",
       "movement": "away_from_lydia",
       "read": "Market tracking compares LyDia's posted number against later current and closing snapshots.",
       "books": 9,
-      "market_probability_latest": 0.5667
+      "market_probability_latest": 0.5688
     }
   ]
 }
