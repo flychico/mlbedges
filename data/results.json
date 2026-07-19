@@ -2435,7 +2435,7 @@
             "opponent_bullpen_score": 48,
             "posted_price": -149,
             "current_price": -138,
-            "closing_price": -138,
+            "closing_price": 250,
             "clv_result": "lost_to_close",
             "result": "NG",
             "lesson_tag": "not_graded"

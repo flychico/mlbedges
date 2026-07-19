@@ -1,113 +1,15 @@
 {
  "date": "2026-07-19",
- "generated_at": "2026-07-19T20:08:52.414Z",
+ "generated_at": "2026-07-19T22:23:50.900Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
- "events_fetched": 14,
+ "events_fetched": 5,
  "probables": {
   "823521": {
    "away": "Will Klein",
-   "home": "TBD"
+   "home": "Ryan Yarbrough"
   }
  },
  "pitchers": {
-  "shota imanaga": {
-   "name": "Shota Imanaga",
-   "line": 4.5,
-   "over": -110,
-   "under": -125,
-   "books": 1,
-   "game": "Minnesota Twins @ Chicago Cubs",
-   "projection": 5.79,
-   "game_pk": 824653
-  },
-  "hunter greene": {
-   "name": "Hunter Greene",
-   "line": 8.5,
-   "over": -145,
-   "under": 105,
-   "books": 1,
-   "game": "Cincinnati Reds @ Colorado Rockies"
-  },
-  "foster griffin": {
-   "name": "Foster Griffin",
-   "line": 5.5,
-   "over": 114,
-   "under": -123,
-   "books": 5,
-   "game": "Washington Nationals @ Athletics",
-   "projection": 6.8,
-   "game_pk": 824978
-  },
-  "jacob lopez": {
-   "name": "Jacob Lopez",
-   "line": 3.5,
-   "over": -137,
-   "under": 116,
-   "books": 4,
-   "game": "Washington Nationals @ Athletics",
-   "projection": 3.61,
-   "game_pk": 824978
-  },
-  "ryan johnson": {
-   "name": "Ryan Johnson",
-   "line": 4.5,
-   "over": -115,
-   "under": 100,
-   "books": 5,
-   "game": "Detroit Tigers @ Los Angeles Angels",
-   "projection": 4.26,
-   "game_pk": 824007
-  },
-  "casey mize": {
-   "name": "Casey Mize",
-   "line": 5.5,
-   "over": -115,
-   "under": 110,
-   "books": 5,
-   "game": "Detroit Tigers @ Los Angeles Angels",
-   "projection": 6.77,
-   "game_pk": 824007
-  },
-  "eduardo rodriguez": {
-   "name": "Eduardo Rodriguez",
-   "line": 3.5,
-   "over": -143,
-   "under": 122,
-   "books": 6,
-   "game": "St. Louis Cardinals @ Arizona Diamondbacks",
-   "projection": 3.82,
-   "game_pk": 825057
-  },
-  "andre pallante": {
-   "name": "Andre Pallante",
-   "line": 3.5,
-   "over": 122,
-   "under": -140,
-   "books": 6,
-   "game": "St. Louis Cardinals @ Arizona Diamondbacks",
-   "projection": 3.82,
-   "game_pk": 825057
-  },
-  "logan gilbert": {
-   "name": "Logan Gilbert",
-   "line": 6.5,
-   "over": -115,
-   "under": 106,
-   "books": 5,
-   "game": "San Francisco Giants @ Seattle Mariners",
-   "projection": 6.21,
-   "game_pk": 823113
-  },
-  "robbie ray": {
-   "name": "Robbie Ray",
-   "line": 5.5,
-   "over": 106,
-   "under": -125,
-   "books": 5,
-   "game": "San Francisco Giants @ Seattle Mariners",
-   "projection": 5.62,
-   "game_pk": 823113
-  },
   "sean burke": {
    "name": "Sean Burke",
    "line": null,
@@ -155,7 +57,17 @@
    "under": null,
    "books": 0,
    "game": "Los Angeles Dodgers @ New York Yankees",
-   "projection": 8.41,
+   "projection": 8.4,
+   "game_pk": 823521
+  },
+  "ryan yarbrough": {
+   "name": "Ryan Yarbrough",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Los Angeles Dodgers @ New York Yankees",
+   "projection": 3.31,
    "game_pk": 823521
   },
   "shane mcclanahan": {
@@ -185,7 +97,7 @@
    "under": null,
    "books": 0,
    "game": "New York Mets @ Philadelphia Phillies",
-   "projection": 7.36,
+   "projection": 7.44,
    "game_pk": 823439
   },
   "alan rangel": {
@@ -195,7 +107,7 @@
    "under": null,
    "books": 0,
    "game": "New York Mets @ Philadelphia Phillies",
-   "projection": 6.96,
+   "projection": 6.93,
    "game_pk": 823439
   },
   "nathan eovaldi": {
@@ -205,7 +117,7 @@
    "under": null,
    "books": 0,
    "game": "Texas Rangers @ Atlanta Braves",
-   "projection": 6.31,
+   "projection": 6.29,
    "game_pk": 824897
   },
   "grant holmes": {
@@ -215,7 +127,7 @@
    "under": null,
    "books": 0,
    "game": "Texas Rangers @ Atlanta Braves",
-   "projection": 4.17,
+   "projection": 4.15,
    "game_pk": 824897
   },
   "paul skenes": {
@@ -225,7 +137,7 @@
    "under": null,
    "books": 0,
    "game": "Pittsburgh Pirates @ Cleveland Guardians",
-   "projection": 7.06,
+   "projection": 7.09,
    "game_pk": 824411
   },
   "joey cantillo": {
@@ -245,7 +157,7 @@
    "under": null,
    "books": 0,
    "game": "Baltimore Orioles @ Houston Astros",
-   "projection": 4.49,
+   "projection": 4.63,
    "game_pk": 824168
   },
   "hunter brown": {
@@ -265,7 +177,7 @@
    "under": null,
    "books": 0,
    "game": "San Diego Padres @ Kansas City Royals",
-   "projection": 3.17,
+   "projection": 3.16,
    "game_pk": 824086
   },
   "noah cameron": {
@@ -275,7 +187,7 @@
    "under": null,
    "books": 0,
    "game": "San Diego Padres @ Kansas City Royals",
-   "projection": 4.72,
+   "projection": 4.6,
    "game_pk": 824086
   },
   "eury pérez": {
@@ -285,7 +197,7 @@
    "under": null,
    "books": 0,
    "game": "Miami Marlins @ Milwaukee Brewers",
-   "projection": 6.25,
+   "projection": 6.3,
    "game_pk": 823764
   },
   "robert gasser": {
@@ -295,7 +207,7 @@
    "under": null,
    "books": 0,
    "game": "Miami Marlins @ Milwaukee Brewers",
-   "projection": 5.24,
+   "projection": 5.25,
    "game_pk": 823764
   },
   "zebby matthews": {
@@ -308,6 +220,26 @@
    "projection": 4.78,
    "game_pk": 824653
   },
+  "shota imanaga": {
+   "name": "Shota Imanaga",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Minnesota Twins @ Chicago Cubs",
+   "projection": 5.78,
+   "game_pk": 824653
+  },
+  "hunter greene": {
+   "name": "Hunter Greene",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Cincinnati Reds @ Colorado Rockies",
+   "projection": 8.7,
+   "game_pk": 824330
+  },
   "ryan feltner": {
    "name": "Ryan Feltner",
    "line": null,
@@ -317,6 +249,86 @@
    "game": "Cincinnati Reds @ Colorado Rockies",
    "projection": 3.98,
    "game_pk": 824330
+  },
+  "foster griffin": {
+   "name": "Foster Griffin",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Washington Nationals @ Athletics",
+   "projection": 6.58,
+   "game_pk": 824978
+  },
+  "jacob lopez": {
+   "name": "Jacob Lopez",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Washington Nationals @ Athletics",
+   "projection": 4.04,
+   "game_pk": 824978
+  },
+  "casey mize": {
+   "name": "Casey Mize",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Detroit Tigers @ Los Angeles Angels",
+   "projection": 6.66,
+   "game_pk": 824007
+  },
+  "ryan johnson": {
+   "name": "Ryan Johnson",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Detroit Tigers @ Los Angeles Angels",
+   "projection": 4.44,
+   "game_pk": 824007
+  },
+  "robbie ray": {
+   "name": "Robbie Ray",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "San Francisco Giants @ Seattle Mariners",
+   "projection": 5.61,
+   "game_pk": 823113
+  },
+  "logan gilbert": {
+   "name": "Logan Gilbert",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "San Francisco Giants @ Seattle Mariners",
+   "projection": 6.4,
+   "game_pk": 823113
+  },
+  "andre pallante": {
+   "name": "Andre Pallante",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "St. Louis Cardinals @ Arizona Diamondbacks",
+   "projection": 3.77,
+   "game_pk": 825057
+  },
+  "eduardo rodriguez": {
+   "name": "Eduardo Rodriguez",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "St. Louis Cardinals @ Arizona Diamondbacks",
+   "projection": 3.73,
+   "game_pk": 825057
   }
  }
 }
