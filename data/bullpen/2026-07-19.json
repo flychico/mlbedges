@@ -1,6 +1,6 @@
 {
   "date": "2026-07-19",
-  "generated_at": "2026-07-19T14:56:40.975Z",
+  "generated_at": "2026-07-19T16:00:46.177Z",
   "source_of_truth": "scripts/lib/bullpen-fatigue-core.js",
   "version": "bullpen-fatigue-v3-runs-aware",
   "method": "Generated single source of truth. Website pages display this JSON and do not calculate separate bullpen scores in the browser.",
@@ -8,11 +8,11 @@
   "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
   "lookback_days": 3,
   "summary": {
-    "teams_tracked": 30,
+    "teams_tracked": 28,
     "high_risk": 1,
     "tired": 6,
-    "fresh": 8,
-    "normal": 15
+    "fresh": 7,
+    "normal": 14
   },
   "warnings": [],
   "teams": [
@@ -646,43 +646,6 @@
       }
     },
     {
-      "team_id": 141,
-      "team": "Toronto Blue Jays",
-      "side": "home",
-      "opponent": "Chicago White Sox",
-      "game": "Chicago White Sox @ Toronto Blue Jays",
-      "game_pk": 822786,
-      "game_time_iso": "2026-07-19T16:15:00Z",
-      "score": 45,
-      "label": "Normal",
-      "workload_read": "Manageable recent workload. Bullpen should still be part of the full-game read.",
-      "score_reason": "Normal (4.5/10): 8 relief innings over the last three days, and the pen was hit hard for 6 runs in that stretch. 7 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "last_game_date": "2026-07-18",
-      "last_game_bp_ip": 3,
-      "last3_bp_ip": 8,
-      "last3_bp_runs": 6,
-      "last_game_relievers": 3,
-      "last3_relievers": 7,
-      "back_to_back_arms": 0,
-      "recent_games_tracked": 2,
-      "context_only": {
-        "last_game_relievers": 3,
-        "last3_relievers": 7,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": -3.5,
-        "last_game_bp_ip": 0,
-        "back_to_back_arms": 0,
-        "bp_runs_allowed_3d": 3,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 44.5
-      }
-    },
-    {
       "team_id": 120,
       "team": "Washington Nationals",
       "side": "away",
@@ -828,43 +791,6 @@
         "reliever_counts_context_only": 0,
         "no_recent_games_credit": 0,
         "raw_score": 35.8
-      }
-    },
-    {
-      "team_id": 145,
-      "team": "Chicago White Sox",
-      "side": "away",
-      "opponent": "Toronto Blue Jays",
-      "game": "Chicago White Sox @ Toronto Blue Jays",
-      "game_pk": 822786,
-      "game_time_iso": "2026-07-19T16:15:00Z",
-      "score": 34,
-      "label": "Fresh",
-      "workload_read": "Low recent workload. No major bullpen fatigue flag from the last three days.",
-      "score_reason": "Fresh (3.4/10): 7.3 relief innings over the last three days, allowing 2 runs. 5 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "last_game_date": "2026-07-18",
-      "last_game_bp_ip": 2.3,
-      "last3_bp_ip": 7.3,
-      "last3_bp_runs": 2,
-      "last_game_relievers": 2,
-      "last3_relievers": 5,
-      "back_to_back_arms": 0,
-      "recent_games_tracked": 2,
-      "context_only": {
-        "last_game_relievers": 2,
-        "last3_relievers": 5,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": -5.8,
-        "last_game_bp_ip": -2.7,
-        "back_to_back_arms": 0,
-        "bp_runs_allowed_3d": -3,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 33.5
       }
     },
     {
@@ -1621,35 +1547,6 @@
       },
       "source_version": "bullpen-fatigue-v3-runs-aware"
     },
-    "Toronto Blue Jays": {
-      "score": 45,
-      "label": "Normal",
-      "last_game_bp_ip": 3,
-      "last3_bp_ip": 8,
-      "last3_bp_runs": 6,
-      "last_game_relievers": 3,
-      "last3_relievers": 7,
-      "back_to_back_arms": 0,
-      "workload_read": "Manageable recent workload. Bullpen should still be part of the full-game read.",
-      "score_reason": "Normal (4.5/10): 8 relief innings over the last three days, and the pen was hit hard for 6 runs in that stretch. 7 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "context_only": {
-        "last_game_relievers": 3,
-        "last3_relievers": 7,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": -3.5,
-        "last_game_bp_ip": 0,
-        "back_to_back_arms": 0,
-        "bp_runs_allowed_3d": 3,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 44.5
-      },
-      "source_version": "bullpen-fatigue-v3-runs-aware"
-    },
     "Washington Nationals": {
       "score": 41,
       "label": "Normal",
@@ -1763,35 +1660,6 @@
         "reliever_counts_context_only": 0,
         "no_recent_games_credit": 0,
         "raw_score": 35.8
-      },
-      "source_version": "bullpen-fatigue-v3-runs-aware"
-    },
-    "Chicago White Sox": {
-      "score": 34,
-      "label": "Fresh",
-      "last_game_bp_ip": 2.3,
-      "last3_bp_ip": 7.3,
-      "last3_bp_runs": 2,
-      "last_game_relievers": 2,
-      "last3_relievers": 5,
-      "back_to_back_arms": 0,
-      "workload_read": "Low recent workload. No major bullpen fatigue flag from the last three days.",
-      "score_reason": "Fresh (3.4/10): 7.3 relief innings over the last three days, allowing 2 runs. 5 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "context_only": {
-        "last_game_relievers": 2,
-        "last3_relievers": 5,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": -5.8,
-        "last_game_bp_ip": -2.7,
-        "back_to_back_arms": 0,
-        "bp_runs_allowed_3d": -3,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 33.5
       },
       "source_version": "bullpen-fatigue-v3-runs-aware"
     },
