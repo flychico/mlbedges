@@ -83,10 +83,12 @@
 <script>
 renderNav("/tools/"); renderFooter();
 
+let allRows = [];
+let bpFilter = new Set();
 const datePick = document.getElementById("date-pick");
 datePick.value = localISODate(new Date());
 datePick.addEventListener("change", load);
-load();
+load({ preferInline: true });
 
 function localISODate(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -99,51 +101,70 @@ function shiftDay(n) {
 function fmt(v, dp=1) { return typeof v === "number" && Number.isFinite(v) ? Number(v).toFixed(dp) : "—"; }
 function esc(s) { return escapeHtml(String(s ?? "")); }
 
-async function load() {
+function inlineBullpenFor(date) {
+  const el = document.getElementById("bullpen-inline-data");
+  if (!el) return null;
+  try {
+    const d = JSON.parse(el.textContent);
+    return d && d.date === date && Array.isArray(d.teams) ? d : null;
+  } catch (e) { return null; }
+}
+
+async function load(opts) {
+  const preferInline = opts && opts.preferInline;
   const date = datePick.value;
   const statusEl = document.getElementById("status");
   const teamsEl = document.getElementById("teams");
   const kpisEl = document.getElementById("kpis");
   const sourceEl = document.getElementById("source");
 
-  statusEl.innerHTML = `<div class="loading">Loading bullpen workload…</div>`;
-  teamsEl.innerHTML = "";
-  kpisEl.innerHTML = "";
-  sourceEl.className = "notice";
-  sourceEl.innerHTML = "Loading bullpen source…";
+  let data = null;
+  let loadedUrl = null;
 
-const today = localISODate(new Date());
-
-// Prefer the date-specific file first.
-// today.json is only a fallback.
-const urls = date === today
-  ? [`/data/bullpen/${date}.json`, `/data/bullpen/today.json`]
-  : [`/data/bullpen/${date}.json`];
-
-let data = null;
-let loadedUrl = null;
-
-for (const url of urls) {
-  try {
-    const cacheBust = `${url}${url.includes("?") ? "&" : "?"}v=${Date.now()}`;
-    const res = await fetch(cacheBust, { cache: "no-store" });
-    if (!res.ok) continue;
-
-    const candidate = await res.json();
-
-    // Hard stop: do not use a file for the wrong date.
-    if (!candidate || candidate.date !== date || !Array.isArray(candidate.teams)) {
-      console.warn(`Skipped bullpen file ${url}: date mismatch or invalid teams array`, candidate);
-      continue;
-    }
-
-    data = candidate;
-    loadedUrl = url;
-    break;
-  } catch(e) {
-    console.warn(`Could not load bullpen file ${url}`, e);
+  // Server-baked data for today skips the loading flash and the network
+  // round trip entirely — the page already has a correct answer on arrival.
+  if (preferInline) {
+    data = inlineBullpenFor(date);
+    if (data) loadedUrl = "inline";
   }
-}
+
+  if (!data) {
+    statusEl.innerHTML = `<div class="loading">Loading bullpen workload…</div>`;
+    teamsEl.innerHTML = "";
+    kpisEl.innerHTML = "";
+    sourceEl.className = "notice";
+    sourceEl.innerHTML = "Loading bullpen source…";
+
+    const today = localISODate(new Date());
+
+    // Prefer the date-specific file first.
+    // today.json is only a fallback.
+    const urls = date === today
+      ? [`/data/bullpen/${date}.json`, `/data/bullpen/today.json`]
+      : [`/data/bullpen/${date}.json`];
+
+    for (const url of urls) {
+      try {
+        const cacheBust = `${url}${url.includes("?") ? "&" : "?"}v=${Date.now()}`;
+        const res = await fetch(cacheBust, { cache: "no-store" });
+        if (!res.ok) continue;
+
+        const candidate = await res.json();
+
+        // Hard stop: do not use a file for the wrong date.
+        if (!candidate || candidate.date !== date || !Array.isArray(candidate.teams)) {
+          console.warn(`Skipped bullpen file ${url}: date mismatch or invalid teams array`, candidate);
+          continue;
+        }
+
+        data = candidate;
+        loadedUrl = url;
+        break;
+      } catch(e) {
+        console.warn(`Could not load bullpen file ${url}`, e);
+      }
+    }
+  }
 
   if (!data || !Array.isArray(data.teams)) {
     sourceEl.className = "notice warn";
@@ -171,10 +192,12 @@ for (const url of urls) {
     <div class="kpi"><div class="label">Fresh</div><div class="value">${fresh}</div><div class="small dim">low recent workload</div></div>`;
 
   renderTeams();
+
+  // If this render came from inline data, still refresh from the network in
+  // the background in case anything changed since the page was generated.
+  if (loadedUrl === "inline") load();
 }
 
-let allRows = [];
-let bpFilter = new Set();
 function shortTeam(name) {
   const two = ["Red Sox", "White Sox", "Blue Jays"];
   for (const t of two) if (name.endsWith(t)) return t;

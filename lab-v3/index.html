@@ -101,7 +101,7 @@ function scoreV3(st) {
   const sampS = clampN(35 + Math.min(st.ip, 100) * 0.35, 35, 70);
   return Math.round(fipS * .40 + kbbS * .30 + hrS * .15 + sampS * .15);
 }
-/* v3 Lab Score — same buckets as the live engine, fed v3 ingredients:
+/* v3 Lab Rating — same buckets as the live engine, fed v3 ingredients:
    edge from v3 prob, pitcher points from the v3 skill-score gap, bullpen from
    the brief (swapped if v3 picks the other side), market from v3 edge. */
 function labV3(v3prob, v3edge, pitchGap, gapSupports, bpPick, bpOpp) {
@@ -241,7 +241,7 @@ function render(rows) {
     if (disagree) disagreements.push(`${r.away} @ ${r.home}: v2 → ${v2.team}, v3 → ${v3.team}`);
     const mktV3 = r.mktHome !== null ? (r.pHome3 >= 0.5 ? r.mktHome : 1 - r.mktHome) : null;
     const v3edge = mktV3 !== null ? v3.p - mktV3 : null;
-    // v3 Lab Score: pitcher gap from v3 skill scores; bullpen swapped if v3 flips sides
+    // v3 Lab Rating: pitcher gap from v3 skill scores; bullpen swapped if v3 flips sides
     const v3sideKey = r.pHome3 >= 0.5 ? "home" : "away";
     const sameSide = v3sideKey === r.v2side;
     const bpPick = sameSide ? r.bpPick : r.bpOpp, bpOpp = sameSide ? r.bpOpp : r.bpPick;
@@ -273,7 +273,7 @@ function render(rows) {
     <div class="exline"><span><b>v2 official picks</b> (published)</span><span>${v2picks.length ? v2picks.map(escapeHtml).join(" · ") : "none"}</span></div>
     <div class="exline"><span><b>v3 would-be picks</b> (prob + edge gates only)</span><span>${v3picks.length ? v3picks.map(escapeHtml).join(" · ") : "none"}</span></div>
     <div class="exline"><span><b>Disagreements</b></span><span>${disagreements.length ? disagreements.map(escapeHtml).join(" · ") : "models agree on every game"}</span></div>
-    <div class="small-note">v3 would-be picks clear the same three gates as official picks — probability, market edge, and Lab Score — with every pitcher-dependent ingredient swapped for the v3 skill version.</div>
+    <div class="small-note">v3 would-be picks clear the same three gates as official picks — probability, market edge, and Lab Rating — with every pitcher-dependent ingredient swapped for the v3 skill version.</div>
   </div>`;
 }
 load();

@@ -290,7 +290,7 @@ function rebuildResultsPage(results) {
 <nav id="nav"></nav>
 <main>
 <h1>Results</h1>
-<p class="subtitle">Current official LyDia picks are moneyline-only and require both a high model probability and a strong Lab Score. If the listed starting pitcher is scratched after a pick is published, the pick is voided (∅) — the standard sportsbook listed-pitcher rule — and stays visible without counting in the record. Older results may include legacy totals and run-line outputs from earlier model versions. Wins, losses, and voids alike stay visible.</p>
+<p class="subtitle">Current official LyDia picks are moneyline-only and require both a high model probability and a strong Lab Rating. If the listed starting pitcher is scratched after a pick is published, the pick is voided (∅) — the standard sportsbook listed-pitcher rule — and stays visible without counting in the record. Older results may include legacy totals and run-line outputs from earlier model versions. Wins, losses, and voids alike stay visible.</p>
 <section id="live-pick-results" class="card" style="margin:16px 0 24px">
   <h2 style="margin-top:0">Today's Pick Status</h2>
   <div class="loading">Loading live pick results...</div>

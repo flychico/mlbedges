@@ -122,9 +122,41 @@
     throw lastErr || new Error("No published picks file found.");
   }
 
+  function inlinePicksFor(date) {
+    const el = document.getElementById("results-inline-picks");
+    if (!el) return null;
+    try {
+      const d = JSON.parse(el.textContent);
+      return d && d.date === date && Array.isArray(d.picks) ? d : null;
+    } catch (e) { return null; }
+  }
+
   async function loadLiveResults() {
-    root.innerHTML = `<h2 style="margin-top:0">Today's Pick Status</h2><div class="loading">Loading live pick results...</div>`;
     const today = localISODate(new Date());
+
+    // Server-baked picks (known at publish time) render immediately —
+    // no scores/status yet, but the page never shows a bare "Loading..."
+    // placeholder while the live scoreboard call is in flight below.
+    const inline = inlinePicksFor(today);
+    if (inline && inline.picks.length) {
+      const quick = renderRows(inline.picks, new Map());
+      root.innerHTML = `<h2 style="margin-top:0">Today's Pick Status</h2>
+        <p class="dim small" style="margin-top:-4px">Checking live status for ${esc(today)}…</p>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Game</th><th>Pick</th><th>Status / Score</th></tr></thead>
+            <tbody>${quick.rows}</tbody>
+          </table>
+        </div>`;
+    } else if (inline) {
+      // Zero official picks is a known, valid, ALREADY-known state (strict
+      // probability gate) — show it immediately, no live fetch needed.
+      root.innerHTML = `<h2 style="margin-top:0">Today's Pick Status</h2><p class="dim">No official published picks are available yet.</p>`;
+      return;
+    } else {
+      root.innerHTML = `<h2 style="margin-top:0">Today's Pick Status</h2><div class="loading">Loading live pick results...</div>`;
+    }
+
     const picksFile = await fetchFirstJson([
       "/data/published-picks/today.json",
       `/data/published-picks/${today}.json`,

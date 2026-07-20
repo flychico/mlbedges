@@ -2,7 +2,7 @@
   "date": "2026-07-07",
   "generated": "2026-07-07T18:31:27.631Z",
   "source_of_truth": "scripts/generate-member-lab.js",
-  "note": "Official picks are created only after pitcher matchup, bullpen fatigue, market pricing, and Lab Score checks.",
+  "note": "Official picks are created only after pitcher matchup, bullpen fatigue, market pricing, and Lab Rating checks.",
   "picks": [
     {
       "gamePk": 823847,
@@ -55,7 +55,7 @@
         "tier": "Strong Setup",
         "edgeScore": 88,
         "rawEdge": 0.0987,
-        "why": "Miami Marlins cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+        "why": "Miami Marlins cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 8.8/10.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
     },
@@ -110,7 +110,7 @@
         "tier": "Strong Setup",
         "edgeScore": 88,
         "rawEdge": 0.1815,
-        "why": "Washington Nationals cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+        "why": "Washington Nationals cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 8.8/10.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
     },
@@ -165,7 +165,7 @@
         "tier": "Strong Setup",
         "edgeScore": 88,
         "rawEdge": 0.1497,
-        "why": "Boston Red Sox cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+        "why": "Boston Red Sox cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 8.8/10.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
     },
@@ -220,7 +220,7 @@
         "tier": "Strong Setup",
         "edgeScore": 88,
         "rawEdge": 0.2102,
-        "why": "Los Angeles Dodgers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+        "why": "Los Angeles Dodgers cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 8.8/10.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
     },
@@ -275,7 +275,7 @@
         "tier": "Strong Setup",
         "edgeScore": 79,
         "rawEdge": 0.0819,
-        "why": "Detroit Tigers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 79.",
+        "why": "Detroit Tigers cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 7.9/10.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
     },
@@ -330,7 +330,7 @@
         "tier": "Strong Setup",
         "edgeScore": 76,
         "rawEdge": 0.0846,
-        "why": "Texas Rangers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 76.",
+        "why": "Texas Rangers cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 7.6/10.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
     },
@@ -385,7 +385,7 @@
         "tier": "Qualified Setup",
         "edgeScore": 70,
         "rawEdge": 0.1364,
-        "why": "Arizona Diamondbacks cleared the model, market, pitcher, and bullpen checks with a Lab Score of 70.",
+        "why": "Arizona Diamondbacks cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 7.0/10.",
         "risk": "No model can see every live lineup, injury, or late bullpen availability update. Recheck official news before first pitch."
       }
     }

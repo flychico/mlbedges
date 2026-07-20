@@ -179,7 +179,7 @@ function rebuildPreviewArchive() {
     return `<a href="/previews/${f}">Game Previews - ${esc(niceDate(date))}</a>`;
   }).join("\n");
   const html = `<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>MLB Game Previews archive | LyDia</title><meta name="description" content="Daily MLB game previews generated after LyDia's Lab Score, pitcher matchup, bullpen fatigue, and market checks."><link rel="stylesheet" href="/css/style.css"><style>.archive-list a{display:block;padding:8px 0;border-bottom:1px solid var(--border)}</style></head><body><nav id="nav"></nav><main><h1>Game Previews</h1><p class="subtitle">Daily previews rendered from LyDia's daily engine.</p><div class="card archive-list">
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>MLB Game Previews archive | LyDia</title><meta name="description" content="Daily MLB game previews generated after LyDia's Lab Rating, pitcher matchup, bullpen fatigue, and market checks."><link rel="stylesheet" href="/css/style.css"><style>.archive-list a{display:block;padding:8px 0;border-bottom:1px solid var(--border)}</style></head><body><nav id="nav"></nav><main><h1>Game Previews</h1><p class="subtitle">Daily previews rendered from LyDia's daily engine.</p><div class="card archive-list">
 ${links || '<p class="dim">No preview archive is available yet.</p>'}
 </div></main><footer id="footer"></footer><script src="/js/app.js"></script><script>renderNav("/previews/"); renderFooter();</script></body></html>
 `;

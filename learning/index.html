@@ -91,7 +91,7 @@ async function loadLearning() {
     <div class="kpi"><div class="label">Date reviewed</div><div class="value">${esc(data.latest_date || "-")}</div><div class="small dim">${data.days_reviewed || 0} day${data.days_reviewed === 1 ? "" : "s"} in file</div></div>
     <div class="kpi"><div class="label">Moneyline record</div><div class="value">${esc(day.moneyline_record || "0-0")}</div><div class="small dim">${pct(day.moneyline_win_rate)} win rate</div></div>
     <div class="kpi"><div class="label">Avg model prob</div><div class="value">${pct(metrics.average_model_probability)}</div><div class="small dim">graded moneyline set</div></div>
-    <div class="kpi"><div class="label">Avg Lab Score</div><div class="value">${num(metrics.average_lab_score)}</div><div class="small dim">setup quality, not probability</div></div>
+    <div class="kpi"><div class="label">Avg Lab Rating</div><div class="value">${typeof metrics.average_lab_score === "number" ? (metrics.average_lab_score/10).toFixed(1)+"/10" : "-"}</div><div class="small dim">setup quality, not probability</div></div>
     <div class="kpi"><div class="label">Protected by gate</div><div class="value">${metrics.protected_by_probability_gate_count || 0}</div><div class="small dim">high Lab, low probability</div></div>
     <div class="kpi"><div class="label">CLV tracked</div><div class="value">${clvTotal(metrics.clv_counts)}</div><div class="small dim">needs market snapshots</div></div>
   `;
@@ -190,7 +190,7 @@ async function loadLearning() {
 
   bucketsEl.innerHTML = distHtml + calHtml + `
     <h2>Review buckets</h2>
-    ${bucket("Strong official", (data.buckets || {}).strong_official || [], "Picks that cleared the strict 72% model probability and 80 Lab Score gates.")}
+    ${bucket("Strong official", (data.buckets || {}).strong_official || [], "Picks that cleared the strict 72% model probability and 8.0/10 Lab Rating gates.")}
     ${bucket("Protected by probability gate", (data.buckets || {}).protected_by_probability_gate || [], "High setup quality, but model probability below the official-pick gate. These should stay value watch.")}
     ${bucket("High bullpen risk", (data.buckets || {}).high_bullpen_risk || [], "Official moneyline picks with meaningful bullpen caution.")}
     ${bucket("Pitcher conflicts", (data.buckets || {}).pitcher_conflicts || [], "Official moneyline picks where the starting pitcher edge conflicted with the model side.")}
@@ -253,7 +253,7 @@ function row(x) {
     <div class="metric-grid">
       <div class="metric-box"><div class="label">Result</div><div class="value">${esc(x.result || "-")}</div></div>
       <div class="metric-box"><div class="label">Model probability</div><div class="value">${pct(x.model_probability)}</div></div>
-      <div class="metric-box"><div class="label">Lab Score</div><div class="value">${num(x.lab_score)}</div></div>
+      <div class="metric-box"><div class="label">Lab Rating</div><div class="value">${typeof x.lab_score === "number" ? (x.lab_score/10).toFixed(1)+"/10" : "-"}</div></div>
       <div class="metric-box"><div class="label">Raw edge</div><div class="value">${pct(x.raw_edge)}</div></div>
       <div class="metric-box"><div class="label">CLV</div><div class="value small">${esc(x.clv_result || "not_tracked")}</div></div>
       <div class="metric-box"><div class="label">Lesson</div><div class="value small">${esc(x.lesson_tag || "-")}</div></div>

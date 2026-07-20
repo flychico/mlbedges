@@ -146,7 +146,7 @@ function buildFromBrief(dateStr, brief, isPreview) {
         const x = lineForGame(g);
         return `<div style="border-left:3px solid #d6508e;padding:10px 0 10px 12px;margin:14px 0">
           <div style="font-weight:800">${esc(x.game)}</div>
-          <div style="margin-top:4px"><b>${esc(x.status)}:</b> ${esc(x.pick)} ML · Lab Score ${esc(x.labScore)}/100 · ${fmtAm(x.price)}</div>
+          <div style="margin-top:4px"><b>${esc(x.status)}:</b> ${esc(x.pick)} ML · Lab Rating ${esc((Number(x.labScore)/10).toFixed(1))}/10 · ${fmtAm(x.price)}</div>
           <div style="font-size:13px;color:#555;margin-top:4px">
             Model ${pct(x.modelProb)} · Market ${pct(x.marketProb)} · Edge ${edge(x.rawEdge)}
           </div>
@@ -191,7 +191,7 @@ function buildFromBrief(dateStr, brief, isPreview) {
     ? official.map(g => {
         const x = lineForGame(g);
         return `${x.game}
-  ${x.status}: ${x.pick} ML · Lab Score ${x.labScore}/100 · ${fmtAm(x.price)}
+  ${x.status}: ${x.pick} ML · Lab Rating ${(Number(x.labScore)/10).toFixed(1)}/10 · ${fmtAm(x.price)}
   Model ${pct(x.modelProb)} · Market ${pct(x.marketProb)} · Edge ${edge(x.rawEdge)}
   Pitcher edge: ${x.pitcherEdge} · Bullpen: ${x.bullpenRead}
   Read: ${x.read || "—"}

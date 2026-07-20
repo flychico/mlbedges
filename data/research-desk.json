@@ -1,6 +1,7 @@
 {
   "date": "2026-07-20",
-  "generated_at": "2026-07-20T21:50:00.517Z",
+  "generated_at": "2026-07-20T21:45:33.563Z",
+  "stale_reuse": false,
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
   "warnings": [],
@@ -16,7 +17,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "St. Louis Cardinals @ Los Angeles Angels",
       "selected_side": null,
-      "lydia_takeaway": "This article matches St. Louis Cardinals @ Los Angeles Angels, but the headline and summary do not clearly identify a selected side. LyDia currently has St. Louis Cardinals Money Line at 52.3% model probability and 3.5/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches St. Louis Cardinals @ Los Angeles Angels, but the headline and summary do not clearly identify a selected side. LyDia currently has St. Louis Cardinals Money Line at 52.3% model probability and 4.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Nationals vs Rockies Prediction, Odds, Time, Picks for Monday’s MLB Game - Action Network",
@@ -55,7 +56,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "St. Louis Cardinals @ Los Angeles Angels",
       "selected_side": null,
-      "lydia_takeaway": "This article matches St. Louis Cardinals @ Los Angeles Angels, but the headline and summary do not clearly identify a selected side. LyDia currently has St. Louis Cardinals Money Line at 52.3% model probability and 3.5/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches St. Louis Cardinals @ Los Angeles Angels, but the headline and summary do not clearly identify a selected side. LyDia currently has St. Louis Cardinals Money Line at 52.3% model probability and 4.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Mets vs Brewers Predictions, Picks, Odds — 7/20 - Action Network",
@@ -81,7 +82,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Detroit Tigers @ Chicago Cubs",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 52.4% model probability and 4.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 52.4% model probability and 3.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Monday, July 20 - Covers.com",
@@ -198,7 +199,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Pittsburgh Pirates @ New York Yankees",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 51.4% model probability and 1.5/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 51.4% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Rays vs Blue Jays Prediction, Odds: Expert MLB Pick for Monday - Action Network",
@@ -211,7 +212,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Tampa Bay Rays @ Toronto Blue Jays",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 50.8% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 50.8% model probability and 6.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Twins vs Guardians Predictions, Start Time, Odds: MLB Picks for Monday - Action Network",
@@ -224,7 +225,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Minnesota Twins @ Cleveland Guardians",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Minnesota Twins Money Line at 53.1% model probability and 8.6/10 Lab Rating, with value watch status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Minnesota Twins Money Line at 53.1% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Home Run Picks Today: Predictions, Props for Padres vs Braves, Tigers vs Cubs on Monday, July 20 - Action Network",
@@ -309,7 +310,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "St. Louis Cardinals @ Los Angeles Angels",
         "selected_side": null,
-        "lydia_takeaway": "This article matches St. Louis Cardinals @ Los Angeles Angels, but the headline and summary do not clearly identify a selected side. LyDia currently has St. Louis Cardinals Money Line at 52.3% model probability and 3.5/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches St. Louis Cardinals @ Los Angeles Angels, but the headline and summary do not clearly identify a selected side. LyDia currently has St. Louis Cardinals Money Line at 52.3% model probability and 4.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Nationals vs Rockies Prediction, Odds, Time, Picks for Monday’s MLB Game - Action Network",
@@ -348,7 +349,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "St. Louis Cardinals @ Los Angeles Angels",
         "selected_side": null,
-        "lydia_takeaway": "This article matches St. Louis Cardinals @ Los Angeles Angels, but the headline and summary do not clearly identify a selected side. LyDia currently has St. Louis Cardinals Money Line at 52.3% model probability and 3.5/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches St. Louis Cardinals @ Los Angeles Angels, but the headline and summary do not clearly identify a selected side. LyDia currently has St. Louis Cardinals Money Line at 52.3% model probability and 4.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Mets vs Brewers Predictions, Picks, Odds — 7/20 - Action Network",
@@ -374,7 +375,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Detroit Tigers @ Chicago Cubs",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 52.4% model probability and 4.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 52.4% model probability and 3.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Orioles vs Red Sox Prediction, Odds, Picks, Time for Today’s MLB Game - Action Network",
@@ -439,7 +440,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Pittsburgh Pirates @ New York Yankees",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 51.4% model probability and 1.5/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 51.4% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Rays vs Blue Jays Prediction, Odds: Expert MLB Pick for Monday - Action Network",
@@ -452,7 +453,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Tampa Bay Rays @ Toronto Blue Jays",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 50.8% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 50.8% model probability and 6.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Twins vs Guardians Predictions, Start Time, Odds: MLB Picks for Monday - Action Network",
@@ -465,7 +466,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Minnesota Twins @ Cleveland Guardians",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Minnesota Twins Money Line at 53.1% model probability and 8.6/10 Lab Rating, with value watch status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Minnesota Twins Money Line at 53.1% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "MLB Home Run Picks Today: Predictions, Props for Padres vs Braves, Tigers vs Cubs on Monday, July 20 - Action Network",

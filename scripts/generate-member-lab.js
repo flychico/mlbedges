@@ -3,7 +3,7 @@
   LyDia source-of-truth daily engine.
   Creates research data and locked official picks only for an open slate.
   Current official model: moneyline only.
-  Official picks require both a strong model probability and a strong Lab Score.
+  Official picks require both a strong model probability and a strong Lab Rating.
 */
 const fs = require("fs");
 const path = require("path");
@@ -72,7 +72,10 @@ async function main() {
   const bullpen = bullpenSource.teams_by_name || {};
 
   writeJson(`data/bullpen/${DATE}.json`, bullpenSource);
-  if (DATE === etToday()) writeJson("data/bullpen/today.json", bullpenSource);
+  if (DATE === etToday()) {
+    writeJson("data/bullpen/today.json", bullpenSource);
+    injectInlineData("tools/bullpen-fatigue/index.html", "bullpen-inline-data", bullpenSource);
+  }
 
   const rows = openGames.map(g => modelGame(g, strength, pitchers, oddsMap, bullpen, offense)).filter(Boolean)
     .sort((a, b) => (b.lab_score || 0) - (a.lab_score || 0));
@@ -97,7 +100,15 @@ async function main() {
     games: rows
   };
   writeJson(`data/member-brief/${DATE}.json`, brief);
-  if (DATE === etToday()) writeJson("data/member-brief/today.json", brief);
+  if (DATE === etToday()) {
+    writeJson("data/member-brief/today.json", brief);
+    // Bake today's brief into the page itself so the initial HTML has real
+    // content — a failed fetch, slow connection, or crawler no longer sees
+    // an empty "Loading member brief..." placeholder. The page's own JS
+    // renders this inline data immediately, then still fetches in the
+    // background to catch any later-in-the-day changes.
+    injectBriefInline(brief);
+  }
 
   const candidatePublished = buildPicksFile(rows, generatedAt);
   const published = writeOrReusePublishedPicks(candidatePublished, allGames.length);
@@ -130,6 +141,30 @@ async function fetchJson(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
   return res.json();
+}
+function injectBriefInline(brief) {
+  injectInlineData("member-brief/index.html", "brief-inline-data", brief, '<div id="passes"></div>');
+}
+// Bakes today's already-computed data into a page's own HTML so the initial
+// page load has real content instead of a client-side-only "Loading..."
+// placeholder. Idempotent: re-running replaces the previous block instead of
+// duplicating it. The page's JS still refreshes in the background.
+function injectInlineData(relFile, elementId, payload, anchorHtml) {
+  const file = path.join(ROOT, relFile);
+  if (!fs.existsSync(file)) return;
+  let html = fs.readFileSync(file, "utf8");
+  const start = `<!--${elementId.toUpperCase()}_START-->`;
+  const end = `<!--${elementId.toUpperCase()}_END-->`;
+  const block = `${start}\n<script type="application/json" id="${elementId}">${JSON.stringify(payload)}</script>\n${end}`;
+  if (html.includes(start) && html.includes(end)) {
+    const re = new RegExp(`${start}[\\s\\S]*?${end}`);
+    html = html.replace(re, block);
+  } else if (anchorHtml && html.includes(anchorHtml)) {
+    html = html.replace(anchorHtml, `${anchorHtml}\n${block}`);
+  } else {
+    return;
+  }
+  fs.writeFileSync(file, html, "utf8");
 }
 function writeJson(file, obj) {
   const out = path.join(ROOT, file);
@@ -556,7 +591,7 @@ function passReasonFor({ edge, modelProb, pitchEdgeTeam, pickTeam, pitcherConfli
   if (modelProb < OFFICIAL_MODEL_PROB && labScore >= VALUE_WATCH_LAB_SCORE) return `Setup quality is strong, but LyDia's win probability is only ${fmtPct(modelProb)}. That is not high enough for an official pick.`;
   if (pitcherConflict) return "Starting pitcher edge conflicts with the model side.";
   if (majorBullpenCaution) return "Bullpen fatigue adds too much late-game caution.";
-  if (labScore < OFFICIAL_LAB_SCORE) return "The combined Lab Score did not clear the official threshold.";
+  if (labScore < OFFICIAL_LAB_SCORE) return "The combined Lab Rating did not clear the official threshold.";
   if (pitchEdgeTeam !== "No clear SP edge" && pitchEdgeTeam !== pickTeam) return "Starting pitcher edge does not support the model side.";
   return "No clear setup.";
 }
@@ -587,7 +622,17 @@ function buildRead(ctx) {
     return `${ctx.pickTeam} is an official moneyline pick because it clears both gates: ${fmtPct(ctx.modelProb)} model win probability and ${(ctx.lab.score/10).toFixed(1)}/10 Lab Rating. ${valueLine} ${pitcherLine} ${bullpenLine}${offenseLine}`;
   }
   if (ctx.status === "value_watch") {
-    return `${ctx.pickTeam} is a value watch, not an official pick. ${valueLine} ${labLine} The setup is strong, but official picks require at least ${fmtPct(OFFICIAL_MODEL_PROB)} model probability and ${(OFFICIAL_LAB_SCORE/10).toFixed(1)}/10 Lab Rating.${offenseLine}`;
+    // Value watch already cleared the edge and Lab Rating floor for this tier —
+    // name the SPECIFIC gate(s) that kept it from official, never a generic line.
+    const failedGates = [];
+    if (ctx.modelProb < OFFICIAL_MODEL_PROB) failedGates.push(`model win probability is ${fmtPct(ctx.modelProb)}, below the ${fmtPct(OFFICIAL_MODEL_PROB)} official-pick gate`);
+    if (ctx.lab.score < OFFICIAL_LAB_SCORE) failedGates.push(`Lab Rating is ${(ctx.lab.score/10).toFixed(1)}/10, below the ${(OFFICIAL_LAB_SCORE/10).toFixed(1)}/10 official-pick gate`);
+    if (ctx.pitcherConflict) failedGates.push("the starting pitcher edge conflicts with the model side");
+    if (ctx.majorBullpenCaution) failedGates.push("bullpen fatigue adds too much late-game caution");
+    const gateLine = failedGates.length
+      ? `It stayed a value watch because ${failedGates.join("; and ")}.`
+      : "It stayed a value watch under the stricter official-pick review.";
+    return `${ctx.pickTeam} is a value watch, not an official pick. ${valueLine} ${labLine} ${gateLine}${offenseLine}`;
   }
   if (ctx.status === "watchlist") {
     return `${ctx.pickTeam} remains on the watchlist. ${labLine} ${valueLine} ${pitcherLine} ${bullpenLine}${offenseLine}`;
@@ -601,7 +646,7 @@ function summarize(rows, hasOdds) {
   const high = rows.filter(r => r.lab_score >= VALUE_WATCH_LAB_SCORE).length;
   if (!hasOdds) return "Brief generated without live market pricing. Treat the card as research-only until pricing is checked.";
   if (official) return `${official} official moneyline pick${official === 1 ? "" : "s"} cleared the stricter model-probability and Lab Rating gates. ${valueWatch} value-watch setup${valueWatch === 1 ? "" : "s"} had good price math but did not clear official-pick probability rules.`;
-  return `No official picks cleared the stricter rules. ${valueWatch} value-watch setup${valueWatch === 1 ? "" : "s"} and ${watch} watchlist game${watch === 1 ? "" : "s"} remain research-only. ${high} game${high === 1 ? "" : "s"} reached a Lab Rating of ${VALUE_WATCH_LAB_SCORE}+ but did not clear every official gate.`;
+  return `No official picks cleared the stricter rules. ${valueWatch} value-watch setup${valueWatch === 1 ? "" : "s"} and ${watch} watchlist game${watch === 1 ? "" : "s"} remain research-only. ${high} game${high === 1 ? "" : "s"} reached a Lab Rating of ${(VALUE_WATCH_LAB_SCORE/10).toFixed(1)}+/10 but did not clear every official gate.`;
 }
 function riskNote(r) {
   const notes = [];
@@ -663,11 +708,17 @@ function writeOrReusePublishedPicks(candidate, scheduledGameCount) {
     } else {
       console.log(`Published picks already exist for ${DATE}; reusing ${file}.`);
     }
-    if (DATE === etToday()) writeJson("data/published-picks/today.json", existing);
+    if (DATE === etToday()) {
+      writeJson("data/published-picks/today.json", existing);
+      injectInlineData("results/index.html", "results-inline-picks", existing, '<div class="loading">Loading live pick results...</div>');
+    }
     return existing;
   }
   writeJson(file, candidate);
-  if (DATE === etToday()) writeJson("data/published-picks/today.json", candidate);
+  if (DATE === etToday()) {
+    writeJson("data/published-picks/today.json", candidate);
+    injectInlineData("results/index.html", "results-inline-picks", candidate, '<div class="loading">Loading live pick results...</div>');
+  }
   return candidate;
 }
 function buildMarketFile(rows, generatedAt) {

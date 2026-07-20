@@ -159,7 +159,7 @@ function buildLearningSummary({ date, day, allDays, clvRows }) {
       official_model_probability: 0.72,
       official_lab_score: 80,
       official_market_edge: 0.03,
-      note: "Official picks require high model probability and strong setup quality. A high Lab Score alone is not enough."
+      note: "Official picks require high model probability and strong setup quality. A high Lab Rating alone is not enough."
     },
     process_metrics: {
       average_model_probability: avgModelProbability,
@@ -269,7 +269,7 @@ function buildFindings(ctx) {
   findings.push({
     title: "Probability gate",
     read: ctx.protectedByGate.length
-      ? `${ctx.protectedByGate.length} setup${ctx.protectedByGate.length === 1 ? "" : "s"} had strong Lab Score but model probability below 72%. Those should remain value watch, not official picks.`
+      ? `${ctx.protectedByGate.length} setup${ctx.protectedByGate.length === 1 ? "" : "s"} had strong Lab Rating but model probability below 72%. Those should remain value watch, not official picks.`
       : "No high-Lab, low-probability moneyline setups appeared in the graded official set."
   });
 

@@ -6,7 +6,7 @@
   "source_of_truth": "LyDia Daily Engine",
   "current_official_model": "moneyline_only",
   "lock_policy": "Dated official pick files are append-only. Re-running the engine for the same date reuses the existing dated file instead of changing official picks.",
-  "note": "Official picks require market edge, model probability >= 72%, Lab Score >= 80, pitcher support, and no major bullpen caution.",
+  "note": "Official picks require market edge, model probability >= 72%, Lab Rating >= 80, pitcher support, and no major bullpen caution.",
   "picks": [
     {
       "gamePk": 824575,
@@ -21,7 +21,7 @@
         "bullpen_points": 8.78,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "status": "official_pick",
       "modelVersion": "moneyline-v2-strict-probability-gate",
@@ -126,7 +126,7 @@
         "tier": "Qualified Official",
         "edgeScore": 89,
         "rawEdge": 0.1819,
-        "why": "Chicago White Sox is an official moneyline pick because it clears both gates: 77.9% model win probability and 89/100 Lab Score. LyDia projects 77.9% against a 59.8% no-vig market number, a 18.2% model edge at -157. Chicago White Sox owns the starting pitcher edge by 43 points. Bullpen read: Elevated volatility.",
+        "why": "Chicago White Sox is an official moneyline pick because it clears both gates: 77.9% model win probability and 8.9/10 Lab Rating. LyDia projects 77.9% against a 59.8% no-vig market number, a 18.2% model edge at -157. Chicago White Sox owns the starting pitcher edge by 43 points. Bullpen read: Elevated volatility.",
         "risk": "Primary caution: bullpen workload adds late-game volatility. Recheck official news before first pitch."
       }
     },
@@ -143,7 +143,7 @@
         "bullpen_points": 7.07,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "status": "official_pick",
       "modelVersion": "moneyline-v2-strict-probability-gate",
@@ -248,7 +248,7 @@
         "tier": "Qualified Official",
         "edgeScore": 87,
         "rawEdge": 0.1675,
-        "why": "Minnesota Twins is an official moneyline pick because it clears both gates: 74.9% model win probability and 87/100 Lab Score. LyDia projects 74.9% against a 58.1% no-vig market number, a 16.8% model edge at -148. Minnesota Twins owns the starting pitcher edge by 35 points. Bullpen read: Elevated volatility.",
+        "why": "Minnesota Twins is an official moneyline pick because it clears both gates: 74.9% model win probability and 8.7/10 Lab Rating. LyDia projects 74.9% against a 58.1% no-vig market number, a 16.8% model edge at -148. Minnesota Twins owns the starting pitcher edge by 35 points. Bullpen read: Elevated volatility.",
         "risk": "Primary caution: bullpen workload adds late-game volatility. Recheck official news before first pitch."
       }
     }

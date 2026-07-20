@@ -18,6 +18,26 @@ const QUERIES = [
 ];
 const ALLOWED = ["action network", "covers", "bettingpros", "sportsbook review", "vsin", "fanduel research", "rotowire"];
 
+// MLB team names/cities so a headline can be confirmed as MLB content, not just
+// "from an allowed source." Sources allowed here also cover other sports (WNBA,
+// NFL, etc.) and headlines about those leagues were slipping through.
+const MLB_TEAMS = [
+  "diamondbacks","braves","orioles","red sox","cubs","white sox","reds","guardians",
+  "rockies","tigers","astros","royals","angels","dodgers","marlins","brewers","twins",
+  "mets","yankees","athletics","phillies","pirates","padres","giants","mariners",
+  "cardinals","rays","rangers","blue jays","nationals","d-backs"
+];
+const OTHER_LEAGUE_SIGNALS = [
+  "wnba","nba","nfl","nhl","ncaa","college football","college basketball",
+  "premier league","champions league","pga","ufc","mma","nascar","tennis","golf"
+];
+function isMlbContent(text) {
+  const lower = String(text || "").toLowerCase();
+  if (OTHER_LEAGUE_SIGNALS.some(s => lower.includes(s))) return false;
+  if (lower.includes("mlb") || lower.includes("major league baseball")) return true;
+  return MLB_TEAMS.some(t => lower.includes(t));
+}
+
 function etToday() {
   const d = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -141,7 +161,8 @@ async function fetchText(url) {
 function rssUrl(q) { return `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`; }
 function allowed(x) {
   const hay = `${x.source} ${x.title}`.toLowerCase();
-  return ALLOWED.some(s => hay.includes(s));
+  const fromAllowedSource = ALLOWED.some(s => hay.includes(s));
+  return fromAllowedSource && isMlbContent(`${x.title} ${x.description || ""}`);
 }
 function dedupe(items) {
   const seen = new Set();
@@ -169,6 +190,7 @@ function render(data) {
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>LyDia Research Desk | MLB market intelligence</title>
 <meta name="description" content="Recent public MLB betting coverage classified by explicit agreement, disagreement, market context, and items that cannot be classified confidently.">
+<meta name="robots" content="noindex">
 <link rel="canonical" href="${SITE}/articles/"><link rel="stylesheet" href="/css/style.css">
 <style>.desk-grid{display:grid;gap:14px;margin:14px 0 28px}.desk-card h3{font-size:1.08rem;margin:10px 0}.source-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.takeaway{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent2);background:var(--bg-elev);border-radius:6px}.takeaway p{margin:4px 0 0;line-height:1.55}</style>
 </head><body><nav id="nav"></nav><main>
@@ -185,7 +207,8 @@ ${section("Where LyDia agrees", g.lydia_agrees || [], "No source explicitly sele
 ${section("Where LyDia disagrees", g.lydia_disagrees || [], "No source explicitly selected the opposite side.")}
 ${section("Market-moving context", g.market_context || [], "No additional market context was available.")}
 ${section("Unable to classify", g.unable_to_classify || [], "Every matched item had a clear side classification.")}
-<p class="dim small">Last refreshed ${esc(data.generated_at)}. External publishers remain responsible for their own reporting and opinions.</p>
+<p class="dim small">Last refreshed ${esc(data.generated_at)}${data.stale_reuse ? " (no new MLB items cleared review today — showing the last successful refresh)" : ""}. External publishers remain responsible for their own reporting and opinions.</p>
+<div class="lead-box" style="margin-top:16px"><h3 style="margin:0 0 4px">Get tomorrow\'s MLB model card free</h3><p class="dim small" style="margin:0">One email, every morning. No payment required.</p><form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><p style="display:none"><input name="bot-field"></p><input type="hidden" name="form-name" value="newsletter"><input type="email" name="email" required placeholder="you@example.com" style="flex:1;min-width:200px"><button type="submit" class="secondary">Subscribe free</button></form></div>
 </main><footer id="footer"></footer><script src="/js/app.js"></script><script>renderNav("/articles/");renderFooter();</script></body></html>`;
 }
 async function main() {
@@ -214,9 +237,16 @@ async function main() {
     };
   }).sort((a, b) => String(b.published_at || "").localeCompare(String(a.published_at || ""))).slice(0, MAX_ITEMS);
 
+  let staleReuse = false;
+  let reusedGeneratedAt = null;
   if (!items.length) {
     const prior = readJson("data/research-desk.json");
-    if (prior && Array.isArray(prior.items)) items = prior.items;
+    if (prior && Array.isArray(prior.items)) {
+      items = prior.items;
+      staleReuse = true;
+      reusedGeneratedAt = prior.generated_at || null;
+      warnings.push("No new items cleared the MLB-source filter today; showing the last successful refresh instead of a false-fresh timestamp.");
+    }
   }
 
   const groups = {
@@ -228,7 +258,11 @@ async function main() {
 
   const out = {
     date: etToday(),
-    generated_at: new Date().toISOString(),
+    // Honest freshness: only stamp "now" when this run actually produced new
+    // items. A reused day keeps the ORIGINAL generated_at so the page never
+    // claims to be more current than it is.
+    generated_at: staleReuse ? (reusedGeneratedAt || new Date().toISOString()) : new Date().toISOString(),
+    stale_reuse: staleReuse,
     mode: "explicit-side-classification-v3",
     note: "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
     warnings,

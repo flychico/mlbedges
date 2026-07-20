@@ -106,7 +106,17 @@ function friendlyTime(iso) {
   return d.toLocaleString("en-US", { month:"short", day:"numeric", hour:"numeric", minute:"2-digit", timeZone:"America/New_York", timeZoneName:"short" });
 }
 
-async function loadBrief() {
+function inlineBriefFor(date) {
+  const el = document.getElementById("brief-inline-data");
+  if (!el) return null;
+  try {
+    const d = JSON.parse(el.textContent);
+    return d && d.date === date ? d : null;
+  } catch (e) { return null; }
+}
+
+async function loadBrief(opts) {
+  const background = opts && opts.background;
   const date = datePick.value;
   const statusEl = document.getElementById("status");
   const kpisEl = document.getElementById("kpis");
@@ -115,8 +125,21 @@ async function loadBrief() {
   const watchEl = document.getElementById("watch");
   const passesEl = document.getElementById("passes");
 
-  statusEl.innerHTML = `<div class="loading">Loading member brief...</div>`;
-  kpisEl.innerHTML = ""; summaryEl.innerHTML = ""; officialEl.innerHTML = ""; watchEl.innerHTML = ""; passesEl.innerHTML = "";
+  // Server-baked data for today renders immediately — no loading flash, and
+  // the page still has real content if the background refresh below fails.
+  const inline = inlineBriefFor(date);
+  if (inline && !background) {
+    renderBrief(inline);
+    // Still refresh in the background in case something changed since this
+    // page was generated (pitcher scratch, market move, later publish run).
+    loadBrief({ background: true });
+    return;
+  }
+
+  if (!background) {
+    statusEl.innerHTML = `<div class="loading">Loading member brief...</div>`;
+    kpisEl.innerHTML = ""; summaryEl.innerHTML = ""; officialEl.innerHTML = ""; watchEl.innerHTML = ""; passesEl.innerHTML = "";
+  }
 
   let data = null;
   const urls = date === localISODate(new Date())
@@ -141,11 +164,24 @@ async function loadBrief() {
   }
 
   if (!data || !Array.isArray(data.games) || data.games.length === 0) {
+    if (background) return; // keep showing the inline-rendered brief if the background refresh comes back empty
     statusEl.innerHTML = `<div class="notice warn">
       <strong>No member brief is available for ${escapeHtml(date)}.</strong><br>
           </div>`;
     return;
   }
+
+  renderBrief(data);
+}
+
+function renderBrief(data) {
+  const date = datePick.value;
+  const statusEl = document.getElementById("status");
+  const kpisEl = document.getElementById("kpis");
+  const summaryEl = document.getElementById("summary");
+  const officialEl = document.getElementById("official");
+  const watchEl = document.getElementById("watch");
+  const passesEl = document.getElementById("passes");
 
   const games = data.games || [];
   const official = games.filter(g => g.status === "official_pick");
