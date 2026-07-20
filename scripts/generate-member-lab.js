@@ -474,8 +474,7 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
     && edge >= VALUE_EDGE
     && modelProb >= OFFICIAL_MODEL_PROB
     && lab.score >= OFFICIAL_LAB_SCORE
-    && !pitcherConflict
-    && !majorBullpenCaution;
+    && !pitcherConflict;
 
   let status = "pass";
   if (officialEligible) status = "official_pick";
@@ -619,7 +618,6 @@ function passReasonFor({ edge, modelProb, pitchEdgeTeam, pickTeam, pitcherConfli
   if (edge !== null && edge < VALUE_EDGE) return "Model and market are too close for a clear official pick.";
   if (modelProb < OFFICIAL_MODEL_PROB && labScore >= VALUE_WATCH_LAB_SCORE) return `Setup quality is strong, but LyDia's win probability is only ${fmtPct(modelProb)}. That is not high enough for an official pick.`;
   if (pitcherConflict) return "Starting pitcher edge conflicts with the model side.";
-  if (majorBullpenCaution) return "Bullpen fatigue adds too much late-game caution.";
   if (labScore < OFFICIAL_LAB_SCORE) return "The combined Lab Rating did not clear the official threshold.";
   if (pitchEdgeTeam !== "No clear SP edge" && pitchEdgeTeam !== pickTeam) return "Starting pitcher edge does not support the model side.";
   return "No clear setup.";
@@ -667,7 +665,6 @@ function buildRead(ctx) {
     if (ctx.modelProb < OFFICIAL_MODEL_PROB) failedGates.push(`model win probability is ${fmtPct(ctx.modelProb)}, below the ${fmtPct(OFFICIAL_MODEL_PROB)} official-pick gate`);
     if (ctx.lab.score < OFFICIAL_LAB_SCORE) failedGates.push(`Lab Rating is ${(ctx.lab.score/10).toFixed(1)}/10, below the ${(OFFICIAL_LAB_SCORE/10).toFixed(1)}/10 official-pick gate`);
     if (ctx.pitcherConflict) failedGates.push("the starting pitcher edge conflicts with the model side");
-    if (ctx.majorBullpenCaution) failedGates.push("bullpen fatigue adds too much late-game caution");
     const gateLine = failedGates.length
       ? `It stayed a value watch because ${failedGates.join("; and ")}.`
       : "It stayed a value watch under the stricter official-pick review.";

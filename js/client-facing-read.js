@@ -114,7 +114,6 @@
       if (gate.model_probability_passed === false) failedGates.push(`model win probability is ${modelProb}, below the ${pct(gate.minimum_model_probability)} official-pick gate`);
       if (gate.lab_score_passed === false) failedGates.push(`Lab Rating is ${rating}, below the ${labRating(gate.minimum_lab_score)} official-pick gate`);
       if (g.pitcher_edge && g.pitcher_edge.conflict) failedGates.push("the starting pitcher edge conflicts with the model side");
-      if (g.bullpen && g.bullpen.major_caution) failedGates.push("bullpen fatigue adds too much late-game caution");
       const gateLine = failedGates.length
         ? `It stayed a value watch because ${failedGates.join("; and ")}.`
         : "It stayed a value watch under the stricter official-pick review.";
