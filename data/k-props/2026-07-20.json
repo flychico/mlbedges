@@ -1,6 +1,6 @@
 {
  "date": "2026-07-20",
- "generated_at": "2026-07-20T14:37:43.169Z",
+ "generated_at": "2026-07-20T14:51:45.836Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
  "events_fetched": 15,
  "probables": {
@@ -135,7 +135,7 @@
   "payton tolle": {
    "name": "Payton Tolle",
    "line": 6.5,
-   "over": 121,
+   "over": 125,
    "under": -150,
    "books": 5,
    "game": "Baltimore Orioles @ Boston Red Sox",
@@ -147,7 +147,7 @@
    "name": "Shane Baz",
    "line": 5.5,
    "over": 120,
-   "under": -138,
+   "under": -136,
    "books": 5,
    "game": "Baltimore Orioles @ Boston Red Sox",
    "projection": 5.27,
@@ -199,7 +199,7 @@
    "name": "Michael Wacha",
    "line": 4.5,
    "over": 105,
-   "under": -130,
+   "under": -116,
    "books": 6,
    "game": "San Francisco Giants @ Kansas City Royals",
    "projection": 4.91,
@@ -220,7 +220,7 @@
   "jacob misiorowski": {
    "name": "Jacob Misiorowski",
    "line": 8.5,
-   "over": -132,
+   "over": -130,
    "under": 110,
    "books": 6,
    "game": "New York Mets @ Milwaukee Brewers",
@@ -231,7 +231,7 @@
   "freddy peralta": {
    "name": "Freddy Peralta",
    "line": 5.5,
-   "over": 113,
+   "over": 117,
    "under": -130,
    "books": 6,
    "game": "New York Mets @ Milwaukee Brewers",
@@ -283,6 +283,14 @@
    "projection_raw": 4.34,
    "game_pk": 822874
   },
+  "ronel blanco": {
+   "name": "Ronel Blanco",
+   "line": 3.5,
+   "over": -126,
+   "under": 116,
+   "books": 6,
+   "game": "Miami Marlins @ Houston Astros"
+  },
   "janson junk": {
    "name": "Janson Junk",
    "line": 3.5,
@@ -294,19 +302,11 @@
    "projection_raw": 4.02,
    "game_pk": 824167
   },
-  "ronel blanco": {
-   "name": "Ronel Blanco",
-   "line": 3.5,
-   "over": -126,
-   "under": 116,
-   "books": 6,
-   "game": "Miami Marlins @ Houston Astros"
-  },
   "andrew alvarez": {
    "name": "Andrew Alvarez",
    "line": 4.5,
    "over": 112,
-   "under": -137,
+   "under": -138,
    "books": 5,
    "game": "Washington Nationals @ Colorado Rockies",
    "projection": 8.22,
@@ -324,14 +324,6 @@
    "projection_raw": 4.78,
    "game_pk": 824328
   },
-  "mitch bratt": {
-   "name": "Mitch Bratt",
-   "line": 3.5,
-   "over": 118,
-   "under": -120,
-   "books": 6,
-   "game": "Athletics @ Arizona Diamondbacks"
-  },
   "jeffrey springs": {
    "name": "Jeffrey Springs",
    "line": 3.5,
@@ -342,6 +334,14 @@
    "projection": 3.74,
    "projection_raw": 3.74,
    "game_pk": 825058
+  },
+  "mitch bratt": {
+   "name": "Mitch Bratt",
+   "line": 3.5,
+   "over": 118,
+   "under": -135,
+   "books": 6,
+   "game": "Athletics @ Arizona Diamondbacks"
   },
   "george kirby": {
    "name": "George Kirby",
@@ -368,8 +368,8 @@
   "jose soriano": {
    "name": "Jose Soriano",
    "line": 5.5,
-   "over": 115,
-   "under": -146,
+   "over": 124,
+   "under": -148,
    "books": 6,
    "game": "St. Louis Cardinals @ Los Angeles Angels"
   },

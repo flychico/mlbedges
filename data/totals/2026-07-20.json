@@ -1,6 +1,6 @@
 {
  "date": "2026-07-20",
- "generated_at": "2026-07-20T14:37:43.678Z",
+ "generated_at": "2026-07-20T14:51:46.372Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.52,
  "probables": {
@@ -211,7 +211,7 @@
    "away_sp": "Andrew Abbott",
    "home_sp": "George Kirby",
    "line": 7.5,
-   "over": -112,
+   "over": -113,
    "under": -102,
    "books": 9,
    "lab": 40
@@ -412,7 +412,7 @@
    "home_sp": "José Soriano",
    "line": 9,
    "over": 102,
-   "under": -109,
+   "under": -110,
    "books": 9,
    "lab": 66
   },
@@ -511,8 +511,8 @@
    "away_sp": "Janson Junk",
    "home_sp": "Ronel Blanco",
    "line": 9,
-   "over": 107,
-   "under": -117,
+   "over": 105,
+   "under": -116,
    "books": 9,
    "lab": 37
   },
@@ -711,7 +711,7 @@
    "away_sp": "Shane Baz",
    "home_sp": "Payton Tolle",
    "line": 8.5,
-   "over": -120,
+   "over": -121,
    "under": 109,
    "books": 9,
    "lab": 63
@@ -761,7 +761,7 @@
    "away_sp": "JP Sears",
    "home_sp": "Bryce Elder",
    "line": 9,
-   "over": -109,
+   "over": -113,
    "under": 103,
    "books": 9,
    "lab": 94

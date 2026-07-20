@@ -1,52 +1,6 @@
 {
-  "date": "2026-07-19",
-  "generated_at": "2026-07-20T03:23:37.726Z",
-  "snapshot_type": "auto",
-  "note": "Automated market snapshots update current_price before close and closing_price near game time. Official picks remain locked separately.",
-  "items": [
-    {
-      "pick_id": "washington-nationals-athletics-2026-07-19-ml",
-      "date": "2026-07-19",
-      "game": "Washington Nationals @ Athletics",
-      "game_time_iso": "2026-07-19T20:05:00Z",
-      "market": "Moneyline",
-      "pick": "Washington Nationals ML",
-      "pick_team": "Washington Nationals",
-      "lab_score": 90,
-      "model_probability": 0.741,
-      "market_probability": 0.5683,
-      "raw_edge": 0.1728,
-      "posted_price": -138,
-      "current_price": -145,
-      "closing_price": -146,
-      "posted_at": "2026-07-19T16:00:46.177Z",
-      "last_checked_at": "2026-07-19T20:05:53.440Z",
-      "movement": "toward_lydia",
-      "read": "Market tracking compares LyDia's posted number against later current and closing snapshots.",
-      "books": 9,
-      "market_probability_latest": 0.5784
-    },
-    {
-      "pick_id": "detroit-tigers-los-angeles-angels-2026-07-19-ml",
-      "date": "2026-07-19",
-      "game": "Detroit Tigers @ Los Angeles Angels",
-      "game_time_iso": "2026-07-19T20:07:00Z",
-      "market": "Moneyline",
-      "pick": "Detroit Tigers ML",
-      "pick_team": "Detroit Tigers",
-      "lab_score": 92,
-      "model_probability": 0.8011,
-      "market_probability": 0.5846,
-      "raw_edge": 0.2165,
-      "posted_price": -149,
-      "current_price": -138,
-      "closing_price": 250,
-      "posted_at": "2026-07-19T16:00:46.177Z",
-      "last_checked_at": "2026-07-19T21:44:16.559Z",
-      "movement": "away_from_lydia",
-      "read": "Market tracking compares LyDia's posted number against later current and closing snapshots.",
-      "books": 6,
-      "market_probability_latest": 0.2842
-    }
-  ]
+  "date": "2026-07-20",
+  "generated_at": "2026-07-20T14:51:39.873Z",
+  "items": [],
+  "snapshot_type": "posted"
 }
