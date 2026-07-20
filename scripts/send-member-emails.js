@@ -179,6 +179,7 @@ function buildFromBrief(dateStr, brief, isPreview) {
       Public preview: <a href="https://lydiaslab.com/previews/${dateStr}.html" style="color:#4d9fdc">lydiaslab.com/previews/${dateStr}.html</a><br>
       Results history: <a href="https://lydiaslab.com/results/" style="color:#4d9fdc">lydiaslab.com/results/</a>
     </p>
+    <p style="font-size:12px;color:#888;margin-top:14px">Your Lab: <a href="https://lydiaslab.com/member-brief/" style="color:#4d9fdc">Member Brief</a> · <a href="https://lydiaslab.com/tools/pitcher-matchups/" style="color:#4d9fdc">Pitchers</a> · <a href="https://lydiaslab.com/tools/offense-matchups/" style="color:#4d9fdc">Offense</a> · <a href="https://lydiaslab.com/tools/bullpen-fatigue/" style="color:#4d9fdc">Bullpens</a> · <a href="https://lydiaslab.com/tools/strikeout-projections/" style="color:#4d9fdc">Strikeouts</a> · <a href="https://lydiaslab.com/tools/totals-projections/" style="color:#4d9fdc">Totals</a></p>
     <p style="font-size:12px;color:#aaa;margin-top:24px;border-top:1px solid #eee;padding-top:10px">
       LyDia — analysis and education only, not betting advice. No win rate is guaranteed. Please bet responsibly;
       if gambling stops being fun, call 1-800-GAMBLER. Manage your subscription from your PayPal account.
@@ -249,6 +250,7 @@ function buildFromLegacyPicks(dateStr, picksFile, isPreview) {
       Full reasoning: <a href="https://lydiaslab.com/previews/${dateStr}.html" style="color:#4d9fdc">lydiaslab.com/previews/${dateStr}.html</a><br>
       Results history: <a href="https://lydiaslab.com/results/" style="color:#4d9fdc">lydiaslab.com/results/</a>
     </p>
+    <p style="font-size:12px;color:#888;margin-top:14px">Your Lab: <a href="https://lydiaslab.com/member-brief/" style="color:#4d9fdc">Member Brief</a> · <a href="https://lydiaslab.com/tools/pitcher-matchups/" style="color:#4d9fdc">Pitchers</a> · <a href="https://lydiaslab.com/tools/offense-matchups/" style="color:#4d9fdc">Offense</a> · <a href="https://lydiaslab.com/tools/bullpen-fatigue/" style="color:#4d9fdc">Bullpens</a> · <a href="https://lydiaslab.com/tools/strikeout-projections/" style="color:#4d9fdc">Strikeouts</a> · <a href="https://lydiaslab.com/tools/totals-projections/" style="color:#4d9fdc">Totals</a></p>
     <p style="font-size:12px;color:#aaa;margin-top:24px;border-top:1px solid #eee;padding-top:10px">
       LyDia — analysis and education only, not betting advice. 1-800-GAMBLER.
     </p>
