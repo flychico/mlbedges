@@ -1,6 +1,6 @@
 {
   "date": "2026-07-20",
-  "generated_at": "2026-07-20T22:05:57.891Z",
+  "generated_at": "2026-07-20T22:38:43.288Z",
   "source_of_truth": "scripts/lib/bullpen-fatigue-core.js",
   "version": "bullpen-fatigue-v3-runs-aware",
   "method": "Generated single source of truth. Website pages display this JSON and do not calculate separate bullpen scores in the browser.",
@@ -8,11 +8,11 @@
   "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
   "lookback_days": 3,
   "summary": {
-    "teams_tracked": 30,
-    "high_risk": 8,
+    "teams_tracked": 26,
+    "high_risk": 5,
     "tired": 10,
     "fresh": 1,
-    "normal": 11
+    "normal": 10
   },
   "warnings": [],
   "teams": [
@@ -51,117 +51,6 @@
         "reliever_counts_context_only": 0,
         "no_recent_games_credit": 0,
         "raw_score": 108.8
-      }
-    },
-    {
-      "team_id": 114,
-      "team": "Cleveland Guardians",
-      "side": "home",
-      "opponent": "Minnesota Twins",
-      "game": "Minnesota Twins @ Cleveland Guardians",
-      "game_pk": 824410,
-      "game_time_iso": "2026-07-20T22:40:00Z",
-      "score": 100,
-      "label": "High risk",
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (10.0/10): 15.7 relief innings over the last three days — 4 of them in the last game, 4 arms pitched back-to-back days, and the pen was hit hard for 7 runs in that stretch. 13 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "last_game_date": "2026-07-19",
-      "last_game_bp_ip": 4,
-      "last3_bp_ip": 15.7,
-      "last3_bp_runs": 7,
-      "last_game_relievers": 3,
-      "last3_relievers": 13,
-      "back_to_back_arms": 4,
-      "recent_games_tracked": 4,
-      "context_only": {
-        "last_game_relievers": 3,
-        "last3_relievers": 13,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 23.3,
-        "last_game_bp_ip": 4,
-        "back_to_back_arms": 24,
-        "bp_runs_allowed_3d": 4.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 100.8
-      }
-    },
-    {
-      "team_id": 147,
-      "team": "New York Yankees",
-      "side": "home",
-      "opponent": "Pittsburgh Pirates",
-      "game": "Pittsburgh Pirates @ New York Yankees",
-      "game_pk": 823522,
-      "game_time_iso": "2026-07-20T23:05:00Z",
-      "score": 100,
-      "label": "High risk",
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (10.0/10): 18.7 relief innings over the last three days — 4.7 of them in the last game, 4 arms pitched back-to-back days, and the pen was hit hard for 11 runs in that stretch. 15 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "last_game_date": "2026-07-19",
-      "last_game_bp_ip": 4.7,
-      "last3_bp_ip": 18.7,
-      "last3_bp_runs": 11,
-      "last_game_relievers": 4,
-      "last3_relievers": 15,
-      "back_to_back_arms": 4,
-      "recent_games_tracked": 4,
-      "context_only": {
-        "last_game_relievers": 4,
-        "last3_relievers": 15,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 33.8,
-        "last_game_bp_ip": 6.7,
-        "back_to_back_arms": 24,
-        "bp_runs_allowed_3d": 10.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 120
-      }
-    },
-    {
-      "team_id": 134,
-      "team": "Pittsburgh Pirates",
-      "side": "away",
-      "opponent": "New York Yankees",
-      "game": "Pittsburgh Pirates @ New York Yankees",
-      "game_pk": 823522,
-      "game_time_iso": "2026-07-20T23:05:00Z",
-      "score": 93,
-      "label": "High risk",
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (9.3/10): 18.3 relief innings over the last three days, 3 arms pitched back-to-back days, allowing 5 runs. 12 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "last_game_date": "2026-07-19",
-      "last_game_bp_ip": 2,
-      "last3_bp_ip": 18.3,
-      "last3_bp_runs": 5,
-      "last_game_relievers": 2,
-      "last3_relievers": 12,
-      "back_to_back_arms": 3,
-      "recent_games_tracked": 4,
-      "context_only": {
-        "last_game_relievers": 2,
-        "last3_relievers": 12,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 32.7,
-        "last_game_bp_ip": -4,
-        "back_to_back_arms": 18,
-        "bp_runs_allowed_3d": 1.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 93.2
       }
     },
     {
@@ -794,43 +683,6 @@
       }
     },
     {
-      "team_id": 142,
-      "team": "Minnesota Twins",
-      "side": "away",
-      "opponent": "Cleveland Guardians",
-      "game": "Minnesota Twins @ Cleveland Guardians",
-      "game_pk": 824410,
-      "game_time_iso": "2026-07-20T22:40:00Z",
-      "score": 58,
-      "label": "Normal",
-      "workload_read": "Manageable recent workload. Bullpen should still be part of the full-game read.",
-      "score_reason": "Normal (5.8/10): 11.7 relief innings over the last three days — 5 of them in the last game, allowing 1 run. 9 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "last_game_date": "2026-07-19",
-      "last_game_bp_ip": 5,
-      "last3_bp_ip": 11.7,
-      "last3_bp_runs": 1,
-      "last_game_relievers": 3,
-      "last3_relievers": 9,
-      "back_to_back_arms": 0,
-      "recent_games_tracked": 3,
-      "context_only": {
-        "last_game_relievers": 3,
-        "last3_relievers": 9,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 9.3,
-        "last_game_bp_ip": 8,
-        "back_to_back_arms": 0,
-        "bp_runs_allowed_3d": -4.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 57.8
-      }
-    },
-    {
       "team_id": 137,
       "team": "San Francisco Giants",
       "side": "away",
@@ -1154,93 +1006,6 @@
         "reliever_counts_context_only": 0,
         "no_recent_games_credit": 0,
         "raw_score": 108.8
-      },
-      "source_version": "bullpen-fatigue-v3-runs-aware"
-    },
-    "Cleveland Guardians": {
-      "score": 100,
-      "label": "High risk",
-      "last_game_bp_ip": 4,
-      "last3_bp_ip": 15.7,
-      "last3_bp_runs": 7,
-      "last_game_relievers": 3,
-      "last3_relievers": 13,
-      "back_to_back_arms": 4,
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (10.0/10): 15.7 relief innings over the last three days — 4 of them in the last game, 4 arms pitched back-to-back days, and the pen was hit hard for 7 runs in that stretch. 13 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "context_only": {
-        "last_game_relievers": 3,
-        "last3_relievers": 13,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 23.3,
-        "last_game_bp_ip": 4,
-        "back_to_back_arms": 24,
-        "bp_runs_allowed_3d": 4.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 100.8
-      },
-      "source_version": "bullpen-fatigue-v3-runs-aware"
-    },
-    "New York Yankees": {
-      "score": 100,
-      "label": "High risk",
-      "last_game_bp_ip": 4.7,
-      "last3_bp_ip": 18.7,
-      "last3_bp_runs": 11,
-      "last_game_relievers": 4,
-      "last3_relievers": 15,
-      "back_to_back_arms": 4,
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (10.0/10): 18.7 relief innings over the last three days — 4.7 of them in the last game, 4 arms pitched back-to-back days, and the pen was hit hard for 11 runs in that stretch. 15 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "context_only": {
-        "last_game_relievers": 4,
-        "last3_relievers": 15,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 33.8,
-        "last_game_bp_ip": 6.7,
-        "back_to_back_arms": 24,
-        "bp_runs_allowed_3d": 10.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 120
-      },
-      "source_version": "bullpen-fatigue-v3-runs-aware"
-    },
-    "Pittsburgh Pirates": {
-      "score": 93,
-      "label": "High risk",
-      "last_game_bp_ip": 2,
-      "last3_bp_ip": 18.3,
-      "last3_bp_runs": 5,
-      "last_game_relievers": 2,
-      "last3_relievers": 12,
-      "back_to_back_arms": 3,
-      "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-      "score_reason": "High risk (9.3/10): 18.3 relief innings over the last three days, 3 arms pitched back-to-back days, allowing 5 runs. 12 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "context_only": {
-        "last_game_relievers": 2,
-        "last3_relievers": 12,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 32.7,
-        "last_game_bp_ip": -4,
-        "back_to_back_arms": 18,
-        "bp_runs_allowed_3d": 1.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 93.2
       },
       "source_version": "bullpen-fatigue-v3-runs-aware"
     },
@@ -1734,35 +1499,6 @@
         "reliever_counts_context_only": 0,
         "no_recent_games_credit": 0,
         "raw_score": 58.2
-      },
-      "source_version": "bullpen-fatigue-v3-runs-aware"
-    },
-    "Minnesota Twins": {
-      "score": 58,
-      "label": "Normal",
-      "last_game_bp_ip": 5,
-      "last3_bp_ip": 11.7,
-      "last3_bp_runs": 1,
-      "last_game_relievers": 3,
-      "last3_relievers": 9,
-      "back_to_back_arms": 0,
-      "workload_read": "Manageable recent workload. Bullpen should still be part of the full-game read.",
-      "score_reason": "Normal (5.8/10): 11.7 relief innings over the last three days — 5 of them in the last game, allowing 1 run. 9 reliever appearances in the window.",
-      "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
-      "context_only": {
-        "last_game_relievers": 3,
-        "last3_relievers": 9,
-        "note": "Reliever counts are displayed for context only and do not add score points."
-      },
-      "component_scores": {
-        "baseline": 45,
-        "last3_bp_ip": 9.3,
-        "last_game_bp_ip": 8,
-        "back_to_back_arms": 0,
-        "bp_runs_allowed_3d": -4.5,
-        "reliever_counts_context_only": 0,
-        "no_recent_games_credit": 0,
-        "raw_score": 57.8
       },
       "source_version": "bullpen-fatigue-v3-runs-aware"
     },

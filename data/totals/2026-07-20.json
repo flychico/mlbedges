@@ -1,6 +1,6 @@
 {
  "date": "2026-07-20",
- "generated_at": "2026-07-20T22:06:49.914Z",
+ "generated_at": "2026-07-20T22:38:51.465Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.52,
  "probables": {
@@ -19,10 +19,6 @@
   "823436": {
    "away": "Emmet Sheehan",
    "home": "Cristopher Sánchez"
-  },
-  "823522": {
-   "away": "Braxton Ashcraft",
-   "home": "Ryan Weathers"
   },
   "823762": {
    "away": "Freddy Peralta",
@@ -43,10 +39,6 @@
   "824328": {
    "away": "Andrew Alvarez",
    "home": "Kyle Freeland"
-  },
-  "824410": {
-   "away": "Joe Ryan",
-   "home": "Tanner Bibee"
   },
   "824654": {
    "away": "Jack Flaherty",
@@ -269,10 +261,10 @@
   "823522": {
    "game": "Pittsburgh Pirates @ New York Yankees",
    "game_time_iso": "2026-07-20T23:05:00Z",
-   "projection": 10,
-   "projection_raw": 10,
-   "proj_away": 6,
-   "proj_home": 4,
+   "projection": 9.4,
+   "projection_raw": 9.4,
+   "proj_away": 5.7,
+   "proj_home": 3.8,
    "away": {
     "team": "Pittsburgh Pirates",
     "rpg": 5.68,
@@ -286,8 +278,8 @@
     "opp_sp_fip": 3.86,
     "opp_sp_ip": 5.4,
     "pitch_factor": 0.951,
-    "opp_pen_score": 100,
-    "pen_factor": 1.06,
+    "opp_pen_score": null,
+    "pen_factor": 1,
     "sp_sample_ok": true
    },
    "home": {
@@ -303,8 +295,8 @@
     "opp_sp_fip": 3.21,
     "opp_sp_ip": 6,
     "pitch_factor": 0.844,
-    "opp_pen_score": 93,
-    "pen_factor": 1.06,
+    "opp_pen_score": null,
+    "pen_factor": 1,
     "sp_sample_ok": true
    },
    "park_factor": 1.05,
@@ -314,7 +306,7 @@
    "over": -105,
    "under": -102,
    "books": 6,
-   "lab": 70
+   "lab": 46
   },
   "823762": {
    "game": "New York Mets @ Milwaukee Brewers",
@@ -361,7 +353,7 @@
    "away_sp": "Freddy Peralta",
    "home_sp": "Jacob Misiorowski",
    "line": 8.5,
-   "over": -112,
+   "over": -118,
    "under": 103,
    "books": 6,
    "lab": 42
@@ -410,11 +402,11 @@
    "park_factor": 1,
    "away_sp": "Kyle Leahy",
    "home_sp": "José Soriano",
-   "line": 8.5,
-   "over": -118,
-   "under": 103,
+   "line": 9,
+   "over": 100,
+   "under": -110,
    "books": 6,
-   "lab": 45
+   "lab": 66
   },
   "824087": {
    "game": "San Francisco Giants @ Kansas City Royals",
@@ -461,7 +453,7 @@
    "away_sp": "Trevor McDonald",
    "home_sp": "Michael Wacha",
    "line": 9.5,
-   "over": 100,
+   "over": -102,
    "under": -105,
    "books": 6,
    "lab": 73
@@ -561,7 +553,7 @@
    "away_sp": "Andrew Alvarez",
    "home_sp": "Kyle Freeland",
    "line": 12.5,
-   "over": -111,
+   "over": -115,
    "under": 112,
    "books": 6,
    "lab": 42
@@ -569,9 +561,9 @@
   "824410": {
    "game": "Minnesota Twins @ Cleveland Guardians",
    "game_time_iso": "2026-07-20T22:40:00Z",
-   "projection": 8,
-   "projection_raw": 8,
-   "proj_away": 5,
+   "projection": 7.7,
+   "projection_raw": 7.7,
+   "proj_away": 4.8,
    "proj_home": 2.9,
    "away": {
     "team": "Minnesota Twins",
@@ -586,8 +578,8 @@
     "opp_sp_fip": 4.81,
     "opp_sp_ip": 5.7,
     "pitch_factor": 1.092,
-    "opp_pen_score": 100,
-    "pen_factor": 1.06,
+    "opp_pen_score": null,
+    "pen_factor": 1,
     "sp_sample_ok": true
    },
    "home": {
@@ -603,8 +595,8 @@
     "opp_sp_fip": 2.75,
     "opp_sp_ip": 5.5,
     "pitch_factor": 0.788,
-    "opp_pen_score": 58,
-    "pen_factor": 1.006,
+    "opp_pen_score": null,
+    "pen_factor": 1,
     "sp_sample_ok": true
    },
    "park_factor": 0.99,
@@ -614,7 +606,7 @@
    "over": 100,
    "under": -120,
    "books": 3,
-   "lab": 55
+   "lab": 59
   },
   "824654": {
    "game": "Detroit Tigers @ Chicago Cubs",
@@ -712,7 +704,7 @@
    "home_sp": "Payton Tolle",
    "line": 8.5,
    "over": -120,
-   "under": 107,
+   "under": 110,
    "books": 9,
    "lab": 63
   },
@@ -811,7 +803,7 @@
    "away_sp": "Jeffrey Springs",
    "home_sp": "Mitch Bratt",
    "line": 9,
-   "over": -120,
+   "over": -114,
    "under": 105,
    "books": 9,
    "lab": 79
