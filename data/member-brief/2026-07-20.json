@@ -1050,8 +1050,8 @@
         "lab_score_passed": false,
         "edge_passed": true
       },
-      "pass_reason": "The combined Lab Score did not clear the official threshold.",
-      "read": "The combined Lab Score did not clear the official threshold.",
+      "pass_reason": "The combined Lab Rating did not clear the official threshold.",
+      "read": "The combined Lab Rating did not clear the official threshold.",
       "pitcher_edge": {
         "team": "Miami Marlins",
         "gap": 8,
@@ -1551,8 +1551,8 @@
         "lab_score_passed": false,
         "edge_passed": true
       },
-      "pass_reason": "The combined Lab Score did not clear the official threshold.",
-      "read": "The combined Lab Score did not clear the official threshold.",
+      "pass_reason": "The combined Lab Rating did not clear the official threshold.",
+      "read": "The combined Lab Rating did not clear the official threshold.",
       "pitcher_edge": {
         "team": "Los Angeles Angels",
         "gap": 5,

@@ -24,7 +24,7 @@
     "official_model_probability": 0.72,
     "official_lab_score": 80,
     "official_market_edge": 0.03,
-    "note": "Official picks require high model probability and strong setup quality. A high Lab Score alone is not enough."
+    "note": "Official picks require high model probability and strong setup quality. A high Lab Rating alone is not enough."
   },
   "process_metrics": {
     "average_model_probability": 0.7642,

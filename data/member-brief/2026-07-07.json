@@ -25,7 +25,7 @@
       "value_tag": "STRONG SETUP",
       "lab_score": 88,
       "pass_reason": null,
-      "read": "Miami Marlins cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+      "read": "Miami Marlins cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 8.8/10.",
       "pitcher_edge": {
         "team": "Miami Marlins",
         "gap": 29,
@@ -85,7 +85,7 @@
       "value_tag": "STRONG SETUP",
       "lab_score": 88,
       "pass_reason": null,
-      "read": "Washington Nationals cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+      "read": "Washington Nationals cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 8.8/10.",
       "pitcher_edge": {
         "team": "Washington Nationals",
         "gap": 23,
@@ -145,7 +145,7 @@
       "value_tag": "STRONG SETUP",
       "lab_score": 88,
       "pass_reason": null,
-      "read": "Boston Red Sox cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+      "read": "Boston Red Sox cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 8.8/10.",
       "pitcher_edge": {
         "team": "Boston Red Sox",
         "gap": 26,
@@ -205,7 +205,7 @@
       "value_tag": "STRONG SETUP",
       "lab_score": 88,
       "pass_reason": null,
-      "read": "Los Angeles Dodgers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 88.",
+      "read": "Los Angeles Dodgers cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 8.8/10.",
       "pitcher_edge": {
         "team": "Los Angeles Dodgers",
         "gap": 46,
@@ -265,7 +265,7 @@
       "value_tag": "STRONG SETUP",
       "lab_score": 79,
       "pass_reason": null,
-      "read": "Detroit Tigers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 79.",
+      "read": "Detroit Tigers cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 7.9/10.",
       "pitcher_edge": {
         "team": "Detroit Tigers",
         "gap": 8,
@@ -325,7 +325,7 @@
       "value_tag": "STRONG SETUP",
       "lab_score": 76,
       "pass_reason": null,
-      "read": "Texas Rangers cleared the model, market, pitcher, and bullpen checks with a Lab Score of 76.",
+      "read": "Texas Rangers cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 7.6/10.",
       "pitcher_edge": {
         "team": "Texas Rangers",
         "gap": 10,
@@ -385,7 +385,7 @@
       "value_tag": "QUALIFIED SETUP",
       "lab_score": 70,
       "pass_reason": null,
-      "read": "Arizona Diamondbacks cleared the model, market, pitcher, and bullpen checks with a Lab Score of 70.",
+      "read": "Arizona Diamondbacks cleared the model, market, pitcher, and bullpen checks with a Lab Rating of 7.0/10.",
       "pitcher_edge": {
         "team": "No clear SP edge",
         "gap": 2,
@@ -445,7 +445,7 @@
       "value_tag": "WATCHLIST",
       "lab_score": 65,
       "pass_reason": null,
-      "read": "Tampa Bay Rays did not fully clear the official threshold, but the Lab Score keeps this game on the watchlist.",
+      "read": "Tampa Bay Rays did not fully clear the official threshold, but the Lab Rating keeps this game on the watchlist.",
       "pitcher_edge": {
         "team": "No clear SP edge",
         "gap": 2,

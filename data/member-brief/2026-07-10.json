@@ -8,9 +8,9 @@
     "minimum_model_probability": 0.72,
     "minimum_lab_score": 80,
     "minimum_market_edge": 0.03,
-    "note": "Lab Score is setup quality. It is not win probability. Official picks require both strong win probability and strong setup quality."
+    "note": "Lab Rating is setup quality. It is not win probability. Official picks require both strong win probability and strong setup quality."
   },
-  "summary": "2 official moneyline picks cleared the stricter model-probability and Lab Score gates. 6 value-watch setups had good price math but did not clear official-pick probability rules.",
+  "summary": "2 official moneyline picks cleared the stricter model-probability and Lab Rating gates. 6 value-watch setups had good price math but did not clear official-pick probability rules.",
   "games": [
     {
       "game_pk": 824575,
@@ -38,7 +38,7 @@
         "bullpen_points": 9.71,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -49,7 +49,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Chicago White Sox is an official moneyline pick because it clears both gates: 77.9% model win probability and 90/100 Lab Score. LyDia projects 77.9% against a 48.9% no-vig market number, a 29.0% model edge at -102. Chicago White Sox owns the starting pitcher edge by 43 points. Bullpen read: Elevated volatility.",
+      "read": "Chicago White Sox is an official moneyline pick because it clears both gates: 77.9% model win probability and 9.0/10 Lab Rating. LyDia projects 77.9% against a 48.9% no-vig market number, a 29.0% model edge at -102. Chicago White Sox owns the starting pitcher edge by 43 points. Bullpen read: Elevated volatility.",
       "pitcher_edge": {
         "team": "Chicago White Sox",
         "gap": 43,
@@ -205,7 +205,7 @@
         "bullpen_points": 7.69,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -216,7 +216,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Minnesota Twins is an official moneyline pick because it clears both gates: 74.9% model win probability and 88/100 Lab Score. LyDia projects 74.9% against a 57.3% no-vig market number, a 17.6% model edge at -141. Minnesota Twins owns the starting pitcher edge by 35 points. Bullpen read: Elevated volatility.",
+      "read": "Minnesota Twins is an official moneyline pick because it clears both gates: 74.9% model win probability and 8.8/10 Lab Rating. LyDia projects 74.9% against a 57.3% no-vig market number, a 17.6% model edge at -141. Minnesota Twins owns the starting pitcher edge by 35 points. Bullpen read: Elevated volatility.",
       "pitcher_edge": {
         "team": "Minnesota Twins",
         "gap": 35,
@@ -372,7 +372,7 @@
         "bullpen_points": 8.42,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -383,7 +383,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Atlanta Braves is a value watch, not an official pick. LyDia projects 61.6% against a 52.0% no-vig market number, a 9.6% model edge at -115. Lab Score 88/100: model edge 35, pitcher 25, bullpen 8.42, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 80/100 Lab Score.",
+      "read": "Atlanta Braves is a value watch, not an official pick. LyDia projects 61.6% against a 52.0% no-vig market number, a 9.6% model edge at -115. Lab Rating 8.8/10: model edge 35, pitcher 25, bullpen 8.42, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating.",
       "pitcher_edge": {
         "team": "Atlanta Braves",
         "gap": 20,
@@ -539,7 +539,7 @@
         "bullpen_points": 12.04,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -550,7 +550,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Baltimore Orioles is a value watch, not an official pick. LyDia projects 65.2% against a 58.2% no-vig market number, a 7.1% model edge at -145. Lab Score 87/100: model edge 30.9, pitcher 23.75, bullpen 12.04, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 80/100 Lab Score.",
+      "read": "Baltimore Orioles is a value watch, not an official pick. LyDia projects 65.2% against a 58.2% no-vig market number, a 7.1% model edge at -145. Lab Rating 8.7/10: model edge 30.9, pitcher 23.75, bullpen 12.04, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating.",
       "pitcher_edge": {
         "team": "Baltimore Orioles",
         "gap": 19,
@@ -706,7 +706,7 @@
         "bullpen_points": 3.64,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -717,7 +717,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Chicago Cubs is a value watch, not an official pick. LyDia projects 64.1% against a 51.7% no-vig market number, a 12.3% model edge at -112. Lab Score 84/100: model edge 35, pitcher 25, bullpen 3.64, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 80/100 Lab Score.",
+      "read": "Chicago Cubs is a value watch, not an official pick. LyDia projects 64.1% against a 51.7% no-vig market number, a 12.3% model edge at -112. Lab Rating 8.4/10: model edge 35, pitcher 25, bullpen 3.64, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating.",
       "pitcher_edge": {
         "team": "Chicago Cubs",
         "gap": 40,
@@ -873,7 +873,7 @@
         "bullpen_points": 0.09,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -884,7 +884,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Tampa Bay Rays is a value watch, not an official pick. LyDia projects 66.6% against a 50.8% no-vig market number, a 15.9% model edge at -105. Lab Score 79/100: model edge 35, pitcher 23.75, bullpen 0.09, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 80/100 Lab Score.",
+      "read": "Tampa Bay Rays is a value watch, not an official pick. LyDia projects 66.6% against a 50.8% no-vig market number, a 15.9% model edge at -105. Lab Rating 7.9/10: model edge 35, pitcher 23.75, bullpen 0.09, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating.",
       "pitcher_edge": {
         "team": "Tampa Bay Rays",
         "gap": 19,
@@ -1040,7 +1040,7 @@
         "bullpen_points": 5.2,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -1051,7 +1051,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "San Francisco Giants is a value watch, not an official pick. LyDia projects 64.2% against a 57.7% no-vig market number, a 6.5% model edge at -145. Lab Score 79/100: model edge 28.41, pitcher 25, bullpen 5.2, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 80/100 Lab Score.",
+      "read": "San Francisco Giants is a value watch, not an official pick. LyDia projects 64.2% against a 57.7% no-vig market number, a 6.5% model edge at -145. Lab Rating 7.9/10: model edge 28.41, pitcher 25, bullpen 5.2, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating.",
       "pitcher_edge": {
         "team": "San Francisco Giants",
         "gap": 29,
@@ -1207,7 +1207,7 @@
         "bullpen_points": 11.27,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -1218,7 +1218,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Boston Red Sox is a value watch, not an official pick. LyDia projects 64.3% against a 42.6% no-vig market number, a 21.7% model edge at +135. Lab Score 75/100: model edge 35, pitcher 8.75, bullpen 11.27, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 80/100 Lab Score.",
+      "read": "Boston Red Sox is a value watch, not an official pick. LyDia projects 64.3% against a 42.6% no-vig market number, a 21.7% model edge at +135. Lab Rating 7.5/10: model edge 35, pitcher 8.75, bullpen 11.27, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating.",
       "pitcher_edge": {
         "team": "Boston Red Sox",
         "gap": 7,
@@ -1374,7 +1374,7 @@
         "bullpen_points": 9.09,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -1385,7 +1385,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Detroit Tigers remains on the watchlist. Lab Score 73/100: model edge 35, pitcher 8.75, bullpen 9.09, market 15, base 5. LyDia projects 69.7% against a 44.7% no-vig market number, a 24.9% model edge at +120. Detroit Tigers owns the starting pitcher edge by 7 points. Bullpen read: Neutral.",
+      "read": "Detroit Tigers remains on the watchlist. Lab Rating 7.3/10: model edge 35, pitcher 8.75, bullpen 9.09, market 15, base 5. LyDia projects 69.7% against a 44.7% no-vig market number, a 24.9% model edge at +120. Detroit Tigers owns the starting pitcher edge by 7 points. Bullpen read: Neutral.",
       "pitcher_edge": {
         "team": "Detroit Tigers",
         "gap": 7,
@@ -1541,7 +1541,7 @@
         "bullpen_points": 15,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -1552,7 +1552,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Washington Nationals remains on the watchlist. Lab Score 70/100: model edge 35, pitcher 0, bullpen 15, market 15, base 5. LyDia projects 55.7% against a 36.6% no-vig market number, a 19.1% model edge at +167. New York Yankees owns the starting pitcher edge by 30 points. Bullpen read: Supports LyDia side.",
+      "read": "Washington Nationals remains on the watchlist. Lab Rating 7.0/10: model edge 35, pitcher 0, bullpen 15, market 15, base 5. LyDia projects 55.7% against a 36.6% no-vig market number, a 19.1% model edge at +167. New York Yankees owns the starting pitcher edge by 30 points. Bullpen read: Supports LyDia side.",
       "pitcher_edge": {
         "team": "New York Yankees",
         "gap": 30,
@@ -1708,7 +1708,7 @@
         "bullpen_points": 6.76,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -1718,8 +1718,8 @@
         "lab_score_passed": false,
         "edge_passed": true
       },
-      "pass_reason": "The combined Lab Score did not clear the official threshold.",
-      "read": "The combined Lab Score did not clear the official threshold.",
+      "pass_reason": "The combined Lab Rating did not clear the official threshold.",
+      "read": "The combined Lab Rating did not clear the official threshold.",
       "pitcher_edge": {
         "team": "Texas Rangers",
         "gap": 4,
@@ -1875,7 +1875,7 @@
         "bullpen_points": 13.76,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -2042,7 +2042,7 @@
         "bullpen_points": 3.82,
         "market_points": 15,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -2209,7 +2209,7 @@
         "bullpen_points": 13.13,
         "market_points": 1,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
@@ -2376,7 +2376,7 @@
         "bullpen_points": 8.47,
         "market_points": 1,
         "base_points": 5,
-        "note": "Lab Score grades setup quality. It is not win probability."
+        "note": "Lab Rating grades setup quality. It is not win probability."
       },
       "official_pick_gate": {
         "minimum_model_probability": 0.72,
