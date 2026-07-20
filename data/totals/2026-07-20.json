@@ -1,6 +1,6 @@
 {
  "date": "2026-07-20",
- "generated_at": "2026-07-20T14:51:46.372Z",
+ "generated_at": "2026-07-20T16:27:13.635Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.52,
  "probables": {
@@ -262,7 +262,7 @@
    "home_sp": "Cristopher Sánchez",
    "line": 8.5,
    "over": -105,
-   "under": -108,
+   "under": -107,
    "books": 9,
    "lab": 56
   },
@@ -411,7 +411,7 @@
    "away_sp": "Kyle Leahy",
    "home_sp": "José Soriano",
    "line": 9,
-   "over": 102,
+   "over": 100,
    "under": -110,
    "books": 9,
    "lab": 66
@@ -461,8 +461,8 @@
    "away_sp": "Trevor McDonald",
    "home_sp": "Michael Wacha",
    "line": 10.5,
-   "over": -102,
-   "under": -110,
+   "over": 100,
+   "under": -114,
    "books": 9,
    "lab": 89
   },
@@ -511,8 +511,8 @@
    "away_sp": "Janson Junk",
    "home_sp": "Ronel Blanco",
    "line": 9,
-   "over": 105,
-   "under": -116,
+   "over": 100,
+   "under": -115,
    "books": 9,
    "lab": 37
   },
@@ -561,7 +561,7 @@
    "away_sp": "Andrew Alvarez",
    "home_sp": "Kyle Freeland",
    "line": 11.5,
-   "over": -118,
+   "over": -115,
    "under": 107,
    "books": 9,
    "lab": 78
@@ -611,8 +611,8 @@
    "away_sp": "Joe Ryan",
    "home_sp": "Tanner Bibee",
    "line": 7.5,
-   "over": -107,
-   "under": -105,
+   "over": -109,
+   "under": 100,
    "books": 9,
    "lab": 48
   },
@@ -711,7 +711,7 @@
    "away_sp": "Shane Baz",
    "home_sp": "Payton Tolle",
    "line": 8.5,
-   "over": -121,
+   "over": -120,
    "under": 109,
    "books": 9,
    "lab": 63
@@ -761,7 +761,7 @@
    "away_sp": "JP Sears",
    "home_sp": "Bryce Elder",
    "line": 9,
-   "over": -113,
+   "over": -114,
    "under": 103,
    "books": 9,
    "lab": 94
