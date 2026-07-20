@@ -1,13 +1,9 @@
 {
  "date": "2026-07-20",
- "generated_at": "2026-07-20T22:38:51.465Z",
+ "generated_at": "2026-07-20T22:46:56.539Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.52,
  "probables": {
-  "822788": {
-   "away": "Nick Martinez",
-   "home": "Dylan Cease"
-  },
   "822874": {
    "away": "Erick Fedde",
    "home": "Jacob deGrom"
@@ -15,10 +11,6 @@
   "823112": {
    "away": "Andrew Abbott",
    "home": "George Kirby"
-  },
-  "823436": {
-   "away": "Emmet Sheehan",
-   "home": "Cristopher Sánchez"
   },
   "823762": {
    "away": "Freddy Peralta",
@@ -61,10 +53,10 @@
   "822788": {
    "game": "Tampa Bay Rays @ Toronto Blue Jays",
    "game_time_iso": "2026-07-20T23:07:00Z",
-   "projection": 7.1,
-   "projection_raw": 7.1,
+   "projection": 6.9,
+   "projection_raw": 6.9,
    "proj_away": 3.2,
-   "proj_home": 3.9,
+   "proj_home": 3.8,
    "away": {
     "team": "Tampa Bay Rays",
     "rpg": 3.95,
@@ -78,7 +70,7 @@
     "opp_sp_fip": 2.75,
     "opp_sp_ip": 5.8,
     "pitch_factor": 0.778,
-    "opp_pen_score": 55,
+    "opp_pen_score": null,
     "pen_factor": 1,
     "sp_sample_ok": true
    },
@@ -95,8 +87,8 @@
     "opp_sp_fip": 3.87,
     "opp_sp_ip": 5.9,
     "pitch_factor": 0.949,
-    "opp_pen_score": 79,
-    "pen_factor": 1.048,
+    "opp_pen_score": null,
+    "pen_factor": 1,
     "sp_sample_ok": true
    },
    "park_factor": 1.03,
@@ -106,7 +98,7 @@
    "over": -107,
    "under": -105,
    "books": 6,
-   "lab": 46
+   "lab": 63
   },
   "822874": {
    "game": "Chicago White Sox @ Texas Rangers",
@@ -228,7 +220,7 @@
     "opp_sp_fip": 2.75,
     "opp_sp_ip": 6.4,
     "pitch_factor": 0.756,
-    "opp_pen_score": 49,
+    "opp_pen_score": null,
     "pen_factor": 1,
     "sp_sample_ok": true
    },
@@ -245,7 +237,7 @@
     "opp_sp_fip": 4.21,
     "opp_sp_ip": 4.8,
     "pitch_factor": 1.001,
-    "opp_pen_score": 38,
+    "opp_pen_score": null,
     "pen_factor": 1,
     "sp_sample_ok": true
    },
@@ -503,7 +495,7 @@
    "away_sp": "Janson Junk",
    "home_sp": "Ronel Blanco",
    "line": 9,
-   "over": 100,
+   "over": -101,
    "under": -115,
    "books": 6,
    "lab": 37
@@ -561,36 +553,36 @@
   "824410": {
    "game": "Minnesota Twins @ Cleveland Guardians",
    "game_time_iso": "2026-07-20T22:40:00Z",
-   "projection": 7.7,
-   "projection_raw": 7.7,
-   "proj_away": 4.8,
-   "proj_home": 2.9,
+   "projection": 7.3,
+   "projection_raw": 7.3,
+   "proj_away": 4.5,
+   "proj_home": 2.8,
    "away": {
     "team": "Minnesota Twins",
-    "rpg": 4.4,
+    "rpg": 4.18,
     "season_rpg": 4.79,
-    "form15_rpg": 3.7,
-    "form15_g": 10,
-    "form7_rpg": 2.67,
-    "form7_g": 3,
-    "off_factor": 0.975,
+    "form15_rpg": 3.36,
+    "form15_g": 11,
+    "form7_rpg": 2,
+    "form7_g": 4,
+    "off_factor": 0.926,
     "opp_sp": "Tanner Bibee",
-    "opp_sp_fip": 4.81,
-    "opp_sp_ip": 5.7,
-    "pitch_factor": 1.092,
+    "opp_sp_fip": 4.79,
+    "opp_sp_ip": 5.4,
+    "pitch_factor": 1.084,
     "opp_pen_score": null,
     "pen_factor": 1,
     "sp_sample_ok": true
    },
    "home": {
     "team": "Cleveland Guardians",
-    "rpg": 3.73,
+    "rpg": 3.55,
     "season_rpg": 3.92,
-    "form15_rpg": 3.6,
-    "form15_g": 10,
-    "form7_rpg": 2.33,
-    "form7_g": 3,
-    "off_factor": 0.826,
+    "form15_rpg": 3.27,
+    "form15_g": 11,
+    "form7_rpg": 1.75,
+    "form7_g": 4,
+    "off_factor": 0.787,
     "opp_sp": "Joe Ryan",
     "opp_sp_fip": 2.75,
     "opp_sp_ip": 5.5,
@@ -606,7 +598,7 @@
    "over": 100,
    "under": -120,
    "books": 3,
-   "lab": 59
+   "lab": 72
   },
   "824654": {
    "game": "Detroit Tigers @ Chicago Cubs",
@@ -653,8 +645,8 @@
    "away_sp": "Jack Flaherty",
    "home_sp": "Jameson Taillon",
    "line": 8.5,
-   "over": -112,
-   "under": -105,
+   "over": -104,
+   "under": -115,
    "books": 3,
    "lab": 82
   },
@@ -704,7 +696,7 @@
    "home_sp": "Payton Tolle",
    "line": 8.5,
    "over": -120,
-   "under": 110,
+   "under": 105,
    "books": 9,
    "lab": 63
   },
@@ -803,7 +795,7 @@
    "away_sp": "Jeffrey Springs",
    "home_sp": "Mitch Bratt",
    "line": 9,
-   "over": -114,
+   "over": -118,
    "under": 105,
    "books": 9,
    "lab": 79
