@@ -74,7 +74,13 @@ async function main() {
   writeJson(`data/bullpen/${DATE}.json`, bullpenSource);
   if (DATE === etToday()) {
     writeJson("data/bullpen/today.json", bullpenSource);
-    injectInlineData("tools/bullpen-fatigue/index.html", "bullpen-inline-data", bullpenSource);
+    // Public-safe subset only — the full object carries internal fields
+    // (source_of_truth, formula text, method notes) that don't belong in a
+    // public page even inside a script tag, and the client only reads
+    // date/teams anyway.
+    injectInlineData("tools/bullpen-fatigue/index.html", "bullpen-inline-data",
+      { date: bullpenSource.date, generated_at: bullpenSource.generated_at, teams: bullpenSource.teams },
+      '<div id="status" class="loading">Loading bullpen workload…</div>');
   }
 
   const rows = openGames.map(g => modelGame(g, strength, pitchers, oddsMap, bullpen, offense)).filter(Boolean)
@@ -106,8 +112,9 @@ async function main() {
     // content — a failed fetch, slow connection, or crawler no longer sees
     // an empty "Loading member brief..." placeholder. The page's own JS
     // renders this inline data immediately, then still fetches in the
-    // background to catch any later-in-the-day changes.
-    injectBriefInline(brief);
+    // background to catch any later-in-the-day changes. Public-safe subset
+    // only (renderBrief() only ever reads date/generated_at/summary/games).
+    injectBriefInline({ date: brief.date, generated_at: brief.generated_at, summary: brief.summary, games: brief.games });
   }
 
   const candidatePublished = buildPicksFile(rows, generatedAt);
@@ -710,14 +717,19 @@ function writeOrReusePublishedPicks(candidate, scheduledGameCount) {
     }
     if (DATE === etToday()) {
       writeJson("data/published-picks/today.json", existing);
-      injectInlineData("results/index.html", "results-inline-picks", existing, '<div class="loading">Loading live pick results...</div>');
+      // Public-safe subset only (live-results.js only ever reads date/picks).
+      injectInlineData("results/index.html", "results-inline-picks",
+        { date: existing.date, picks: existing.picks },
+        '<div class="loading">Loading live pick results...</div>');
     }
     return existing;
   }
   writeJson(file, candidate);
   if (DATE === etToday()) {
     writeJson("data/published-picks/today.json", candidate);
-    injectInlineData("results/index.html", "results-inline-picks", candidate, '<div class="loading">Loading live pick results...</div>');
+    injectInlineData("results/index.html", "results-inline-picks",
+      { date: candidate.date, picks: candidate.picks },
+      '<div class="loading">Loading live pick results...</div>');
   }
   return candidate;
 }
