@@ -1,6 +1,6 @@
 {
   "date": "2026-07-20",
-  "generated_at": "2026-07-20T21:49:56.062Z",
+  "generated_at": "2026-07-20T22:05:57.891Z",
   "snapshot_type": "posted",
   "source_of_truth": "LyDia Daily Engine",
   "current_official_model": "moneyline_only",
@@ -10,7 +10,7 @@
     "minimum_market_edge": 0.03,
     "note": "Lab Rating is setup quality. It is not win probability. Official picks require both strong win probability and strong setup quality."
   },
-  "summary": "No official picks cleared the stricter rules. 5 value-watch setups and 3 watchlist games remain research-only. 5 games reached a Lab Rating of 75+ but did not clear every official gate.",
+  "summary": "No official picks cleared the stricter rules. 5 value-watch setups and 3 watchlist games remain research-only. 5 games reached a Lab Rating of 7.5+/10 but did not clear every official gate.",
   "games": [
     {
       "game_pk": 824328,
@@ -49,7 +49,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Washington Nationals is a value watch, not an official pick. LyDia projects 64.8% against a 48.9% no-vig market number, a 15.9% model edge at -101. Lab Rating 9.1/10: model edge 35, pitcher 23.75, bullpen 12.36, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating. Lineup check: Washington Nationals is swinging a hot bat (+0.110 OPS); Colorado Rockies is in a cold stretch (-0.052 OPS). Recent form supports this side as well.",
+      "read": "Washington Nationals is a value watch, not an official pick. LyDia projects 64.8% against a 48.9% no-vig market number, a 15.9% model edge at -101. Lab Rating 9.1/10: model edge 35, pitcher 23.75, bullpen 12.36, market 15, base 5. It stayed a value watch because model win probability is 64.8%, below the 72.0% official-pick gate. Lineup check: Washington Nationals is swinging a hot bat (+0.110 OPS); Colorado Rockies is in a cold stretch (-0.052 OPS). Recent form supports this side as well.",
       "pitcher_edge": {
         "team": "Washington Nationals",
         "gap": 19,
@@ -216,7 +216,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Minnesota Twins is a value watch, not an official pick. LyDia projects 53.1% against a 42.5% no-vig market number, a 10.6% model edge at +126. Lab Rating 8.6/10: model edge 35, pitcher 16.25, bullpen 14.53, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating. Lineup check: Minnesota Twins is a touch below its season form (-0.023 OPS); Cleveland Guardians is near its season form (+0.009 OPS).",
+      "read": "Minnesota Twins is a value watch, not an official pick. LyDia projects 53.1% against a 42.5% no-vig market number, a 10.6% model edge at +126. Lab Rating 8.6/10: model edge 35, pitcher 16.25, bullpen 14.53, market 15, base 5. It stayed a value watch because model win probability is 53.1%, below the 72.0% official-pick gate. Lineup check: Minnesota Twins is a touch below its season form (-0.023 OPS); Cleveland Guardians is near its season form (+0.009 OPS).",
       "pitcher_edge": {
         "team": "Minnesota Twins",
         "gap": 13,
@@ -383,7 +383,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Milwaukee Brewers is a value watch, not an official pick. LyDia projects 77.8% against a 56.6% no-vig market number, a 21.1% model edge at -136. Lab Rating 8.1/10: model edge 35, pitcher 25, bullpen 1.47, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating. Lineup check: Milwaukee Brewers is a touch below its season form (-0.024 OPS); New York Mets is swinging a hot bat (+0.092 OPS). Recent form leans against this side — noted, not modeled.",
+      "read": "Milwaukee Brewers is a value watch, not an official pick. LyDia projects 77.8% against a 56.6% no-vig market number, a 21.1% model edge at -136. Lab Rating 8.1/10: model edge 35, pitcher 25, bullpen 1.47, market 15, base 5. It stayed a value watch because bullpen fatigue adds too much late-game caution. Lineup check: Milwaukee Brewers is a touch below its season form (-0.024 OPS); New York Mets is swinging a hot bat (+0.092 OPS). Recent form leans against this side — noted, not modeled.",
       "pitcher_edge": {
         "team": "Milwaukee Brewers",
         "gap": 30,
@@ -528,7 +528,7 @@
       "pick_team": "Boston Red Sox",
       "side": "home",
       "model_probability": 0.7104,
-      "edge": 0.1206,
+      "edge": 0.1193,
       "status": "value_watch",
       "value_tag": "VALUE WATCH",
       "lab_score": 78,
@@ -550,7 +550,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Boston Red Sox is a value watch, not an official pick. LyDia projects 71.0% against a 59.0% no-vig market number, a 12.1% model edge at -154. Lab Rating 7.8/10: model edge 35, pitcher 18.75, bullpen 3.82, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating. Lineup check: Boston Red Sox is swinging a hot bat (+0.091 OPS); Baltimore Orioles is near its season form (+0.014 OPS). Recent form supports this side as well.",
+      "read": "Boston Red Sox is a value watch, not an official pick. LyDia projects 71.0% against a 59.1% no-vig market number, a 11.9% model edge at -154. Lab Rating 7.8/10: model edge 35, pitcher 18.75, bullpen 3.82, market 15, base 5. It stayed a value watch because model win probability is 71.0%, below the 72.0% official-pick gate; and Lab Rating is 7.8/10, below the 8.0/10 official-pick gate. Lineup check: Boston Red Sox is swinging a hot bat (+0.091 OPS); Baltimore Orioles is near its season form (+0.014 OPS). Recent form supports this side as well.",
       "pitcher_edge": {
         "team": "Boston Red Sox",
         "gap": 15,
@@ -675,7 +675,7 @@
         "absolute_risk": "Pick side high"
       },
       "market": {
-        "no_vig_probability": 0.5898,
+        "no_vig_probability": 0.5911,
         "best_price": -154,
         "books": 9
       }
@@ -717,7 +717,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Atlanta Braves is a value watch, not an official pick. LyDia projects 65.0% against a 56.3% no-vig market number, a 8.7% model edge at -132. Lab Rating 7.8/10: model edge 35, pitcher 18.75, bullpen 4.07, market 15, base 5. The setup is strong, but official picks require at least 72.0% model probability and 8.0/10 Lab Rating. Lineup check: Atlanta Braves is swinging a hot bat (+0.083 OPS); San Diego Padres is swinging a hot bat (+0.073 OPS).",
+      "read": "Atlanta Braves is a value watch, not an official pick. LyDia projects 65.0% against a 56.3% no-vig market number, a 8.7% model edge at -132. Lab Rating 7.8/10: model edge 35, pitcher 18.75, bullpen 4.07, market 15, base 5. It stayed a value watch because model win probability is 65.0%, below the 72.0% official-pick gate; and Lab Rating is 7.8/10, below the 8.0/10 official-pick gate. Lineup check: Atlanta Braves is swinging a hot bat (+0.083 OPS); San Diego Padres is swinging a hot bat (+0.073 OPS).",
       "pitcher_edge": {
         "team": "Atlanta Braves",
         "gap": 15,
@@ -862,7 +862,7 @@
       "pick_team": "Chicago White Sox",
       "side": "away",
       "model_probability": 0.5116,
-      "edge": 0.1127,
+      "edge": 0.1121,
       "status": "watchlist",
       "value_tag": "WATCHLIST",
       "lab_score": 69,
@@ -884,7 +884,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Chicago White Sox remains on the watchlist. Lab Rating 6.9/10: model edge 35, pitcher 0, bullpen 14.07, market 15, base 5. LyDia projects 51.2% against a 39.9% no-vig market number, a 11.3% model edge at +145. Texas Rangers owns the starting pitcher edge by 20 points. Bullpen read: Supports LyDia side. Lineup check: Chicago White Sox is in a cold stretch (-0.062 OPS); Texas Rangers is swinging a hot bat (+0.063 OPS). Recent form leans against this side — noted, not modeled.",
+      "read": "Chicago White Sox remains on the watchlist. Lab Rating 6.9/10: model edge 35, pitcher 0, bullpen 14.07, market 15, base 5. LyDia projects 51.2% against a 39.9% no-vig market number, a 11.2% model edge at +145. Texas Rangers owns the starting pitcher edge by 20 points. Bullpen read: Supports LyDia side. Lineup check: Chicago White Sox is in a cold stretch (-0.062 OPS); Texas Rangers is swinging a hot bat (+0.063 OPS). Recent form leans against this side — noted, not modeled.",
       "pitcher_edge": {
         "team": "Texas Rangers",
         "gap": 20,
@@ -1009,7 +1009,7 @@
         "absolute_risk": "Opponent high"
       },
       "market": {
-        "no_vig_probability": 0.3989,
+        "no_vig_probability": 0.3994,
         "best_price": 145,
         "books": 9
       }
@@ -1363,7 +1363,7 @@
       "pick_team": "Arizona Diamondbacks",
       "side": "home",
       "model_probability": 0.8066,
-      "edge": 0.24,
+      "edge": 0.2398,
       "status": "pass",
       "value_tag": "PASS",
       "lab_score": 59,
@@ -1510,7 +1510,7 @@
         "absolute_risk": "Pick side high"
       },
       "market": {
-        "no_vig_probability": 0.5667,
+        "no_vig_probability": 0.5669,
         "best_price": -137,
         "books": 9
       }

@@ -1,6 +1,6 @@
 {
  "date": "2026-07-20",
- "generated_at": "2026-07-20T21:50:04.489Z",
+ "generated_at": "2026-07-20T22:06:49.362Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
  "events_fetched": 15,
  "probables": {
@@ -146,7 +146,7 @@
   "shane baz": {
    "name": "Shane Baz",
    "line": 5.5,
-   "over": 122,
+   "over": 121,
    "under": -154,
    "books": 5,
    "game": "Baltimore Orioles @ Boston Red Sox",
@@ -158,7 +158,7 @@
    "name": "Cristopher Sanchez",
    "line": 6.5,
    "over": 125,
-   "under": -139,
+   "under": -142,
    "books": 6,
    "game": "Los Angeles Dodgers @ Philadelphia Phillies"
   },
@@ -176,7 +176,7 @@
   "bryce elder": {
    "name": "Bryce Elder",
    "line": 3.5,
-   "over": -141,
+   "over": -148,
    "under": 124,
    "books": 6,
    "game": "San Diego Padres @ Atlanta Braves",
@@ -187,7 +187,7 @@
   "jp sears": {
    "name": "JP Sears",
    "line": 3.5,
-   "over": -125,
+   "over": -145,
    "under": 122,
    "books": 6,
    "game": "San Diego Padres @ Atlanta Braves",
@@ -220,8 +220,8 @@
   "jacob misiorowski": {
    "name": "Jacob Misiorowski",
    "line": 8.5,
-   "over": 105,
-   "under": -112,
+   "over": 110,
+   "under": -125,
    "books": 6,
    "game": "New York Mets @ Milwaukee Brewers",
    "projection": 10.34,
@@ -275,7 +275,7 @@
   "erick fedde": {
    "name": "Erick Fedde",
    "line": 3.5,
-   "over": 117,
+   "over": 116,
    "under": -140,
    "books": 6,
    "game": "Chicago White Sox @ Texas Rangers",
@@ -305,7 +305,7 @@
   "andrew alvarez": {
    "name": "Andrew Alvarez",
    "line": 4.5,
-   "over": 118,
+   "over": 116,
    "under": -142,
    "books": 5,
    "game": "Washington Nationals @ Colorado Rockies",
@@ -316,7 +316,7 @@
   "kyle freeland": {
    "name": "Kyle Freeland",
    "line": 4.5,
-   "over": 125,
+   "over": 118,
    "under": -138,
    "books": 6,
    "game": "Washington Nationals @ Colorado Rockies",
@@ -327,7 +327,7 @@
   "mitch bratt": {
    "name": "Mitch Bratt",
    "line": 3.5,
-   "over": 120,
+   "over": 126,
    "under": -150,
    "books": 6,
    "game": "Athletics @ Arizona Diamondbacks"
@@ -335,8 +335,8 @@
   "jeffrey springs": {
    "name": "Jeffrey Springs",
    "line": 3.5,
-   "over": 105,
-   "under": -118,
+   "over": 111,
+   "under": -120,
    "books": 6,
    "game": "Athletics @ Arizona Diamondbacks",
    "projection": 3.74,
