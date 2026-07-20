@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-20T02:17:26.266Z",
+  "generated_at": "2026-07-20T03:02:57.708Z",
   "status": "ready",
   "latest_date": "2026-07-19",
   "days_reviewed": 11,
@@ -98,12 +98,12 @@
     },
     "totals": {
       "status": "ready",
-      "graded": 18,
-      "bias": -0.06,
-      "mae": 3.19,
-      "lean_record": "12-5",
-      "over_lean_record": "5-4",
-      "under_lean_record": "7-1",
+      "graded": 29,
+      "bias": 0.13,
+      "mae": 3.31,
+      "lean_record": "15-9",
+      "over_lean_record": "8-7",
+      "under_lean_record": "7-2",
       "note": "Bias = actual total minus projection. Leans counted at 0.5+ run edges. Totals are the noisiest market — judge nothing before ~100 graded games."
     },
     "note": "Shadow ledger for learning only — never part of the public record. Official picks stay the only published record.",
