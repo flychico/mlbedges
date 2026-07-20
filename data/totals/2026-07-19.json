@@ -1,7 +1,7 @@
 {
  "date": "2026-07-19",
  "generated_at": "2026-07-19T22:23:51.195Z",
- "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
+ "source": "LyDia totals projection (offense factor \u00d7 opposing pitching \u00d7 park \u00d7 pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.52,
  "probables": {
   "823521": {
@@ -10,6 +10,20 @@
   }
  },
  "games": {
+  "822786": {
+   "game": "Chicago White Sox @ Toronto Blue Jays",
+   "game_time_iso": "2026-07-19T16:15:00Z",
+   "projection": 8.5,
+   "proj_away": 4.9,
+   "proj_home": 3.7,
+   "park_factor": 1.03,
+   "away_sp": "Sean Burke",
+   "home_sp": "Trey Yesavage",
+   "line": 8,
+   "over": -112,
+   "under": -103,
+   "books": 9
+  },
   "823113": {
    "game": "San Francisco Giants @ Seattle Mariners",
    "game_time_iso": "2026-07-19T20:10:00Z",
@@ -23,6 +37,20 @@
    "over": 105,
    "under": -108,
    "books": 5
+  },
+  "823439": {
+   "game": "New York Mets @ Philadelphia Phillies",
+   "game_time_iso": "2026-07-19T17:35:00Z",
+   "projection": 8.2,
+   "proj_away": 4.3,
+   "proj_home": 3.9,
+   "park_factor": 1.06,
+   "away_sp": "Nolan McLean",
+   "home_sp": "Alan Rangel",
+   "line": 8.5,
+   "over": -115,
+   "under": 100,
+   "books": 9
   },
   "823521": {
    "game": "Los Angeles Dodgers @ New York Yankees",
@@ -38,6 +66,34 @@
    "under": -102,
    "books": 9
   },
+  "823523": {
+   "game": "Los Angeles Dodgers @ New York Yankees",
+   "game_time_iso": "2026-07-19T16:35:00Z",
+   "projection": 8.5,
+   "proj_away": 4.2,
+   "proj_home": 4.3,
+   "park_factor": 1.05,
+   "away_sp": "Yoshinobu Yamamoto",
+   "home_sp": "Cam Schlittler",
+   "line": 8.5,
+   "over": -120,
+   "under": 107,
+   "books": 8
+  },
+  "823764": {
+   "game": "Miami Marlins @ Milwaukee Brewers",
+   "game_time_iso": "2026-07-19T18:10:00Z",
+   "projection": 9.9,
+   "proj_away": 4.8,
+   "proj_home": 5.1,
+   "park_factor": 1,
+   "away_sp": "Eury P\u00e9rez",
+   "home_sp": "Robert Gasser",
+   "line": 8,
+   "over": -104,
+   "under": -105,
+   "books": 9
+  },
   "824007": {
    "game": "Detroit Tigers @ Los Angeles Angels",
    "game_time_iso": "2026-07-19T20:07:00Z",
@@ -51,6 +107,104 @@
    "over": -122,
    "under": 105,
    "books": 6
+  },
+  "824086": {
+   "game": "San Diego Padres @ Kansas City Royals",
+   "game_time_iso": "2026-07-19T18:10:00Z",
+   "projection": 8.4,
+   "proj_away": 3.7,
+   "proj_home": 4.8,
+   "park_factor": 0.96,
+   "away_sp": "Germ\u00e1n M\u00e1rquez",
+   "home_sp": "Noah Cameron",
+   "line": 10,
+   "over": 103,
+   "under": -106,
+   "books": 9
+  },
+  "824168": {
+   "game": "Baltimore Orioles @ Houston Astros",
+   "game_time_iso": "2026-07-19T18:10:00Z",
+   "projection": 9.3,
+   "proj_away": 4.8,
+   "proj_home": 4.5,
+   "park_factor": 0.99,
+   "away_sp": "Brandon Young",
+   "home_sp": "Hunter Brown",
+   "line": 8.5,
+   "over": -102,
+   "under": -113,
+   "books": 9
+  },
+  "824330": {
+   "game": "Cincinnati Reds @ Colorado Rockies",
+   "game_time_iso": "2026-07-19T19:10:00Z",
+   "projection": 10.8,
+   "proj_away": 5.4,
+   "proj_home": 5.4,
+   "park_factor": 1.18,
+   "away_sp": "Hunter Greene",
+   "home_sp": "Ryan Feltner",
+   "line": 11,
+   "over": -105,
+   "under": -107,
+   "books": 9
+  },
+  "824411": {
+   "game": "Pittsburgh Pirates @ Cleveland Guardians",
+   "game_time_iso": "2026-07-19T17:40:00Z",
+   "projection": 8.6,
+   "proj_away": 5.3,
+   "proj_home": 3.3,
+   "park_factor": 0.99,
+   "away_sp": "Paul Skenes",
+   "home_sp": "Joey Cantillo",
+   "line": 7,
+   "over": -112,
+   "under": 100,
+   "books": 9
+  },
+  "824653": {
+   "game": "Minnesota Twins @ Chicago Cubs",
+   "game_time_iso": "2026-07-19T18:20:00Z",
+   "projection": 10.9,
+   "proj_away": 5.2,
+   "proj_home": 5.7,
+   "park_factor": 1.02,
+   "away_sp": "Zebby Matthews",
+   "home_sp": "Shota Imanaga",
+   "line": 7.5,
+   "over": -102,
+   "under": -105,
+   "books": 9
+  },
+  "824739": {
+   "game": "Tampa Bay Rays @ Boston Red Sox",
+   "game_time_iso": "2026-07-19T17:35:00Z",
+   "projection": 8.4,
+   "proj_away": 4.4,
+   "proj_home": 4,
+   "park_factor": 1.06,
+   "away_sp": "Shane McClanahan",
+   "home_sp": "Sonny Gray",
+   "line": 8,
+   "over": -110,
+   "under": 100,
+   "books": 9
+  },
+  "824897": {
+   "game": "Texas Rangers @ Atlanta Braves",
+   "game_time_iso": "2026-07-19T17:35:00Z",
+   "projection": 9.8,
+   "proj_away": 4.9,
+   "proj_home": 5,
+   "park_factor": 1.05,
+   "away_sp": "Nathan Eovaldi",
+   "home_sp": "Grant Holmes",
+   "line": 8.5,
+   "over": -118,
+   "under": 106,
+   "books": 9
   },
   "824978": {
    "game": "Washington Nationals @ Athletics",

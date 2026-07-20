@@ -150,6 +150,16 @@ async function main() {
       }
     }
   } catch (e) { console.warn("projection compute skipped:", e.message); }
+  // MERGE with any existing capture — started games keep their morning lines/projections.
+  try {
+    const prevPath = path.join(ROOT, "data", "k-props", `${DATE}.json`);
+    if (fs.existsSync(prevPath)) {
+      const prev = JSON.parse(fs.readFileSync(prevPath, "utf8"));
+      if (prev && prev.date === DATE && prev.pitchers) {
+        for (const [k, v] of Object.entries(prev.pitchers)) if (!pitchers[k]) pitchers[k] = v;
+      }
+    }
+  } catch (e) {}
   const out = { date: DATE, generated_at: new Date().toISOString(), source: "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)", events_fetched: fetched, probables, pitchers };
   fs.mkdirSync(path.join(ROOT, "data", "k-props"), { recursive: true });
   fs.writeFileSync(path.join(ROOT, "data", "k-props", `${DATE}.json`), JSON.stringify(out, null, 1));

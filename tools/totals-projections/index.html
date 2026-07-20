@@ -138,7 +138,8 @@ function sideBoxes(g){
   const box=(sideName, sd, runs)=>{
     return `<div class="side-box">
       <h3>${escapeHtml(sd.team)} <span class="dim small">projected</span> <span class="s-runs">${runs.toFixed(1)}</span></h3>
-      <div class="s-row"><span>Their scoring (season)</span><span><b>${sd.rpg}</b> runs/game${offTier(sd.off_factor)}</span></div>
+      <div class="s-row"><span>Their scoring</span><span><b>${sd.rpg}</b> runs/game${offTier(sd.off_factor)}</span></div>
+      ${Number.isFinite(sd.form_rpg) ? `<div class="s-row"><span class="dim small">= season ${sd.season_rpg} blended 70/30 with last-15 ${sd.form_rpg}</span><span class="dim small">${sd.form_rpg - sd.season_rpg >= 0.6 ? "hot" : sd.form_rpg - sd.season_rpg <= -0.6 ? "cold" : ""}</span></div>` : ""}
       <div class="s-row"><span>Facing starter</span><span><b>${escapeHtml(sd.opp_sp)}</b> <span class="dim small">${Number.isFinite(sd.opp_sp_fip)?"FIP-in "+sd.opp_sp_fip.toFixed(2):""}${sd.opp_sp_ip?" · ~"+sd.opp_sp_ip+" IP":""}</span>${fipTier(sd.opp_sp_fip)}</span></div>
       <div class="s-row"><span>Facing bullpen</span><span>${Number.isFinite(sd.opp_pen_score)?`<b>${(sd.opp_pen_score/10).toFixed(1)}/10 fatigue</b>${sd.pen_factor>1?` <span class=\"tier pos-text\">tired pen — adds runs</span>`:""}`:'<span class="dim">—</span>'}</span></div>
     </div>`;

@@ -76,6 +76,20 @@ async function main() {
     if (gp) { off[t.team.id] = t.runsScored / gp; rsT += t.runsScored; gT += gp; }
   }
   const lgRPG = gT ? rsT / gT : 4.5;
+  // Recent form: last-15-day scoring, blended 70/30 with season — same philosophy
+  // as the moneyline model's Pythagorean + last-10 blend. Form matters; it just
+  // doesn't get to shout over a 90-game sample.
+  const FORM_W = 0.30;
+  const off15 = {};
+  try {
+    const end = new Date(DATE + "T12:00:00Z"), start = new Date(end.getTime() - 15 * 864e5);
+    const f = d => d.toISOString().slice(0, 10);
+    const win = await j(`https://statsapi.mlb.com/api/v1/teams/stats?sportId=1&group=hitting&season=${yr}&stats=byDateRange&startDate=${f(start)}&endDate=${f(end)}`);
+    for (const t of (win.stats[0] || {}).splits || []) {
+      const gp = Number(t.stat.gamesPlayed) || 0;
+      if (gp >= 8) off15[t.team.id] = (Number(t.stat.runs) || 0) / gp;
+    }
+  } catch (e) { console.warn("form window unavailable:", e.message); }
 
   const pids = [...new Set(games.flatMap(g => ["away", "home"].map(sd => g.teams[sd].probablePitcher && g.teams[sd].probablePitcher.id).filter(Boolean)))];
   const ps = {};
@@ -124,7 +138,9 @@ async function main() {
     const aT = g.teams.away.team, hT = g.teams.home.team;
     const park = PARKS[hT.name] ?? 1.0;
     const side = (batTeamId, oppStarter, oppPenName) => {
-      const rpg = off[batTeamId] || lgRPG;
+      const seasonRpg = off[batTeamId] || lgRPG;
+      const formRpg = off15[batTeamId];
+      const rpg = Number.isFinite(formRpg) ? (1 - FORM_W) * seasonRpg + FORM_W * formRpg : seasonRpg;
       const offF = rpg / lgRPG;
       const st = oppStarter ? ps[oppStarter.id] : null;
       const fip = fipLite(st);
@@ -136,7 +152,7 @@ async function main() {
       const penF = penScore !== null && penScore > 55 ? 1 + Math.min(0.06, (penScore - 55) / 500) : 1;
       return {
         runs: lgRPG * offF * pitchF * penF * park,
-        rpg: Number(rpg.toFixed(2)), off_factor: Number(offF.toFixed(3)),
+        rpg: Number(rpg.toFixed(2)), season_rpg: Number(seasonRpg.toFixed(2)), form_rpg: Number.isFinite(formRpg) ? Number(formRpg.toFixed(2)) : null, off_factor: Number(offF.toFixed(3)),
         opp_sp: st ? st.name : "TBD", opp_sp_fip: Number(fip.toFixed(2)), opp_sp_ip: st ? Number(expIP.toFixed(1)) : null,
         pitch_factor: Number(pitchF.toFixed(3)),
         opp_pen_score: penScore, pen_factor: Number(penF.toFixed(3)),
@@ -181,6 +197,18 @@ async function main() {
       lab: totalsLab
     };
   }
+
+  // MERGE with any existing capture: games that already started must keep their
+  // morning projections/lines — a re-capture may only update or add pregame games.
+  try {
+    const prevPath = path.join(ROOT, "data", "totals", `${DATE}.json`);
+    if (fs.existsSync(prevPath)) {
+      const prev = JSON.parse(fs.readFileSync(prevPath, "utf8"));
+      if (prev && prev.date === DATE && prev.games) {
+        for (const [pk, g] of Object.entries(prev.games)) if (!out[pk]) out[pk] = g;
+      }
+    }
+  } catch (e) {}
 
   const payload = { date: DATE, generated_at: new Date().toISOString(), source: "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus", league_rpg: Number(lgRPG.toFixed(2)), probables, games: out };
   fs.mkdirSync(path.join(ROOT, "data", "totals"), { recursive: true });
