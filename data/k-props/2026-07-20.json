@@ -1,8 +1,8 @@
 {
  "date": "2026-07-20",
- "generated_at": "2026-07-20T16:27:13.294Z",
+ "generated_at": "2026-07-20T21:50:04.489Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
- "events_fetched": 14,
+ "events_fetched": 15,
  "probables": {
   "822788": {
    "away": "Nick Martinez",
@@ -70,7 +70,7 @@
    "name": "Tanner Bibee",
    "line": 4.5,
    "over": -120,
-   "under": 101,
+   "under": 107,
    "books": 6,
    "game": "Minnesota Twins @ Cleveland Guardians",
    "projection": 4.48,
@@ -80,8 +80,8 @@
   "joe ryan": {
    "name": "Joe Ryan",
    "line": 6.5,
-   "over": -110,
-   "under": 103,
+   "over": -118,
+   "under": 110,
    "books": 6,
    "game": "Minnesota Twins @ Cleveland Guardians",
    "projection": 6.83,
@@ -91,8 +91,8 @@
   "braxton ashcraft": {
    "name": "Braxton Ashcraft",
    "line": 6.5,
-   "over": -115,
-   "under": 104,
+   "over": -114,
+   "under": 103,
    "books": 6,
    "game": "Pittsburgh Pirates @ New York Yankees",
    "projection": 7.65,
@@ -102,8 +102,8 @@
   "ryan weathers": {
    "name": "Ryan Weathers",
    "line": 6.5,
-   "over": 112,
-   "under": -125,
+   "over": 107,
+   "under": -108,
    "books": 6,
    "game": "Pittsburgh Pirates @ New York Yankees",
    "projection": 7.06,
@@ -113,8 +113,8 @@
   "nick martinez": {
    "name": "Nick Martinez",
    "line": 3.5,
-   "over": 128,
-   "under": -150,
+   "over": 140,
+   "under": -173,
    "books": 6,
    "game": "Tampa Bay Rays @ Toronto Blue Jays",
    "projection": 3.17,
@@ -125,7 +125,7 @@
    "name": "Dylan Cease",
    "line": 7.5,
    "over": 115,
-   "under": -119,
+   "under": -135,
    "books": 6,
    "game": "Tampa Bay Rays @ Toronto Blue Jays",
    "projection": 8,
@@ -135,8 +135,8 @@
   "payton tolle": {
    "name": "Payton Tolle",
    "line": 6.5,
-   "over": 120,
-   "under": -150,
+   "over": 110,
+   "under": -120,
    "books": 5,
    "game": "Baltimore Orioles @ Boston Red Sox",
    "projection": 6.91,
@@ -147,7 +147,7 @@
    "name": "Shane Baz",
    "line": 5.5,
    "over": 122,
-   "under": -150,
+   "under": -154,
    "books": 5,
    "game": "Baltimore Orioles @ Boston Red Sox",
    "projection": 5.27,
@@ -157,16 +157,16 @@
   "cristopher sanchez": {
    "name": "Cristopher Sanchez",
    "line": 6.5,
-   "over": 101,
-   "under": -125,
+   "over": 125,
+   "under": -139,
    "books": 6,
    "game": "Los Angeles Dodgers @ Philadelphia Phillies"
   },
   "emmet sheehan": {
    "name": "Emmet Sheehan",
    "line": 5.5,
-   "over": -115,
-   "under": 105,
+   "over": -122,
+   "under": 100,
    "books": 6,
    "game": "Los Angeles Dodgers @ Philadelphia Phillies",
    "projection": 5.87,
@@ -176,8 +176,8 @@
   "bryce elder": {
    "name": "Bryce Elder",
    "line": 3.5,
-   "over": -136,
-   "under": 120,
+   "over": -141,
+   "under": 124,
    "books": 6,
    "game": "San Diego Padres @ Atlanta Braves",
    "projection": 4.95,
@@ -187,8 +187,8 @@
   "jp sears": {
    "name": "JP Sears",
    "line": 3.5,
-   "over": -140,
-   "under": 116,
+   "over": -125,
+   "under": 122,
    "books": 6,
    "game": "San Diego Padres @ Atlanta Braves",
    "projection": 4.04,
@@ -199,7 +199,7 @@
    "name": "Michael Wacha",
    "line": 4.5,
    "over": 105,
-   "under": -125,
+   "under": -126,
    "books": 6,
    "game": "San Francisco Giants @ Kansas City Royals",
    "projection": 4.91,
@@ -209,8 +209,8 @@
   "trevor mcdonald": {
    "name": "Trevor McDonald",
    "line": 3.5,
-   "over": 119,
-   "under": -140,
+   "over": 118,
+   "under": -150,
    "books": 6,
    "game": "San Francisco Giants @ Kansas City Royals",
    "projection": 4,
@@ -220,8 +220,8 @@
   "jacob misiorowski": {
    "name": "Jacob Misiorowski",
    "line": 8.5,
-   "over": -120,
-   "under": 107,
+   "over": 105,
+   "under": -112,
    "books": 6,
    "game": "New York Mets @ Milwaukee Brewers",
    "projection": 10.34,
@@ -231,7 +231,7 @@
   "freddy peralta": {
    "name": "Freddy Peralta",
    "line": 5.5,
-   "over": 117,
+   "over": 112,
    "under": -130,
    "books": 6,
    "game": "New York Mets @ Milwaukee Brewers",
@@ -242,7 +242,7 @@
   "jameson taillon": {
    "name": "Jameson Taillon",
    "line": 3.5,
-   "over": -149,
+   "over": -148,
    "under": 124,
    "books": 6,
    "game": "Detroit Tigers @ Chicago Cubs",
@@ -253,7 +253,7 @@
   "jack flaherty": {
    "name": "Jack Flaherty",
    "line": 5.5,
-   "over": 106,
+   "over": 105,
    "under": -128,
    "books": 6,
    "game": "Detroit Tigers @ Chicago Cubs",
@@ -264,8 +264,8 @@
   "jacob degrom": {
    "name": "Jacob deGrom",
    "line": 6.5,
-   "over": -143,
-   "under": 115,
+   "over": -146,
+   "under": 120,
    "books": 6,
    "game": "Chicago White Sox @ Texas Rangers",
    "projection": 7.78,
@@ -275,8 +275,8 @@
   "erick fedde": {
    "name": "Erick Fedde",
    "line": 3.5,
-   "over": 112,
-   "under": -125,
+   "over": 117,
+   "under": -140,
    "books": 6,
    "game": "Chicago White Sox @ Texas Rangers",
    "projection": 4.34,
@@ -286,16 +286,16 @@
   "ronel blanco": {
    "name": "Ronel Blanco",
    "line": 3.5,
-   "over": -136,
-   "under": 115,
+   "over": -153,
+   "under": 126,
    "books": 6,
    "game": "Miami Marlins @ Houston Astros"
   },
   "janson junk": {
    "name": "Janson Junk",
    "line": 3.5,
-   "over": -118,
-   "under": 100,
+   "over": -104,
+   "under": 103,
    "books": 6,
    "game": "Miami Marlins @ Houston Astros",
    "projection": 4.02,
@@ -305,8 +305,8 @@
   "andrew alvarez": {
    "name": "Andrew Alvarez",
    "line": 4.5,
-   "over": 114,
-   "under": -137,
+   "over": 118,
+   "under": -142,
    "books": 5,
    "game": "Washington Nationals @ Colorado Rockies",
    "projection": 8.22,
@@ -316,7 +316,7 @@
   "kyle freeland": {
    "name": "Kyle Freeland",
    "line": 4.5,
-   "over": 120,
+   "over": 125,
    "under": -138,
    "books": 6,
    "game": "Washington Nationals @ Colorado Rockies",
@@ -327,16 +327,16 @@
   "mitch bratt": {
    "name": "Mitch Bratt",
    "line": 3.5,
-   "over": 133,
-   "under": -135,
+   "over": 120,
+   "under": -150,
    "books": 6,
    "game": "Athletics @ Arizona Diamondbacks"
   },
   "jeffrey springs": {
    "name": "Jeffrey Springs",
    "line": 3.5,
-   "over": -102,
-   "under": -105,
+   "over": 105,
+   "under": -118,
    "books": 6,
    "game": "Athletics @ Arizona Diamondbacks",
    "projection": 3.74,
@@ -346,8 +346,8 @@
   "george kirby": {
    "name": "George Kirby",
    "line": 6.5,
-   "over": -111,
-   "under": 100,
+   "over": -113,
+   "under": 105,
    "books": 6,
    "game": "Cincinnati Reds @ Seattle Mariners",
    "projection": 6.35,
@@ -357,13 +357,32 @@
   "andrew abbott": {
    "name": "Andrew Abbott",
    "line": 4.5,
-   "over": -140,
-   "under": 120,
+   "over": -148,
+   "under": 125,
    "books": 6,
    "game": "Cincinnati Reds @ Seattle Mariners",
    "projection": 4.51,
    "projection_raw": 4.51,
    "game_pk": 823112
+  },
+  "jose soriano": {
+   "name": "Jose Soriano",
+   "line": 4.5,
+   "over": -145,
+   "under": 130,
+   "books": 6,
+   "game": "St. Louis Cardinals @ Los Angeles Angels"
+  },
+  "kyle leahy": {
+   "name": "Kyle Leahy",
+   "line": 4.5,
+   "over": -128,
+   "under": 115,
+   "books": 6,
+   "game": "St. Louis Cardinals @ Los Angeles Angels",
+   "projection": 4.64,
+   "projection_raw": 4.64,
+   "game_pk": 824006
   },
   "cristopher sánchez": {
    "name": "Cristopher Sánchez",
@@ -376,17 +395,6 @@
    "projection_raw": 6.84,
    "game_pk": 823436
   },
-  "kyle leahy": {
-   "name": "Kyle Leahy",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0,
-   "game": "St. Louis Cardinals @ Los Angeles Angels",
-   "projection": 4.64,
-   "projection_raw": 4.64,
-   "game_pk": 824006
-  },
   "josé soriano": {
    "name": "José Soriano",
    "line": null,
@@ -397,14 +405,6 @@
    "projection": 5.75,
    "projection_raw": 5.75,
    "game_pk": 824006
-  },
-  "jose soriano": {
-   "name": "Jose Soriano",
-   "line": 5.5,
-   "over": 124,
-   "under": -148,
-   "books": 6,
-   "game": "St. Louis Cardinals @ Los Angeles Angels"
   }
  },
  "learned_bias": 0,
