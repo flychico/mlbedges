@@ -244,44 +244,55 @@ async function gradeDay() {
 
 function rebuildResultsPage(results) {
   const days = Object.values(results.days).sort((a, b) => b.date.localeCompare(a.date));
-  let W = 0, L = 0, U = 0, hasUnits = false;
-  for (const d of days) { W += d.wins; L += d.losses; if (d.units !== null) { U += d.units; hasUnits = true; } }
-  const winPct = W + L ? (W / (W + L) * 100).toFixed(1) : "—";
-  // Official record: moneyline results only, on days graded under the current official model.
-  let OW = 0, OL = 0;
-  for (const d of days) {
-    if (d.current_official_model !== "moneyline_only") continue;
-    for (const p of d.picks) { if (p.mlResult === "W") OW++; else if (p.mlResult === "L") OL++; }
+  const officialDays = days.filter(d => d.current_official_model === "moneyline_only");
+
+  let OW = 0, OL = 0, OU = 0, hasOfficialUnits = false;
+  for (const d of officialDays) {
+    for (const p of d.picks || []) {
+      if (p.mlResult === "W") OW++;
+      else if (p.mlResult === "L") OL++;
+    }
+    if (d.units !== null && Number.isFinite(d.units)) {
+      OU += d.units;
+      hasOfficialUnits = true;
+    }
   }
-  const oPct = OW + OL ? (OW / (OW + OL) * 100).toFixed(1) : "—";
+  const gradedOfficial = OW + OL;
+  const oPct = gradedOfficial ? (OW / gradedOfficial * 100).toFixed(1) : "—";
 
   const pickLine = p => {
-    const parts = [];
-    if (p.moneyline && p.moneyline.pick && !p.moneyline.isPass) parts.push(`${p.mlResult === "W" ? "✅" : p.mlResult === "L" ? "❌" : p.mlResult === "VOID" ? "∅" : "⏸"} ML ${esc(p.moneyline.pick)} (${(p.moneyline.prob * 100).toFixed(0)}%${p.moneyline.bestAm ? `, ${fmtAm(p.moneyline.bestAm)}` : ""})`);
-    if (p.total && p.total.pick) parts.push(`${p.totResult === "W" ? "✅" : p.totResult === "L" ? "❌" : p.totResult === "PUSH" ? "➖" : "⏸"} Total ${esc(p.total.pick)} ${p.total.line}`);
-    if (p.runLine && p.runLine.pick) parts.push(`${p.rlResult === "W" ? "✅" : p.rlResult === "L" ? "❌" : p.rlResult === "PUSH" ? "➖" : "⏸"} RL ${esc(p.runLine.pick)} ${p.runLine.point > 0 ? "+" : ""}${p.runLine.point}`);
-    if (!parts.length) return `<div class="small dim">No official play — ${esc(p.away)} @ ${esc(p.home)}</div>`;
+    if (!p.moneyline || !p.moneyline.pick || p.moneyline.isPass) {
+      return `<div class="small dim">No official play — ${esc(p.away)} @ ${esc(p.home)}</div>`;
+    }
+    const icon = p.mlResult === "W" ? "✅" : p.mlResult === "L" ? "❌" : p.mlResult === "VOID" ? "∅" : "⏸";
+    const probability = typeof p.moneyline.prob === "number" ? ` (${(p.moneyline.prob * 100).toFixed(0)}%${p.moneyline.bestAm ? `, ${fmtAm(p.moneyline.bestAm)}` : ""})` : "";
     const lessonTag = p.voidReason ? "" : (p.learning && p.learning.lesson_tag ? p.learning.lesson_tag : "");
     const lessonText = p.voidReason ? "VOID — " + p.voidReason : (lessonTag === "not_graded" ? "official grade posts each morning" : lessonTag.replace(/_/g, " "));
     const lesson = lessonText ? ` <span class="dim">· ${esc(lessonText)}</span>` : "";
-    return `<div class="small">${parts.join(" · ")} — ${esc(p.away)} @ ${esc(p.home)}${p.finalAway !== undefined ? ` · ${p.finalAway}-${p.finalHome}` : ""}${lesson}</div>`;
+    return `<div class="small">${icon} ML ${esc(p.moneyline.pick)}${probability} — ${esc(p.away)} @ ${esc(p.home)}${p.finalAway !== undefined ? ` · ${p.finalAway}-${p.finalHome}` : ""}${lesson}</div>`;
   };
 
-  const dayRows = days.slice(0, 60).map(d => `<tr>
-    <td>${esc(niceDate(d.date))}${d.current_official_model !== "moneyline_only" ? ' <span class="dim small">(legacy markets)</span>' : ""}</td>
-    <td class="num">${d.wins}-${d.losses}</td>
-    <td class="num">${d.wins + d.losses ? (d.wins / (d.wins + d.losses) * 100).toFixed(0) + "%" : "—"}</td>
+  const dayRows = officialDays.slice(0, 60).map(d => {
+    const picks = d.picks || [];
+    const dW = picks.filter(p => p.mlResult === "W").length;
+    const dL = picks.filter(p => p.mlResult === "L").length;
+    const dPct = dW + dL ? (dW / (dW + dL) * 100).toFixed(0) + "%" : "—";
+    return `<tr>
+    <td>${esc(niceDate(d.date))}</td>
+    <td class="num">${dW}-${dL}</td>
+    <td class="num">${dPct}</td>
     <td class="num ${d.units > 0 ? "pos-text" : d.units < 0 ? "neg-text" : ""}">${d.units !== null ? (d.units > 0 ? "+" : "") + d.units.toFixed(2) : "—"}</td>
-    <td><details><summary>${d.picks.length} published pick group${d.picks.length === 1 ? "" : "s"}</summary>${d.picks.map(pickLine).join("")}</details></td>
-  </tr>`).join("\n");
+    <td><details><summary>${picks.length} published pick group${picks.length === 1 ? "" : "s"}</summary>${picks.map(pickLine).join("")}</details></td>
+  </tr>`;
+  }).join("\n");
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Results — verified pick record | LyDia</title>
-<meta name="description" content="LyDia verified results: official moneyline model ${OW}-${OL}, all graded markets including legacy ${W}-${L} — every pick graded in public, wins and losses alike.">
+<title>Results — verified official pick record | LyDia</title>
+<meta name="description" content="LyDia verified official moneyline results: ${OW}-${OL} across ${gradedOfficial} graded picks. Every official pick stays public, including the losses and voids.">
 <link rel="canonical" href="https://lydiaslab.com/results/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9918;</text></svg>">
 <link rel="stylesheet" href="/css/style.css">
@@ -290,19 +301,19 @@ function rebuildResultsPage(results) {
 <nav id="nav"></nav>
 <main>
 <h1>Results</h1>
-<p class="subtitle">Current official LyDia picks are moneyline-only and require both a high model probability and a strong Lab Rating. If the listed starting pitcher is scratched after a pick is published, the pick is voided (∅) — the standard sportsbook listed-pitcher rule — and stays visible without counting in the record. Older results may include legacy totals and run-line outputs from earlier model versions. Wins, losses, and voids alike stay visible.</p>
+<p class="subtitle">LyDia's current official picks are moneyline-only and must clear both the model-probability and Lab Rating gates. If a listed starting pitcher is scratched after publication, the pick is marked void and remains visible without counting in the record. Wins, losses, and voids stay public.</p>
 <section id="live-pick-results" class="card" style="margin:16px 0 24px">
   <h2 style="margin-top:0">Today's Pick Status</h2>
   <div class="loading">Loading live pick results...</div>
 </section>
 <div class="kpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px">
-  <div class="card"><div class="dim small">OFFICIAL RECORD (moneyline model)</div><div style="font-size:1.6rem;font-weight:700">${OW}-${OL}</div><div class="dim small">${oPct === "—" ? "no graded official picks yet" : oPct + "% win rate"}</div></div>
-  <div class="card"><div class="dim small">ALL GRADED MARKETS (incl. legacy)</div><div style="font-size:1.6rem;font-weight:700">${W}-${L}</div><div class="dim small">${winPct === "—" ? "—" : winPct + "% win rate"}</div></div>
-  <div class="card"><div class="dim small">UNITS (flat 1u @ best price)</div><div style="font-size:1.6rem;font-weight:700" class="${U > 0 ? "pos-text" : U < 0 ? "neg-text" : ""}">${hasUnits ? (U > 0 ? "+" : "") + U.toFixed(2) : "—"}</div></div>
-  <div class="card"><div class="dim small">DAYS TRACKED</div><div style="font-size:1.6rem;font-weight:700">${days.length}</div></div>
+  <div class="card"><div class="dim small">OFFICIAL RECORD</div><div style="font-size:1.6rem;font-weight:700">${OW}-${OL}</div><div class="dim small">${oPct === "—" ? "no graded official picks yet" : oPct + "% win rate"}</div></div>
+  <div class="card"><div class="dim small">GRADED OFFICIAL PICKS</div><div style="font-size:1.6rem;font-weight:700">${gradedOfficial}</div><div class="dim small">moneyline model only</div></div>
+  <div class="card"><div class="dim small">OFFICIAL UNITS (flat 1u)</div><div style="font-size:1.6rem;font-weight:700" class="${OU > 0 ? "pos-text" : OU < 0 ? "neg-text" : ""}">${hasOfficialUnits ? (OU > 0 ? "+" : "") + OU.toFixed(2) : "—"}</div><div class="dim small">at published best price</div></div>
+  <div class="card"><div class="dim small">DAYS TRACKED</div><div style="font-size:1.6rem;font-weight:700">${days.length}</div><div class="dim small">since public tracking began</div></div>
 </div>
 <div class="notice" style="margin-bottom:20px">
-  <strong>Current official model:</strong> moneyline only. <strong>Legacy history:</strong> earlier records may show totals or run lines. Every grade is archived and reviewed as part of LyDia's learning process.
+  <strong>Public record scope:</strong> Only picks published under LyDia's current official moneyline model appear here. Earlier experimental totals and run-line records remain archived internally and are excluded from this page and its headline metrics.
 </div>
 <div class="card">
 <table>
