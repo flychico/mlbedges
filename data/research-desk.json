@@ -1,6 +1,6 @@
 {
   "date": "2026-07-21",
-  "generated_at": "2026-07-21T12:54:02.774Z",
+  "generated_at": "2026-07-21T13:21:32.095Z",
   "stale_reuse": false,
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
@@ -30,7 +30,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Cincinnati Reds @ Seattle Mariners",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Cincinnati Reds @ Seattle Mariners, but the headline and summary do not clearly identify a selected side. LyDia currently has Seattle Mariners Money Line at 50.4% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Cincinnati Reds @ Seattle Mariners, but the headline and summary do not clearly identify a selected side. LyDia currently has Seattle Mariners Money Line at 50.4% model probability and 2.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Milwaukee Brewers Odds & Betting Lines - Action Network",
@@ -147,7 +147,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Tampa Bay Rays @ Toronto Blue Jays",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 56.8% model probability and 7.3/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 56.8% model probability and 7.2/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Predictions and Moneyline Picks for Monday, July 20 - Covers.com",
@@ -173,7 +173,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Pittsburgh Pirates @ New York Yankees",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 61.2% model probability and 5.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 61.2% model probability and 5.2/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Monday, July 20 - Covers.com",
@@ -375,7 +375,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Cincinnati Reds @ Seattle Mariners",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Cincinnati Reds @ Seattle Mariners, but the headline and summary do not clearly identify a selected side. LyDia currently has Seattle Mariners Money Line at 50.4% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Cincinnati Reds @ Seattle Mariners, but the headline and summary do not clearly identify a selected side. LyDia currently has Seattle Mariners Money Line at 50.4% model probability and 2.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Milwaukee Brewers Odds & Betting Lines - Action Network",
@@ -414,7 +414,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Tampa Bay Rays @ Toronto Blue Jays",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 56.8% model probability and 7.3/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 56.8% model probability and 7.2/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Pirates vs Yankees Prediction, Picks & Odds for Tonight's MLB Game - Covers.com",
@@ -427,7 +427,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Pittsburgh Pirates @ New York Yankees",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 61.2% model probability and 5.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 61.2% model probability and 5.2/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Cardinals vs Angels Prediction, Pick, MLB Odds for Monday, July 20 - Action Network",

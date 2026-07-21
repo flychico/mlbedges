@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T12:32:01.803Z",
+ "generated_at": "2026-07-21T13:21:34.328Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.53,
  "probables": {
@@ -111,7 +111,7 @@
    "away_sp": "Drew Rasmussen",
    "home_sp": "Kevin Gausman",
    "line": 7.5,
-   "over": 120,
+   "over": -107,
    "under": -106,
    "books": 9,
    "lab": 46
@@ -212,7 +212,7 @@
    "home_sp": "Luis Castillo",
    "line": 7.5,
    "over": -102,
-   "under": -106,
+   "under": -105,
    "books": 9,
    "lab": 45
   },
@@ -262,7 +262,7 @@
    "home_sp": "Zack Wheeler",
    "line": 9,
    "over": 100,
-   "under": -109,
+   "under": -108,
    "books": 9,
    "lab": 46
   },
@@ -286,7 +286,7 @@
     "opp_sp_fip": 4.06,
     "opp_sp_ip": 5.2,
     "pitch_factor": 0.98,
-    "opp_pen_score": 100,
+    "opp_pen_score": 99,
     "pen_factor": 1.06,
     "sp_sample_ok": true
    },
@@ -310,11 +310,11 @@
    "park_factor": 1.05,
    "away_sp": "Bubba Chandler",
    "home_sp": "Will Warren",
-   "line": 9,
-   "over": -112,
-   "under": 101,
+   "line": 9.5,
+   "over": -101,
+   "under": -113,
    "books": 9,
-   "lab": 94
+   "lab": 92
   },
   "823760": {
    "game": "New York Mets @ Milwaukee Brewers",
@@ -411,8 +411,8 @@
    "away_sp": "Matthew Liberatore",
    "home_sp": "Walbert Ureña",
    "line": 9,
-   "over": -102,
-   "under": -110,
+   "over": -108,
+   "under": 103,
    "books": 9,
    "lab": 42
   },
@@ -562,7 +562,7 @@
    "home_sp": "Michael Lorenzen",
    "line": 13,
    "over": -105,
-   "under": -107,
+   "under": -105,
    "books": 9,
    "lab": 87
   },
@@ -611,7 +611,7 @@
    "away_sp": "Kendry Rojas",
    "home_sp": "Parker Messick",
    "line": 8,
-   "over": -113,
+   "over": -110,
    "under": -102,
    "books": 9,
    "lab": 46
@@ -660,11 +660,11 @@
    "park_factor": 1.02,
    "away_sp": "Framber Valdez",
    "home_sp": "David Peterson",
-   "line": 8.5,
-   "over": -107,
-   "under": -107,
+   "line": 8,
+   "over": -112,
+   "under": -102,
    "books": 9,
-   "lab": 87
+   "lab": 94
   },
   "824735": {
    "game": "Baltimore Orioles @ Boston Red Sox",
@@ -710,11 +710,11 @@
    "park_factor": 1.06,
    "away_sp": "Kyle Bradish",
    "home_sp": "Ranger Suarez",
-   "line": 8,
-   "over": -107,
-   "under": 100,
+   "line": 8.5,
+   "over": 100,
+   "under": -113,
    "books": 9,
-   "lab": 78
+   "lab": 70
   },
   "824895": {
    "game": "San Diego Padres @ Atlanta Braves",
@@ -812,7 +812,7 @@
    "home_sp": "Kohl Drake",
    "line": 9.5,
    "over": -113,
-   "under": -102,
+   "under": 100,
    "books": 9,
    "lab": 49
   }

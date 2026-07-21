@@ -1,6 +1,6 @@
 {
   "date": "2026-07-21",
-  "generated_at": "2026-07-21T12:31:57.178Z",
+  "generated_at": "2026-07-21T13:21:29.079Z",
   "snapshot_type": "posted",
   "source_of_truth": "LyDia Daily Engine",
   "current_official_model": "moneyline_only",
@@ -364,13 +364,13 @@
       "side": "home",
       "model_probability": 0.6459,
       "model_probability_pre_bullpen": 0.6527,
-      "edge": 0.0721,
+      "edge": 0.0717,
       "status": "value_watch",
       "value_tag": "VALUE WATCH",
       "lab_score": 81,
       "lab_score_breakdown": {
         "score": 81,
-        "model_edge_points": 31.55,
+        "model_edge_points": 31.37,
         "pitcher_points": 25,
         "bullpen_points": 4.44,
         "market_points": 15,
@@ -386,7 +386,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Cleveland Guardians is a value watch, not an official pick. LyDia projects 64.6% against a 57.4% no-vig market number, a 7.2% model edge at -141. Lab Rating 8.1/10: model edge 31.55, pitcher 25, bullpen 4.44, market 15, base 5. It stayed a value watch because model win probability is 64.6%, below the 72.0% official-pick gate. Lineup check: Cleveland Guardians is swinging a hot bat (+0.079 OPS); Minnesota Twins is a touch below its season form (-0.038 OPS). Recent form supports this side as well.",
+      "read": "Cleveland Guardians is a value watch, not an official pick. LyDia projects 64.6% against a 57.4% no-vig market number, a 7.2% model edge at -143. Lab Rating 8.1/10: model edge 31.37, pitcher 25, bullpen 4.44, market 15, base 5. It stayed a value watch because model win probability is 64.6%, below the 72.0% official-pick gate. Lineup check: Cleveland Guardians is swinging a hot bat (+0.079 OPS); Minnesota Twins is a touch below its season form (-0.038 OPS). Recent form supports this side as well.",
       "pitcher_edge": {
         "team": "Cleveland Guardians",
         "gap": 21,
@@ -511,8 +511,8 @@
         "absolute_risk": "Pick side high"
       },
       "market": {
-        "no_vig_probability": 0.5738,
-        "best_price": -141,
+        "no_vig_probability": 0.5742,
+        "best_price": -143,
         "books": 9
       }
     },
@@ -532,7 +532,7 @@
       "side": "away",
       "model_probability": 0.6014,
       "model_probability_pre_bullpen": 0.6057,
-      "edge": 0.0983,
+      "edge": 0.0977,
       "status": "value_watch",
       "value_tag": "VALUE WATCH",
       "lab_score": 81,
@@ -554,7 +554,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Washington Nationals is a value watch, not an official pick. LyDia projects 60.1% against a 50.3% no-vig market number, a 9.8% model edge at -106. Lab Rating 8.1/10: model edge 35, pitcher 18.75, bullpen 7.07, market 15, base 5. It stayed a value watch because model win probability is 60.1%, below the 72.0% official-pick gate. Lineup check: Washington Nationals is swinging a hot bat (+0.119 OPS); Colorado Rockies is in a cold stretch (-0.081 OPS). Recent form supports this side as well.",
+      "read": "Washington Nationals is a value watch, not an official pick. LyDia projects 60.1% against a 50.4% no-vig market number, a 9.8% model edge at -108. Lab Rating 8.1/10: model edge 35, pitcher 18.75, bullpen 7.07, market 15, base 5. It stayed a value watch because model win probability is 60.1%, below the 72.0% official-pick gate. Lineup check: Washington Nationals is swinging a hot bat (+0.119 OPS); Colorado Rockies is in a cold stretch (-0.081 OPS). Recent form supports this side as well.",
       "pitcher_edge": {
         "team": "Washington Nationals",
         "gap": 15,
@@ -679,8 +679,8 @@
         "absolute_risk": "Elevated"
       },
       "market": {
-        "no_vig_probability": 0.5031,
-        "best_price": -106,
+        "no_vig_probability": 0.5037,
+        "best_price": -108,
         "books": 9
       }
     },
@@ -700,13 +700,13 @@
       "side": "away",
       "model_probability": 0.5467,
       "model_probability_pre_bullpen": 0.5644,
-      "edge": 0.0668,
+      "edge": 0.0688,
       "status": "value_watch",
       "value_tag": "VALUE WATCH",
       "lab_score": 77,
       "lab_score_breakdown": {
         "score": 77,
-        "model_edge_points": 29.24,
+        "model_edge_points": 30.09,
         "pitcher_points": 25,
         "bullpen_points": 2.27,
         "market_points": 15,
@@ -722,7 +722,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Detroit Tigers is a value watch, not an official pick. LyDia projects 54.7% against a 48.0% no-vig market number, a 6.7% model edge at +105. Lab Rating 7.7/10: model edge 29.24, pitcher 25, bullpen 2.27, market 15, base 5. Bullpen fatigue moved this probability down 1.8 points from 56.4% (starting pitcher and team strength only) to 54.7%. It stayed a value watch because model win probability is 54.7%, below the 72.0% official-pick gate; and Lab Rating is 7.7/10, below the 8.0/10 official-pick gate. Lineup check: Detroit Tigers is near its season form (+0.008 OPS); Chicago Cubs is a touch above its season form (+0.028 OPS).",
+      "read": "Detroit Tigers is a value watch, not an official pick. LyDia projects 54.7% against a 47.8% no-vig market number, a 6.9% model edge at +105. Lab Rating 7.7/10: model edge 30.09, pitcher 25, bullpen 2.27, market 15, base 5. Bullpen fatigue moved this probability down 1.8 points from 56.4% (starting pitcher and team strength only) to 54.7%. It stayed a value watch because model win probability is 54.7%, below the 72.0% official-pick gate; and Lab Rating is 7.7/10, below the 8.0/10 official-pick gate. Lineup check: Detroit Tigers is near its season form (+0.008 OPS); Chicago Cubs is a touch above its season form (+0.028 OPS).",
       "pitcher_edge": {
         "team": "Detroit Tigers",
         "gap": 24,
@@ -847,7 +847,7 @@
         "absolute_risk": "Pick side high"
       },
       "market": {
-        "no_vig_probability": 0.4798,
+        "no_vig_probability": 0.4779,
         "best_price": 105,
         "books": 9
       }
@@ -1036,7 +1036,7 @@
       "side": "home",
       "model_probability": 0.6799,
       "model_probability_pre_bullpen": 0.6851,
-      "edge": 0.124,
+      "edge": 0.1243,
       "status": "watchlist",
       "value_tag": "WATCHLIST",
       "lab_score": 74,
@@ -1183,7 +1183,7 @@
         "absolute_risk": "Normal"
       },
       "market": {
-        "no_vig_probability": 0.5559,
+        "no_vig_probability": 0.5556,
         "best_price": -133,
         "books": 9
       }
@@ -1204,13 +1204,13 @@
       "side": "away",
       "model_probability": 0.5675,
       "model_probability_pre_bullpen": 0.5704,
-      "edge": 0.0672,
+      "edge": 0.0645,
       "status": "watchlist",
       "value_tag": "WATCHLIST",
-      "lab_score": 73,
+      "lab_score": 72,
       "lab_score_breakdown": {
-        "score": 73,
-        "model_edge_points": 29.4,
+        "score": 72,
+        "model_edge_points": 28.23,
         "pitcher_points": 16.25,
         "bullpen_points": 7.38,
         "market_points": 15,
@@ -1226,7 +1226,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Tampa Bay Rays remains on the watchlist. Lab Rating 7.3/10: model edge 29.4, pitcher 16.25, bullpen 7.38, market 15, base 5. LyDia projects 56.7% against a 50.0% no-vig market number, a 6.7% model edge at +102. Tampa Bay Rays owns the starting pitcher edge by 13 points. Bullpen read: Neutral. Lineup check: Tampa Bay Rays is near its season form (+0.006 OPS); Toronto Blue Jays is a touch below its season form (-0.028 OPS).",
+      "read": "Tampa Bay Rays remains on the watchlist. Lab Rating 7.2/10: model edge 28.23, pitcher 16.25, bullpen 7.38, market 15, base 5. LyDia projects 56.7% against a 50.3% no-vig market number, a 6.5% model edge at -105. Tampa Bay Rays owns the starting pitcher edge by 13 points. Bullpen read: Neutral. Lineup check: Tampa Bay Rays is near its season form (+0.006 OPS); Toronto Blue Jays is a touch below its season form (-0.028 OPS).",
       "pitcher_edge": {
         "team": "Tampa Bay Rays",
         "gap": 13,
@@ -1351,8 +1351,8 @@
         "absolute_risk": "Normal"
       },
       "market": {
-        "no_vig_probability": 0.5003,
-        "best_price": 102,
+        "no_vig_probability": 0.5029,
+        "best_price": -105,
         "books": 9
       }
     },
@@ -1372,7 +1372,7 @@
       "side": "away",
       "model_probability": 0.5391,
       "model_probability_pre_bullpen": 0.5323,
-      "edge": 0.0839,
+      "edge": 0.084,
       "status": "watchlist",
       "value_tag": "WATCHLIST",
       "lab_score": 71,
@@ -1519,7 +1519,7 @@
         "absolute_risk": "Elevated"
       },
       "market": {
-        "no_vig_probability": 0.4552,
+        "no_vig_probability": 0.4551,
         "best_price": 115,
         "books": 9
       }
@@ -1708,7 +1708,7 @@
       "side": "home",
       "model_probability": 0.7541,
       "model_probability_pre_bullpen": 0.7677,
-      "edge": 0.1975,
+      "edge": 0.1985,
       "status": "watchlist",
       "value_tag": "WATCHLIST",
       "lab_score": 67,
@@ -1730,7 +1730,7 @@
         "edge_passed": true
       },
       "pass_reason": null,
-      "read": "Arizona Diamondbacks remains on the watchlist. Lab Rating 6.7/10: model edge 35, pitcher 10, bullpen 2.11, market 15, base 5. LyDia projects 75.4% against a 55.7% no-vig market number, a 19.7% model edge at -133. Arizona Diamondbacks owns the starting pitcher edge by 8 points. Bullpen read: Adds caution. Bullpen fatigue moved this probability down 1.4 points from 76.8% (starting pitcher and team strength only) to 75.4%. Lineup check: Arizona Diamondbacks is a touch above its season form (+0.042 OPS); Athletics is a touch below its season form (-0.045 OPS). Recent form supports this side as well.",
+      "read": "Arizona Diamondbacks remains on the watchlist. Lab Rating 6.7/10: model edge 35, pitcher 10, bullpen 2.11, market 15, base 5. LyDia projects 75.4% against a 55.6% no-vig market number, a 19.9% model edge at -132. Arizona Diamondbacks owns the starting pitcher edge by 8 points. Bullpen read: Adds caution. Bullpen fatigue moved this probability down 1.4 points from 76.8% (starting pitcher and team strength only) to 75.4%. Lineup check: Arizona Diamondbacks is a touch above its season form (+0.042 OPS); Athletics is a touch below its season form (-0.045 OPS). Recent form supports this side as well.",
       "pitcher_edge": {
         "team": "Arizona Diamondbacks",
         "gap": 8,
@@ -1855,8 +1855,8 @@
         "absolute_risk": "Pick side high"
       },
       "market": {
-        "no_vig_probability": 0.5566,
-        "best_price": -133,
+        "no_vig_probability": 0.5556,
+        "best_price": -132,
         "books": 9
       }
     },
@@ -1876,7 +1876,7 @@
       "side": "home",
       "model_probability": 0.673,
       "model_probability_pre_bullpen": 0.6906,
-      "edge": 0.1032,
+      "edge": 0.1023,
       "status": "pass",
       "value_tag": "PASS",
       "lab_score": 59,
@@ -2023,7 +2023,7 @@
         "absolute_risk": "Elevated"
       },
       "market": {
-        "no_vig_probability": 0.5698,
+        "no_vig_probability": 0.5706,
         "best_price": -140,
         "books": 9
       }
@@ -2042,17 +2042,17 @@
       "home_l10": "6-4",
       "pick_team": "New York Yankees",
       "side": "home",
-      "model_probability": 0.6115,
+      "model_probability": 0.6122,
       "model_probability_pre_bullpen": 0.6115,
-      "edge": 0.0325,
+      "edge": 0.031,
       "status": "pass",
       "value_tag": "PASS",
-      "lab_score": 53,
+      "lab_score": 52,
       "lab_score_breakdown": {
-        "score": 53,
-        "model_edge_points": 14.2,
+        "score": 52,
+        "model_edge_points": 13.57,
         "pitcher_points": 13.75,
-        "bullpen_points": 5,
+        "bullpen_points": 5.16,
         "market_points": 15,
         "base_points": 5,
         "note": "Lab Rating grades setup quality. It is not win probability."
@@ -2118,42 +2118,42 @@
         "window_days": 15
       },
       "model_v3": {
-        "p_home": 0.5865,
+        "p_home": 0.5872,
         "fip_away": 4.48,
         "fip_home": 4.06,
         "off_adj": -0.04,
-        "bp_adj": 0,
+        "bp_adj": 0.003,
         "version": "v3.1-bullpen",
-        "p_home_v2": 0.6115,
+        "p_home_v2": 0.6122,
         "note": "shadow A/B — does not drive picks"
       },
       "bullpen": {
         "pick_team": {
-          "score": 100,
+          "score": 99,
           "label": "High risk",
           "last_game_bp_ip": 4.3,
-          "last3_bp_ip": 20,
-          "last3_bp_runs": 11,
+          "last3_bp_ip": 15.3,
+          "last3_bp_runs": 6,
           "last_game_relievers": 4,
-          "last3_relievers": 16,
-          "back_to_back_arms": 6,
+          "last3_relievers": 12,
+          "back_to_back_arms": 4,
           "workload_read": "Heavy recent workload. Late-game pitching condition could materially affect the read.",
-          "score_reason": "High risk (10.0/10): 20 relief innings over the last three days — 4.3 of them in the last game, 6 arms pitched back-to-back days, and the pen was hit hard for 11 runs in that stretch. 16 reliever appearances in the window.",
+          "score_reason": "High risk (9.9/10): 15.3 relief innings over the last three days — 4.3 of them in the last game, 4 arms pitched back-to-back days, and the pen was hit hard for 6 runs in that stretch. 12 reliever appearances in the window.",
           "formula": "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
           "context_only": {
             "last_game_relievers": 4,
-            "last3_relievers": 16,
+            "last3_relievers": 12,
             "note": "Reliever counts are displayed for context only and do not add score points."
           },
           "component_scores": {
             "baseline": 45,
-            "last3_bp_ip": 38.5,
+            "last3_bp_ip": 22.2,
             "last_game_bp_ip": 5.3,
-            "back_to_back_arms": 36,
-            "bp_runs_allowed_3d": 10.5,
+            "back_to_back_arms": 24,
+            "bp_runs_allowed_3d": 3,
             "reliever_counts_context_only": 0,
             "no_recent_games_credit": 0,
-            "raw_score": 135.3
+            "raw_score": 99.5
           },
           "source_version": "bullpen-fatigue-v3-runs-aware"
         },
@@ -2191,7 +2191,7 @@
         "absolute_risk": "Both high"
       },
       "market": {
-        "no_vig_probability": 0.579,
+        "no_vig_probability": 0.5812,
         "best_price": -148,
         "books": 9
       }
@@ -2380,16 +2380,16 @@
       "side": "home",
       "model_probability": 0.5039,
       "model_probability_pre_bullpen": 0.5009,
-      "edge": -0.0017,
+      "edge": 0.0008,
       "status": "pass",
       "value_tag": "PASS",
-      "lab_score": 19,
+      "lab_score": 24,
       "lab_score_breakdown": {
-        "score": 19,
-        "model_edge_points": 0,
+        "score": 24,
+        "model_edge_points": 0.34,
         "pitcher_points": 0,
         "bullpen_points": 8.62,
-        "market_points": 5,
+        "market_points": 10,
         "base_points": 5,
         "note": "Lab Rating grades setup quality. It is not win probability."
       },
@@ -2401,8 +2401,8 @@
         "lab_score_passed": false,
         "edge_passed": false
       },
-      "pass_reason": "Market is higher than LyDia's model probability.",
-      "read": "Market is higher than LyDia's model probability.",
+      "pass_reason": "Model and market are too close for a clear official pick.",
+      "read": "Model and market are too close for a clear official pick.",
       "pitcher_edge": {
         "team": "Cincinnati Reds",
         "gap": 23,
@@ -2527,8 +2527,8 @@
         "absolute_risk": "Elevated"
       },
       "market": {
-        "no_vig_probability": 0.5056,
-        "best_price": -106,
+        "no_vig_probability": 0.5031,
+        "best_price": -105,
         "books": 9
       }
     }
