@@ -1,8 +1,8 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T18:13:41.369Z",
+ "generated_at": "2026-07-21T18:32:53.314Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
- "events_fetched": 15,
+ "events_fetched": 14,
  "probables": {
   "822787": {
    "away": "Drew Rasmussen",
@@ -19,10 +19,6 @@
   "823437": {
    "away": "Justin Wrobleski",
    "home": "Zack Wheeler"
-  },
-  "823519": {
-   "away": "Bubba Chandler",
-   "home": "Will Warren"
   },
   "823760": {
    "away": "Zac Thornton",
@@ -81,7 +77,7 @@
    "name": "Zack Wheeler",
    "line": 6.5,
    "over": -138,
-   "under": 119,
+   "under": 117,
    "books": 6,
    "game": "Los Angeles Dodgers @ Philadelphia Phillies",
    "projection": 6.95,
@@ -92,40 +88,18 @@
    "name": "Justin Wrobleski",
    "line": 5.5,
    "over": 102,
-   "under": -122,
+   "under": -118,
    "books": 6,
    "game": "Los Angeles Dodgers @ Philadelphia Phillies",
    "projection": 5.17,
    "projection_raw": 5.77,
    "game_pk": 823437
   },
-  "will warren": {
-   "name": "Will Warren",
-   "line": 5.5,
-   "over": 106,
-   "under": -135,
-   "books": 3,
-   "game": "Pittsburgh Pirates @ New York Yankees",
-   "projection": 4.66,
-   "projection_raw": 5.26,
-   "game_pk": 823519
-  },
-  "bubba chandler": {
-   "name": "Bubba Chandler",
-   "line": 4.5,
-   "over": -125,
-   "under": 100,
-   "books": 3,
-   "game": "Pittsburgh Pirates @ New York Yankees",
-   "projection": 4.28,
-   "projection_raw": 4.88,
-   "game_pk": 823519
-  },
   "drew rasmussen": {
    "name": "Drew Rasmussen",
    "line": 4.5,
    "over": 105,
-   "under": -122,
+   "under": -127,
    "books": 5,
    "game": "Tampa Bay Rays @ Toronto Blue Jays",
    "projection": 4.54,
@@ -209,8 +183,8 @@
   "zach thornton": {
    "name": "Zach Thornton",
    "line": 4.5,
-   "over": 129,
-   "under": -162,
+   "over": 128,
+   "under": -159,
    "books": 6,
    "game": "New York Mets @ Milwaukee Brewers"
   },
@@ -251,7 +225,7 @@
    "name": "Kumar Rocker",
    "line": 4.5,
    "over": -141,
-   "under": 121,
+   "under": 124,
    "books": 6,
    "game": "Chicago White Sox @ Texas Rangers",
    "projection": 4.65,
@@ -311,7 +285,7 @@
    "name": "Matthew Liberatore",
    "line": 5.5,
    "over": 124,
-   "under": -151,
+   "under": -145,
    "books": 6,
    "game": "St. Louis Cardinals @ Los Angeles Angels",
    "projection": 4.49,
@@ -333,7 +307,7 @@
    "name": "Kohl Drake",
    "line": 3.5,
    "over": -130,
-   "under": 109,
+   "under": 110,
    "books": 4,
    "game": "Athletics @ Arizona Diamondbacks"
   },
@@ -351,7 +325,7 @@
   "chase burns": {
    "name": "Chase Burns",
    "line": 6.5,
-   "over": -150,
+   "over": -149,
    "under": 132,
    "books": 6,
    "game": "Cincinnati Reds @ Seattle Mariners",
@@ -402,6 +376,28 @@
    "projection": 4.43,
    "projection_raw": 5.03,
    "game_pk": 824005
+  },
+  "bubba chandler": {
+   "name": "Bubba Chandler",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Pittsburgh Pirates @ New York Yankees",
+   "projection": 4.28,
+   "projection_raw": 4.88,
+   "game_pk": 823519
+  },
+  "will warren": {
+   "name": "Will Warren",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Pittsburgh Pirates @ New York Yankees",
+   "projection": 4.66,
+   "projection_raw": 5.26,
+   "game_pk": 823519
   },
   "ranger suarez": {
    "name": "Ranger Suarez",

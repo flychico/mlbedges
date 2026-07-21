@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T18:13:42.055Z",
+ "generated_at": "2026-07-21T18:32:53.966Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.53,
  "probables": {
@@ -113,8 +113,8 @@
    "away_sp": "Drew Rasmussen",
    "home_sp": "Kevin Gausman",
    "line": 7.5,
-   "over": -104,
-   "under": -106,
+   "over": -109,
+   "under": -104,
    "books": 9,
    "lab": 46
   },
@@ -169,9 +169,9 @@
    "away_sp": "Noah Schultz",
    "home_sp": "Kumar Rocker",
    "line": 8.5,
-   "over": -113,
-   "under": 104,
-   "books": 9,
+   "over": -110,
+   "under": 103,
+   "books": 4,
    "lab": 79
   },
   "823114": {
@@ -225,7 +225,7 @@
    "away_sp": "Chase Burns",
    "home_sp": "Luis Castillo",
    "line": 8,
-   "over": -112,
+   "over": -113,
    "under": -105,
    "books": 4,
    "lab": 43
@@ -280,11 +280,11 @@
    "park_factor": 1.06,
    "away_sp": "Justin Wrobleski",
    "home_sp": "Zack Wheeler",
-   "line": 9,
-   "over": 105,
-   "under": -115,
-   "books": 9,
-   "lab": 46
+   "line": 10,
+   "over": -107,
+   "under": -107,
+   "books": 4,
+   "lab": 69
   },
   "823519": {
    "game": "Pittsburgh Pirates @ New York Yankees",
@@ -448,11 +448,11 @@
    "park_factor": 1,
    "away_sp": "Matthew Liberatore",
    "home_sp": "Walbert Ureña",
-   "line": 8.5,
-   "over": -102,
-   "under": -113,
-   "books": 3,
-   "lab": 46
+   "line": 9,
+   "over": -107,
+   "under": 100,
+   "books": 4,
+   "lab": 42
   },
   "824085": {
    "game": "San Francisco Giants @ Kansas City Royals",
@@ -460,7 +460,7 @@
    "projection": 9.6,
    "projection_raw": 9,
    "proj_away": 4.3,
-   "proj_home": 4.7,
+   "proj_home": 4.6,
    "away": {
     "team": "San Francisco Giants",
     "rpg": 4.14,
@@ -494,11 +494,11 @@
     "opp_sp_fip": 4.5,
     "opp_sp_ip": 5.2,
     "pitch_factor": 1.041,
-    "opp_pen_risk": 61,
+    "opp_pen_risk": 60,
     "opp_pen_fatigue": 65,
-    "opp_pen_efficiency": 58,
+    "opp_pen_efficiency": 60,
     "opp_pen_efficiency_label": "Effective",
-    "pen_factor": 1.012,
+    "pen_factor": 1.01,
     "sp_sample_ok": true
    },
    "park_factor": 0.96,
@@ -506,7 +506,7 @@
    "home_sp": "Luinder Avila",
    "line": 9,
    "over": -112,
-   "under": -108,
+   "under": -102,
    "books": 4,
    "lab": 50
   },
@@ -560,11 +560,11 @@
    "park_factor": 0.99,
    "away_sp": "Tyler Phillips",
    "home_sp": "Tatsuya Imai",
-   "line": 9,
-   "over": -118,
-   "under": 103,
-   "books": 9,
-   "lab": 53
+   "line": 8.5,
+   "over": -113,
+   "under": -105,
+   "books": 4,
+   "lab": 61
   },
   "824329": {
    "game": "Washington Nationals @ Colorado Rockies",
@@ -616,11 +616,11 @@
    "park_factor": 1.18,
    "away_sp": "Carson Palmquist",
    "home_sp": "Michael Lorenzen",
-   "line": 12,
-   "over": 103,
-   "under": -118,
+   "line": 11.5,
+   "over": 100,
+   "under": -113,
    "books": 4,
-   "lab": 77
+   "lab": 85
   },
   "824409": {
    "game": "Minnesota Twins @ Cleveland Guardians",
@@ -675,7 +675,7 @@
    "line": 8,
    "over": -102,
    "under": -113,
-   "books": 3,
+   "books": 4,
    "lab": 45
   },
   "824652": {
@@ -729,9 +729,9 @@
    "away_sp": "Framber Valdez",
    "home_sp": "David Peterson",
    "line": 8,
-   "over": 100,
-   "under": -108,
-   "books": 9,
+   "over": -102,
+   "under": -113,
+   "books": 4,
    "lab": 94
   },
   "824735": {
@@ -897,9 +897,9 @@
    "away_sp": "Jack Perkins",
    "home_sp": "Kohl Drake",
    "line": 9,
-   "over": -102,
-   "under": -113,
-   "books": 3,
+   "over": -113,
+   "under": -102,
+   "books": 4,
    "lab": 57
   }
  },
