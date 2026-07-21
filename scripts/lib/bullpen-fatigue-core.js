@@ -91,7 +91,7 @@ function createTeamState(todayGames) {
   return teams;
 }
 
-function processBoxSide(box, side, teamId, date, teams) {
+function processBoxSide(box, side, teamId, date, teams, seq) {
   const team = teams[teamId];
   if (!team) return;
 
@@ -138,6 +138,7 @@ function processBoxSide(box, side, teamId, date, teams) {
   }
   team.games.push({
     date,
+    seq,
     bpIP: Math.max(0, openerGame ? totalIP : totalIP - starterIP),
     relievers,
     bpRuns,
@@ -163,18 +164,30 @@ function countBackToBackArms(pitcherDates) {
 }
 
 function scoreTeam(team) {
-  const games = [...(team.games || [])].sort((a, b) => new Date(b.date) - new Date(a.date));
+  // Sort most-recent-game-first. Same calendar date can hold two games
+  // (doubleheader) — date alone can't order those, so seq (assigned in
+  // schedule/gameNumber order during collection) breaks the tie and puts
+  // the later game of the day first, not whichever game happened to get
+  // pushed first.
+  const games = [...(team.games || [])].sort((a, b) => (new Date(b.date) - new Date(a.date)) || ((b.seq || 0) - (a.seq || 0)));
   const last = games[0] || { bpIP: 0, relievers: 0, bpRuns: 0, date: null };
   const last3BP = games.reduce((s, g) => s + g.bpIP, 0);
   const last3Runs = games.reduce((s, g) => s + (g.bpRuns || 0), 0);
   const last3Relievers = games.reduce((s, g) => s + g.relievers, 0);
   const b2b = countBackToBackArms(team.pitcherDates);
   const gamesTracked = games.length;
+  // Expected bullpen IP baseline scales with actual games played in the
+  // window, not calendar days — a doubleheader means 4 team-games can land
+  // inside a 3-calendar-day lookback, and comparing that against a flat
+  // 3-game assumption (9 IP) overstates fatigue for volume that was never
+  // unusual per game, just unusually scheduled. 3 IP/game matches the same
+  // assumption already used for the single-game baseline below.
+  const expectedBP = 3 * gamesTracked;
 
   // Active owned formula v3. Reliever counts remain context-only.
   const components = {
     baseline: 45,
-    last3_bp_ip: (last3BP - 9) * 3.5,
+    last3_bp_ip: (last3BP - expectedBP) * 3.5,
     last_game_bp_ip: (last.bpIP - 3) * 4,
     back_to_back_arms: b2b * 6,
     bp_runs_allowed_3d: gamesTracked ? clamp((last3Runs - 4) * 1.5, -6, 12) : 0,
@@ -293,6 +306,7 @@ async function buildBullpenSource({ date, todayGames, fetchJson, generatedAt }) 
   // weren't actually played, regardless of abstractGameState.
   const NOT_PLAYED_STATES = new Set(["Postponed", "Suspended", "Cancelled", "Suspended: Rain"]);
   const processedGamePks = new Set();
+  let gameSeq = 0;
 
   for (const priorDate of Array.from({ length: LOOKBACK_DAYS }, (_, i) => dateShift(date, -(i + 1)))) {
     let schedule = [];
@@ -313,8 +327,9 @@ async function buildBullpenSource({ date, todayGames, fetchJson, generatedAt }) 
 
       try {
         const box = await fetchJson(`https://statsapi.mlb.com/api/v1/game/${g.gamePk}/boxscore`);
-        processBoxSide(box, "away", awayId, priorDate, teams);
-        processBoxSide(box, "home", homeId, priorDate, teams);
+        const seq = gameSeq++;
+        processBoxSide(box, "away", awayId, priorDate, teams, seq);
+        processBoxSide(box, "home", homeId, priorDate, teams, seq);
         processedGamePks.add(g.gamePk);
       } catch (err) {
         lookupWarnings.push(`Could not load boxscore ${g.gamePk}: ${err.message}`);
