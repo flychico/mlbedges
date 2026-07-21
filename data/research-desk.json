@@ -1,6 +1,6 @@
 {
   "date": "2026-07-21",
-  "generated_at": "2026-07-21T20:42:49.875Z",
+  "generated_at": "2026-07-21T21:05:16.962Z",
   "stale_reuse": false,
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
@@ -31,6 +31,19 @@
       "game": "San Diego Padres @ Atlanta Braves",
       "selected_side": null,
       "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 73.1% model probability and 7.4/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
+    },
+    {
+      "title": "Orioles vs Red Sox Predictions, Start Time, Odds: MLB Picks for Tuesday - Action Network",
+      "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQSEZTVGlkZ2xzOVJTUmVWdGtveUZfQVU1X01WM0xsYjNnaUdPOGd0TXNzYTZ4QVhlMks4SUlFWncxTlc2LVlsVGZpWU9XWWEtaUg5a1ZDejNUYnVhT3YtY1hjb2FBeVdUS1FweF9uRE45UzR6T3hyZENtX2RaMUtCMWhVajZDWlZaY0lZcFV2SlNwLTRmdEJaME1uUGhvOXpUaElpVU02WncxS3RoRUtN?oc=5",
+      "published_at": "2026-07-21T20:15:00.000Z",
+      "description": "Orioles vs Red Sox Predictions, Start Time, Odds: MLB Picks for Tuesday &nbsp;&nbsp; Action Network",
+      "source": "Action Network",
+      "published_label": "Jul 21, 2026",
+      "section": "unable_to_classify",
+      "classification_confidence": "no_explicit_side",
+      "game": "Baltimore Orioles @ Boston Red Sox",
+      "selected_side": null,
+      "lydia_takeaway": "This article matches Baltimore Orioles @ Boston Red Sox, but the headline and summary do not clearly identify a selected side. LyDia currently has Boston Red Sox Money Line at 63.3% model probability and 5.5/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Pirates vs Yankees Prediction, Picks & Odds for Today's MLB Game - Covers.com",
@@ -163,19 +176,6 @@
       "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
     },
     {
-      "title": "A’s vs Diamondbacks Prediction, Pick, MLB Odds for Tuesday, July 21 - Action Network",
-      "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPcmNOYVdzVFl3M3JGRWdwOGNGSkE1akVtVEp0d3d5VWpOeGZRNGhNeFN3S1FoVTJfNzI0WmRWOVZIcm1jSHlibHpuOXZ1MV9FMnBneVM4ZDVKZFo5Qm5uaFo5UnBGUC1WdHJQeENWQWM4MGpidWdid1RfMDhVSi0wcGd4UF9uVEpFdjFzcmh3Z01xT2ltVG5ldlVEWEpRTFdyTHc?oc=5",
-      "published_at": "2026-07-21T17:55:00.000Z",
-      "description": "A’s vs Diamondbacks Prediction, Pick, MLB Odds for Tuesday, July 21 &nbsp;&nbsp; Action Network",
-      "source": "Action Network",
-      "published_label": "Jul 21, 2026",
-      "section": "unable_to_classify",
-      "classification_confidence": "no_explicit_side",
-      "game": "Athletics @ Arizona Diamondbacks",
-      "selected_side": null,
-      "lydia_takeaway": "This article matches Athletics @ Arizona Diamondbacks, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 75.4% model probability and 6.7/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
-    },
-    {
       "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Tuesday, July 21 - Covers.com",
       "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPcGdCSXg2bHNHRFVlM25IOENtazQ1VVJja1YtTDdwTmVEMmV6RG9kaGVBVVZKRUYtWnM5OW9WSmg5TEd4NDN4LXk5bFdkcXVQa3lNaTlKRUtYNGRvMlZ6STZEMXhRTXE1S1FrVUUyWlRJRUliRlBTMUVoQjNQRkN3MA?oc=5",
       "published_at": "2026-07-21T17:48:00.000Z",
@@ -187,19 +187,6 @@
       "game": null,
       "selected_side": null,
       "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
-    },
-    {
-      "title": "Mets vs Brewers Prediction, Pick, MLB Odds for Tuesday, July 21 - Action Network",
-      "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQU0V2b2hlWDEyYmVxSVpWUmotWTJ5emhncVNDcEFrdTJJeXVMTUpkbmdLbG1lTnBGaTVlOW9vd1dxV2l2TUtCLWhIVUJSRFpCdjVjUUFMcDNOVHdUSmszckpSSG5NV1phNW1lVDVyX3pfTDg5Y09UUkhMVnZJaG80azFQazNMd1h0LUJoTVREdEQwTndrUkdmU2tIMEtveDJ2VEU2TnQ5ZkRWaVBvQWc?oc=5",
-      "published_at": "2026-07-21T17:45:00.000Z",
-      "description": "Mets vs Brewers Prediction, Pick, MLB Odds for Tuesday, July 21 &nbsp;&nbsp; Action Network",
-      "source": "Action Network",
-      "published_label": "Jul 21, 2026",
-      "section": "unable_to_classify",
-      "classification_confidence": "no_explicit_side",
-      "game": "New York Mets @ Milwaukee Brewers",
-      "selected_side": null,
-      "lydia_takeaway": "This article matches New York Mets @ Milwaukee Brewers, but the headline and summary do not clearly identify a selected side. LyDia currently has Milwaukee Brewers Money Line at 67.8% model probability and 6.0/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Picks, Predictions Today: Nick Martin’s Best Bets for Tuesday, July 21 - Action Network",
@@ -239,6 +226,19 @@
       "game": null,
       "selected_side": null,
       "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+    },
+    {
+      "title": "MLB Strikeout Props & Pitcher Best Bets for Today, July 21 - Covers.com",
+      "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQenNOcWMxQmlxcWg2ZTlWS0tXRkJpbnJIaEZweV81MnBNNVRQQXk3dnZheEJEQ1lwTTZyamVNcFh4RTFXc2VqdldWMDJqS2dmMWNta2xGMGJPVDFoR1E2RGZiVnRTcHB6LVUteGdqRjI4dkdBTUc2TDZaMDRwb3hYNzBuX0E?oc=5",
+      "published_at": "2026-07-21T16:15:00.000Z",
+      "description": "MLB Strikeout Props & Pitcher Best Bets for Today, July 21 &nbsp;&nbsp; Covers.com",
+      "source": "Covers.com",
+      "published_label": "Jul 21, 2026",
+      "section": "market_context",
+      "classification_confidence": "no_game_match",
+      "game": null,
+      "selected_side": null,
+      "lydia_takeaway": "Compare this pitching angle with LyDia's Pitcher Matchup Tool and current market price."
     }
   ],
   "groups": {
@@ -361,6 +361,19 @@
         "game": null,
         "selected_side": null,
         "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      },
+      {
+        "title": "MLB Strikeout Props & Pitcher Best Bets for Today, July 21 - Covers.com",
+        "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQenNOcWMxQmlxcWg2ZTlWS0tXRkJpbnJIaEZweV81MnBNNVRQQXk3dnZheEJEQ1lwTTZyamVNcFh4RTFXc2VqdldWMDJqS2dmMWNta2xGMGJPVDFoR1E2RGZiVnRTcHB6LVUteGdqRjI4dkdBTUc2TDZaMDRwb3hYNzBuX0E?oc=5",
+        "published_at": "2026-07-21T16:15:00.000Z",
+        "description": "MLB Strikeout Props & Pitcher Best Bets for Today, July 21 &nbsp;&nbsp; Covers.com",
+        "source": "Covers.com",
+        "published_label": "Jul 21, 2026",
+        "section": "market_context",
+        "classification_confidence": "no_game_match",
+        "game": null,
+        "selected_side": null,
+        "lydia_takeaway": "Compare this pitching angle with LyDia's Pitcher Matchup Tool and current market price."
       }
     ],
     "unable_to_classify": [
@@ -389,6 +402,19 @@
         "game": "San Diego Padres @ Atlanta Braves",
         "selected_side": null,
         "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 73.1% model probability and 7.4/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
+      },
+      {
+        "title": "Orioles vs Red Sox Predictions, Start Time, Odds: MLB Picks for Tuesday - Action Network",
+        "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQSEZTVGlkZ2xzOVJTUmVWdGtveUZfQVU1X01WM0xsYjNnaUdPOGd0TXNzYTZ4QVhlMks4SUlFWncxTlc2LVlsVGZpWU9XWWEtaUg5a1ZDejNUYnVhT3YtY1hjb2FBeVdUS1FweF9uRE45UzR6T3hyZENtX2RaMUtCMWhVajZDWlZaY0lZcFV2SlNwLTRmdEJaME1uUGhvOXpUaElpVU02WncxS3RoRUtN?oc=5",
+        "published_at": "2026-07-21T20:15:00.000Z",
+        "description": "Orioles vs Red Sox Predictions, Start Time, Odds: MLB Picks for Tuesday &nbsp;&nbsp; Action Network",
+        "source": "Action Network",
+        "published_label": "Jul 21, 2026",
+        "section": "unable_to_classify",
+        "classification_confidence": "no_explicit_side",
+        "game": "Baltimore Orioles @ Boston Red Sox",
+        "selected_side": null,
+        "lydia_takeaway": "This article matches Baltimore Orioles @ Boston Red Sox, but the headline and summary do not clearly identify a selected side. LyDia currently has Boston Red Sox Money Line at 63.3% model probability and 5.5/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Cardinals vs. Angels Prediction | MLB Picks & Odds for Tuesday, July 21 - Sportsbook Review",
@@ -441,32 +467,6 @@
         "game": "Los Angeles Dodgers @ Philadelphia Phillies",
         "selected_side": null,
         "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 53.7% model probability and 5.0/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-      },
-      {
-        "title": "A’s vs Diamondbacks Prediction, Pick, MLB Odds for Tuesday, July 21 - Action Network",
-        "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPcmNOYVdzVFl3M3JGRWdwOGNGSkE1akVtVEp0d3d5VWpOeGZRNGhNeFN3S1FoVTJfNzI0WmRWOVZIcm1jSHlibHpuOXZ1MV9FMnBneVM4ZDVKZFo5Qm5uaFo5UnBGUC1WdHJQeENWQWM4MGpidWdid1RfMDhVSi0wcGd4UF9uVEpFdjFzcmh3Z01xT2ltVG5ldlVEWEpRTFdyTHc?oc=5",
-        "published_at": "2026-07-21T17:55:00.000Z",
-        "description": "A’s vs Diamondbacks Prediction, Pick, MLB Odds for Tuesday, July 21 &nbsp;&nbsp; Action Network",
-        "source": "Action Network",
-        "published_label": "Jul 21, 2026",
-        "section": "unable_to_classify",
-        "classification_confidence": "no_explicit_side",
-        "game": "Athletics @ Arizona Diamondbacks",
-        "selected_side": null,
-        "lydia_takeaway": "This article matches Athletics @ Arizona Diamondbacks, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 75.4% model probability and 6.7/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
-      },
-      {
-        "title": "Mets vs Brewers Prediction, Pick, MLB Odds for Tuesday, July 21 - Action Network",
-        "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQU0V2b2hlWDEyYmVxSVpWUmotWTJ5emhncVNDcEFrdTJJeXVMTUpkbmdLbG1lTnBGaTVlOW9vd1dxV2l2TUtCLWhIVUJSRFpCdjVjUUFMcDNOVHdUSmszckpSSG5NV1phNW1lVDVyX3pfTDg5Y09UUkhMVnZJaG80azFQazNMd1h0LUJoTVREdEQwTndrUkdmU2tIMEtveDJ2VEU2TnQ5ZkRWaVBvQWc?oc=5",
-        "published_at": "2026-07-21T17:45:00.000Z",
-        "description": "Mets vs Brewers Prediction, Pick, MLB Odds for Tuesday, July 21 &nbsp;&nbsp; Action Network",
-        "source": "Action Network",
-        "published_label": "Jul 21, 2026",
-        "section": "unable_to_classify",
-        "classification_confidence": "no_explicit_side",
-        "game": "New York Mets @ Milwaukee Brewers",
-        "selected_side": null,
-        "lydia_takeaway": "This article matches New York Mets @ Milwaukee Brewers, but the headline and summary do not clearly identify a selected side. LyDia currently has Milwaukee Brewers Money Line at 67.8% model probability and 6.0/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "MLB Home Run Picks Today: Player Props for Phillies vs Dodgers, A's vs Diamondbacks, More for Tuesday, July 21 - Action Network",

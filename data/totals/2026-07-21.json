@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T20:42:52.223Z",
+ "generated_at": "2026-07-21T21:05:19.488Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.53,
  "probables": {
@@ -113,7 +113,7 @@
    "away_sp": "Drew Rasmussen",
    "home_sp": "Kevin Gausman",
    "line": 7.5,
-   "over": -107,
+   "over": -108,
    "under": -104,
    "books": 9,
    "lab": 46
@@ -224,11 +224,11 @@
    "park_factor": 0.92,
    "away_sp": "Chase Burns",
    "home_sp": "Luis Castillo",
-   "line": 8,
-   "over": -111,
-   "under": -105,
+   "line": 7.5,
+   "over": -128,
+   "under": 112,
    "books": 6,
-   "lab": 43
+   "lab": 45
   },
   "823437": {
    "game": "Los Angeles Dodgers @ Philadelphia Phillies",
@@ -560,11 +560,11 @@
    "park_factor": 0.99,
    "away_sp": "Tyler Phillips",
    "home_sp": "Tatsuya Imai",
-   "line": 7.5,
-   "over": -123,
-   "under": 107,
+   "line": 8,
+   "over": -116,
+   "under": 101,
    "books": 6,
-   "lab": 77
+   "lab": 69
   },
   "824329": {
    "game": "Washington Nationals @ Colorado Rockies",
