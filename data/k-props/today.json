@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T21:57:11.383Z",
+ "generated_at": "2026-07-21T22:12:32.498Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
  "events_fetched": 13,
  "probables": {
@@ -61,41 +61,19 @@
   "parker messick": {
    "name": "Parker Messick",
    "line": 5.5,
-   "over": -101,
-   "under": -125,
+   "over": -102,
+   "under": -115,
    "books": 5,
    "game": "Minnesota Twins @ Cleveland Guardians",
    "projection": 5.63,
    "projection_raw": 6.23,
    "game_pk": 824409
   },
-  "zack wheeler": {
-   "name": "Zack Wheeler",
-   "line": 6.5,
-   "over": -125,
-   "under": 106,
-   "books": 6,
-   "game": "Los Angeles Dodgers @ Philadelphia Phillies",
-   "projection": 6.95,
-   "projection_raw": 7.55,
-   "game_pk": 823437
-  },
-  "justin wrobleski": {
-   "name": "Justin Wrobleski",
-   "line": 5.5,
-   "over": 100,
-   "under": -110,
-   "books": 6,
-   "game": "Los Angeles Dodgers @ Philadelphia Phillies",
-   "projection": 5.17,
-   "projection_raw": 5.77,
-   "game_pk": 823437
-  },
   "drew rasmussen": {
    "name": "Drew Rasmussen",
    "line": 4.5,
    "over": -105,
-   "under": -109,
+   "under": -101,
    "books": 5,
    "game": "Tampa Bay Rays @ Toronto Blue Jays",
    "projection": 4.54,
@@ -113,11 +91,33 @@
    "projection_raw": 5.21,
    "game_pk": 822787
   },
+  "zack wheeler": {
+   "name": "Zack Wheeler",
+   "line": 6.5,
+   "over": -125,
+   "under": 104,
+   "books": 6,
+   "game": "Los Angeles Dodgers @ Philadelphia Phillies",
+   "projection": 6.95,
+   "projection_raw": 7.55,
+   "game_pk": 823437
+  },
+  "justin wrobleski": {
+   "name": "Justin Wrobleski",
+   "line": 5.5,
+   "over": 100,
+   "under": -110,
+   "books": 6,
+   "game": "Los Angeles Dodgers @ Philadelphia Phillies",
+   "projection": 5.17,
+   "projection_raw": 5.77,
+   "game_pk": 823437
+  },
   "walker buehler": {
    "name": "Walker Buehler",
    "line": 3.5,
    "over": -140,
-   "under": 135,
+   "under": 132,
    "books": 6,
    "game": "San Diego Padres @ Atlanta Braves",
    "projection": 3.42,
@@ -127,8 +127,8 @@
   "reynaldo lopez": {
    "name": "Reynaldo Lopez",
    "line": 4.5,
-   "over": 125,
-   "under": -149,
+   "over": 120,
+   "under": -143,
    "books": 6,
    "game": "San Diego Padres @ Atlanta Braves"
   },
@@ -157,8 +157,8 @@
   "brandon sproat": {
    "name": "Brandon Sproat",
    "line": 4.5,
-   "over": -151,
-   "under": 134,
+   "over": -157,
+   "under": 136,
    "books": 6,
    "game": "New York Mets @ Milwaukee Brewers",
    "projection": 4.82,
@@ -168,7 +168,7 @@
   "zach thornton": {
    "name": "Zach Thornton",
    "line": 4.5,
-   "over": 126,
+   "over": 125,
    "under": -138,
    "books": 6,
    "game": "New York Mets @ Milwaukee Brewers"
@@ -272,7 +272,7 @@
   "jack perkins": {
    "name": "Jack Perkins",
    "line": 4.5,
-   "over": 100,
+   "over": 125,
    "under": -125,
    "books": 6,
    "game": "Athletics @ Arizona Diamondbacks",
@@ -284,7 +284,7 @@
    "name": "Kohl Drake",
    "line": 3.5,
    "over": -130,
-   "under": 112,
+   "under": 116,
    "books": 4,
    "game": "Athletics @ Arizona Diamondbacks"
   },
@@ -302,7 +302,7 @@
   "chase burns": {
    "name": "Chase Burns",
    "line": 6.5,
-   "over": -150,
+   "over": -152,
    "under": 125,
    "books": 6,
    "game": "Cincinnati Reds @ Seattle Mariners",

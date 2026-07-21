@@ -1,6 +1,6 @@
 {
   "date": "2026-07-21",
-  "generated_at": "2026-07-21T21:57:07.078Z",
+  "generated_at": "2026-07-21T22:12:27.682Z",
   "source_of_truth": "scripts/lib/bullpen-fatigue-core.js",
   "version": "bullpen-fatigue-v4-fatigue-efficiency-split",
   "method": "Generated single source of truth. Website pages display this JSON and do not calculate separate bullpen scores in the browser.",

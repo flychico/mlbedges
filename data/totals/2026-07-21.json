@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T21:57:11.785Z",
+ "generated_at": "2026-07-21T22:12:32.905Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.53,
  "probables": {
@@ -109,8 +109,8 @@
    "away_sp": "Drew Rasmussen",
    "home_sp": "Kevin Gausman",
    "line": 7.5,
-   "over": 100,
-   "under": -108,
+   "over": -102,
+   "under": -109,
    "books": 9,
    "lab": 46
   },
