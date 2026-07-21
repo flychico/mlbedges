@@ -101,24 +101,39 @@ function processBoxSide(box, side, teamId, date, teams, seq) {
   let totalIP = 0;
   let starterIP = 0;
   let starterRuns = 0;
+  let starterER = 0;
+  let starterH = 0;
+  let starterBB = 0;
   let starterId = null;
   let relievers = 0;
   let bpRuns = 0;
+  let bpER = 0;
+  let bpH = 0;
+  let bpBB = 0;
   const relieverIds = [];
+
+  const pstat = player => (player && player.stats && player.stats.pitching) || {};
 
   for (let i = 0; i < tb.pitchers.length; i++) {
     const id = tb.pitchers[i];
     const player = tb.players["ID" + id];
-    const ip = ipToNum(player && player.stats && player.stats.pitching && player.stats.pitching.inningsPitched);
+    const stats = pstat(player);
+    const ip = ipToNum(stats.inningsPitched);
     totalIP += ip;
 
     if (i === 0) {
       starterIP = ip;
       starterId = id;
-      starterRuns = Number(player && player.stats && player.stats.pitching && player.stats.pitching.runs) || 0;
+      starterRuns = Number(stats.runs) || 0;
+      starterER = Number(stats.earnedRuns) || 0;
+      starterH = Number(stats.hits) || 0;
+      starterBB = Number(stats.baseOnBalls) || 0;
     } else {
       relievers += 1;
-      bpRuns += Number(player && player.stats && player.stats.pitching && player.stats.pitching.runs) || 0;
+      bpRuns += Number(stats.runs) || 0;
+      bpER += Number(stats.earnedRuns) || 0;
+      bpH += Number(stats.hits) || 0;
+      bpBB += Number(stats.baseOnBalls) || 0;
       relieverIds.push(id);
       if (!team.pitcherDates[id]) team.pitcherDates[id] = new Set();
       team.pitcherDates[id].add(date);
@@ -133,6 +148,9 @@ function processBoxSide(box, side, teamId, date, teams, seq) {
   if (openerGame && starterId) {
     relievers += 1;
     bpRuns += starterRuns;
+    bpER += starterER;
+    bpH += starterH;
+    bpBB += starterBB;
     if (!team.pitcherDates[starterId]) team.pitcherDates[starterId] = new Set();
     team.pitcherDates[starterId].add(date);
   }
@@ -142,6 +160,9 @@ function processBoxSide(box, side, teamId, date, teams, seq) {
     bpIP: Math.max(0, openerGame ? totalIP : totalIP - starterIP),
     relievers,
     bpRuns,
+    bpER,
+    bpH,
+    bpBB,
     opener_game: openerGame,
     relieverIds
   });
@@ -170,9 +191,12 @@ function scoreTeam(team) {
   // the later game of the day first, not whichever game happened to get
   // pushed first.
   const games = [...(team.games || [])].sort((a, b) => (new Date(b.date) - new Date(a.date)) || ((b.seq || 0) - (a.seq || 0)));
-  const last = games[0] || { bpIP: 0, relievers: 0, bpRuns: 0, date: null };
+  const last = games[0] || { bpIP: 0, relievers: 0, bpRuns: 0, bpER: 0, bpH: 0, bpBB: 0, date: null };
   const last3BP = games.reduce((s, g) => s + g.bpIP, 0);
   const last3Runs = games.reduce((s, g) => s + (g.bpRuns || 0), 0);
+  const last3ER = games.reduce((s, g) => s + (g.bpER || 0), 0);
+  const last3H = games.reduce((s, g) => s + (g.bpH || 0), 0);
+  const last3BB = games.reduce((s, g) => s + (g.bpBB || 0), 0);
   const last3Relievers = games.reduce((s, g) => s + g.relievers, 0);
   const b2b = countBackToBackArms(team.pitcherDates);
   const gamesTracked = games.length;
@@ -184,13 +208,13 @@ function scoreTeam(team) {
   // assumption already used for the single-game baseline below.
   const expectedBP = 3 * gamesTracked;
 
-  // Active owned formula v3. Reliever counts remain context-only.
+  // FATIGUE: pure workload/rest. No outcome data — how much a pen has
+  // pitched and how little rest it's had, nothing about how well it pitched.
   const components = {
     baseline: 45,
     last3_bp_ip: (last3BP - expectedBP) * 3.5,
     last_game_bp_ip: (last.bpIP - 3) * 4,
     back_to_back_arms: b2b * 6,
-    bp_runs_allowed_3d: gamesTracked ? clamp((last3Runs - 4) * 1.5, -6, 12) : 0,
     reliever_counts_context_only: 0,
     no_recent_games_credit: gamesTracked === 0 ? -18 : 0
   };
@@ -199,7 +223,6 @@ function scoreTeam(team) {
     + components.last3_bp_ip
     + components.last_game_bp_ip
     + components.back_to_back_arms
-    + components.bp_runs_allowed_3d
     + components.reliever_counts_context_only
     + components.no_recent_games_credit;
 
@@ -209,6 +232,34 @@ function scoreTeam(team) {
   if (score >= 82) label = "High risk";
   else if (score >= 62) label = "Tired";
   else if (score < 35) label = "Fresh";
+
+  // EFFICIENCY: pure outcome, independent of workload. ERA and WHIP against
+  // this window's bullpen innings, each measured against a league-average
+  // reliever baseline (ERA 4.20, WHIP 1.30). A confidence multiplier shrinks
+  // both terms toward the 50 baseline when the sample is thin (a few relief
+  // innings can produce an extreme rate stat by pure small-sample noise) and
+  // reaches full weight at 6+ bullpen innings.
+  const era3d = last3BP > 0 ? (last3ER / last3BP) * 9 : null;
+  const whip3d = last3BP > 0 ? (last3H + last3BB) / last3BP : null;
+  const confidence = clamp(last3BP / 6, 0.35, 1);
+  const eraTerm = era3d === null ? 0 : clamp(-(era3d - 4.20) * 6, -25, 25) * confidence;
+  const whipTerm = whip3d === null ? 0 : clamp(-(whip3d - 1.30) * 15, -20, 20) * confidence;
+  const efficiencyRaw = gamesTracked && last3BP > 0 ? 50 + eraTerm + whipTerm : null;
+  const efficiencyScore = efficiencyRaw === null ? null : Math.round(clamp(efficiencyRaw, 0, 100));
+
+  let efficiencyLabel = "No data";
+  if (efficiencyScore !== null) {
+    if (efficiencyScore >= 75) efficiencyLabel = "Dominant";
+    else if (efficiencyScore >= 55) efficiencyLabel = "Effective";
+    else if (efficiencyScore >= 30) efficiencyLabel = "Below average";
+    else efficiencyLabel = "Struggling";
+  }
+
+  // COMBINED RISK: what probability and Lab Rating actually consume. A
+  // tired-but-dominant pen reads less risky than fatigue alone would say; a
+  // fresh-but-bad pen reads more risky than fatigue alone would say. Efficiency
+  // is centered at 50, so this is a no-op when efficiency is exactly average.
+  const riskIndex = Math.round(clamp(score - 0.5 * ((efficiencyScore ?? 50) - 50), 0, 100));
 
   return {
     team_id: team.team_id,
@@ -221,12 +272,22 @@ function scoreTeam(team) {
     score,
     label,
     workload_read: workloadRead(label),
-    score_reason: scoreReason({ label, score, last, last3BP, last3Runs, last3Relievers, b2b, gamesTracked }),
-    formula: "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6) + clamp((Last 3 BP runs - 4) x 1.5, -6, 12)",
+    score_reason: scoreReason({ label, score, last, last3BP, last3Relievers, b2b, gamesTracked }),
+    formula: "45 + ((Last 3 BP IP - 9) x 3.5) + ((Last game BP IP - 3) x 4) + (Back-to-back arms x 6)",
+    efficiency_score: efficiencyScore,
+    efficiency_label: efficiencyLabel,
+    efficiency_reason: efficiencyReason({ efficiencyLabel, efficiencyScore, era3d, whip3d, last3ER, last3H, last3BB, last3BP, gamesTracked }),
+    efficiency_formula: "50 - clamp((ERA - 4.20) x 6, -25, 25) x confidence - clamp((WHIP - 1.30) x 15, -20, 20) x confidence, confidence = clamp(BP IP / 6, 0.35, 1)",
+    risk_index: riskIndex,
     last_game_date: last.date,
     last_game_bp_ip: round(last.bpIP, 1),
     last3_bp_ip: round(last3BP, 1),
     last3_bp_runs: last3Runs,
+    last3_bp_er: last3ER,
+    last3_bp_hits: last3H,
+    last3_bp_bb: last3BB,
+    era_3d: era3d === null ? null : round(era3d, 2),
+    whip_3d: whip3d === null ? null : round(whip3d, 2),
     last_game_relievers: last.relievers || 0,
     last3_relievers: last3Relievers,
     back_to_back_arms: b2b,
@@ -241,12 +302,23 @@ function scoreTeam(team) {
       last3_bp_ip: round(components.last3_bp_ip, 1),
       last_game_bp_ip: round(components.last_game_bp_ip, 1),
       back_to_back_arms: round(components.back_to_back_arms, 1),
-      bp_runs_allowed_3d: round(components.bp_runs_allowed_3d, 1),
       reliever_counts_context_only: 0,
       no_recent_games_credit: round(components.no_recent_games_credit, 1),
       raw_score: round(rawScore, 1)
+    },
+    efficiency_component_scores: efficiencyRaw === null ? null : {
+      baseline: 50,
+      era_term: round(eraTerm, 1),
+      whip_term: round(whipTerm, 1),
+      confidence: round(confidence, 2),
+      raw_score: round(efficiencyRaw, 1)
     }
   };
+}
+
+function efficiencyReason({ efficiencyLabel, efficiencyScore, era3d, whip3d, last3ER, last3H, last3BB, last3BP, gamesTracked }) {
+  if (!gamesTracked || era3d === null) return "No completed bullpen innings in the last three days to grade.";
+  return `${efficiencyLabel} (${(efficiencyScore / 10).toFixed(1)}/10): ${round(era3d, 2)} ERA and ${round(whip3d, 2)} WHIP over ${round(last3BP, 1)} relief innings (${last3ER} ER, ${last3H} H, ${last3BB} BB) in the last three days.`;
 }
 
 function workloadRead(label) {
@@ -256,15 +328,12 @@ function workloadRead(label) {
   return "Manageable recent workload. Bullpen should still be part of the full-game read.";
 }
 
-function scoreReason({ label, score, last, last3BP, last3Runs, last3Relievers, b2b, gamesTracked }) {
+function scoreReason({ label, score, last, last3BP, last3Relievers, b2b, gamesTracked }) {
   if (!gamesTracked) return `${label} (${(score/10).toFixed(1)}/10). No completed games in the last three days — the pen comes in rested.`;
   const bits = [];
   bits.push(`${round(last3BP, 1)} relief innings over the last three days` + (last.bpIP >= 4 ? ` — ${round(last.bpIP, 1)} of them in the last game` : ""));
   if (b2b > 0) bits.push(`${b2b} arm${b2b === 1 ? "" : "s"} pitched back-to-back days`);
-  if (last3Runs >= 6) bits.push(`and the pen was hit hard for ${last3Runs} runs in that stretch`);
-  else if (last3Runs >= 1) bits.push(`allowing ${last3Runs} run${last3Runs === 1 ? "" : "s"}`);
-  else bits.push(`without allowing a run`);
-  return `${label} (${(score/10).toFixed(1)}/10): ` + bits.join(", ") + `. ${last3Relievers} reliever appearances in the window.`;
+  return `${label} (${(score/10).toFixed(1)}/10): ` + bits.join(", ") + `. ${last3Relievers} reliever appearances in the window. Workload only — see efficiency for how well the pen has actually pitched.`;
 }
 
 function buildTeamsByName(rows) {
@@ -284,6 +353,14 @@ function buildTeamsByName(rows) {
       formula: row.formula,
       context_only: row.context_only,
       component_scores: row.component_scores,
+      efficiency_score: row.efficiency_score,
+      efficiency_label: row.efficiency_label,
+      efficiency_reason: row.efficiency_reason,
+      efficiency_formula: row.efficiency_formula,
+      efficiency_component_scores: row.efficiency_component_scores,
+      era_3d: row.era_3d,
+      whip_3d: row.whip_3d,
+      risk_index: row.risk_index,
       source_version: VERSION
     };
   }

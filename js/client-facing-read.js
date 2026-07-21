@@ -36,41 +36,40 @@
 
     const team = g.pick_team || "LyDia's side";
     const opponent = opponentName(g);
-    const ten = x => (x / 10).toFixed(1) + "/10";
-    const pickScore = Math.round(pick.score);
-    const oppScore = Math.round(opp.score);
+    // Risk index blends fatigue (workload) with efficiency (how well the pen
+    // has actually pitched) — this is what the model itself uses, so the
+    // client-side comparison bands need to match, not just raw workload.
+    const pickRisk = Math.round(typeof pick.risk_index === "number" ? pick.risk_index : pick.score);
+    const oppRisk = Math.round(typeof opp.risk_index === "number" ? opp.risk_index : opp.score);
     const pickIp = typeof pick.last3_bp_ip === "number" ? pick.last3_bp_ip.toFixed(1) : null;
     const oppIp = typeof opp.last3_bp_ip === "number" ? opp.last3_bp_ip.toFixed(1) : null;
-    const pickRuns = typeof pick.last3_bp_runs === "number" ? pick.last3_bp_runs : null;
-    const oppRuns = typeof opp.last3_bp_runs === "number" ? opp.last3_bp_runs : null;
     const pickB2b = Number(pick.back_to_back_arms || 0);
     const oppB2b = Number(opp.back_to_back_arms || 0);
+    const effNote = t => (t && t.efficiency_label) ? `${t === pick ? team : opponent}'s pen has been ${t.efficiency_label.toLowerCase()} lately (${(t.efficiency_score/10).toFixed(1)}/10 efficiency).` : "";
 
-    if (pickScore >= 82 && oppScore >= 82) {
-      return `Both bullpens are high risk. ${team} is ${(pickScore/10).toFixed(1)}/10 and ${opponent} is ${(oppScore/10).toFixed(1)}/10, so the late innings carry meaningful volatility on both sides.`;
+    if (pickRisk >= 82 && oppRisk >= 82) {
+      return `Both bullpens carry high risk. ${team} is ${(pickRisk/10).toFixed(1)}/10 and ${opponent} is ${(oppRisk/10).toFixed(1)}/10, so the late innings carry meaningful volatility on both sides.`;
     }
 
-    if (pickScore + 15 < oppScore) {
+    if (pickRisk + 15 < oppRisk) {
       const facts = [];
       if (oppIp !== null) facts.push(`${oppIp} relief innings over the last three days`);
       if (oppB2b) facts.push(`${oppB2b} back-to-back arm${oppB2b === 1 ? "" : "s"}`);
-      if (oppRuns !== null && oppRuns >= 6) facts.push(`${oppRuns} bullpen runs allowed`);
-      return `${team} has the fresher bullpen, ${(pickScore/10).toFixed(1)}/10 versus ${(oppScore/10).toFixed(1)}/10. ${opponent}${facts.length ? " has " + facts.join(", ") + "." : " carries the heavier recent workload."}`;
+      return `${team} has the lower-risk bullpen, ${(pickRisk/10).toFixed(1)}/10 versus ${(oppRisk/10).toFixed(1)}/10. ${opponent}${facts.length ? " has " + facts.join(", ") + "." : " carries the heavier recent workload."} ${effNote(opp)}`.trim();
     }
 
-    if (pickScore > oppScore + 15) {
+    if (pickRisk > oppRisk + 15) {
       const facts = [];
       if (pickIp !== null) facts.push(`${pickIp} relief innings over the last three days`);
       if (pickB2b) facts.push(`${pickB2b} back-to-back arm${pickB2b === 1 ? "" : "s"}`);
-      if (pickRuns !== null && pickRuns >= 6) facts.push(`${pickRuns} bullpen runs allowed`);
-      return `${team} carries the heavier bullpen workload, ${(pickScore/10).toFixed(1)}/10 versus ${(oppScore/10).toFixed(1)}/10, which adds late-game risk.${facts.length ? " Recent context: " + facts.join(", ") + "." : ""}`;
+      return `${team} carries the higher-risk bullpen, ${(pickRisk/10).toFixed(1)}/10 versus ${(oppRisk/10).toFixed(1)}/10.${facts.length ? " Recent context: " + facts.join(", ") + "." : ""} ${effNote(pick)}`.trim();
     }
 
-    if (pickScore >= 62 || oppScore >= 62) {
-      return `Bullpen workload is elevated but not decisive. ${team} is ${(pickScore/10).toFixed(1)}/10 and ${opponent} is ${(oppScore/10).toFixed(1)}/10.`;
+    if (pickRisk >= 62 || oppRisk >= 62) {
+      return `Bullpen risk is elevated but not decisive. ${team} is ${(pickRisk/10).toFixed(1)}/10 and ${opponent} is ${(oppRisk/10).toFixed(1)}/10.`;
     }
 
-    return `No meaningful bullpen fatigue edge — both pens come in comparable (${team} ${(pickScore/10).toFixed(1)}/10, ${opponent} ${(oppScore/10).toFixed(1)}/10${pickScore < 35 && oppScore < 35 ? ", both fresh" : ""}).`;
+    return `No meaningful bullpen risk edge — both pens come in comparable (${team} ${(pickRisk/10).toFixed(1)}/10, ${opponent} ${(oppRisk/10).toFixed(1)}/10${pickRisk < 35 && oppRisk < 35 ? ", both fresh" : ""}).`;
   }
 
   function pitcherSentence(g) {

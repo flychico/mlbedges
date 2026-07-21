@@ -433,10 +433,14 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
   const pBase = log5Home(blendH, blendA);
   const spA = starterEff(g, "away", pitchers);
   const spH = starterEff(g, "home", pitchers);
-  // Bullpen fatigue now adjusts the probability itself, not just Lab Rating
-  // and the official-pick gate — a starter only covers part of the game.
-  const bpAwayScoreForModel = bullpen[aT.name] ? bullpen[aT.name].score : null;
-  const bpHomeScoreForModel = bullpen[hT.name] ? bullpen[hT.name].score : null;
+  // Bullpen risk adjusts the probability itself, not just Lab Rating and the
+  // official-pick gate — a starter only covers part of the game. Uses the
+  // combined risk index (fatigue blended with efficiency), not raw fatigue,
+  // so a tired-but-dominant pen doesn't get penalized like a tired-and-bad
+  // one. Falls back to raw fatigue score for any bullpen record generated
+  // before the efficiency split existed.
+  const bpAwayScoreForModel = bullpen[aT.name] ? (bullpen[aT.name].risk_index ?? bullpen[aT.name].score) : null;
+  const bpHomeScoreForModel = bullpen[hT.name] ? (bullpen[hT.name].risk_index ?? bullpen[hT.name].score) : null;
   const bullpenAdj = bullpenProbAdjustment(bpAwayScoreForModel, bpHomeScoreForModel);
   const preBullpenOdds = (pBase / (1 - pBase)) * Math.exp(ERA_K * (spA - spH));
   const preBullpenHomeProb = preBullpenOdds / (1 + preBullpenOdds);
@@ -467,7 +471,7 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
   const pickBullpen = bullpen[pickTeam] || null;
   const oppBullpen = bullpen[oppTeam] || null;
   const bullpenRead = bullpenLabel(pickBullpen, oppBullpen);
-  const majorBullpenCaution = bullpenRead === "Adds caution" && pickBullpen && pickBullpen.score >= 60;
+  const majorBullpenCaution = bullpenRead === "Adds caution" && pickBullpen && (pickBullpen.risk_index ?? pickBullpen.score) >= 60;
 
   const lab = calcLabScore({ edge, pitchGap, pitchEdgeSupports: pitchEdgeTeam === pickTeam, pickBullpen, oppBullpen, hasMarket: !!m });
   const officialEligible = edge !== null
@@ -553,8 +557,8 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
     },
     model_v3: (() => {
       const oa = offenseFormFor(aT.id, null, offense), oh = offenseFormFor(hT.id, null, offense);
-      const bpA = bullpen[aT.name] ? bullpen[aT.name].score : null;
-      const bpH = bullpen[hT.name] ? bullpen[hT.name].score : null;
+      const bpA = bullpen[aT.name] ? (bullpen[aT.name].risk_index ?? bullpen[aT.name].score) : null;
+      const bpH = bullpen[hT.name] ? (bullpen[hT.name].risk_index ?? bullpen[hT.name].score) : null;
       const v3 = modelV3(pBase, awayStats, homeStats, oa, oh, bpA, bpH);
       return { ...v3, p_home_v2: Number(pHome.toFixed(4)), note: "shadow A/B — does not drive picks" };
     })(),
@@ -578,9 +582,11 @@ function calcLabScore({ edge, pitchGap, pitchEdgeSupports, pickBullpen, oppBullp
   const pitcherPts = pitchEdgeSupports ? clamp(pitchGap / 20, 0, 1) * 25 : Math.max(0, 8 - clamp(pitchGap / 20, 0, 1) * 8);
   let bullpenPts = 7;
   if (pickBullpen && oppBullpen) {
-    bullpenPts = 8 + clamp((oppBullpen.score - pickBullpen.score) / 45, -1, 1) * 7;
-    if (pickBullpen.score >= 78) bullpenPts -= 2;
-    if (pickBullpen.score >= 78 && oppBullpen.score >= 78) bullpenPts -= 1;
+    const pickRisk = pickBullpen.risk_index ?? pickBullpen.score;
+    const oppRisk = oppBullpen.risk_index ?? oppBullpen.score;
+    bullpenPts = 8 + clamp((oppRisk - pickRisk) / 45, -1, 1) * 7;
+    if (pickRisk >= 78) bullpenPts -= 2;
+    if (pickRisk >= 78 && oppRisk >= 78) bullpenPts -= 1;
   }
   const marketPts = !hasMarket ? 0 : edge >= VALUE_EDGE ? 15 : edge >= 0 ? 10 : edge > -VALUE_EDGE ? 5 : 1;
   const basePts = 5;
@@ -596,20 +602,27 @@ function calcLabScore({ edge, pitchGap, pitchEdgeSupports, pickBullpen, oppBullp
   };
 }
 
+// Both label functions read the combined risk index (fatigue blended with
+// efficiency), not raw fatigue — a tired-but-dominant pen shouldn't read as
+// "Adds caution" just because it threw a lot of innings.
 function bullpenLabel(pick, opp) {
   if (!pick || !opp) return "Unknown";
-  if (pick.score >= 78 && opp.score >= 78) return "Both bullpens stressed";
-  if (pick.score + 15 < opp.score) return "Supports LyDia side";
-  if (pick.score > opp.score + 15) return "Adds caution";
-  if (pick.score >= 60 || opp.score >= 60) return "Elevated volatility";
+  const pickRisk = pick.risk_index ?? pick.score;
+  const oppRisk = opp.risk_index ?? opp.score;
+  if (pickRisk >= 78 && oppRisk >= 78) return "Both bullpens stressed";
+  if (pickRisk + 15 < oppRisk) return "Supports LyDia side";
+  if (pickRisk > oppRisk + 15) return "Adds caution";
+  if (pickRisk >= 60 || oppRisk >= 60) return "Elevated volatility";
   return "Neutral";
 }
 function absoluteBullpenRisk(pick, opp) {
   if (!pick || !opp) return "Unknown";
-  if (pick.score >= 78 && opp.score >= 78) return "Both high";
-  if (pick.score >= 78) return "Pick side high";
-  if (opp.score >= 78) return "Opponent high";
-  if (pick.score >= 60 || opp.score >= 60) return "Elevated";
+  const pickRisk = pick.risk_index ?? pick.score;
+  const oppRisk = opp.risk_index ?? opp.score;
+  if (pickRisk >= 78 && oppRisk >= 78) return "Both high";
+  if (pickRisk >= 78) return "Pick side high";
+  if (oppRisk >= 78) return "Opponent high";
+  if (pickRisk >= 60 || oppRisk >= 60) return "Elevated";
   return "Normal";
 }
 function passReasonFor({ edge, modelProb, pitchEdgeTeam, pickTeam, pitcherConflict, labScore, market, majorBullpenCaution }) {
@@ -630,6 +643,15 @@ function buildRead(ctx) {
     ? "The starting pitcher matchup does not create a meaningful separation."
     : `${ctx.pitchEdgeTeam} owns the starting pitcher edge by ${ctx.pitchGap} points.`;
   const bullpenLine = `Bullpen read: ${ctx.bullpenRead}.`;
+  // Fatigue (workload) and efficiency (how well they've actually pitched)
+  // are separate reads now — surface both so "Adds caution" (risk-based)
+  // doesn't read as a pure workload verdict when efficiency pulled it there,
+  // or vice versa.
+  const efficiencyLine = (() => {
+    const pb = ctx.pickBullpen;
+    if (!pb || pb.efficiency_score === null || pb.efficiency_score === undefined) return "";
+    return ` ${ctx.pickTeam}'s pen efficiency: ${pb.efficiency_label} (${(pb.efficiency_score / 10).toFixed(1)}/10).`;
+  })();
   // Disclose when bullpen fatigue meaningfully moved the win probability
   // itself (not just Lab Rating) — only surfaced when the shift is real,
   // so most games don't carry a near-zero footnote.
@@ -656,7 +678,7 @@ function buildRead(ctx) {
   const labLine = `Lab Rating ${(ctx.lab.score/10).toFixed(1)}/10: model edge ${ctx.lab.model_edge_points}, pitcher ${ctx.lab.pitcher_points}, bullpen ${ctx.lab.bullpen_points}, market ${ctx.lab.market_points}, base ${ctx.lab.base_points}.`;
 
   if (ctx.status === "official_pick") {
-    return `${ctx.pickTeam} is an official moneyline pick because it clears both gates: ${fmtPct(ctx.modelProb)} model win probability and ${(ctx.lab.score/10).toFixed(1)}/10 Lab Rating. ${valueLine} ${pitcherLine} ${bullpenLine}${bullpenProbLine}${offenseLine}`;
+    return `${ctx.pickTeam} is an official moneyline pick because it clears both gates: ${fmtPct(ctx.modelProb)} model win probability and ${(ctx.lab.score/10).toFixed(1)}/10 Lab Rating. ${valueLine} ${pitcherLine} ${bullpenLine}${efficiencyLine}${bullpenProbLine}${offenseLine}`;
   }
   if (ctx.status === "value_watch") {
     // Value watch already cleared the edge and Lab Rating floor for this tier —
@@ -668,10 +690,10 @@ function buildRead(ctx) {
     const gateLine = failedGates.length
       ? `It stayed a value watch because ${failedGates.join("; and ")}.`
       : "It stayed a value watch under the stricter official-pick review.";
-    return `${ctx.pickTeam} is a value watch, not an official pick. ${valueLine} ${labLine}${bullpenProbLine} ${gateLine}${offenseLine}`;
+    return `${ctx.pickTeam} is a value watch, not an official pick. ${valueLine} ${labLine}${efficiencyLine}${bullpenProbLine} ${gateLine}${offenseLine}`;
   }
   if (ctx.status === "watchlist") {
-    return `${ctx.pickTeam} remains on the watchlist. ${labLine} ${valueLine} ${pitcherLine} ${bullpenLine}${bullpenProbLine}${offenseLine}`;
+    return `${ctx.pickTeam} remains on the watchlist. ${labLine} ${valueLine} ${pitcherLine} ${bullpenLine}${efficiencyLine}${bullpenProbLine}${offenseLine}`;
   }
   return ctx.passReason || "No clear setup.";
 }
