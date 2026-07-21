@@ -11,19 +11,19 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Model Picks | LyDia</title>
+<title>MLB Computer Picks &amp; Predictions Today | Free Model Picks | LyDia</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LyDia">
-<meta property="og:title" content="Model Picks | LyDia">
-<meta property="og:description" content="LyDia official MLB moneyline picks with model probability, market value, pitcher matchup, bullpen workload, and bettor-friendly reasoning.">
+<meta property="og:title" content="MLB Computer Picks &amp; Predictions Today | Free Model Picks | LyDia">
+<meta property="og:description" content="Free MLB computer picks and predictions for every game today. Model win probability, market value, pitcher and bullpen edges, and every graded result in public.">
 <meta property="og:url" content="https://lydiaslab.com/picks/">
 <meta property="og:image" content="https://lydiaslab.com/img/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Model Picks | LyDia">
-<meta name="twitter:description" content="LyDia official MLB moneyline picks with model probability, market value, pitcher matchup, bullpen workload, and bettor-friendly reasoning.">
+<meta name="twitter:title" content="MLB Computer Picks &amp; Predictions Today | LyDia">
+<meta name="twitter:description" content="Free MLB computer picks and predictions for every game today, with public grading on every result.">
 <meta name="twitter:image" content="https://lydiaslab.com/img/og-card.png">
 
-<meta name="description" content="LyDia official MLB moneyline picks with model probability, market value, pitcher matchup, bullpen workload, and bettor-friendly reasoning.">
+<meta name="description" content="Free MLB computer picks and predictions for every game today. Model win probability, market value, pitcher matchup, bullpen risk, and parlay-ready reads. Every pick graded in public, including the losses.">
 <link rel="canonical" href="https://lydiaslab.com/picks/">
 <link rel="stylesheet" href="/css/style.css">
 <style>
@@ -33,6 +33,10 @@
 .kpi { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; }
 .kpi .label { font-size:.76rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; }
 .kpi .value { font-size:1.35rem; font-weight:800; }
+.record-strip { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin:0 0 20px; }
+.record-strip .rs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; }
+.record-strip .rs-item .label { font-size:.72rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; }
+.record-strip .rs-item .value { font-size:1.2rem; font-weight:800; font-variant-numeric:tabular-nums; }
 .pick-card { margin-bottom:14px; }
 .pick-head { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; margin-bottom:8px; }
 .pick-head .matchup { font-weight:800; font-size:1.05rem; }
@@ -42,17 +46,31 @@
 .metric-box .label { color:var(--text-dim); font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; }
 .metric-box .value { font-size:1.05rem; font-weight:800; font-variant-numeric:tabular-nums; line-height:1.28; }
 .read { margin-top:12px; font-size:.92rem; color:var(--text); line-height:1.55; }
+.byline { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 0 18px; font-size:.9rem; }
+.byline a { font-weight:700; }
+.author-card { display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
+.author-card .ac-body { flex:1; min-width:220px; }
 </style>
 </head>
 <body>
 <nav id="nav"></nav>
 <main>
-  <p class="eyebrow">Official daily card</p>
-  <h1>Model Picks</h1>
-  <p class="subtitle">Official moneyline picks with the probability, price, pitching matchup, bullpen condition, and plain-English reason behind the decision.</p>
+  <p class="eyebrow">Free daily MLB model card</p>
+  <h1>MLB Picks</h1>
+  <p class="subtitle" id="intro-line">Free expert and computer MLB picks and predictions for every game today. Every pick comes from a public model that shows its win probability, its market edge, and its full record, including the losses.</p>
+
+  <div class="byline">
+    <span class="dim">Model built and maintained by</span>
+    <a href="/writers/lynold/">Lynold Mercado</a>
+    <span class="dim" id="byline-updated"></span>
+  </div>
+
+  <!--PICKS-INLINE-RECORD_START-->
+  <!--PICKS-INLINE-RECORD_END-->
+  <div id="record-strip"></div>
 
   <div class="notice">
-    <strong>How to read this page:</strong> Model probability tells you how often LyDia expects the team to win. Lab Rating grades the quality of the full setup. An official pick needs both.
+    <strong>How to read this page:</strong> Model probability is how often LyDia expects that side to win. Lab Rating grades the quality of the whole setup and is not a win probability. An official pick has to clear both. Anything that does not clear both is shown anyway, labelled honestly, so you can see what was passed on and why.
   </div>
 
   <div class="controls">
@@ -70,15 +88,87 @@
   <div id="official"></div>
   <div id="watchlist"></div>
   <div id="passes"></div>
+  <!--PICKS-INLINE-DATA_START-->
+  <!--PICKS-INLINE-DATA_END-->
+
+  <section class="card" style="margin-top:26px">
+    <h2 style="margin-top:0">How LyDia makes these picks</h2>
+    <p>LyDia is a computer model, not a tout. Every game on this page is run through the same process:</p>
+    <ul>
+      <li><strong>Team strength</strong> from run-differential and recent form.</li>
+      <li><strong>Starting pitching</strong> from earned run average and skill-based metrics.</li>
+      <li><strong>Bullpen risk</strong> blending recent workload with how well the pen has actually pitched.</li>
+      <li><strong>Market comparison</strong> against a no-vig probability from up to nine sportsbooks.</li>
+    </ul>
+    <p>A game only becomes an <strong>official pick</strong> when the model probability and the Lab Rating both clear a fixed threshold and the price still offers value. Most games do not. On a typical slate LyDia passes on the majority, and those passes stay on this page with the reason attached.</p>
+    <p class="small dim">Lab Rating grades setup quality on a 0 to 10 scale. It is not a win probability. A high Lab Rating with a low win probability is still a pass.</p>
+  </section>
+
+  <section class="card">
+    <h2 style="margin-top:0">Frequently asked</h2>
+    <h3>Are these MLB picks free?</h3>
+    <p>Yes. Every pick, every grade, and every pass reason on this page is free. Membership adds delivery before first pitch and the full member brief, not better picks.</p>
+    <h3>Do you show your losses?</h3>
+    <p>Yes. The record above counts every graded official pick, wins and losses. Nothing is removed after the fact. The <a href="/results/">results page</a> holds the full dated history.</p>
+    <h3>Can I use these for parlays?</h3>
+    <p>You can, but understand what you are doing. Parlays multiply the sportsbook's edge along with the payout. LyDia grades single moneyline bets because that is what the model is built to price. Treat any parlay as your own decision, not the model's.</p>
+    <h3>How often is this page updated?</h3>
+    <p>Once each morning, before the first game of the day. The timestamp above shows the last run.</p>
+  </section>
+
+  <div class="lead-box" style="border-color:var(--accent2);margin-top:22px">
+    <h3 style="margin:0 0 4px">Get tomorrow's MLB model card free</h3>
+    <p class="dim small" style="margin:0">One email each morning with the featured game and the previous day's graded result. No cost.</p>
+    <p style="margin-top:10px"><a class="btn blue" href="/membership/#free">Get the free card &rarr;</a></p>
+  </div>
+
+  <section class="card" style="margin-top:22px">
+    <h2 style="margin-top:0">About the analyst</h2>
+    <div class="author-card">
+      <div class="ac-body">
+        <p style="margin-top:0"><strong><a href="/writers/lynold/">Lynold Mercado</a></strong> <span class="dim">Founder and model developer, LyDia</span></p>
+        <p class="small">Lynold builds and maintains the LyDia model and publishes every graded result in public, including the days it loses. Follow the daily card on <a href="https://x.com/Kid_lynold" rel="me noopener" target="_blank">X</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="small dim" style="margin-top:18px">For entertainment and informational purposes. No outcome is guaranteed. 21+. If you or someone you know has a gambling problem, call 1-800-GAMBLER.</p>
 </main>
 <footer id="footer"></footer><script src="/js/app.js"></script><script src="/js/client-facing-read.js"></script>
+
+<script type="application/ld+json" id="picks-schema">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://lydiaslab.com/picks/#webpage",
+  "url": "https://lydiaslab.com/picks/",
+  "name": "MLB Computer Picks & Predictions Today",
+  "description": "Free MLB computer picks and predictions for every game today, with model win probability, market edge, and public grading on every result.",
+  "inLanguage": "en-US",
+  "isPartOf": { "@type": "WebSite", "@id": "https://lydiaslab.com/#website", "name": "LyDia", "url": "https://lydiaslab.com/" },
+  "author": { "@id": "https://lydiaslab.com/writers/lynold/#person" },
+  "publisher": { "@type": "Organization", "@id": "https://lydiaslab.com/#organization", "name": "LyDia", "url": "https://lydiaslab.com/" },
+  "mainEntity": {
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Are these MLB picks free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every pick, every grade, and every pass reason is free. Membership adds delivery before first pitch and the full member brief, not better picks." } },
+      { "@type": "Question", "name": "Do you show your losses?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The record counts every graded official pick, wins and losses. Nothing is removed after the fact." } },
+      { "@type": "Question", "name": "Can I use these for parlays?", "acceptedAnswer": { "@type": "Answer", "text": "You can, but parlays multiply the sportsbook edge along with the payout. LyDia grades single moneyline bets because that is what the model is built to price." } },
+      { "@type": "Question", "name": "How often is this page updated?", "acceptedAnswer": { "@type": "Answer", "text": "Once each morning, before the first game of the day." } }
+    ]
+  }
+}
+</script>
+
 <script>
 renderNav("/picks/"); renderFooter();
 
+let PICKS_DATA = null;
 const datePick = document.getElementById("date-pick");
 datePick.value = localISODate(new Date());
 datePick.addEventListener("change", loadPicks);
-loadPicks();
+renderRecordStrip();
+loadPicks({ preferInline: true });
 
 function localISODate(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -98,43 +188,108 @@ function friendlyTime(iso) {
   if (Number.isNaN(d.getTime())) return "";
   return d.toLocaleString("en-US", { month:"short", day:"numeric", hour:"numeric", minute:"2-digit", timeZone:"America/New_York", timeZoneName:"short" });
 }
-function opponentName(g) { return LyDiaRead.opponentName(g); }
+function longDate(iso) {
+  if (!iso) return "";
+  const [y, m, d] = String(iso).split("-").map(Number);
+  if (!y || !m || !d) return "";
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", { month:"long", day:"numeric", year:"numeric" });
+}
 function bullpenAnalysis(g) { return LyDiaRead.bullpenAnalysis(g); }
-function pitcherSentence(g) { return LyDiaRead.pitcherSentence(g); }
 function clientRead(g) { return LyDiaRead.clientRead(g); }
 
-async function loadPicks() {
+/* Record strip. Server-injected so the record is in the initial HTML, which is
+   the whole point of leading with transparency. Falls back to the live
+   results file if the injection is missing. */
+function inlineJson(id) {
+  const el = document.getElementById(id);
+  if (!el) return null;
+  try { return JSON.parse(el.textContent); } catch (e) { return null; }
+}
+async function renderRecordStrip() {
+  let rec = inlineJson("picks-inline-record");
+  if (!rec) {
+    try {
+      const res = await fetch(`/data/results.json?v=${Date.now()}`, { cache: "no-store" });
+      if (res.ok) rec = summarizeResults(await res.json());
+    } catch (e) {}
+  }
+  const el = document.getElementById("record-strip");
+  if (!el || !rec) return;
+  const graded = (rec.official_wins || 0) + (rec.official_losses || 0);
+  if (!graded) return;
+  const pctTxt = ((rec.official_wins / graded) * 100).toFixed(1) + "%";
+  el.innerHTML = `<div class="record-strip"><div class="rs-grid">
+    <div class="rs-item"><div class="label">Official record</div><div class="value">${rec.official_wins}-${rec.official_losses}</div><div class="small dim">across ${graded} graded pick${graded === 1 ? "" : "s"}</div></div>
+    <div class="rs-item"><div class="label">Win rate</div><div class="value">${pctTxt}</div><div class="small dim">small sample, judge over hundreds</div></div>
+    <div class="rs-item"><div class="label">Units</div><div class="value ${rec.units > 0 ? "pos-text" : rec.units < 0 ? "neg-text" : ""}">${rec.units > 0 ? "+" : ""}${Number(rec.units || 0).toFixed(2)}</div><div class="small dim">flat 1u at best price</div></div>
+    <div class="rs-item"><div class="label">Days tracked</div><div class="value">${rec.days_tracked || 0}</div><div class="small dim"><a href="/results/">see every result</a></div></div>
+  </div></div>`;
+}
+function summarizeResults(results) {
+  const days = Object.values((results && results.days) || {});
+  let w = 0, l = 0, u = 0;
+  for (const d of days) {
+    if (d.current_official_model !== "moneyline_only") continue;
+    for (const p of (d.picks || [])) { if (p.mlResult === "W") w++; else if (p.mlResult === "L") l++; }
+    if (typeof d.units === "number") u += d.units;
+  }
+  return { official_wins: w, official_losses: l, units: Number(u.toFixed(2)), days_tracked: days.length };
+}
+
+async function loadPicks(opts) {
+  const preferInline = opts && opts.preferInline;
   const date = datePick.value;
   const statusEl = document.getElementById("status");
-  const kpisEl = document.getElementById("kpis");
+
+  let data = null;
+  let fromInline = false;
+
+  // Server-baked data for today means the initial HTML already has the real
+  // card. No loading flash, and a crawler sees the picks rather than a spinner.
+  if (preferInline) {
+    const inline = inlineJson("picks-inline-data");
+    if (inline && inline.date === date && Array.isArray(inline.games) && inline.games.length) {
+      data = inline; fromInline = true;
+    }
+  }
+
+  if (!data) {
+    // Only show the spinner when there is nothing good on screen. A silent
+    // background refresh over an already-rendered card must not flash it.
+    if (!(PICKS_DATA && PICKS_DATA.date === date)) {
+      statusEl.innerHTML = `<div class="loading">Loading generated picks...</div>`;
+    }
+    const urls = date === localISODate(new Date())
+      ? [`/data/member-brief/${date}.json`, `/data/member-brief/today.json`]
+      : [`/data/member-brief/${date}.json`];
+    for (const url of urls) {
+      try {
+        const res = await fetch(`${url}?v=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) continue;
+        const candidate = await res.json();
+        if (!candidate || candidate.date !== date || !Array.isArray(candidate.games) || candidate.games.length === 0) continue;
+        data = candidate;
+        break;
+      } catch (e) {}
+    }
+  }
+
   const officialEl = document.getElementById("official");
   const watchlistEl = document.getElementById("watchlist");
   const passesEl = document.getElementById("passes");
-
-  statusEl.innerHTML = `<div class="loading">Loading generated picks...</div>`;
-  kpisEl.innerHTML = ""; officialEl.innerHTML = ""; watchlistEl.innerHTML = ""; passesEl.innerHTML = "";
-
-  let data = null;
-  const urls = date === localISODate(new Date())
-    ? [`/data/member-brief/${date}.json`, `/data/member-brief/today.json`]
-    : [`/data/member-brief/${date}.json`];
-
-  for (const url of urls) {
-    try {
-      const res = await fetch(`${url}?v=${Date.now()}`, { cache: "no-store" });
-      if (!res.ok) continue;
-      const candidate = await res.json();
-      if (!candidate || candidate.date !== date || !Array.isArray(candidate.games) || candidate.games.length === 0) continue;
-      data = candidate;
-      break;
-    } catch(e) {}
-  }
+  const kpisEl = document.getElementById("kpis");
 
   if (!data || !Array.isArray(data.games) || data.games.length === 0) {
-    statusEl.innerHTML = `<div class="notice warn"><strong>No generated card is available for ${escapeHtml(date)}.</strong></div>`;
+    // A failed background refresh must never destroy a card that already
+    // rendered from inline data. Only show the empty state if nothing good
+    // is on screen for the date being requested.
+    if (PICKS_DATA && PICKS_DATA.date === date) return;
+    statusEl.innerHTML = `<div class="notice warn"><strong>No generated card is available for ${escapeHtml(date)}.</strong> Cards are published each morning before first pitch.</div>`;
+    kpisEl.innerHTML = ""; officialEl.innerHTML = ""; watchlistEl.innerHTML = ""; passesEl.innerHTML = "";
     return;
   }
 
+  PICKS_DATA = data;
   const games = data.games || [];
   const official = games.filter(g => g.status === "official_pick");
   const valueWatch = games.filter(g => g.status === "value_watch");
@@ -142,16 +297,27 @@ async function loadPicks() {
   const passes = games.filter(g => g.status === "pass");
   const updated = friendlyTime(data.generated_at);
 
-  statusEl.innerHTML = `<div class="notice"><strong>LyDia Daily Engine</strong>${updated ? ` · Updated ${escapeHtml(updated)}` : ""}</div>`;
+  const nice = longDate(data.date || date);
+  if (nice) {
+    document.getElementById("intro-line").textContent =
+      `Free expert and computer MLB picks and predictions for all ${games.length} games on ${nice}. Every pick comes from a public model that shows its win probability, its market edge, and its full record, including the losses.`;
+  }
+  document.getElementById("byline-updated").textContent = updated ? `· Updated ${updated}` : "";
+
+  statusEl.innerHTML = `<div class="notice"><strong>LyDia Daily Engine</strong>${updated ? ` · Updated ${escapeHtml(updated)}` : ""}${official.length === 0 ? " · No game cleared every official requirement today. The passes below explain why." : ""}</div>`;
   kpisEl.innerHTML = `
     <div class="kpi"><div class="label">Games</div><div class="value">${games.length}</div><div class="small dim">${escapeHtml(data.date || date)}</div></div>
     <div class="kpi"><div class="label">Official picks</div><div class="value">${official.length}</div><div class="small dim">cleared every requirement</div></div>
     <div class="kpi"><div class="label">Value watch</div><div class="value">${valueWatch.length}</div><div class="small dim">strong setup, not official</div></div>
-    <div class="kpi"><div class="label">Watchlist</div><div class="value">${watchlist.length}</div><div class="small dim">worth monitoring</div></div>`;
+    <div class="kpi"><div class="label">Passed on</div><div class="value">${passes.length + watchlist.length}</div><div class="small dim">shown with reasons</div></div>`;
 
-  officialEl.innerHTML = section("Official Picks", official, "No official picks cleared every check for this date.");
-  watchlistEl.innerHTML = section("Value Watch / Watchlist", valueWatch.concat(watchlist), "No extra games reached the research range.");
-  passesEl.innerHTML = section("Pass / No Clear Setup", passes, "No pass notes available.");
+  officialEl.innerHTML = section("Official Picks", official, "No game cleared every official requirement for this date. That is a normal outcome, not a missing card.");
+  watchlistEl.innerHTML = section("Value Watch and Watchlist", valueWatch.concat(watchlist), "No extra games reached the research range.");
+  passesEl.innerHTML = section("Passed On, and Why", passes, "No pass notes available.");
+
+  // Rendered from inline data. Still refresh from the network in the
+  // background so a later regeneration is picked up.
+  if (fromInline) loadPicks();
 }
 
 function section(title, items, empty) {
@@ -160,10 +326,12 @@ function section(title, items, empty) {
 }
 
 function renderGame(g) {
-  const cls = g.status === "official_pick" ? "pos" : "neutral";
+  const cls = g.status === "official_pick" ? "pos" : g.status === "pass" ? "neutral" : "neutral";
   const label = g.status === "official_pick" ? "Official pick" : g.status === "value_watch" ? "Value watch" : g.status === "watchlist" ? "Watchlist" : "Pass";
   const market = g.market || {};
   const pitcher = g.pitcher_edge || {};
+  const bp = (g.bullpen && g.bullpen.pick_team) || {};
+  const risk = Number.isFinite(bp.risk_index) ? bp.risk_index : bp.score;
 
   return `<div class="card pick-card">
     <div class="pick-head">
@@ -179,11 +347,12 @@ function renderGame(g) {
       <div class="metric-box"><div class="label">Model probability</div><div class="value">${pct(g.model_probability)}</div></div>
       <div class="metric-box"><div class="label">Market probability</div><div class="value">${pct(market.no_vig_probability)}</div></div>
       <div class="metric-box"><div class="label">Model vs market</div><div class="value ${g.edge > 0 ? "pos-text" : g.edge < 0 ? "neg-text" : ""}">${edge(g.edge)}</div></div>
-      <div class="metric-box"><div class="label">Current price</div><div class="value">${odds(market.best_price)}</div></div>
+      <div class="metric-box"><div class="label">Best price</div><div class="value">${odds(market.best_price)}</div></div>
       <div class="metric-box"><div class="label">Pitcher edge</div><div class="value">${escapeHtml(pitcher.team || "-")}</div></div>
-      <div class="metric-box"><div class="label">Bullpen read</div><div class="value">${escapeHtml(bullpenAnalysis(g))}</div></div>
+      <div class="metric-box"><div class="label">Bullpen risk</div><div class="value">${Number.isFinite(risk) ? (risk / 10).toFixed(1) + "/10" : "-"}</div></div>
     </div>
     <div class="read">${escapeHtml(clientRead(g))}</div>
+    <div class="read small dim">${escapeHtml(bullpenAnalysis(g))}</div>
   </div>`;
 }
 </script>

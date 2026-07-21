@@ -115,6 +115,11 @@ async function main() {
     // background to catch any later-in-the-day changes. Public-safe subset
     // only (renderBrief() only ever reads date/generated_at/summary/games).
     injectBriefInline({ date: brief.date, generated_at: brief.generated_at, summary: brief.summary, games: brief.games });
+    // Bake the same public-safe card into the /picks/ hub. That page is the
+    // evergreen SEO target, so its initial HTML must contain the real card and
+    // the real record rather than a loading placeholder.
+    injectPicksInline({ date: brief.date, generated_at: brief.generated_at, summary: brief.summary, games: brief.games });
+    injectPicksRecord();
   }
 
   const candidatePublished = buildPicksFile(rows, generatedAt);
@@ -148,6 +153,32 @@ async function fetchJson(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
   return res.json();
+}
+function injectPicksInline(brief) {
+  injectInlineData("picks/index.html", "picks-inline-data", brief, "<!--PICKS-INLINE-DATA_START-->");
+}
+// Public record for the picks hub. Wins, losses, units, and days only, so the
+// graded-pick count can sit beside the win rate instead of a bare percentage.
+function injectPicksRecord() {
+  let results;
+  try { results = readJson("data/results.json"); } catch (e) { return; }
+  const days = Object.values((results && results.days) || {});
+  if (!days.length) return;
+  let wins = 0, losses = 0, units = 0;
+  for (const d of days) {
+    if (d.current_official_model !== "moneyline_only") continue;
+    for (const p of (Array.isArray(d.picks) ? d.picks : [])) {
+      if (p.mlResult === "W") wins++;
+      else if (p.mlResult === "L") losses++;
+    }
+    if (typeof d.units === "number") units += d.units;
+  }
+  injectInlineData("picks/index.html", "picks-inline-record", {
+    official_wins: wins,
+    official_losses: losses,
+    units: Number(units.toFixed(2)),
+    days_tracked: days.length
+  }, "<!--PICKS-INLINE-RECORD_START-->");
 }
 function injectBriefInline(brief) {
   injectInlineData("member-brief/index.html", "brief-inline-data", brief, '<div id="passes"></div>');
