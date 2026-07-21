@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T22:12:32.498Z",
+ "generated_at": "2026-07-21T22:27:29.600Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
  "events_fetched": 13,
  "probables": {
@@ -40,10 +40,6 @@
    "away": "Carson Palmquist",
    "home": "Michael Lorenzen"
   },
-  "824409": {
-   "away": "Kendry Rojas",
-   "home": "Parker Messick"
-  },
   "824652": {
    "away": "Framber Valdez",
    "home": "David Peterson"
@@ -61,7 +57,7 @@
   "parker messick": {
    "name": "Parker Messick",
    "line": 5.5,
-   "over": -102,
+   "over": -105,
    "under": -115,
    "books": 5,
    "game": "Minnesota Twins @ Cleveland Guardians",
@@ -72,7 +68,7 @@
   "drew rasmussen": {
    "name": "Drew Rasmussen",
    "line": 4.5,
-   "over": -105,
+   "over": -118,
    "under": -101,
    "books": 5,
    "game": "Tampa Bay Rays @ Toronto Blue Jays",
@@ -95,7 +91,7 @@
    "name": "Zack Wheeler",
    "line": 6.5,
    "over": -125,
-   "under": 104,
+   "under": 102,
    "books": 6,
    "game": "Los Angeles Dodgers @ Philadelphia Phillies",
    "projection": 6.95,
@@ -117,7 +113,7 @@
    "name": "Walker Buehler",
    "line": 3.5,
    "over": -140,
-   "under": 132,
+   "under": 130,
    "books": 6,
    "game": "San Diego Padres @ Atlanta Braves",
    "projection": 3.42,
@@ -272,8 +268,8 @@
   "jack perkins": {
    "name": "Jack Perkins",
    "line": 4.5,
-   "over": 125,
-   "under": -125,
+   "over": 100,
+   "under": -117,
    "books": 6,
    "game": "Athletics @ Arizona Diamondbacks",
    "projection": 6.87,
@@ -302,7 +298,7 @@
   "chase burns": {
    "name": "Chase Burns",
    "line": 6.5,
-   "over": -152,
+   "over": -153,
    "under": 125,
    "books": 6,
    "game": "Cincinnati Reds @ Seattle Mariners",

@@ -1,42 +1,14 @@
 {
   "date": "2026-07-21",
-  "generated_at": "2026-07-21T22:12:35.240Z",
+  "generated_at": "2026-07-21T22:27:32.194Z",
   "source": "data/member-brief/2026-07-21.json",
   "pitcher_source": "data/pitcher-matchups/2026-07-21.json",
   "pitcher_source_version": "pitcher-matchup-core-v1",
-  "total_pages": 13,
-  "indexable_pages": 12,
+  "total_pages": 12,
+  "indexable_pages": 11,
   "noindex_pages": 1,
   "indexing_rule": "Pages are indexable only when verified starters, model, market, pitcher, bullpen, offense and decision data are complete.",
   "pages": [
-    {
-      "date": "2026-07-21",
-      "game_pk": 824409,
-      "game": "Minnesota Twins @ Cleveland Guardians",
-      "away_team": "Minnesota Twins",
-      "home_team": "Cleveland Guardians",
-      "slug": "twins-vs-guardians-prediction-odds-2026-07-21",
-      "url": "https://lydiaslab.com/mlb/twins-vs-guardians-prediction-odds-2026-07-21/",
-      "output": "mlb/twins-vs-guardians-prediction-odds-2026-07-21/index.html",
-      "status": "value_watch",
-      "indexable": true,
-      "quality_score": 11,
-      "quality_total": 11,
-      "missing": [],
-      "generated_at": "2026-07-21T22:12:33.878Z",
-      "weather": {
-        "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-21T23:00",
-        "temperature_f": 75.4,
-        "precipitation_probability": 12,
-        "wind_mph": 10.3,
-        "wind_direction_degrees": 268,
-        "weather_code": 0,
-        "roof": false
-      },
-      "pitcher_source_version": "pitcher-matchup-core-v1",
-      "final": null
-    },
     {
       "date": "2026-07-21",
       "game_pk": 824005,
@@ -51,7 +23,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:33.992Z",
+      "generated_at": "2026-07-21T22:27:31.069Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T02:00",
@@ -79,7 +51,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:34.106Z",
+      "generated_at": "2026-07-21T22:27:31.171Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T00:00",
@@ -88,6 +60,34 @@
         "wind_mph": 6.9,
         "wind_direction_degrees": 283,
         "weather_code": 0,
+        "roof": true
+      },
+      "pitcher_source_version": "pitcher-matchup-core-v1",
+      "final": null
+    },
+    {
+      "date": "2026-07-21",
+      "game_pk": 822787,
+      "game": "Tampa Bay Rays @ Toronto Blue Jays",
+      "away_team": "Tampa Bay Rays",
+      "home_team": "Toronto Blue Jays",
+      "slug": "rays-vs-blue-jays-prediction-odds-2026-07-21",
+      "url": "https://lydiaslab.com/mlb/rays-vs-blue-jays-prediction-odds-2026-07-21/",
+      "output": "mlb/rays-vs-blue-jays-prediction-odds-2026-07-21/index.html",
+      "status": "value_watch",
+      "indexable": true,
+      "quality_score": 11,
+      "quality_total": 11,
+      "missing": [],
+      "generated_at": "2026-07-21T22:27:31.278Z",
+      "weather": {
+        "source": "Open-Meteo forecast",
+        "forecast_time_utc": "2026-07-21T23:00",
+        "temperature_f": 67.1,
+        "precipitation_probability": 46,
+        "wind_mph": 6.6,
+        "wind_direction_degrees": 208,
+        "weather_code": 45,
         "roof": true
       },
       "pitcher_source_version": "pitcher-matchup-core-v1",
@@ -107,7 +107,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:34.219Z",
+      "generated_at": "2026-07-21T22:27:31.379Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T00:00",
@@ -117,34 +117,6 @@
         "wind_direction_degrees": 4,
         "weather_code": 3,
         "roof": false
-      },
-      "pitcher_source_version": "pitcher-matchup-core-v1",
-      "final": null
-    },
-    {
-      "date": "2026-07-21",
-      "game_pk": 822787,
-      "game": "Tampa Bay Rays @ Toronto Blue Jays",
-      "away_team": "Tampa Bay Rays",
-      "home_team": "Toronto Blue Jays",
-      "slug": "rays-vs-blue-jays-prediction-odds-2026-07-21",
-      "url": "https://lydiaslab.com/mlb/rays-vs-blue-jays-prediction-odds-2026-07-21/",
-      "output": "mlb/rays-vs-blue-jays-prediction-odds-2026-07-21/index.html",
-      "status": "value_watch",
-      "indexable": true,
-      "quality_score": 11,
-      "quality_total": 11,
-      "missing": [],
-      "generated_at": "2026-07-21T22:12:34.332Z",
-      "weather": {
-        "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-21T23:00",
-        "temperature_f": 67.1,
-        "precipitation_probability": 46,
-        "wind_mph": 6.6,
-        "wind_direction_degrees": 208,
-        "weather_code": 45,
-        "roof": true
       },
       "pitcher_source_version": "pitcher-matchup-core-v1",
       "final": null
@@ -163,7 +135,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:34.445Z",
+      "generated_at": "2026-07-21T22:27:31.482Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-21T23:00",
@@ -191,7 +163,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:34.558Z",
+      "generated_at": "2026-07-21T22:27:31.584Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T01:00",
@@ -221,7 +193,7 @@
       "missing": [
         "pitcher_stats"
       ],
-      "generated_at": "2026-07-21T22:12:34.671Z",
+      "generated_at": "2026-07-21T22:27:31.686Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T02:00",
@@ -249,7 +221,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:34.784Z",
+      "generated_at": "2026-07-21T22:27:31.787Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T00:00",
@@ -277,7 +249,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:34.897Z",
+      "generated_at": "2026-07-21T22:27:31.889Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T00:00",
@@ -305,7 +277,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:35.014Z",
+      "generated_at": "2026-07-21T22:27:31.991Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-21T23:00",
@@ -333,7 +305,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:35.127Z",
+      "generated_at": "2026-07-21T22:27:32.092Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T00:00",
@@ -361,7 +333,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-21T22:12:35.240Z",
+      "generated_at": "2026-07-21T22:27:32.194Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T02:00",

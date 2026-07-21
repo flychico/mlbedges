@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T22:12:32.905Z",
+ "generated_at": "2026-07-21T22:27:29.997Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.53,
  "probables": {
@@ -39,10 +39,6 @@
   "824329": {
    "away": "Carson Palmquist",
    "home": "Michael Lorenzen"
-  },
-  "824409": {
-   "away": "Kendry Rojas",
-   "home": "Parker Messick"
   },
   "824652": {
    "away": "Framber Valdez",
@@ -621,10 +617,10 @@
   "824409": {
    "game": "Minnesota Twins @ Cleveland Guardians",
    "game_time_iso": "2026-07-21T22:40:00Z",
-   "projection": 8.7,
-   "projection_raw": 8.1,
-   "proj_away": 3.8,
-   "proj_home": 4.3,
+   "projection": 8.4,
+   "projection_raw": 7.8,
+   "proj_away": 3.7,
+   "proj_home": 4.1,
    "away": {
     "team": "Minnesota Twins",
     "rpg": 4.34,
@@ -638,11 +634,11 @@
     "opp_sp_fip": 3.31,
     "opp_sp_ip": 5.9,
     "pitch_factor": 0.861,
-    "opp_pen_risk": 69,
-    "opp_pen_fatigue": 70,
-    "opp_pen_efficiency": 53,
-    "opp_pen_efficiency_label": "Average",
-    "pen_factor": 1.028,
+    "opp_pen_risk": null,
+    "opp_pen_fatigue": null,
+    "opp_pen_efficiency": null,
+    "opp_pen_efficiency_label": null,
+    "pen_factor": 1,
     "sp_sample_ok": true
    },
    "home": {
@@ -658,11 +654,11 @@
     "opp_sp_fip": 4.16,
     "opp_sp_ip": 6.8,
     "pitch_factor": 0.993,
-    "opp_pen_risk": 77,
-    "opp_pen_fatigue": 72,
-    "opp_pen_efficiency": 40,
-    "opp_pen_efficiency_label": "Below average",
-    "pen_factor": 1.044,
+    "opp_pen_risk": null,
+    "opp_pen_fatigue": null,
+    "opp_pen_efficiency": null,
+    "opp_pen_efficiency_label": null,
+    "pen_factor": 1,
     "sp_sample_ok": false
    },
    "park_factor": 0.99,
@@ -672,7 +668,7 @@
    "over": -102,
    "under": -112,
    "books": 7,
-   "lab": 45
+   "lab": 40
   },
   "824652": {
    "game": "Detroit Tigers @ Chicago Cubs",
