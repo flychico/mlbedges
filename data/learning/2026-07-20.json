@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T12:23:05.419Z",
+  "generated_at": "2026-07-21T12:30:04.933Z",
   "status": "ready",
   "latest_date": "2026-07-20",
   "days_reviewed": 12,
@@ -8,16 +8,16 @@
     "clv": "data/clv/clv_log.csv"
   },
   "current_official_model": "moneyline_only",
-  "headline": "Learning summary for 2026-07-20: no graded official moneyline picks yet.",
+  "headline": "Learning summary for 2026-07-20: moneyline record 1-0 (100.0%).",
   "day": {
     "date": "2026-07-20",
     "source": "published-picks",
-    "record_all_markets": "0-0",
-    "units_all_markets": null,
+    "record_all_markets": "1-0",
+    "units_all_markets": 0.49,
     "ungraded": 0,
-    "moneyline_record": "0-0",
-    "moneyline_win_rate": null,
-    "official_moneyline_picks": 0,
+    "moneyline_record": "1-0",
+    "moneyline_win_rate": 1,
+    "official_moneyline_picks": 1,
     "legacy_market_entries": 0
   },
   "gates": {
@@ -27,20 +27,40 @@
     "note": "Official picks require high model probability and strong setup quality. A high Lab Rating alone is not enough."
   },
   "process_metrics": {
-    "average_model_probability": null,
-    "average_lab_score": null,
-    "average_raw_edge": null,
-    "clv_counts": {},
-    "lesson_counts": {},
-    "strong_official_count": 12,
+    "average_model_probability": 0.7551,
+    "average_lab_score": 81,
+    "average_raw_edge": 0.1005,
+    "clv_counts": {
+      "not_tracked": 1
+    },
+    "lesson_counts": {
+      "win_needs_more_sample": 1
+    },
+    "strong_official_count": 13,
     "protected_by_probability_gate_count": 13,
-    "high_bullpen_risk_count": 5,
+    "high_bullpen_risk_count": 6,
     "pitcher_conflict_count": 0
   },
   "findings": [
     {
-      "title": "No official moneyline picks graded yet",
-      "read": "Learning will become useful after a finished slate is graded under the current model."
+      "title": "Official-pick discipline",
+      "read": "1 moneyline pick were graded. Record: 1-0 (100.0%)."
+    },
+    {
+      "title": "Probability gate",
+      "read": "13 setups had strong Lab Rating but model probability below 72%. Those should remain value watch, not official picks."
+    },
+    {
+      "title": "Market learning",
+      "read": "Closing price data is not strong enough yet. Keep the market snapshot automation running."
+    },
+    {
+      "title": "Bullpen learning",
+      "read": "6 graded moneyline picks carried a meaningful bullpen caution. Review these before adjusting thresholds."
+    },
+    {
+      "title": "Pitcher learning",
+      "read": "No major starting-pitcher conflicts showed up in the graded moneyline set."
     }
   ],
   "calibration": {
@@ -335,6 +355,21 @@
         "bullpen_label": "Neutral",
         "pick_side_bullpen_score": 41,
         "opponent_bullpen_score": 52
+      },
+      {
+        "game": "New York Mets @ Milwaukee Brewers",
+        "pick": "Milwaukee Brewers",
+        "result": "W",
+        "model_probability": 0.7551,
+        "lab_score": 81,
+        "raw_edge": 0.1005,
+        "clv_result": "not_tracked",
+        "lesson_tag": "win_needs_more_sample",
+        "pitcher_edge_team": "Milwaukee Brewers",
+        "pitcher_gap": 30,
+        "bullpen_label": "Adds caution",
+        "pick_side_bullpen_score": 76,
+        "opponent_bullpen_score": 34
       }
     ],
     "protected_by_probability_gate": [
@@ -609,16 +644,47 @@
         "bullpen_label": "Neutral",
         "pick_side_bullpen_score": 100,
         "opponent_bullpen_score": 100
+      },
+      {
+        "game": "New York Mets @ Milwaukee Brewers",
+        "pick": "Milwaukee Brewers",
+        "result": "W",
+        "model_probability": 0.7551,
+        "lab_score": 81,
+        "raw_edge": 0.1005,
+        "clv_result": "not_tracked",
+        "lesson_tag": "win_needs_more_sample",
+        "pitcher_edge_team": "Milwaukee Brewers",
+        "pitcher_gap": 30,
+        "bullpen_label": "Adds caution",
+        "pick_side_bullpen_score": 76,
+        "opponent_bullpen_score": 34
       }
     ],
     "pitcher_conflicts": [],
-    "all_moneyline": []
+    "all_moneyline": [
+      {
+        "game": "New York Mets @ Milwaukee Brewers",
+        "pick": "Milwaukee Brewers",
+        "result": "W",
+        "model_probability": 0.7551,
+        "lab_score": 81,
+        "raw_edge": 0.1005,
+        "clv_result": "not_tracked",
+        "lesson_tag": "win_needs_more_sample",
+        "pitcher_edge_team": "Milwaukee Brewers",
+        "pitcher_gap": 30,
+        "bullpen_label": "Adds caution",
+        "pick_side_bullpen_score": 76,
+        "opponent_bullpen_score": 34
+      }
+    ]
   },
   "multi_day": {
-    "moneyline_record": "19-9",
-    "moneyline_win_rate": 0.6786,
-    "official_moneyline_entries": 28,
-    "strict_gate_candidates": 12,
+    "moneyline_record": "20-9",
+    "moneyline_win_rate": 0.6897,
+    "official_moneyline_entries": 29,
+    "strict_gate_candidates": 13,
     "high_lab_low_probability_entries": 11,
     "note": "Multi-day view includes whatever historical data exists. Older days may include legacy model behavior."
   },
@@ -631,9 +697,9 @@
   "coach": {
     "status": "collecting",
     "title": "Collecting a trustworthy current-model sample",
-    "summary": "LyDia has 5 of 7 required current-model days and 7 of 20 required current-model official picks. Recommendations remain paused until both minimums are reached.",
-    "current_model_days": 5,
-    "current_model_picks": 7,
+    "summary": "LyDia has 6 of 7 required current-model days and 8 of 20 required current-model official picks. Recommendations remain paused until both minimums are reached.",
+    "current_model_days": 6,
+    "current_model_picks": 8,
     "minimum_days": 7,
     "minimum_picks": 20,
     "bullpen_model_owner": "bullpen-fatigue-v3-runs-aware",

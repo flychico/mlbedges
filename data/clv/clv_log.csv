@@ -50,3 +50,4 @@ date,market,matchup,pick,price_taken,result
 2026-07-18,moneyline,"Detroit Tigers@Los Angeles Angels","Detroit Tigers",-189,-143,lost_to_close,88,0.766,0.1284,W,result_win_price_warning
 2026-07-19,moneyline,"Detroit Tigers@Los Angeles Angels","Detroit Tigers",-149,250,lost_to_close,92,0.8011,0.2169,L,bad_process_loss
 2026-07-19,moneyline,"Washington Nationals@Athletics","Washington Nationals",-138,-146,beat_close,90,0.741,0.173,W,good_process_win
+2026-07-20,moneyline,"New York Mets@Milwaukee Brewers","Milwaukee Brewers",-136,,not_tracked,81,0.7551,0.1005,W,win_needs_more_sample
