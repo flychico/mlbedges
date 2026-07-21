@@ -131,6 +131,8 @@ async function main() {
     throw new Error(`Missing canonical pitcher source ${relative(PITCHER_PATH)}. Run generate-pitcher-matchup-data.js first.`);
   }
   const results = readJsonSafe(RESULTS_PATH) || { days: {} };
+  const kprops = readJsonSafe(path.join(ROOT, "data", "k-props", `${DATE}.json`));
+  const teamHitting = args.offline ? { season: {}, recent: {} } : await fetchTeamHitting(DATE);
   const previousManifest = readJsonSafe(MANIFEST_PATH) || { pages: [] };
   const previousBySlug = new Map((previousManifest.pages || []).map(page => [page.slug, page]));
   const schedule = args.offline ? null : await fetchSchedule(DATE);
@@ -170,7 +172,9 @@ async function main() {
       venue,
       quality,
       slug,
-      urlPath
+      urlPath,
+      kprops,
+      teamHitting
     }), "utf8");
 
     pages.push({
@@ -366,6 +370,32 @@ function qualityGate(game, pitcherGame) {
     missing,
     indexable: missing.length === 0
   };
+}
+
+async function fetchTeamHitting(date) {
+  // Team strikeout rates, season and last 15 days. Same StatsAPI endpoints the
+  // public Stats page uses client-side. Failure degrades to "Not available"
+  // and never affects the indexing quality gate.
+  const year = Number(String(date).slice(0, 4));
+  const start = (() => { const d = new Date(`${date}T12:00:00Z`); d.setUTCDate(d.getUTCDate() - 15); return d.toISOString().slice(0, 10); })();
+  const out = { season: {}, recent: {} };
+  const grab = async (url, bucket) => {
+    const response = await fetch(url, { headers: { "user-agent": "LyDia matchup generator" } });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    for (const split of (((data.stats || [])[0] || {}).splits || [])) {
+      const teamName = split.team && split.team.name;
+      const stat = split.stat || {};
+      const pa = Number(stat.plateAppearances);
+      const so = Number(stat.strikeOuts);
+      if (teamName && Number.isFinite(pa) && pa > 0 && Number.isFinite(so)) bucket[teamName] = so / pa;
+    }
+  };
+  try { await grab(`https://statsapi.mlb.com/api/v1/teams/stats?sportId=1&group=hitting&season=${year}&stats=season`, out.season); }
+  catch (error) { console.warn(`Team season hitting unavailable: ${error.message}`); }
+  try { await grab(`https://statsapi.mlb.com/api/v1/teams/stats?sportId=1&group=hitting&season=${year}&stats=byDateRange&startDate=${start}&endDate=${date}`, out.recent); }
+  catch (error) { console.warn(`Team recent hitting unavailable: ${error.message}`); }
+  return out;
 }
 
 async function fetchSchedule(date) {
@@ -653,52 +683,115 @@ function teamWinPct(record) {
   const wins = Number(match[1]), losses = Number(match[2]);
   return wins + losses > 0 ? wins / (wins + losses) : null;
 }
-function renderTeamMap(brief, game) {
+function renderTeamMap(brief, game, teamHitting) {
+  const hit = teamHitting || { season: {}, recent: {} };
   const teams = [];
+  const push = (team, record, off, pen) => {
+    if (!team || teams.some(t => t.team === team)) return;
+    teams.push({
+      team,
+      short: shortTeam(team),
+      wpct: teamWinPct(record),
+      delta_ops: off && typeof off.delta_ops === "number" ? off.delta_ops : null,
+      ops_15d: off && typeof off.ops_15d === "number" ? off.ops_15d : null,
+      season_ops: off && typeof off.season_ops === "number" ? off.season_ops : null,
+      rpg_15d: off && typeof off.rpg_15d === "number" ? off.rpg_15d : null,
+      risk: riskOf(pen),
+      kpct: typeof hit.season[team] === "number" ? hit.season[team] : null
+    });
+  };
   for (const row of brief.games || []) {
     const offense = row.offense_form || {};
-    const entries = [
-      { team: row.away_team, wpct: teamWinPct(row.away_record), delta: offense.away && offense.away.delta_ops },
-      { team: row.home_team, wpct: teamWinPct(row.home_record), delta: offense.home && offense.home.delta_ops }
-    ];
-    for (const entry of entries) {
-      if (entry.team && typeof entry.wpct === "number" && typeof entry.delta === "number" && !teams.some(t => t.team === entry.team)) teams.push(entry);
+    const pens = { away: null, home: null };
+    const bullpen = row.bullpen || {};
+    if (bullpen.pick_team && bullpen.opponent) {
+      if (row.pick_team === row.away_team) { pens.away = bullpen.pick_team; pens.home = bullpen.opponent; }
+      else if (row.pick_team === row.home_team) { pens.home = bullpen.pick_team; pens.away = bullpen.opponent; }
     }
+    push(row.away_team, row.away_record, offense.away, pens.away);
+    push(row.home_team, row.home_record, offense.home, pens.home);
   }
-  if (teams.length < 8) return "";
-  const width = 720, height = 400, padLeft = 52, padRight = 20, padTop = 26, padBottom = 44;
-  const xs = teams.map(t => t.wpct), ys = teams.map(t => t.delta);
-  const xMin = Math.min(...xs) - 0.02, xMax = Math.max(...xs) + 0.02;
-  const yAbs = Math.max(0.05, ...ys.map(Math.abs)) + 0.01;
-  const X = v => padLeft + (v - xMin) / (xMax - xMin) * (width - padLeft - padRight);
-  const Y = v => padTop + (yAbs - v) / (2 * yAbs) * (height - padTop - padBottom);
-  const midX = X(0.5) >= padLeft && X(0.5) <= width - padRight ? X(0.5) : null;
-  const dots = teams.map(t => {
-    const isAway = t.team === game.away_team, isHome = t.team === game.home_team;
-    if (!isAway && !isHome) return `<circle cx="${X(t.wpct).toFixed(1)}" cy="${Y(t.delta).toFixed(1)}" r="5" fill="var(--text-dim)" opacity="0.35"/>`;
-    const color = isAway ? "var(--accent2)" : "var(--good)";
-    const anchor = X(t.wpct) > width - 130 ? "end" : "start";
-    const dx = anchor === "end" ? -10 : 10;
-    return `<circle cx="${X(t.wpct).toFixed(1)}" cy="${Y(t.delta).toFixed(1)}" r="8" fill="${color}"/><text x="${(X(t.wpct)+dx).toFixed(1)}" y="${(Y(t.delta)+4).toFixed(1)}" text-anchor="${anchor}" font-size="13" font-weight="800" fill="${color}">${esc(shortTeam(t.team))}</text>`;
-  }).join("");
+  const usable = teams.filter(t => typeof t.wpct === "number" && typeof t.delta_ops === "number");
+  if (usable.length < 8) return "";
+
+  const axes = [
+    ["wpct", "Win %", "pct"],
+    ["delta_ops", "OPS vs season, last 15", "delta3"],
+    ["ops_15d", "OPS, last 15 days", "dec3"],
+    ["season_ops", "Season OPS", "dec3"],
+    ["rpg_15d", "Runs per game, last 15", "dec1"],
+    ["risk", "Bullpen risk", "score10"],
+    ["kpct", "K% season", "pct"]
+  ].filter(([key]) => teams.filter(t => typeof t[key] === "number").length >= 8);
+
+  const payload = { teams, away: game.away_team, home: game.home_team, axes };
+  const options = axes.map(([key, label]) => `<option value="${esc(key)}">${esc(label)}</option>`).join("");
+
   return `<section class="card">
-    <div class="sec-head"><h2>The Map: quality vs current form</h2><a class="tool-link" href="/stats/">Full interactive map &rarr;</a></div>
-    <p class="small dim" style="margin-top:0">Every team on today\'s slate. Right means a better record, up means hotter than its own season form over the last 15 days. <span style="color:var(--accent2);font-weight:700">${esc(shortTeam(game.away_team))}</span> and <span style="color:var(--good);font-weight:700">${esc(shortTeam(game.home_team))}</span> are highlighted.</p>
-    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Win percentage against recent offensive form for today\'s teams" style="width:100%;height:auto">
-      <line x1="${padLeft}" y1="${Y(0).toFixed(1)}" x2="${width - padRight}" y2="${Y(0).toFixed(1)}" stroke="var(--border)" stroke-dasharray="4 4"/>
-      ${midX !== null ? `<line x1="${midX.toFixed(1)}" y1="${padTop}" x2="${midX.toFixed(1)}" y2="${height - padBottom}" stroke="var(--border)" stroke-dasharray="4 4"/>` : ""}
-      <text x="${width - padRight}" y="${padTop - 8}" text-anchor="end" font-size="11" fill="var(--text-dim)">HOT</text>
-      <text x="${width - padRight}" y="${height - padBottom + 16}" text-anchor="end" font-size="11" fill="var(--text-dim)">COLD</text>
-      <text x="${padLeft}" y="${height - 8}" font-size="11" fill="var(--text-dim)">Worse record</text>
-      <text x="${width - padRight}" y="${height - 8}" text-anchor="end" font-size="11" fill="var(--text-dim)">Better record</text>
-      <text x="14" y="${Y(0).toFixed(1)}" font-size="11" fill="var(--text-dim)" transform="rotate(-90 14 ${Y(0).toFixed(1)})" text-anchor="middle">OPS vs season</text>
-      ${dots}
-    </svg>
+    <div class="sec-head"><h2>The Map</h2><a class="tool-link" href="/stats/">Full interactive map &rarr;</a></div>
+    <p class="small dim" style="margin-top:0">Every team on today's slate, on any two axes you pick. <span style="color:var(--accent2);font-weight:700">${esc(shortTeam(game.away_team))}</span> and <span style="color:var(--good);font-weight:700">${esc(shortTeam(game.home_team))}</span> are highlighted.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+      <label class="small dim">Horizontal <select id="map-x" onchange="drawMatchupMap()">${options}</select></label>
+      <label class="small dim">Vertical <select id="map-y" onchange="drawMatchupMap()">${options}</select></label>
+    </div>
+    <div id="matchup-map"></div>
+    <script type="application/json" id="map-data">${jsonScript(payload)}</script>
+    <script>
+    (function () {
+      const data = JSON.parse(document.getElementById("map-data").textContent);
+      const fmts = {
+        pct: v => (v * 100).toFixed(1) + "%",
+        delta3: v => (v >= 0 ? "+" : "") + v.toFixed(3),
+        dec3: v => v.toFixed(3),
+        dec1: v => v.toFixed(1),
+        score10: v => (v / 10).toFixed(1) + "/10"
+      };
+      const selX = document.getElementById("map-x");
+      const selY = document.getElementById("map-y");
+      selX.value = "wpct";
+      selY.value = data.axes.some(a => a[0] === "delta_ops") ? "delta_ops" : data.axes[0][0];
+      window.drawMatchupMap = function () {
+        const xKey = selX.value, yKey = selY.value;
+        const xAxis = data.axes.find(a => a[0] === xKey), yAxis = data.axes.find(a => a[0] === yKey);
+        const pts = data.teams.filter(t => typeof t[xKey] === "number" && typeof t[yKey] === "number");
+        if (pts.length < 4) { document.getElementById("matchup-map").innerHTML = '<p class="small dim">Not enough data for this pair of axes today.</p>'; return; }
+        const W = 720, H = 400, PL = 56, PR = 20, PT = 24, PB = 46;
+        const xs = pts.map(t => t[xKey]), ys = pts.map(t => t[yKey]);
+        const xMin = Math.min.apply(null, xs), xMax = Math.max.apply(null, xs);
+        const yMin = Math.min.apply(null, ys), yMax = Math.max.apply(null, ys);
+        const xPad = (xMax - xMin || 1) * 0.06, yPad = (yMax - yMin || 1) * 0.1;
+        const X = v => PL + (v - xMin + xPad) / ((xMax - xMin) + 2 * xPad) * (W - PL - PR);
+        const Y = v => PT + (yMax + yPad - v) / ((yMax - yMin) + 2 * yPad) * (H - PT - PB);
+        const xMid = (xMin + xMax) / 2, yMid = (yMin + yMax) / 2;
+        let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto" role="img">';
+        svg += '<line x1="' + PL + '" y1="' + Y(yMid).toFixed(1) + '" x2="' + (W - PR) + '" y2="' + Y(yMid).toFixed(1) + '" stroke="var(--border)" stroke-dasharray="4 4"/>';
+        svg += '<line x1="' + X(xMid).toFixed(1) + '" y1="' + PT + '" x2="' + X(xMid).toFixed(1) + '" y2="' + (H - PB) + '" stroke="var(--border)" stroke-dasharray="4 4"/>';
+        for (const t of pts) {
+          const cx = X(t[xKey]).toFixed(1), cy = Y(t[yKey]).toFixed(1);
+          const isAway = t.team === data.away, isHome = t.team === data.home;
+          if (!isAway && !isHome) {
+            svg += '<circle cx="' + cx + '" cy="' + cy + '" r="5" fill="var(--text-dim)" opacity="0.35"><title>' + t.short + ": " + fmts[xAxis[2]](t[xKey]) + " / " + fmts[yAxis[2]](t[yKey]) + '</title></circle>';
+          } else {
+            const color = isAway ? "var(--accent2)" : "var(--good)";
+            const anchor = Number(cx) > W - 130 ? "end" : "start";
+            const dx = anchor === "end" ? -10 : 10;
+            svg += '<circle cx="' + cx + '" cy="' + cy + '" r="8" fill="' + color + '"/>';
+            svg += '<text x="' + (Number(cx) + dx).toFixed(1) + '" y="' + (Number(cy) + 4).toFixed(1) + '" text-anchor="' + anchor + '" font-size="13" font-weight="800" fill="' + color + '">' + t.short + " (" + fmts[xAxis[2]](t[xKey]) + ", " + fmts[yAxis[2]](t[yKey]) + ")</text>";
+          }
+        }
+        svg += '<text x="' + (W - PR) + '" y="' + (H - 8) + '" text-anchor="end" font-size="11" fill="var(--text-dim)">Higher ' + xAxis[1] + ' &#8594;</text>';
+        svg += '<text x="16" y="' + PT + '" font-size="11" fill="var(--text-dim)" transform="rotate(-90 16 ' + PT + ')" text-anchor="end">Higher ' + yAxis[1] + ' &#8594;</text>';
+        svg += "</svg>";
+        document.getElementById("matchup-map").innerHTML = svg;
+      };
+      drawMatchupMap();
+    })();
+    </script>
   </section>`;
 }
 
 function renderMatchupPage(context) {
-  const { brief, game, scheduleGame, totalsGame, pitcherGame, resultGame, weather, venue, quality, slug, urlPath } = context;
+  const { brief, game, scheduleGame, totalsGame, pitcherGame, resultGame, weather, venue, quality, slug, urlPath, kprops, teamHitting } = context;
   const awayShort = shortTeam(game.away_team);
   const homeShort = shortTeam(game.home_team);
   const titleDate = niceDate(DATE);
@@ -815,6 +908,7 @@ function renderMatchupPage(context) {
         <tr><th>First pitch</th><td>${esc(game.time ? `${game.time} ET` : prettyDateTime(gameTime) || "Not confirmed")}</td></tr>
         <tr><th>Venue</th><td>${esc(venue.name)}</td></tr>
         <tr><th>Starting pitchers</th><td>${esc((pitcher.away && pitcher.away.name) || "TBD")} vs ${esc((pitcher.home && pitcher.home.name) || "TBD")}</td></tr>
+        <tr><th>Weather</th><td>${esc(weatherText(weather, venue))}</td></tr>
       </tbody>
     </table>
   </section>
@@ -822,16 +916,17 @@ function renderMatchupPage(context) {
   <section class="card">
     <div class="sec-head"><h2>Starting pitcher matchup</h2><a class="tool-link" href="/tools/pitcher-matchups/">Full Pitcher Matchup Tool &rarr;</a></div>
     ${renderPitcherTable(game, pitcherGame)}
+    ${renderStrikeoutProjections(game, pitcherGame, kprops)}
     <p class="small dim">Same data source as the <a href="/tools/pitcher-matchups/">Pitcher Matchup Tool</a>, where every starter on the slate is compared side by side.</p>
   </section>
 
   <section class="card">
     <div class="sec-head"><h2>Offense and recent form</h2><a class="tool-link" href="/stats/">Full Stats page &rarr;</a></div>
-    ${renderOffenseTable(game)}
+    ${renderOffenseTable(game, teamHitting)}
     <p class="small dim">Season and 15-day splits for all 30 teams live on the <a href="/stats/">Stats page</a>, including hot and cold streaks and the run environment table.</p>
   </section>
 
-  ${renderTeamMap(brief, game)}
+  ${renderTeamMap(brief, game, teamHitting)}
 
   <section class="card">
     <div class="sec-head"><h2>Bullpen matchup</h2><a class="tool-link" href="/tools/bullpen-fatigue/">Full Bullpen Fatigue Index &rarr;</a></div>
@@ -841,11 +936,6 @@ function renderMatchupPage(context) {
   </section>
 
   ${renderTotals(totalsGame)}
-
-  <section class="card">
-    <h2>Weather and venue</h2>
-    <p>${esc(weatherText(weather, venue))}</p>
-  </section>
 
   <section class="card">
     <h2>What could change the prediction</h2>
@@ -903,6 +993,9 @@ function renderPitcherTable(game, pitcherGame) {
       <tr><th>LyDia pitcher score</th><td class="${known(away.score) && known(home.score) && away.score > home.score ? "adv" : ""}">${esc(known(away.score) ? away.score : "Not available")}</td><td class="${known(away.score) && known(home.score) && home.score > away.score ? "adv" : ""}">${esc(known(home.score) ? home.score : "Not available")}</td></tr>
       <tr><th>ERA</th><td>${esc(oneDecimal(away.era))}</td><td>${esc(oneDecimal(home.era))}</td></tr>
       <tr><th>WHIP</th><td>${esc(typeof away.whip === "number" ? away.whip.toFixed(2) : "Not available")}</td><td>${esc(typeof home.whip === "number" ? home.whip.toFixed(2) : "Not available")}</td></tr>
+      <tr><th>Throws</th><td>${esc(away.hand || "Not available")}</td><td>${esc(home.hand || "Not available")}</td></tr>
+      <tr><th>K/9</th><td class="${typeof away.k9 === "number" && typeof home.k9 === "number" && away.k9 > home.k9 ? "adv" : ""}">${esc(oneDecimal(away.k9))}</td><td class="${typeof away.k9 === "number" && typeof home.k9 === "number" && home.k9 > away.k9 ? "adv" : ""}">${esc(oneDecimal(home.k9))}</td></tr>
+      <tr><th>BB/9</th><td>${esc(oneDecimal(away.bb9))}</td><td>${esc(oneDecimal(home.bb9))}</td></tr>
       <tr><th>K-BB%</th><td>${esc(pct(away.kbbPct))}</td><td>${esc(pct(home.kbbPct))}</td></tr>
       <tr><th>Ground-ball rate</th><td>${esc(pct(away.gbPct))}</td><td>${esc(pct(home.gbPct))}</td></tr>
       <tr><th>HR/9</th><td>${esc(oneDecimal(away.hr9))}</td><td>${esc(oneDecimal(home.hr9))}</td></tr>
@@ -912,10 +1005,40 @@ function renderPitcherTable(game, pitcherGame) {
   <p><strong>Pitcher edge:</strong> ${esc(p.edge_team || "No clear starting pitcher edge")}${p.gap ? ` by ${esc(p.gap)} points` : ""}.</p>`;
 }
 
-function renderOffenseTable(game) {
+function kpropFor(kprops, name) {
+  if (!kprops || !kprops.pitchers || !name) return null;
+  return kprops.pitchers[String(name).trim().toLowerCase()] || null;
+}
+function renderStrikeoutProjections(game, pitcherGame, kprops) {
+  const p = pitcherGame || {};
+  const rows = [
+    { team: game.away_team, pitcher: p.away },
+    { team: game.home_team, pitcher: p.home }
+  ].map(entry => ({ ...entry, prop: kpropFor(kprops, entry.pitcher && entry.pitcher.name) }))
+   .filter(entry => entry.prop);
+  if (!rows.length) return "";
+  const cells = rows.map(entry => {
+    const prop = entry.prop;
+    const lean = typeof prop.projection === "number" && typeof prop.line === "number"
+      ? prop.projection - prop.line : null;
+    const leanText = lean === null ? "" : Math.abs(lean) < 0.3
+      ? " Model and market agree."
+      : ` LyDia leans ${lean > 0 ? "over" : "under"} by ${Math.abs(lean).toFixed(1)}K.`;
+    return `<div class="metric"><div class="label">${esc(entry.pitcher.name)} strikeouts</div><div class="value">${esc(oneDecimal(prop.projection))} <span class="dim small">proj</span></div><div class="small dim">Market ${esc(oneDecimal(prop.line))}K · O ${esc(odds(prop.over))} / U ${esc(odds(prop.under))} · ${esc(prop.books)} book${prop.books === 1 ? "" : "s"}.${esc(leanText)}</div></div>`;
+  }).join("");
+  return `<h3 style="margin:16px 0 4px">Strikeout projections <a class="tool-link" style="font-size:.78rem" href="/tools/strikeout-projections/">Full K board &rarr;</a></h3>
+  <div class="metric-grid">${cells}</div>
+  <p class="small dim">Projections are self-calibrated against graded results${kprops && kprops.learned_n ? ` (${esc(kprops.learned_n)} graded starts)` : ""}. Leans are context, not official picks.</p>`;
+}
+
+function renderOffenseTable(game, teamHitting) {
   const offense = game.offense_form || {};
   const away = offense.away || {};
   const home = offense.home || {};
+  const hit = teamHitting || { season: {}, recent: {} };
+  const awayKSeason = hit.season[game.away_team], homeKSeason = hit.season[game.home_team];
+  const awayKRecent = hit.recent[game.away_team], homeKRecent = hit.recent[game.home_team];
+  const kCell = (mine, theirs) => typeof mine === "number" && typeof theirs === "number" && mine < theirs ? "adv" : "";
   return `<table class="matchup-table">
     <thead><tr><th>Metric</th><th>${esc(shortTeam(game.away_team))}</th><th>${esc(shortTeam(game.home_team))}</th></tr></thead>
     <tbody>
@@ -925,6 +1048,8 @@ function renderOffenseTable(game) {
       <tr><th>Season OPS</th><td>${esc(typeof away.season_ops === "number" ? away.season_ops.toFixed(3) : "Not available")}</td><td>${esc(typeof home.season_ops === "number" ? home.season_ops.toFixed(3) : "Not available")}</td></tr>
       <tr><th>OPS change</th><td>${esc(typeof away.delta_ops === "number" ? signedDecimal(away.delta_ops, 3) : "Not available")}</td><td>${esc(typeof home.delta_ops === "number" ? signedDecimal(home.delta_ops, 3) : "Not available")}</td></tr>
       <tr><th>Runs per game, last 15 days</th><td>${esc(oneDecimal(away.rpg_15d))}</td><td>${esc(oneDecimal(home.rpg_15d))}</td></tr>
+      <tr><th>K% season <span class="dim" style="font-weight:400">(lower is better)</span></th><td class="${kCell(awayKSeason, homeKSeason)}">${esc(pct(awayKSeason))}</td><td class="${kCell(homeKSeason, awayKSeason)}">${esc(pct(homeKSeason))}</td></tr>
+      <tr><th>K% last 15 days</th><td class="${kCell(awayKRecent, homeKRecent)}">${esc(pct(awayKRecent))}</td><td class="${kCell(homeKRecent, awayKRecent)}">${esc(pct(homeKRecent))}</td></tr>
       <tr><th>OPS vs opposing hand</th><td>${esc(typeof away.ops_vs_opp_hand === "number" ? away.ops_vs_opp_hand.toFixed(3) : "Not available")}</td><td>${esc(typeof home.ops_vs_opp_hand === "number" ? home.ops_vs_opp_hand.toFixed(3) : "Not available")}</td></tr>
     </tbody>
   </table>`;
