@@ -1,6 +1,6 @@
 {
   "date": "2026-07-22",
-  "generated_at": "2026-07-22T19:26:32.324Z",
+  "generated_at": "2026-07-22T19:31:20.098Z",
   "snapshot_type": "posted",
   "source_of_truth": "LyDia Daily Engine",
   "current_official_model": "moneyline_only",
@@ -1739,9 +1739,9 @@
           "ops_vs_opp_hand": null
         },
         "home": {
-          "ops_15d": 0.806,
+          "ops_15d": 0.803,
           "season_ops": 0.71,
-          "delta_ops": 0.096,
+          "delta_ops": 0.093,
           "rpg_15d": 5.67,
           "opp_hand": "R",
           "ops_vs_opp_hand": 0.688
@@ -1749,10 +1749,10 @@
         "window_days": 15
       },
       "model_v3": {
-        "p_home": 0.671,
+        "p_home": 0.6705,
         "fip_away": 4.03,
         "fip_home": 4.2,
-        "off_adj": 0.0352,
+        "off_adj": 0.0328,
         "bp_adj": 0.027,
         "version": "v3.1-bullpen",
         "p_home_v2": 0.5979,
@@ -1884,13 +1884,13 @@
       "run_model_probability": 0.5848,
       "run_model_weight": 0.5,
       "model_probability_pre_bullpen": null,
-      "edge": 0.0103,
+      "edge": 0.0099,
       "status": "pass",
       "value_tag": "PASS",
       "lab_score": 47,
       "lab_score_breakdown": {
         "score": 47,
-        "model_edge_points": 4.5,
+        "model_edge_points": 4.31,
         "pitcher_points": 15,
         "bullpen_points": 12.67,
         "market_points": 10,
@@ -2059,12 +2059,12 @@
         "absolute_risk": "Elevated"
       },
       "market": {
-        "no_vig_probability": 0.5524,
+        "no_vig_probability": 0.5528,
         "best_price": -128,
         "away_price": 121,
         "home_price": -128,
-        "away_no_vig": 0.4476,
-        "home_no_vig": 0.5524,
+        "away_no_vig": 0.4472,
+        "home_no_vig": 0.5528,
         "books": 9
       }
     },
@@ -2767,17 +2767,17 @@
       },
       "offense_form": {
         "away": {
-          "ops_15d": 0.806,
+          "ops_15d": 0.807,
           "season_ops": 0.767,
-          "delta_ops": 0.039,
+          "delta_ops": 0.04,
           "rpg_15d": 6,
           "opp_hand": "L",
           "ops_vs_opp_hand": 0.726
         },
         "home": {
-          "ops_15d": 0.759,
+          "ops_15d": 0.757,
           "season_ops": 0.738,
-          "delta_ops": 0.021,
+          "delta_ops": 0.019,
           "rpg_15d": 4.18,
           "opp_hand": "R",
           "ops_vs_opp_hand": 0.738
@@ -2785,10 +2785,10 @@
         "window_days": 15
       },
       "model_v3": {
-        "p_home": 0.618,
+        "p_home": 0.6174,
         "fip_away": 4.48,
         "fip_home": 3.02,
-        "off_adj": -0.0144,
+        "off_adj": -0.0168,
         "bp_adj": -0.102,
         "version": "v3.1-bullpen",
         "p_home_v2": 0.5641,
@@ -2886,12 +2886,12 @@
         "absolute_risk": "Pick side high"
       },
       "market": {
-        "no_vig_probability": 0.6206,
+        "no_vig_probability": 0.6207,
         "best_price": -174,
         "away_price": 160,
         "home_price": -174,
-        "away_no_vig": 0.3794,
-        "home_no_vig": 0.6206,
+        "away_no_vig": 0.3793,
+        "home_no_vig": 0.6207,
         "books": 9
       }
     },

@@ -1,6 +1,6 @@
 {
   "date": "2026-07-22",
-  "generated_at": "2026-07-22T19:26:36.677Z",
+  "generated_at": "2026-07-22T19:31:24.228Z",
   "stale_reuse": false,
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
@@ -77,19 +77,6 @@
       "published_at": "2026-07-22T17:37:00.000Z",
       "description": "MLB Expert Picks & Baseball Predictions July 22 &nbsp;&nbsp; Covers.com",
       "source": "Covers.com",
-      "published_label": "Jul 22, 2026",
-      "section": "market_context",
-      "classification_confidence": "no_game_match",
-      "game": null,
-      "selected_side": null,
-      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
-    },
-    {
-      "title": "Opening Pitch: Zerillo’s MLB Projections for Wednesday - Action Network",
-      "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE84UFpWTjlPY01GbXJPcW05bmU1clpZSzMtbDFaTkNYZnZTX0JKdGVTdU1fZEFvYUI3bVdsQnRVVS1IZ3dqbWVWb2JtM2V4cVBMWmpyWXUxWXF6V2FlWFZoRlZheGVkT19KZ21EeWRHbWlQdUMxMzNIVzZ0cw?oc=5",
-      "published_at": "2026-07-22T17:14:55.000Z",
-      "description": "Opening Pitch: Zerillo’s MLB Projections for Wednesday &nbsp;&nbsp; Action Network",
-      "source": "Action Network",
       "published_label": "Jul 22, 2026",
       "section": "market_context",
       "classification_confidence": "no_game_match",
@@ -239,6 +226,19 @@
       "game": null,
       "selected_side": null,
       "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+    },
+    {
+      "title": "MLB Picks Today: Adam Burke’s Best Bets for Wednesday, July 22 - VSiN",
+      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNaUt4QTUtVkx6bXA1WkMyd1VkN05HS0VkODM0NFlQME5yYXZpU2N6elFHZzFrbnh4ODhmck5VOUdmbzA4S1RPQjc1WC1FdzZlNDh5SldpOV9DV0JEQURKTHVLajdybkVpOW4xNGNEVlFpZk0tNkxhQi1GRzhZVlE4QkptdGdmbXRy?oc=5",
+      "published_at": "2026-07-22T15:46:22.000Z",
+      "description": "MLB Picks Today: Adam Burke’s Best Bets for Wednesday, July 22 &nbsp;&nbsp; VSiN",
+      "source": "VSiN",
+      "published_label": "Jul 22, 2026",
+      "section": "market_context",
+      "classification_confidence": "no_game_match",
+      "game": null,
+      "selected_side": null,
+      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
     }
   ],
   "groups": {
@@ -264,19 +264,6 @@
         "published_at": "2026-07-22T17:37:00.000Z",
         "description": "MLB Expert Picks & Baseball Predictions July 22 &nbsp;&nbsp; Covers.com",
         "source": "Covers.com",
-        "published_label": "Jul 22, 2026",
-        "section": "market_context",
-        "classification_confidence": "no_game_match",
-        "game": null,
-        "selected_side": null,
-        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
-      },
-      {
-        "title": "Opening Pitch: Zerillo’s MLB Projections for Wednesday - Action Network",
-        "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE84UFpWTjlPY01GbXJPcW05bmU1clpZSzMtbDFaTkNYZnZTX0JKdGVTdU1fZEFvYUI3bVdsQnRVVS1IZ3dqbWVWb2JtM2V4cVBMWmpyWXUxWXF6V2FlWFZoRlZheGVkT19KZ21EeWRHbWlQdUMxMzNIVzZ0cw?oc=5",
-        "published_at": "2026-07-22T17:14:55.000Z",
-        "description": "Opening Pitch: Zerillo’s MLB Projections for Wednesday &nbsp;&nbsp; Action Network",
-        "source": "Action Network",
         "published_label": "Jul 22, 2026",
         "section": "market_context",
         "classification_confidence": "no_game_match",
@@ -329,6 +316,19 @@
         "published_at": "2026-07-22T15:47:00.000Z",
         "description": "MLB Predictions Tonight: Sharps Betting 2 Totals, 1 Moneyline &nbsp;&nbsp; Action Network",
         "source": "Action Network",
+        "published_label": "Jul 22, 2026",
+        "section": "market_context",
+        "classification_confidence": "no_game_match",
+        "game": null,
+        "selected_side": null,
+        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      },
+      {
+        "title": "MLB Picks Today: Adam Burke’s Best Bets for Wednesday, July 22 - VSiN",
+        "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNaUt4QTUtVkx6bXA1WkMyd1VkN05HS0VkODM0NFlQME5yYXZpU2N6elFHZzFrbnh4ODhmck5VOUdmbzA4S1RPQjc1WC1FdzZlNDh5SldpOV9DV0JEQURKTHVLajdybkVpOW4xNGNEVlFpZk0tNkxhQi1GRzhZVlE4QkptdGdmbXRy?oc=5",
+        "published_at": "2026-07-22T15:46:22.000Z",
+        "description": "MLB Picks Today: Adam Burke’s Best Bets for Wednesday, July 22 &nbsp;&nbsp; VSiN",
+        "source": "VSiN",
         "published_label": "Jul 22, 2026",
         "section": "market_context",
         "classification_confidence": "no_game_match",

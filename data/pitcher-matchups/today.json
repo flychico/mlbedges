@@ -1,6 +1,6 @@
 {
   "date": "2026-07-22",
-  "generated_at": "2026-07-22T19:26:36.817Z",
+  "generated_at": "2026-07-22T19:31:24.386Z",
   "source_of_truth": "LyDia Pitcher Matchup Tool",
   "source_version": "pitcher-matchup-core-v1",
   "method": "Season pitching stats plus starter-only game logs for mixed-role pitchers. The Pitcher Matchup Tool and matchup pages read this same source.",
@@ -623,7 +623,7 @@
       "h": 11,
       "ab": 54,
       "sf": 0,
-      "starterIp": 12.333333333333332,
+      "starterIp": 12.666666666666666,
       "starterGames": 3
     },
     "687562": {
@@ -1574,7 +1574,7 @@
         "h": 11,
         "ab": 54,
         "sf": 0,
-        "starterIp": 12.333333333333332,
+        "starterIp": 12.666666666666666,
         "starterGames": 3,
         "score": 73,
         "grade": "Above avg",
@@ -1585,7 +1585,7 @@
         "gbPct": 0.4444444444444444,
         "babip": 0.2894736842105263,
         "hr9": 0,
-        "ipStart": 4.111111111111111
+        "ipStart": 4.222222222222222
       },
       "gap": 6,
       "strength": "Slight",

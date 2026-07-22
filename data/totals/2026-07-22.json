@@ -1,6 +1,6 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T19:26:32.094Z",
+ "generated_at": "2026-07-22T19:31:19.782Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.52,
  "probables": {
@@ -43,10 +43,6 @@
   "824896": {
    "away": "Michael King",
    "home": "Martín Pérez"
-  },
-  "825055": {
-   "away": "Gage Jump",
-   "home": "Merrill Kelly"
   }
  },
  "games": {
@@ -214,7 +210,7 @@
    "home_sp": "Emerson Hancock",
    "line": 8.5,
    "over": 100,
-   "under": -115,
+   "under": -110,
    "books": 9,
    "lab": 73
   },
@@ -437,8 +433,8 @@
    "away_sp": "Christian Scott",
    "home_sp": "Logan Henderson",
    "line": 8.5,
-   "over": 100,
-   "under": -120,
+   "over": -102,
+   "under": -118,
    "books": 6,
    "lab": 40
   },
@@ -549,8 +545,8 @@
    "away_sp": "Landen Roupp",
    "home_sp": "Seth Lugo",
    "line": 3.5,
-   "over": -108,
-   "under": 105,
+   "over": -102,
+   "under": -111,
    "books": 6,
    "lab": 80
   },
@@ -660,11 +656,11 @@
    "park_factor": 1.18,
    "away_sp": "Cade Cavalli",
    "home_sp": "Gabriel Hughes",
-   "line": 10.5,
-   "over": -102,
+   "line": 10,
+   "over": -115,
    "under": -111,
-   "books": 7,
-   "lab": 40
+   "books": 6,
+   "lab": 61
   },
   "824408": {
    "game": "Minnesota Twins @ Cleveland Guardians",
@@ -949,10 +945,10 @@
   "825055": {
    "game": "Athletics @ Arizona Diamondbacks",
    "game_time_iso": "2026-07-22T19:40:00Z",
-   "projection": 10.5,
-   "projection_raw": 10.5,
-   "proj_away": 6,
-   "proj_home": 4.4,
+   "projection": 9.9,
+   "projection_raw": 9.9,
+   "proj_away": 5.7,
+   "proj_home": 4.2,
    "away": {
     "team": "Athletics",
     "rpg": 4.44,
@@ -966,11 +962,11 @@
     "opp_sp_fip": 5.88,
     "opp_sp_ip": 5.8,
     "pitch_factor": 1.257,
-    "opp_pen_risk": 88,
-    "opp_pen_fatigue": 86,
-    "opp_pen_efficiency": 46,
-    "opp_pen_efficiency_label": "Average",
-    "pen_factor": 1.06,
+    "opp_pen_risk": null,
+    "opp_pen_fatigue": null,
+    "opp_pen_efficiency": null,
+    "opp_pen_efficiency_label": null,
+    "pen_factor": 1,
     "sp_sample_ok": true
    },
    "home": {
@@ -986,11 +982,11 @@
     "opp_sp_fip": 3.4,
     "opp_sp_ip": 5.2,
     "pitch_factor": 0.889,
-    "opp_pen_risk": 83,
-    "opp_pen_fatigue": 83,
-    "opp_pen_efficiency": 50,
-    "opp_pen_efficiency_label": "Average",
-    "pen_factor": 1.056,
+    "opp_pen_risk": null,
+    "opp_pen_fatigue": null,
+    "opp_pen_efficiency": null,
+    "opp_pen_efficiency_label": null,
+    "pen_factor": 1,
     "sp_sample_ok": true
    },
    "park_factor": 1.02,
@@ -1000,7 +996,7 @@
    "over": -119,
    "under": 104,
    "books": 9,
-   "lab": 79
+   "lab": 69
   }
  },
  "learned_bias": 0,
