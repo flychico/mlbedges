@@ -1,12 +1,12 @@
 {
   "date": "2026-07-22",
-  "generated_at": "2026-07-22T20:11:57.134Z",
+  "generated_at": "2026-07-22T20:30:36.471Z",
   "source": "data/member-brief/2026-07-22.json",
   "pitcher_source": "data/pitcher-matchups/2026-07-22.json",
   "pitcher_source_version": "pitcher-matchup-core-v1",
   "total_pages": 17,
-  "indexable_pages": 16,
-  "noindex_pages": 1,
+  "indexable_pages": 17,
+  "noindex_pages": 0,
   "indexing_rule": "Pages are indexable only when verified starters, model, market, pitcher, bullpen, offense and decision data are complete.",
   "pages": [
     {
@@ -23,7 +23,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:56.598Z",
+      "generated_at": "2026-07-22T20:30:35.986Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T17:00",
@@ -36,7 +36,12 @@
       },
       "pitcher_source_version": "pitcher-matchup-core-v1",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 5,
+        "home_score": 3,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -52,7 +57,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:55.120Z",
+      "generated_at": "2026-07-22T20:30:34.639Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T18:00",
@@ -85,7 +90,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:55.524Z",
+      "generated_at": "2026-07-22T20:30:35.256Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T18:00",
@@ -114,7 +119,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:56.999Z",
+      "generated_at": "2026-07-22T20:30:36.350Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T18:00",
@@ -127,7 +132,12 @@
       },
       "pitcher_source_version": "pitcher-matchup-core-v1",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 4,
+        "home_score": 5,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -143,7 +153,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:56.866Z",
+      "generated_at": "2026-07-22T20:30:36.228Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T19:00",
@@ -172,7 +182,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:54.985Z",
+      "generated_at": "2026-07-22T20:30:34.516Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T20:00",
@@ -201,7 +211,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:55.255Z",
+      "generated_at": "2026-07-22T20:30:34.761Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T20:00",
@@ -230,7 +240,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:56.196Z",
+      "generated_at": "2026-07-22T20:30:35.621Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T20:00",
@@ -259,7 +269,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:56.061Z",
+      "generated_at": "2026-07-22T20:30:35.499Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T23:00",
@@ -288,7 +298,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:56.330Z",
+      "generated_at": "2026-07-22T20:30:35.742Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T23:00",
@@ -317,7 +327,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:56.732Z",
+      "generated_at": "2026-07-22T20:30:36.107Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T23:00",
@@ -346,7 +356,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:55.389Z",
+      "generated_at": "2026-07-22T20:30:34.890Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T23:00",
@@ -370,15 +380,12 @@
       "slug": "orioles-vs-red-sox-prediction-odds-2026-07-22-game-2",
       "url": "https://lydiaslab.com/mlb/orioles-vs-red-sox-prediction-odds-2026-07-22-game-2/",
       "output": "mlb/orioles-vs-red-sox-prediction-odds-2026-07-22-game-2/index.html",
-      "status": "pass",
-      "indexable": false,
-      "quality_score": 9,
+      "status": "watchlist",
+      "indexable": true,
+      "quality_score": 11,
       "quality_total": 11,
-      "missing": [
-        "probable_pitchers",
-        "pitcher_stats"
-      ],
-      "generated_at": "2026-07-22T20:11:55.792Z",
+      "missing": [],
+      "generated_at": "2026-07-22T20:30:35.012Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T23:00",
@@ -411,7 +418,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:57.134Z",
+      "generated_at": "2026-07-22T20:30:36.471Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-22T23:00",
@@ -435,12 +442,12 @@
       "slug": "white-sox-vs-rangers-prediction-odds-2026-07-22",
       "url": "https://lydiaslab.com/mlb/white-sox-vs-rangers-prediction-odds-2026-07-22/",
       "output": "mlb/white-sox-vs-rangers-prediction-odds-2026-07-22/index.html",
-      "status": "pass",
+      "status": "watchlist",
       "indexable": true,
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:55.926Z",
+      "generated_at": "2026-07-22T20:30:35.134Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -469,7 +476,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:55.658Z",
+      "generated_at": "2026-07-22T20:30:35.377Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -498,7 +505,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T20:11:56.465Z",
+      "generated_at": "2026-07-22T20:30:35.865Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",

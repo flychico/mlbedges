@@ -1,6 +1,6 @@
 {
   "date": "2026-07-22",
-  "generated_at": "2026-07-22T20:11:53.563Z",
+  "generated_at": "2026-07-22T20:30:33.444Z",
   "stale_reuse": false,
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
@@ -17,7 +17,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Miami Marlins @ Houston Astros",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Miami Marlins @ Houston Astros, but the headline and summary do not clearly identify a selected side. LyDia currently has Houston Astros Money Line at 55.8% model probability and 5.6/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Miami Marlins @ Houston Astros, but the headline and summary do not clearly identify a selected side. LyDia currently has Houston Astros Money Line at 55.8% model probability and 5.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Player Props & Best Bets for Today, July 22 - Covers.com",
@@ -44,6 +44,19 @@
       "game": null,
       "selected_side": null,
       "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+    },
+    {
+      "title": "Dodgers vs Phillies Predictions, Picks, Odds: Our F5 Best Bet for Today’s MLB Game - Action Network",
+      "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOeUNtMWZUQzV1YzF1R3JlYjNpZ2pTR3lzTWVzRTc4Y1J2cTBKNnFRSkRYenNoRmdIVUxiRUdCc3cwbmd5UmFQVTR1OW1Cc1ZLQWlKLWx0M0FRd01CYTNBdzZmMlB3cmQ2azFkVlRSTlRVZHJtQm9DU3hjVFRweF9CLXUtUUVRRmNQZHo0b2tSMGVLbThFRmNPaGFwcDJWWF9ScXU2ZngxWTA1S3FfX2FSb0gwMHpnR2hvMDloVXVB?oc=5",
+      "published_at": "2026-07-22T18:41:00.000Z",
+      "description": "Dodgers vs Phillies Predictions, Picks, Odds: Our F5 Best Bet for Today’s MLB Game &nbsp;&nbsp; Action Network",
+      "source": "Action Network",
+      "published_label": "Jul 22, 2026",
+      "section": "unable_to_classify",
+      "classification_confidence": "no_explicit_side",
+      "game": "Los Angeles Dodgers @ Philadelphia Phillies",
+      "selected_side": null,
+      "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 55.8% model probability and 4.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Cardinals vs Angels Prediction, Odds: Expert MLB Pick for Wednesday - Action Network",
@@ -226,19 +239,6 @@
       "game": "Detroit Tigers @ Chicago Cubs",
       "selected_side": null,
       "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 55.1% model probability and 3.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-    },
-    {
-      "title": "MLB Strikeout Props & Pitcher Best Bets for Today, July 22 - Covers.com",
-      "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPNkFoWWpMVjV2bEo2aEtBZjc3MG44akU0MVBNME9kaXdnRE5fcVhQdF9fZ0xzeXljcGc3UjFndlZVSlcwY1ZNQTdWRWZnRzBZejJFLWZDY21DaHVTVE92VTFrYll3ODJiRzZ5N18zYW0zYWYxbzNQd29TZXEtSm5XbllONkx6VXM?oc=5",
-      "published_at": "2026-07-22T16:13:00.000Z",
-      "description": "MLB Strikeout Props & Pitcher Best Bets for Today, July 22 &nbsp;&nbsp; Covers.com",
-      "source": "Covers.com",
-      "published_label": "Jul 22, 2026",
-      "section": "market_context",
-      "classification_confidence": "no_game_match",
-      "game": null,
-      "selected_side": null,
-      "lydia_takeaway": "Compare this pitching angle with LyDia's Pitcher Matchup Tool and current market price."
     }
   ],
   "groups": {
@@ -309,19 +309,6 @@
         "game": null,
         "selected_side": null,
         "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
-      },
-      {
-        "title": "MLB Strikeout Props & Pitcher Best Bets for Today, July 22 - Covers.com",
-        "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPNkFoWWpMVjV2bEo2aEtBZjc3MG44akU0MVBNME9kaXdnRE5fcVhQdF9fZ0xzeXljcGc3UjFndlZVSlcwY1ZNQTdWRWZnRzBZejJFLWZDY21DaHVTVE92VTFrYll3ODJiRzZ5N18zYW0zYWYxbzNQd29TZXEtSm5XbllONkx6VXM?oc=5",
-        "published_at": "2026-07-22T16:13:00.000Z",
-        "description": "MLB Strikeout Props & Pitcher Best Bets for Today, July 22 &nbsp;&nbsp; Covers.com",
-        "source": "Covers.com",
-        "published_label": "Jul 22, 2026",
-        "section": "market_context",
-        "classification_confidence": "no_game_match",
-        "game": null,
-        "selected_side": null,
-        "lydia_takeaway": "Compare this pitching angle with LyDia's Pitcher Matchup Tool and current market price."
       }
     ],
     "unable_to_classify": [
@@ -336,7 +323,20 @@
         "classification_confidence": "no_explicit_side",
         "game": "Miami Marlins @ Houston Astros",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Miami Marlins @ Houston Astros, but the headline and summary do not clearly identify a selected side. LyDia currently has Houston Astros Money Line at 55.8% model probability and 5.6/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Miami Marlins @ Houston Astros, but the headline and summary do not clearly identify a selected side. LyDia currently has Houston Astros Money Line at 55.8% model probability and 5.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      },
+      {
+        "title": "Dodgers vs Phillies Predictions, Picks, Odds: Our F5 Best Bet for Today’s MLB Game - Action Network",
+        "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOeUNtMWZUQzV1YzF1R3JlYjNpZ2pTR3lzTWVzRTc4Y1J2cTBKNnFRSkRYenNoRmdIVUxiRUdCc3cwbmd5UmFQVTR1OW1Cc1ZLQWlKLWx0M0FRd01CYTNBdzZmMlB3cmQ2azFkVlRSTlRVZHJtQm9DU3hjVFRweF9CLXUtUUVRRmNQZHo0b2tSMGVLbThFRmNPaGFwcDJWWF9ScXU2ZngxWTA1S3FfX2FSb0gwMHpnR2hvMDloVXVB?oc=5",
+        "published_at": "2026-07-22T18:41:00.000Z",
+        "description": "Dodgers vs Phillies Predictions, Picks, Odds: Our F5 Best Bet for Today’s MLB Game &nbsp;&nbsp; Action Network",
+        "source": "Action Network",
+        "published_label": "Jul 22, 2026",
+        "section": "unable_to_classify",
+        "classification_confidence": "no_explicit_side",
+        "game": "Los Angeles Dodgers @ Philadelphia Phillies",
+        "selected_side": null,
+        "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 55.8% model probability and 4.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Cardinals vs Angels Prediction, Odds: Expert MLB Pick for Wednesday - Action Network",

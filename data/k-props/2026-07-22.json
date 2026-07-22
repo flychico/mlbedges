@@ -1,6 +1,6 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T20:11:47.527Z",
+ "generated_at": "2026-07-22T20:30:29.720Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
  "events_fetched": 16,
  "probables": {
@@ -34,7 +34,7 @@
   },
   "824732": {
    "away": "Kyle Bradish",
-   "home": "TBD"
+   "home": "Eduardo Rivera"
   },
   "824896": {
    "away": "Michael King",
@@ -42,70 +42,59 @@
   }
  },
  "pitchers": {
-  "cade cavalli": {
-   "name": "Cade Cavalli",
+  "gabriel hughes": {
+   "name": "Gabriel Hughes",
    "line": 5.5,
-   "over": -120,
-   "under": -110,
+   "over": -210,
+   "under": 155,
    "books": 1,
    "game": "Washington Nationals @ Colorado Rockies",
-   "projection": 4.9,
-   "projection_raw": 5.32,
+   "projection": 6.02,
+   "projection_raw": 6.44,
    "game_pk": 824327
-  },
-  "emerson hancock": {
-   "name": "Emerson Hancock",
-   "line": 5.5,
-   "over": 105,
-   "under": -145,
-   "books": 1,
-   "game": "Cincinnati Reds @ Seattle Mariners",
-   "projection": 5.77,
-   "projection_raw": 6.19,
-   "game_pk": 823110
   },
   "brady singer": {
    "name": "Brady Singer",
-   "line": 6.5,
-   "over": -110,
-   "under": -120,
+   "line": 4.5,
+   "over": -185,
+   "under": 135,
    "books": 1,
    "game": "Cincinnati Reds @ Seattle Mariners",
-   "projection": 3.75,
-   "projection_raw": 4.17,
+   "projection": 3.77,
+   "projection_raw": 4.19,
    "game_pk": 823110
   },
   "merrill kelly": {
    "name": "Merrill Kelly",
    "line": 3.5,
-   "over": -110,
-   "under": -105,
-   "books": 2,
+   "over": -115,
+   "under": -120,
+   "books": 1,
    "game": "Athletics @ Arizona Diamondbacks",
-   "projection": 3.04,
-   "projection_raw": 3.46,
+   "projection": 3.08,
+   "projection_raw": 3.5,
+   "game_pk": 825055
+  },
+  "gage jump": {
+   "name": "Gage Jump",
+   "line": 4.5,
+   "over": -150,
+   "under": 110,
+   "books": 1,
+   "game": "Athletics @ Arizona Diamondbacks",
+   "projection": 4.25,
+   "projection_raw": 4.67,
    "game_pk": 825055
   },
   "reid detmers": {
    "name": "Reid Detmers",
    "line": 6.5,
-   "over": 146,
-   "under": -160,
-   "books": 5,
+   "over": 115,
+   "under": -150,
+   "books": 2,
    "game": "St. Louis Cardinals @ Los Angeles Angels",
-   "projection": 5.16,
-   "projection_raw": 5.58,
-   "game_pk": 824004
-  },
-  "hunter dobbins": {
-   "name": "Hunter Dobbins",
-   "line": 4.5,
-   "over": 110,
-   "under": -130,
-   "books": 6,
-   "game": "St. Louis Cardinals @ Los Angeles Angels",
-   "projection": 7.53,
-   "projection_raw": 7.95,
+   "projection": 5.27,
+   "projection_raw": 5.69,
    "game_pk": 824004
   },
   "eric lauer": {
@@ -122,8 +111,8 @@
   "aaron nola": {
    "name": "Aaron Nola",
    "line": 5.5,
-   "over": 115,
-   "under": -126,
+   "over": 110,
+   "under": -120,
    "books": 6,
    "game": "Los Angeles Dodgers @ Philadelphia Phillies",
    "projection": 4.54,
@@ -157,7 +146,7 @@
    "line": 4.5,
    "over": -131,
    "under": 112,
-   "books": 4,
+   "books": 3,
    "game": "Pittsburgh Pirates @ New York Yankees",
    "projection": 4.46,
    "projection_raw": 4.88,
@@ -188,13 +177,21 @@
   "kyle bradish": {
    "name": "Kyle Bradish",
    "line": 5.5,
-   "over": 126,
-   "under": -156,
+   "over": 130,
+   "under": -153,
    "books": 4,
    "game": "Baltimore Orioles @ Boston Red Sox",
    "projection": 5.33,
    "projection_raw": 5.75,
    "game_pk": 824732
+  },
+  "eduardo rivera": {
+   "name": "Eduardo Rivera",
+   "line": 3.5,
+   "over": -111,
+   "under": -115,
+   "books": 1,
+   "game": "Baltimore Orioles @ Boston Red Sox"
   },
   "martin perez": {
    "name": "Martin Perez",
@@ -241,7 +238,7 @@
    "name": "Anthony Kay",
    "line": 4.5,
    "over": 120,
-   "under": -133,
+   "under": -138,
    "books": 6,
    "game": "Chicago White Sox @ Texas Rangers",
    "projection": 4.07,
@@ -251,8 +248,8 @@
   "sandy alcantara": {
    "name": "Sandy Alcantara",
    "line": 4.5,
-   "over": -159,
-   "under": 130,
+   "over": -154,
+   "under": 128,
    "books": 6,
    "game": "Miami Marlins @ Houston Astros",
    "projection": 4.79,
@@ -262,7 +259,7 @@
   "peter lambert": {
    "name": "Peter Lambert",
    "line": 5.5,
-   "over": 125,
+   "over": 129,
    "under": -155,
    "books": 6,
    "game": "Miami Marlins @ Houston Astros",
@@ -288,8 +285,8 @@
    "under": null,
    "books": 0,
    "game": "Pittsburgh Pirates @ New York Yankees",
-   "projection": 6.25,
-   "projection_raw": 6.67,
+   "projection": 6.26,
+   "projection_raw": 6.68,
    "game_pk": 823518
   },
   "dean kremer": {
@@ -321,8 +318,8 @@
    "under": null,
    "books": 0,
    "game": "San Francisco Giants @ Kansas City Royals",
-   "projection": 5.28,
-   "projection_raw": 5.7,
+   "projection": 5.29,
+   "projection_raw": 5.71,
    "game_pk": 824083
   },
   "seth lugo": {
@@ -354,31 +351,42 @@
    "under": null,
    "books": 0,
    "game": "New York Mets @ Milwaukee Brewers",
-   "projection": 6.11,
-   "projection_raw": 6.53,
+   "projection": 6.1,
+   "projection_raw": 6.52,
    "game_pk": 823761
   },
-  "gabriel hughes": {
-   "name": "Gabriel Hughes",
+  "cade cavalli": {
+   "name": "Cade Cavalli",
    "line": null,
    "over": null,
    "under": null,
    "books": 0,
    "game": "Washington Nationals @ Colorado Rockies",
-   "projection": 6.06,
-   "projection_raw": 6.48,
+   "projection": 4.93,
+   "projection_raw": 5.35,
    "game_pk": 824327
   },
-  "gage jump": {
-   "name": "Gage Jump",
+  "emerson hancock": {
+   "name": "Emerson Hancock",
    "line": null,
    "over": null,
    "under": null,
    "books": 0,
-   "game": "Athletics @ Arizona Diamondbacks",
-   "projection": 4.24,
-   "projection_raw": 4.66,
-   "game_pk": 825055
+   "game": "Cincinnati Reds @ Seattle Mariners",
+   "projection": 5.83,
+   "projection_raw": 6.25,
+   "game_pk": 823110
+  },
+  "hunter dobbins": {
+   "name": "Hunter Dobbins",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "St. Louis Cardinals @ Los Angeles Angels",
+   "projection": 6.79,
+   "projection_raw": 7.21,
+   "game_pk": 824004
   },
   "braydon fisher": {
    "name": "Braydon Fisher",
