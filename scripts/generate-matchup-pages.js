@@ -159,6 +159,13 @@ async function main() {
     group.forEach((game, index) => dhNumber.set(String(game.game_pk), index + 1));
   }
 
+  // Precompute every game's URL so each page can link to its sibling games.
+  const dayLinks = brief.games.map(g => {
+    const n = dhNumber.get(String(g.game_pk)) || null;
+    const slug = matchupSlug(g) + (n && n > 1 ? `-game-${n}` : "");
+    return { game_pk: g.game_pk, game: g.game, away_team: g.away_team, home_team: g.home_team, status: g.status, url: `/mlb/${slug}/` };
+  });
+
   const pages = [];
   for (const game of brief.games) {
     const gameNumber = dhNumber.get(String(game.game_pk)) || null;
@@ -193,7 +200,8 @@ async function main() {
       urlPath,
       kprops,
       teamHitting,
-      gameNumber
+      gameNumber,
+      dayLinks
     }), "utf8");
 
     pages.push({
@@ -856,7 +864,7 @@ function renderTeamMap(brief, game, teamHitting) {
 }
 
 function renderMatchupPage(context) {
-  const { brief, game, scheduleGame, totalsGame, pitcherGame, resultGame, weather, venue, quality, slug, urlPath, kprops, teamHitting, gameNumber } = context;
+  const { brief, game, scheduleGame, totalsGame, pitcherGame, resultGame, weather, venue, quality, slug, urlPath, kprops, teamHitting, gameNumber, dayLinks } = context;
   const dhSuffix = gameNumber ? ` (Game ${gameNumber})` : "";
   const awayShort = shortTeam(game.away_team);
   const homeShort = shortTeam(game.home_team);
@@ -927,7 +935,7 @@ function renderMatchupPage(context) {
 <meta name="twitter:image" content="${SITE}/img/og-card.png">
 <link rel="stylesheet" href="/css/style.css">
 <style>
-.matchup-head{margin-bottom:18px}.matchup-head h1{margin-bottom:6px}.byline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.byline img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:1px solid var(--border)}.status-badge{display:inline-block;color:#fff;font-size:.76rem;font-weight:800;padding:4px 10px;border-radius:20px;background:var(--accent2)}.status-badge.official{background:var(--good)}.status-badge.pass{background:var(--text-dim)}.status-badge.watch{background:var(--accent2)}.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin:14px 0}.metric{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:12px}.metric .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text-dim)}.metric .value{font-size:1.15rem;font-weight:800;margin-top:2px}.matchup-table{width:100%;border-collapse:collapse;font-size:.88rem}.matchup-table th,.matchup-table td{padding:8px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}.matchup-table th:not(:first-child),.matchup-table td:not(:first-child){text-align:right}.section-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.decision-card{border-color:var(--accent2)}.decision-card.official{border-color:var(--good)}.quality-list{columns:2;column-gap:24px}.quality-list li{break-inside:avoid;margin-bottom:5px}.result-win{border-color:var(--good)}.result-loss{border-color:var(--bad)}.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.sec-head h2{margin-bottom:6px}.tool-link{font-size:.82rem;font-weight:700;white-space:nowrap}.co-head{margin:16px 0 8px;font-size:.95rem}.co-head.for{color:var(--good)}.co-head.against{color:#e08726}.callout-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.callout{border:1px solid var(--border);border-left:4px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--bg-elev)}.callout.for{border-left-color:var(--good)}.callout.against{border-left-color:#e08726}.co-title{font-weight:800;margin-bottom:4px}.co-detail{font-size:.86rem;color:var(--text);line-height:1.5}.verdict{margin-top:14px;padding:14px;border:1px solid var(--accent2);border-radius:var(--radius);background:var(--bg-elev);font-size:.95rem;line-height:1.55}.verdict .v-label{display:inline-block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--accent2);margin-right:8px}.full-read summary{cursor:pointer;font-weight:700;color:var(--text-dim);font-size:.85rem;margin-top:12px}.full-read p{font-size:.86rem;color:var(--text-dim);line-height:1.55}.edgebar{margin:12px 0 4px}.eb-row{display:flex;align-items:center;gap:10px;margin:6px 0}.eb-name{width:92px;font-size:.78rem;color:var(--text-dim);text-align:right}.eb-track{flex:1;height:14px;background:var(--bg-elev);border:1px solid var(--border);border-radius:7px;overflow:hidden}.eb-fill{height:100%;border-radius:7px}.eb-fill.model{background:var(--accent2)}.eb-fill.mkt{background:var(--text-dim)}.eb-val{width:56px;font-size:.82rem;font-weight:800;font-variant-numeric:tabular-nums}.gauge-row{display:flex;align-items:center;gap:10px;margin:6px 0}.g-label{width:120px;font-size:.78rem;color:var(--text-dim);text-align:right}.g-track{flex:1;height:11px;background:var(--bg-elev);border:1px solid var(--border);border-radius:6px;overflow:hidden}.g-fill{height:100%;border-radius:6px}.g-val{width:110px;font-size:.8rem;font-weight:700;font-variant-numeric:tabular-nums}.pen-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:10px}.pen-side{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:12px}.pen-side b{display:block;margin-bottom:6px}.adv{color:var(--good);font-weight:800}.k-lean{font-size:.98rem;font-weight:800;margin:6px 0 4px;padding:5px 10px;border-radius:6px;display:inline-block}.k-lean.over{background:rgba(30,142,62,.12);color:var(--good)}.k-lean.under{background:rgba(207,34,46,.10);color:var(--bad)}.k-lean.flat{background:var(--bg-card);color:var(--text-dim);font-weight:700}@media(max-width:640px){.quality-list{columns:1}.matchup-table{font-size:.8rem}.matchup-table th,.matchup-table td{padding:6px 4px}}
+.matchup-head{margin-bottom:18px}.matchup-head h1{margin-bottom:6px}.byline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.byline img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:1px solid var(--border)}.status-badge{display:inline-block;color:#fff;font-size:.76rem;font-weight:800;padding:4px 10px;border-radius:20px;background:var(--accent2)}.status-badge.official{background:var(--good)}.status-badge.pass{background:var(--text-dim)}.status-badge.watch{background:var(--accent2)}.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin:14px 0}.metric{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:12px}.metric .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text-dim)}.metric .value{font-size:1.15rem;font-weight:800;margin-top:2px}.matchup-table{width:100%;border-collapse:collapse;font-size:.88rem}.matchup-table th,.matchup-table td{padding:8px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}.matchup-table th:not(:first-child),.matchup-table td:not(:first-child){text-align:right}.section-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.decision-card{border-color:var(--accent2)}.decision-card.official{border-color:var(--good)}.quality-list{columns:2;column-gap:24px}.quality-list li{break-inside:avoid;margin-bottom:5px}.result-win{border-color:var(--good)}.result-loss{border-color:var(--bad)}.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.sec-head h2{margin-bottom:6px}.tool-link{font-size:.82rem;font-weight:700;white-space:nowrap}.co-head{margin:16px 0 8px;font-size:.95rem}.co-head.for{color:var(--good)}.co-head.against{color:#e08726}.callout-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.callout{border:1px solid var(--border);border-left:4px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--bg-elev)}.callout.for{border-left-color:var(--good)}.callout.against{border-left-color:#e08726}.co-title{font-weight:800;margin-bottom:4px}.co-detail{font-size:.86rem;color:var(--text);line-height:1.5}.verdict{margin-top:14px;padding:14px;border:1px solid var(--accent2);border-radius:var(--radius);background:var(--bg-elev);font-size:.95rem;line-height:1.55}.verdict .v-label{display:inline-block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--accent2);margin-right:8px}.full-read summary{cursor:pointer;font-weight:700;color:var(--text-dim);font-size:.85rem;margin-top:12px}.full-read p{font-size:.86rem;color:var(--text-dim);line-height:1.55}.edgebar{margin:12px 0 4px}.eb-row{display:flex;align-items:center;gap:10px;margin:6px 0}.eb-name{width:92px;font-size:.78rem;color:var(--text-dim);text-align:right}.eb-track{flex:1;height:14px;background:var(--bg-elev);border:1px solid var(--border);border-radius:7px;overflow:hidden}.eb-fill{height:100%;border-radius:7px}.eb-fill.model{background:var(--accent2)}.eb-fill.mkt{background:var(--text-dim)}.eb-val{width:56px;font-size:.82rem;font-weight:800;font-variant-numeric:tabular-nums}.gauge-row{display:flex;align-items:center;gap:10px;margin:6px 0}.g-label{width:120px;font-size:.78rem;color:var(--text-dim);text-align:right}.g-track{flex:1;height:11px;background:var(--bg-elev);border:1px solid var(--border);border-radius:6px;overflow:hidden}.g-fill{height:100%;border-radius:6px}.g-val{width:110px;font-size:.8rem;font-weight:700;font-variant-numeric:tabular-nums}.pen-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:10px}.pen-side{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:12px}.pen-side b{display:block;margin-bottom:6px}.adv{color:var(--good);font-weight:800}.pcard-grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:6px 0 12px}.pcard{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:12px}.pcard-top{display:flex;flex-direction:column;margin-bottom:8px}.pcard-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}.pc-num{display:block;font-size:1.15rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}.pc-lab{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text-dim)}.pcard-vs{font-weight:800;color:var(--text-dim);font-size:.85rem}.related-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}.related-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elev);font-size:.9rem;font-weight:600}@media(max-width:640px){.pcard-grid{grid-template-columns:1fr;gap:6px}.pcard-vs{display:none}}.k-lean{font-size:.98rem;font-weight:800;margin:6px 0 4px;padding:5px 10px;border-radius:6px;display:inline-block}.k-lean.over{background:rgba(30,142,62,.12);color:var(--good)}.k-lean.under{background:rgba(207,34,46,.10);color:var(--bad)}.k-lean.flat{background:var(--bg-card);color:var(--text-dim);font-weight:700}@media(max-width:640px){.quality-list{columns:1}.matchup-table{font-size:.8rem}.matchup-table th,.matchup-table td{padding:6px 4px}}
 </style>
 <script type="application/ld+json">${jsonScript(articleSchema)}</script>
 <script type="application/ld+json">${jsonScript(eventSchema)}</script>
@@ -981,15 +989,16 @@ function renderMatchupPage(context) {
 
   <section class="card">
     <div class="sec-head"><h2>Starting pitcher matchup</h2><a class="tool-link" href="/tools/pitcher-matchups/">Full Pitcher Matchup Tool &rarr;</a></div>
+    ${renderPitcherCard(game, pitcherGame)}
     ${renderPitcherTable(game, pitcherGame)}
     ${renderStrikeoutProjections(game, pitcherGame, kprops)}
     <p class="small dim">Same data source as the <a href="/tools/pitcher-matchups/">Pitcher Matchup Tool</a>, where every starter on the slate is compared side by side.</p>
   </section>
 
   <section class="card">
-    <div class="sec-head"><h2>Offense and recent form</h2><a class="tool-link" href="/stats/">Full Stats page &rarr;</a></div>
+    <div class="sec-head"><h2>Recent form</h2><a class="tool-link" href="/stats/">Full Stats page &rarr;</a></div>
     ${renderOffenseTable(game, teamHitting)}
-    <p class="small dim">Season and 15-day splits for all 30 teams live on the <a href="/stats/">Stats page</a>, including hot and cold streaks and the run environment table.</p>
+    <p class="small dim">Run differential and run environment come from the season standings; offense splits for all 30 teams live on the <a href="/stats/">Stats page</a>, including hot and cold streaks and the run environment table.</p>
   </section>
 
   ${renderTeamMap(brief, game, teamHitting)}
@@ -1003,6 +1012,8 @@ function renderMatchupPage(context) {
 
   ${renderTotals(totalsGame)}
 
+  ${renderRelatedGames(dayLinks, game)}
+
   <section class="card">
     <h2>What could change the prediction</h2>
     <ul>
@@ -1014,21 +1025,16 @@ function renderMatchupPage(context) {
     </ul>
   </section>
 
-  <div class="lead-box">
-    <h3 style="margin:0 0 4px">Get tomorrow's MLB model card free</h3>
-    <p class="dim small" style="margin:0">One email each morning with the featured game and the previous day's graded result.</p>
+  <div class="lead-box" style="margin-top:8px">
+    <h3 style="margin:0 0 4px">Every LyDia pick, graded in public</h3>
+    <p class="dim small" style="margin:0">Free daily model card by email, or open today's full slate. Membership adds delivery before first pitch.</p>
     <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
       <p style="display:none"><input name="bot-field"></p>
       <input type="hidden" name="form-name" value="newsletter">
       <input type="email" name="email" required placeholder="you@example.com" style="flex:1;min-width:200px">
-      <button type="submit" class="secondary">Subscribe free</button>
+      <button type="submit" class="secondary">Get the free card</button>
     </form>
-  </div>
-
-  <div class="lead-box" style="border-color:var(--accent2);margin-top:14px">
-    <h3 style="margin:0 0 4px">Open the full LyDia card</h3>
-    <p class="dim small" style="margin:0">See every official pick, value watch, watchlist and pass from this slate.</p>
-    <p style="margin-top:10px"><a class="btn blue" href="/picks/">Today's picks</a> <a class="btn secondary" href="${relatedPreview}">Full daily preview</a></p>
+    <p style="margin-top:10px"><a class="btn blue" href="/picks/">Today's picks</a> <a class="btn secondary" href="/membership/">Membership</a></p>
   </div>
 
   <p class="small dim" style="margin-top:18px">Model outputs are not guarantees. LyDia provides analysis and education only. Every official pick remains visible on the <a href="/results/">Results page</a>. 21+. If you or someone you know has a gambling problem, call 1-800-GAMBLER.</p>
@@ -1040,9 +1046,37 @@ function renderMatchupPage(context) {
 </html>`;
 }
 
+function renderRelatedGames(dayLinks, game) {
+  const others = (dayLinks || []).filter(x => String(x.game_pk) !== String(game.game_pk));
+  if (!others.length) return "";
+  const badge = status => decisionLabel(status);
+  const rows = others.map(x => `<a class="related-row" href="${esc(x.url)}"><span>${esc(x.game)}</span><span class="dim small">${esc(badge(x.status))} &rarr;</span></a>`).join("");
+  return `<section class="card">
+    <div class="sec-head"><h2>More games today</h2><a class="tool-link" href="/mlb/matchups/">All matchups &rarr;</a></div>
+    <div class="related-list">${rows}</div>
+  </section>`;
+}
+
 function renderQualityNotice(quality) {
   const labels = quality.missing.map(key => key.replace(/_/g, " "));
   return `<div class="notice" style="margin-bottom:16px"><strong>Analysis still building.</strong> This page is available to users but is not submitted for search indexing until these inputs are complete: ${esc(labels.join(", "))}.</div>`;
+}
+
+function renderPitcherCard(game, pitcherGame) {
+  const p = pitcherGame || {};
+  const a = p.away || {}, h = p.home || {};
+  if (!validPitcher(a.name) && !validPitcher(h.name)) return "";
+  const stat = (v, fmt) => typeof v === "number" ? fmt(v) : "-";
+  const tile = (team, x) => `<div class="pcard">
+    <div class="pcard-top"><b>${esc(x.name || "TBD")}</b><span class="dim small">${esc(shortTeam(team))}${x.hand ? " · " + esc(x.hand) + "HP" : ""}</span></div>
+    <div class="pcard-stats">
+      <div><span class="pc-num">${esc(stat(x.era, v => v.toFixed(2)))}</span><span class="pc-lab">ERA</span></div>
+      <div><span class="pc-num">${esc(stat(x.whip, v => v.toFixed(2)))}</span><span class="pc-lab">WHIP</span></div>
+      <div><span class="pc-num">${esc(stat(x.k9, v => v.toFixed(1)))}</span><span class="pc-lab">K/9</span></div>
+      <div><span class="pc-num">${esc(stat(x.kbbPct, v => (v*100).toFixed(1) + "%"))}</span><span class="pc-lab">K-BB%</span></div>
+    </div>
+  </div>`;
+  return `<div class="pcard-grid">${tile(game.away_team, a)}<div class="pcard-vs">vs</div>${tile(game.home_team, h)}</div>`;
 }
 
 function renderPitcherTable(game, pitcherGame) {
@@ -1128,15 +1162,24 @@ function renderOffenseTable(game, teamHitting) {
   const offense = game.offense_form || {};
   const away = offense.away || {};
   const home = offense.home || {};
-  const hit = teamHitting || { season: {}, recent: {} };
+  const hit = teamHitting || { season: {}, recent: {}, standings: {} };
+  const st = hit.standings || {};
+  const sa = st[game.away_team] || st[shortTeam(game.away_team)] || {};
+  const sh = st[game.home_team] || st[shortTeam(game.home_team)] || {};
   const awayKSeason = hit.season[game.away_team], homeKSeason = hit.season[game.home_team];
   const awayKRecent = hit.recent[game.away_team], homeKRecent = hit.recent[game.home_team];
   const kCell = (mine, theirs) => typeof mine === "number" && typeof theirs === "number" && mine < theirs ? "adv" : "";
+  const advHi = (mine, theirs) => typeof mine === "number" && typeof theirs === "number" && mine > theirs ? "adv" : "";
+  const advLo = (mine, theirs) => typeof mine === "number" && typeof theirs === "number" && mine < theirs ? "adv" : "";
+  const num = (v, fmt) => typeof v === "number" ? fmt(v) : "Not available";
   return `<table class="matchup-table">
     <thead><tr><th>Metric</th><th>${esc(shortTeam(game.away_team))}</th><th>${esc(shortTeam(game.home_team))}</th></tr></thead>
     <tbody>
       <tr><th>Record</th><td>${esc(game.away_record || "Not available")}</td><td>${esc(game.home_record || "Not available")}</td></tr>
       <tr><th>Last 10</th><td>${esc(game.away_l10 || "Not available")}</td><td>${esc(game.home_l10 || "Not available")}</td></tr>
+      <tr><th>Run differential / game <span class="dim" style="font-weight:400">(team quality)</span></th><td class="${advHi(sa.run_diff_pg, sh.run_diff_pg)}">${esc(num(sa.run_diff_pg, v => (v>=0?"+":"")+v.toFixed(2)))}</td><td class="${advHi(sh.run_diff_pg, sa.run_diff_pg)}">${esc(num(sh.run_diff_pg, v => (v>=0?"+":"")+v.toFixed(2)))}</td></tr>
+      <tr><th>Runs scored / game <span class="dim" style="font-weight:400">(offense)</span></th><td class="${advHi(sa.rs_pg, sh.rs_pg)}">${esc(num(sa.rs_pg, v => v.toFixed(2)))}</td><td class="${advHi(sh.rs_pg, sa.rs_pg)}">${esc(num(sh.rs_pg, v => v.toFixed(2)))}</td></tr>
+      <tr><th>Runs allowed / game <span class="dim" style="font-weight:400">(defense, lower better)</span></th><td class="${advLo(sa.ra_pg, sh.ra_pg)}">${esc(num(sa.ra_pg, v => v.toFixed(2)))}</td><td class="${advLo(sh.ra_pg, sa.ra_pg)}">${esc(num(sh.ra_pg, v => v.toFixed(2)))}</td></tr>
       <tr><th>OPS, last 15 days</th><td class="${typeof away.ops_15d === "number" && typeof home.ops_15d === "number" && away.ops_15d > home.ops_15d ? "adv" : ""}">${esc(typeof away.ops_15d === "number" ? away.ops_15d.toFixed(3) : "Not available")}</td><td class="${typeof away.ops_15d === "number" && typeof home.ops_15d === "number" && home.ops_15d > away.ops_15d ? "adv" : ""}">${esc(typeof home.ops_15d === "number" ? home.ops_15d.toFixed(3) : "Not available")}</td></tr>
       <tr><th>Season OPS</th><td>${esc(typeof away.season_ops === "number" ? away.season_ops.toFixed(3) : "Not available")}</td><td>${esc(typeof home.season_ops === "number" ? home.season_ops.toFixed(3) : "Not available")}</td></tr>
       <tr><th>OPS change</th><td>${esc(typeof away.delta_ops === "number" ? signedDecimal(away.delta_ops, 3) : "Not available")}</td><td>${esc(typeof home.delta_ops === "number" ? signedDecimal(home.delta_ops, 3) : "Not available")}</td></tr>
