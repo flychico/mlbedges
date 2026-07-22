@@ -15,6 +15,7 @@
 */
 const fs = require("fs");
 const path = require("path");
+const PitcherCore = require("../js/pitcher-matchup-core.js");
 
 const ROOT = path.join(__dirname, "..");
 const KEY = (process.env.ODDS_API_KEY || "").trim();
@@ -27,7 +28,6 @@ const LEAGUE_ERA = 4.20;
 const PARKS = {"Colorado Rockies": 1.18, "Cincinnati Reds": 1.07, "Boston Red Sox": 1.06, "Philadelphia Phillies": 1.06, "Atlanta Braves": 1.05, "New York Yankees": 1.05, "Chicago White Sox": 1.04, "Toronto Blue Jays": 1.03, "Arizona Diamondbacks": 1.02, "Chicago Cubs": 1.02, "Texas Rangers": 1.0, "Baltimore Orioles": 1.0, "Milwaukee Brewers": 1.0, "Los Angeles Angels": 1.0, "Cleveland Guardians": 0.99, "Minnesota Twins": 0.99, "Houston Astros": 0.99, "Washington Nationals": 0.98, "Tampa Bay Rays": 0.98, "Pittsburgh Pirates": 0.97, "St. Louis Cardinals": 0.97, "Kansas City Royals": 0.96, "New York Mets": 0.96, "Detroit Tigers": 0.95, "Los Angeles Dodgers": 0.94, "Miami Marlins": 0.93, "San Diego Padres": 0.93, "Seattle Mariners": 0.92, "San Francisco Giants": 0.91};
 
 async function j(u) { const r = await fetch(u); if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }
-const ipToNum = ip => { if (!ip || ip === "-.--") return 0; const [w, f] = String(ip).split("."); return Number(w || 0) + Number(f || 0) / 3; };
 const clampEra = e => Math.min(6, Math.max(2.75, e));
 const fipLite = st => { if (!st || !st.ip || st.ip < 10) return LEAGUE_ERA; const fip = (13 * st.hr + 3 * st.bb - 2 * st.so) / st.ip + 3.15; const wt = Math.min(st.ip, 80) / 80; return clampEra(fip * wt + LEAGUE_ERA * (1 - wt)); };
 const consensus = a => { const c = {}; for (const v of a) c[v] = (c[v] || 0) + 1; const mean = a.reduce((x, y) => x + y, 0) / a.length; return Number(Object.entries(c).sort((x, y) => y[1] - x[1] || Math.abs(x[0] - mean) - Math.abs(y[0] - mean))[0][0]); };
@@ -96,14 +96,10 @@ async function main() {
   catch (e) { console.warn("form windows unavailable:", e.message); }
 
   const pids = [...new Set(games.flatMap(g => ["away", "home"].map(sd => g.teams[sd].probablePitcher && g.teams[sd].probablePitcher.id).filter(Boolean)))];
-  const ps = {};
-  if (pids.length) {
-    const pd = await j(`https://statsapi.mlb.com/api/v1/people?personIds=${pids.join(",")}&hydrate=stats(group=[pitching],type=[season])`);
-    for (const pp of pd.people || []) {
-      const st = ((((pp.stats || [])[0] || {}).splits || [])[0] || {}).stat || {};
-      ps[pp.id] = { name: pp.fullName, ip: ipToNum(st.inningsPitched), so: +st.strikeOuts || 0, bb: +st.baseOnBalls || 0, hr: +st.homeRuns || 0, gs: +st.gamesStarted || 0 };
-    }
-  }
+  // Use the same starter-only usage and role classifier as the Pitcher Matchup
+  // Tool. Total season innings divided by starts is invalid for mixed-role
+  // pitchers because it incorrectly assigns their relief innings to starts.
+  const ps = await PitcherCore.fetchPitchers(pids, DATE, j);
   let bullpen = {};
   try { const bp = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "bullpen", `${DATE}.json`), "utf8")); if (bp.date === DATE) bullpen = bp.teams_by_name || {}; } catch (e) {}
 
@@ -174,10 +170,10 @@ async function main() {
       const rpg = (1 - w15 - w7) * seasonRpg + w15 * (off15[batTeamId] || 0) + w7 * (off7[batTeamId] || 0);
       const offF = rpg / lgRPG;
       const st = oppStarter ? ps[oppStarter.id] : null;
+      const role = PitcherCore.classifyPitcherRole(st);
       const fip = fipLite(st);
-      const expIP = st && st.gs ? Math.max(3.8, Math.min(6.8, st.ip / st.gs)) : 5.4;
+      const expIP = role.expectedInnings;
       const share = expIP / 9;
-      const pitchF = (fip / LEAGUE_ERA) * share + 1.0 * (1 - share);
       const pen = bullpen[oppPenName];
       // Run projection should react to how likely the pen is to actually give
       // up runs, not just how much it's pitched — a tired-but-dominant pen
@@ -191,22 +187,54 @@ async function main() {
       const penFatigue = pen && Number.isFinite(pen.score) ? pen.score : null;
       const penEfficiency = pen && Number.isFinite(pen.efficiency_score) ? pen.efficiency_score : null;
       const penEfficiencyLabel = pen && pen.efficiency_label ? pen.efficiency_label : null;
-      const penF = penRisk !== null && penRisk > 55 ? 1 + Math.min(0.06, (penRisk - 55) / 500) : 1;
+      const penF = penRisk !== null
+        ? Math.max(0.94, Math.min(1.10, 1 + (penRisk - 50) / 500))
+        : 1;
+      // Allocate the probable pitcher's quality only to his expected workload.
+      // The bullpen factor owns every remaining inning, which is the majority
+      // of an opener or bullpen game.
+      const pitchF = (fip / LEAGUE_ERA) * share + penF * (1 - share);
       return {
-        runs: lgRPG * offF * pitchF * penF * park,
+        runs: lgRPG * offF * pitchF * park,
         rpg: Number(rpg.toFixed(2)), season_rpg: Number(seasonRpg.toFixed(2)),
         form15_rpg: Number.isFinite(off15[batTeamId]) ? Number(off15[batTeamId].toFixed(2)) : null, form15_g: g15[batTeamId] || 0,
         form7_rpg: Number.isFinite(off7[batTeamId]) ? Number(off7[batTeamId].toFixed(2)) : null, form7_g: g7[batTeamId] || 0,
         off_factor: Number(offF.toFixed(3)),
         opp_sp: st ? st.name : "TBD", opp_sp_fip: Number(fip.toFixed(2)), opp_sp_ip: st ? Number(expIP.toFixed(1)) : null,
+        opp_pitcher_role: role.key, opp_pitcher_role_label: role.label,
+        opp_pitcher_role_confidence: role.confidence,
+        opp_bullpen_game: role.bullpenGame,
+        opp_bullpen_ip: Number(role.bullpenInnings.toFixed(1)),
+        opp_pitcher_role_reason: role.reason,
         pitch_factor: Number(pitchF.toFixed(3)),
         opp_pen_risk: penRisk, opp_pen_fatigue: penFatigue, opp_pen_efficiency: penEfficiency, opp_pen_efficiency_label: penEfficiencyLabel,
         pen_factor: Number(penF.toFixed(3)),
-        sp_sample_ok: !!(st && st.ip >= 40)
+        sp_sample_ok: !!(st && st.ip >= 40 && role.confidence !== "low"),
+        pitching_plan_confident: role.confidence === "high" && !role.bullpenGame
       };
     };
     const A = side(aT.id, g.teams.home.probablePitcher, hT.name);
     const H = side(hT.id, g.teams.away.probablePitcher, aT.name);
+    const pitchingPlan = {
+      away: {
+        pitcher: g.teams.away.probablePitcher ? g.teams.away.probablePitcher.fullName : "TBD",
+        role: H.opp_pitcher_role,
+        label: H.opp_pitcher_role_label,
+        expected_innings: H.opp_sp_ip,
+        bullpen_innings: H.opp_bullpen_ip,
+        confidence: H.opp_pitcher_role_confidence,
+        bullpen_game: H.opp_bullpen_game
+      },
+      home: {
+        pitcher: g.teams.home.probablePitcher ? g.teams.home.probablePitcher.fullName : "TBD",
+        role: A.opp_pitcher_role,
+        label: A.opp_pitcher_role_label,
+        expected_innings: A.opp_sp_ip,
+        bullpen_innings: A.opp_bullpen_ip,
+        confidence: A.opp_pitcher_role_confidence,
+        bullpen_game: A.opp_bullpen_game
+      }
+    };
     const projRaw = Number((A.runs + H.runs).toFixed(1));
     const proj = Number((projRaw + learnedBias).toFixed(1));
     const mkt = lines[`${aT.name} @ ${hT.name}`] || {};
@@ -218,7 +246,18 @@ async function main() {
     let tLab = 15;
     const lean = line !== null ? proj - line : null;
     if (lean !== null) tLab += Math.min(1, Math.abs(lean) / 2.5) * 40;
-    const dataConf = (A.sp_sample_ok ? 12.5 : A.opp_sp !== "TBD" ? 6 : 0) + (H.sp_sample_ok ? 12.5 : H.opp_sp !== "TBD" ? 6 : 0);
+    // Openers are not penalized simply for being openers. When the probable
+    // pitcher and bullpen risk data are available, the pitching plan has the
+    // same data-completeness credit as a traditional start. Performance and
+    // risk flow through the projection and bullpen model instead.
+    const sideConfidence = x => {
+      const hasPitcher = x.opp_sp !== "TBD" && x.opp_pitcher_role !== "unknown";
+      const hasBullpen = x.opp_pen_risk !== null;
+      if (hasPitcher && hasBullpen) return 12.5;
+      if (hasPitcher) return 8;
+      return 0;
+    };
+    const dataConf = sideConfidence(A) + sideConfidence(H);
     tLab += dataConf;
     if (lean !== null && Math.abs(lean) >= 0.5) {
       const dir = lean > 0 ? 1 : -1;

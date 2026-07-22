@@ -1204,11 +1204,14 @@ function renderPitcherTable(game, pitcherGame) {
   return `<table class="matchup-table" data-pitcher-source="${esc(p.source_version || "pitcher-matchup-core-v1")}" data-away-ip-start="${esc(awayIpStart)}" data-home-ip-start="${esc(homeIpStart)}">
     <thead><tr><th>Metric</th><th>${esc(shortTeam(game.away_team))}</th><th>${esc(shortTeam(game.home_team))}</th></tr></thead>
     <tbody>
+      <tr><th>Pitching plan</th><td>${esc(away.roleLabel || "Role unknown")}</td><td>${esc(home.roleLabel || "Role unknown")}</td></tr>
+      <tr><th>Expected innings</th><td>${esc(typeof away.expectedInnings === "number" ? away.expectedInnings.toFixed(1) : "Not available")}</td><td>${esc(typeof home.expectedInnings === "number" ? home.expectedInnings.toFixed(1) : "Not available")}</td></tr>
       <tr><th>Throws</th><td>${esc(away.hand || "Not available")}</td><td>${esc(home.hand || "Not available")}</td></tr>
       ${rows.map(row => `<tr><th>${esc(row.label)}${dirTag(row.better)}</th>${cellPair(row)}</tr>`).join("\n      ")}
     </tbody>
   </table>
   <p><strong>Pitcher edge:</strong> ${esc(p.edge_team || "No clear starting pitcher edge")}${p.gap ? ` by ${esc(p.gap)} points` : ""}.</p>
+  ${p.bullpen_game ? '<p class="notice"><strong>Bullpen game:</strong> LyDia weights each opener only for his expected innings. Aggregate bullpen fatigue, efficiency, and risk data cover the remaining innings.</p>' : ""}
   <p class="small dim" style="text-align:center"><strong>How to read this:</strong> the scorecards show ERA, WHIP, K/9, and K-BB%. The table adds complementary traits without repeating them. Highlighted cells mark a gap big enough to matter. HR/9 is home runs allowed per nine innings. Ground-ball rate is neither good nor bad on its own: high ground-ball pitchers trade strikeouts for double plays and fewer home runs.</p>`;
 }
 

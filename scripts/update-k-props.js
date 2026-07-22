@@ -11,6 +11,7 @@
 */
 const fs = require("fs");
 const path = require("path");
+const PitcherCore = require("../js/pitcher-matchup-core.js");
 
 const ROOT = path.join(__dirname, "..");
 const KEY = (process.env.ODDS_API_KEY || "").trim();
@@ -145,20 +146,15 @@ async function main() {
     const leagueK = paT ? soT / paT : 0.223;
     const pids = [...new Set(games.flatMap(g => ["away", "home"].map(sd => g.teams[sd].probablePitcher && g.teams[sd].probablePitcher.id).filter(Boolean)))];
     if (pids.length) {
-      const pd = await j(`https://statsapi.mlb.com/api/v1/people?personIds=${pids.join(",")}&hydrate=stats(group=[pitching],type=[season])`);
-      const ps = {};
-      for (const pp of pd.people || []) {
-        const st = ((((pp.stats || [])[0] || {}).splits || [])[0] || {}).stat || {};
-        const ipToNum = ip => { if (!ip || ip === "-.--") return 0; const [w, f] = String(ip).split("."); return Number(w || 0) + Number(f || 0) / 3; };
-        ps[pp.id] = { name: pp.fullName, hand: (pp.pitchHand || {}).code || null, ip: ipToNum(st.inningsPitched), so: +st.strikeOuts || 0, gs: +st.gamesStarted || 0, bf: +st.battersFaced || 0 };
-      }
+      const ps = await PitcherCore.fetchPitchers(pids, DATE, j);
       for (const g of games) {
         for (const sd of ["away", "home"]) {
           const pid = g.teams[sd].probablePitcher && g.teams[sd].probablePitcher.id;
           const pit = pid && ps[pid];
           if (!pit || !pit.ip || pit.ip < 15 || !pit.bf) continue;
           const oppId = g.teams[sd === "away" ? "home" : "away"].team.id;
-          const expIP = Math.max(3.8, Math.min(6.8, pit.gs ? pit.ip / pit.gs : 5));
+          const role = PitcherCore.classifyPitcherRole(pit);
+          const expIP = role.expectedInnings;
           const oppK = pit.hand && kv[pit.hand] ? kv[pit.hand][oppId] : null;
           const adj = (oppK && leagueK) ? Math.max(0.87, Math.min(1.13, oppK / leagueK)) : 1;
           const projRaw = Number((expIP * 4.28 * (pit.so / pit.bf) * adj).toFixed(2));
@@ -168,6 +164,10 @@ async function main() {
           rec.projection = proj;
           rec.projection_raw = projRaw;
           rec.game_pk = g.gamePk;
+          rec.pitcher_role = role.key;
+          rec.pitcher_role_label = role.label;
+          rec.expected_innings = Number(expIP.toFixed(1));
+          rec.bullpen_game = role.bullpenGame;
         }
       }
     }
@@ -189,3 +189,4 @@ async function main() {
   console.log(`K-props: wrote lines for ${Object.keys(pitchers).length} pitcher(s) from ${fetched} event call(s).`);
 }
 main().catch(e => { console.error("k-props error:", e.message); process.exit(0); });
+

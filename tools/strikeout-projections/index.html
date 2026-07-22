@@ -77,7 +77,8 @@
   <div id="status"><div class="loading">Projecting strikeouts…</div></div>
   <div id="games"></div>
 </main>
-<footer id="footer"></footer><script src="/js/app.js"></script><script>renderNav("/tools/"); renderFooter();</script>
+<footer id="footer"></footer><script src="/js/app.js"></script>
+<script src="/js/pitcher-matchup-core.js"></script><script>renderNav("/tools/"); renderFooter();</script>
 <script>
 const datePick = document.getElementById("date-pick");
 datePick.value = localISODate(new Date());
@@ -118,15 +119,7 @@ async function load(){
     if(!games.length){ statusEl.innerHTML=`<div class="notice">No MLB games scheduled for ${date}.</div>`; return; }
     games.sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate));
     const pids=[...new Set(games.flatMap(g=>["away","home"].map(s=>g.teams[s].probablePitcher&&g.teams[s].probablePitcher.id).filter(Boolean)))];
-    let ps={};
-    if(pids.length){
-      const pd=await j(`https://statsapi.mlb.com/api/v1/people?personIds=${pids.join(",")}&hydrate=stats(group=[pitching],type=[season])`);
-      for(const p of pd.people||[]){
-        const st=((((p.stats||[])[0]||{}).splits||[])[0]||{}).stat||{};
-        ps[p.id]={ name:p.fullName, hand:(p.pitchHand||{}).code||null,
-          ip:ipToNum(st.inningsPitched), so:+st.strikeOuts||0, gs:+st.gamesStarted||0, bf:+st.battersFaced||0 };
-      }
-    }
+    const ps=pids.length ? await LyDiaPitcherCore.loadPitchersForDate(pids, date) : {};
 
     PROJ={};
     gamesEl.innerHTML = games.map(g=>renderGame(g, ps, kv, leagueK, games, date)).join("");
@@ -143,14 +136,15 @@ async function load(){
    opposing lineup strikes out against his hand relative to league average. */
 function project(p, oppTeamId, kv){
   if(!p || !p.ip || p.ip < 15 || !p.bf) return null;
-  const expIP = Math.max(3.8, Math.min(6.8, p.gs ? p.ip/p.gs : 5));
+  const role = LyDiaPitcherCore.classifyPitcherRole(p);
+  const expIP = role.expectedInnings;
   const kbf = p.so/p.bf;                     // pitcher whiff skill per batter
   const expBF = expIP * 4.28;                // ~4.28 batters per inning
   const oppK = p.hand && kv[p.hand] ? kv[p.hand][oppTeamId] : null;
   // clamp the lineup adjustment — season splits are noisy enough that full strength overfits
   const adj = (oppK && LEAGUE_K) ? Math.max(0.87, Math.min(1.13, oppK/LEAGUE_K)) : 1;
   const raw = expBF * kbf * adj + (KBIAS || 0); // learned correction included so page and graded numbers agree
-  return { k: raw, expIP, kbf, oppK, adj, lowSample: p.ip < 40 };
+  return { k: raw, expIP, kbf, oppK, adj, lowSample: p.ip < 40, role };
 }
 let LEAGUE_K = 0.223;
 
@@ -164,8 +158,10 @@ function kBox(pitcher, oppTeam, oppTeamId, kv, pid){
   return `<div class="k-box">
     <div style="display:flex;justify-content:space-between;align-items:baseline"><b>${escapeHtml(p.name)}</b><span class="dim small">${p.hand==="L"?"LHP":"RHP"}</span></div>
     <div><span class="k-proj">${pr.k.toFixed(1)}</span> <span class="dim small">projected Ks${pr.lowSample ? ' · <b class="gold">small sample</b>' : ""}</span></div>
+    <div class="k-row"><span>Pitching plan</span><b>${escapeHtml(pr.role.label)}</b></div>
     <div class="k-row"><span>K per batter (season)</span><b>${(pr.kbf*100).toFixed(1)}%</b></div>
     <div class="k-row"><span>Expected innings</span><b>${pr.expIP.toFixed(1)}</b></div>
+    ${pr.role.bullpenGame ? '<div class="small dim">Strikeout projection covers the opener only. Remaining innings belong to the bullpen.</div>' : ""}
     <div class="k-row"><span title="How often this lineup strikes out against pitchers of his hand — higher means more strikeouts available">${escapeHtml(oppTeam)} strikeout rate vs ${p.hand==="L"?"lefties":"righties"}</span><span><b>${pr.oppK!==null?(pr.oppK*100).toFixed(1)+"%":"—"}</b>${oppTier}</span></div>
     ${(() => { const L = LINES[p.name.toLowerCase()]; if (!L) return ""; return `<div class="k-row"><span>Market line (${L.books} book${L.books === 1 ? "" : "s"})</span><span><b>${L.line}</b> <span class="dim small">O ${L.over > 0 ? "+" : ""}${L.over ?? "—"} / U ${L.under > 0 ? "+" : ""}${L.under ?? "—"}</span></span></div>`; })()}
     <div class="line-input">
@@ -201,3 +197,4 @@ function renderGame(g, ps, kv, leagueK, allGames, date){
 </script>
 </body>
 </html>
+

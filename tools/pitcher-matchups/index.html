@@ -414,6 +414,7 @@ function renderPitcherBox(label, team, p) {
     <div class="stat-row" title="Home runs allowed per 9 innings"><span>HR/9</span><span><b>${Number.isFinite(p.hr9) ? fmt(p.hr9, 1) : "—"}</b>${chip(tHr9(p.hr9))}</span></div>
     <div class="stat-row" title="Average innings per start — how deep he goes before the bullpen"><span>IP/start</span><span><b>${Number.isFinite(p.ipStart) ? fmt(p.ipStart, 1) : "—"}</b>${chip(tIpStart(p.ipStart))}</span></div>
     ${p.note ? `<div class="small dim" style="margin-top:8px">${escapeHtml(p.note)}</div>` : ""}
+    ${p.bullpenGame ? '<div class="small dim" style="margin-top:6px">Bullpen handles the remaining innings.</div>' : ""}
   </div>`;
 }
 
@@ -468,3 +469,4 @@ function bullpenStrip(awayTeam, homeTeam) {
 </script>
 </body>
 </html>
+

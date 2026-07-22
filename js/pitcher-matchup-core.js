@@ -5,7 +5,7 @@
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   if (root) root.LyDiaPitcherCore = api;
 })(typeof globalThis !== "undefined" ? globalThis : this, function buildPitcherCore() {
-  const VERSION = "pitcher-matchup-core-v1";
+  const VERSION = "pitcher-matchup-core-v2-role-aware";
   const LEAGUE_ERA = 4.20;
   const LEAGUE_WHIP = 1.30;
 
@@ -26,6 +26,74 @@
 
   function seasonFromDate(date) {
     return Number(String(date || "").slice(0, 4)) || new Date().getFullYear();
+  }
+
+  function classifyPitcherRole(stat) {
+    if (!stat || stat.missing) {
+      return {
+        key: "unknown",
+        label: "Role unknown",
+        expectedInnings: 4.5,
+        bullpenInnings: 4.5,
+        confidence: "low",
+        bullpenGame: true,
+        reason: "No confirmed starter usage is available."
+      };
+    }
+
+    const starts = num(stat.starterGames, num(stat.gs, 0));
+    const starterIp = num(stat.starterIp);
+    const ipStart = starts > 0 && starterIp !== null ? starterIp / starts : null;
+    const gp = num(stat.gp, 0);
+    const startRate = gp > 0 ? starts / gp : null;
+    const sampleConfidence = starts >= 5 ? "high" : starts >= 2 ? "medium" : "low";
+
+    if (!Number.isFinite(ipStart)) {
+      return {
+        key: "unknown",
+        label: "Role unknown",
+        expectedInnings: 4.5,
+        bullpenInnings: 4.5,
+        confidence: "low",
+        bullpenGame: true,
+        reason: "Starter-only innings are unavailable."
+      };
+    }
+
+    let key = "traditional_starter";
+    let label = "Traditional starter";
+    if (ipStart < 3.0 || (startRate !== null && startRate < 0.35 && ipStart < 4.0)) {
+      key = "opener";
+      label = "Opener / bullpen game";
+    } else if (ipStart < 4.5) {
+      key = "limited_starter";
+      label = "Limited starter";
+    }
+
+    const ranges = {
+      opener: [1.0, 3.0],
+      limited_starter: [3.0, 4.8],
+      traditional_starter: [4.5, 6.8]
+    };
+    const [minIp, maxIp] = ranges[key];
+    const expectedInnings = clamp(ipStart, minIp, maxIp);
+
+    return {
+      key,
+      label,
+      expectedInnings,
+      bullpenInnings: 9 - expectedInnings,
+      confidence: key === "opener" && sampleConfidence === "high" ? "medium" : sampleConfidence,
+      bullpenGame: key === "opener",
+      starterIpPerStart: ipStart,
+      startRate,
+      starterGames: starts,
+      reason: key === "opener"
+        ? `Starter-only usage is ${ipStart.toFixed(1)} innings per start; most innings belong to the bullpen.`
+        : key === "limited_starter"
+          ? `Starter-only usage is ${ipStart.toFixed(1)} innings per start; bullpen exposure is elevated.`
+          : `Starter-only usage supports a normal starter workload of about ${expectedInnings.toFixed(1)} innings.`
+    };
   }
 
   async function fetchStarterUsage(id, season, getJson) {
@@ -115,11 +183,20 @@
 
   function scorePitcher(stat) {
     if (!stat || stat.missing || !Number.isFinite(stat.era)) {
+      const role = classifyPitcherRole(stat);
       return {
         ...(stat || {}),
         score: 50,
+        rawScore: 50,
         grade: "Unknown",
         note: "season stats unavailable; neutral score used",
+        role,
+        roleKey: role.key,
+        roleLabel: role.label,
+        expectedInnings: role.expectedInnings,
+        bullpenInnings: role.bullpenInnings,
+        roleConfidence: role.confidence,
+        bullpenGame: role.bullpenGame,
         k9: null,
         bb9: null,
         kbbPct: null,
@@ -155,7 +232,12 @@
     else if (score < 45) grade = "Weak";
     else if (score < 55) grade = "Below avg";
 
-    const note = ip < 20 ? "limited innings; treat score with caution" : null;
+    const role = classifyPitcherRole(stat);
+    const roleShare = role.expectedInnings / 5.5;
+    const roleAdjustedScore = Math.round(clamp(50 + (score - 50) * roleShare, 20, 92));
+    const note = role.bullpenGame
+      ? role.reason
+      : ip < 20 ? "limited innings; treat score with caution" : role.key === "limited_starter" ? role.reason : null;
     const kbbPct = stat.bf ? (stat.so - stat.bb) / stat.bf : null;
     const gbPct = stat.go + stat.ao ? stat.go / (stat.go + stat.ao) : null;
     const babipDen = stat.ab - stat.so - stat.hr + (stat.sf || 0);
@@ -165,9 +247,17 @@
 
     return {
       ...stat,
-      score,
+      rawScore: score,
+      score: roleAdjustedScore,
       grade,
       note,
+      role,
+      roleKey: role.key,
+      roleLabel: role.label,
+      expectedInnings: role.expectedInnings,
+      bullpenInnings: role.bullpenInnings,
+      roleConfidence: role.confidence,
+      bullpenGame: role.bullpenGame,
       k9,
       bb9,
       kbbPct,
@@ -210,7 +300,11 @@
       home,
       gap,
       strength,
-      edge_team: edgeTeam
+      edge_team: edgeTeam,
+      bullpen_game: Boolean(away.bullpenGame || home.bullpenGame),
+      pitching_plan_confidence: away.roleConfidence === "low" || home.roleConfidence === "low"
+        ? "low"
+        : away.roleConfidence === "medium" || home.roleConfidence === "medium" ? "medium" : "high"
     };
   }
 
@@ -232,7 +326,7 @@
       generated_at: generatedAt || new Date().toISOString(),
       source_of_truth: "LyDia Pitcher Matchup Tool",
       source_version: VERSION,
-      method: "Season pitching stats plus starter-only game logs for mixed-role pitchers. The Pitcher Matchup Tool and matchup pages read this same source.",
+      method: "Role-aware pitcher model using starter-only game logs. Traditional starters, limited starters, openers, and unknown roles receive workload-appropriate innings; the remainder belongs to the bullpen.",
       pitchers_by_id: pitchersById,
       games: gamesByPk
     };
@@ -271,6 +365,7 @@
     num,
     ipToNum,
     fetchStarterUsage,
+    classifyPitcherRole,
     fetchPitchers,
     scorePitcher,
     pitcherForSide,

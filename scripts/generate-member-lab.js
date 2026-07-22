@@ -8,6 +8,7 @@
 const fs = require("fs");
 const path = require("path");
 const { buildBullpenSource } = require("./lib/bullpen-fatigue-core");
+const PitcherCore = require("../js/pitcher-matchup-core.js");
 
 const ROOT = path.join(__dirname, "..");
 const HFA = 54 / 46;
@@ -310,38 +311,13 @@ function buildStrength(standings) {
 }
 async function fetchPitchers(games) {
   const ids = [...new Set(games.flatMap(g => ["away", "home"].map(s => g.teams[s].probablePitcher && g.teams[s].probablePitcher.id).filter(Boolean)))];
-  const out = {};
-  if (!ids.length) return out;
+  if (!ids.length) return {};
   try {
-    const data = await fetchJson(`https://statsapi.mlb.com/api/v1/people?personIds=${ids.join(",")}&hydrate=stats(group=[pitching],type=[season])`);
-    for (const person of data.people || []) {
-      const split = (((person.stats || [])[0] || {}).splits || [])[0];
-      const st = split && split.stat ? split.stat : {};
-      out[person.id] = {
-        id: person.id,
-        name: person.fullName,
-        hand: (person.pitchHand || {}).code || null,
-        era: Number(st.era),
-        whip: Number(st.whip),
-        ip: ipToNum(st.inningsPitched),
-        so: Number(st.strikeOuts || 0),
-        bb: Number(st.baseOnBalls || 0),
-        gs: Number(st.gamesStarted || 0),
-        w: Number(st.wins || 0),
-        l: Number(st.losses || 0),
-        bf: Number(st.battersFaced || 0),
-        go: Number(st.groundOuts || 0),
-        ao: Number(st.airOuts || 0),
-        h: Number(st.hits || 0),
-        ab: Number(st.atBats || 0),
-        sf: Number(st.sacFlies || 0),
-        hr: Number(st.homeRuns || 0)
-      };
-    }
+    return await PitcherCore.fetchPitchers(ids, DATE, fetchJson);
   } catch (e) {
     console.warn("Pitcher stats unavailable:", e.message);
+    return {};
   }
-  return out;
 }
 function advStats(st) {
   if (!st) return null;
@@ -349,33 +325,21 @@ function advStats(st) {
   const gb = (st.go + st.ao) ? Number((st.go / (st.go + st.ao)).toFixed(4)) : null;
   const den = st.ab - st.so - st.hr + (st.sf || 0);
   const babip = den > 0 ? Number(((st.h - st.hr) / den).toFixed(4)) : null;
-  return { w: st.w ?? null, l: st.l ?? null, kbb_pct: kbb, gb_pct: gb, babip, hr9: st.ip ? Number(((st.hr / st.ip) * 9).toFixed(2)) : null, ip_per_start: st.gs ? Number((st.ip / st.gs).toFixed(1)) : null };
+  const role = PitcherCore.classifyPitcherRole(st);
+  return { w: st.w ?? null, l: st.l ?? null, kbb_pct: kbb, gb_pct: gb, babip, hr9: st.ip ? Number(((st.hr / st.ip) * 9).toFixed(2)) : null, ip_per_start: Number(role.starterIpPerStart?.toFixed(1)) || null, role: role.key, role_label: role.label, expected_innings: Number(role.expectedInnings.toFixed(1)), bullpen_innings: Number(role.bullpenInnings.toFixed(1)) };
 }
 function pitcherScore(st) {
-  if (!st || !Number.isFinite(st.era)) return { score: 50, label: "Unknown", k9: null, bb9: null };
-  const era = st.era || LEAGUE_ERA;
-  const whip = Number.isFinite(st.whip) ? st.whip : 1.30;
-  const ip = st.ip || 0;
-  const k9 = ip ? (st.so / ip) * 9 : null;
-  const bb9 = ip ? (st.bb / ip) * 9 : null;
-  const eraScore = clamp(100 - (era - 2.00) * 16, 20, 92);
-  const whipScore = clamp(100 - (whip - 0.90) * 90, 20, 92);
-  const kbbScore = (k9 !== null && bb9 !== null) ? clamp(50 + (k9 - 8.0) * 4 - (bb9 - 3.0) * 6, 20, 90) : 50;
-  const sampleScore = clamp(35 + Math.min(ip, 100) * 0.35, 35, 70);
-  const score = Math.round(eraScore * 0.40 + whipScore * 0.25 + kbbScore * 0.20 + sampleScore * 0.15);
-  let label = "Average";
-  if (score >= 75) label = "Strong";
-  else if (score >= 65) label = "Above avg";
-  else if (score < 45) label = "Weak";
-  else if (score < 55) label = "Below avg";
-  return { score, label, k9, bb9 };
+  const scored = PitcherCore.scorePitcher(st || { name: "TBD", missing: true });
+  return { score: scored.score, label: scored.grade, k9: scored.k9, bb9: scored.bb9, role: scored.role };
 }
 function starterEff(g, side, pitchers) {
   const p = g.teams[side].probablePitcher;
   if (!p) return LEAGUE_ERA;
   const st = pitchers[p.id];
   if (!st || !isFinite(st.era) || st.ip < MIN_IP) return LEAGUE_ERA;
-  return clampEra(st.era);
+  const role = PitcherCore.classifyPitcherRole(st);
+  const workloadShare = role.expectedInnings / 5.5;
+  return clampEra(LEAGUE_ERA + (st.era - LEAGUE_ERA) * workloadShare);
 }
 function buildOddsMap(events) {
   const map = {};
@@ -544,6 +508,8 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense, runProjecti
   const modelOdds = preBullpenOdds * Math.exp(bullpenAdj);
   const legacyPHome = modelOdds / (1 + modelOdds);
   const runProjection = runProjections && runProjections[String(g.gamePk)];
+  const pitchingPlan = runProjection && runProjection.pitching_plan ? runProjection.pitching_plan : null;
+  const bullpenGame = Boolean(runProjection && runProjection.bullpen_game);
   const runPHome = runProjection
     ? winProbabilityFromRuns(Number(runProjection.proj_home), Number(runProjection.proj_away))
     : null;
@@ -604,6 +570,7 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense, runProjecti
   const read = buildRead({
     status, pickTeam, oppTeam, modelProb, marketProb, edge, lab, pitchEdgeTeam, pitchGap,
     pitcherConflict, bullpenRead, pickBullpen, oppBullpen, bestPrice, majorBullpenCaution, passReason,
+    pitchingPlan, bullpenGame,
     pickOff: pickOffCtx, oppOff: oppOffCtx, preBullpenModelProb
   });
 
@@ -628,6 +595,8 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense, runProjecti
       home: Number(runProjection.proj_home),
       total: Number(runProjection.projection)
     } : null,
+    pitching_plan: pitchingPlan,
+    bullpen_game: bullpenGame,
     legacy_strength_probability: round(pickHome ? legacyPHome : 1 - legacyPHome, 4),
     run_model_probability: Number.isFinite(runPHome)
       ? round(pickHome ? runPHome : 1 - runPHome, 4)
@@ -804,9 +773,20 @@ function buildRead(ctx) {
     return ` Lineup check: ${w(ctx.pickTeam, p.delta_ops)}; ${w(ctx.oppTeam || "the opponent", o.delta_ops)}.${tail}`;
   })();
   const labLine = `Lab Rating ${(ctx.lab.score/10).toFixed(1)}/10: model edge ${ctx.lab.model_edge_points}, pitcher ${ctx.lab.pitcher_points}, bullpen ${ctx.lab.bullpen_points}, market ${ctx.lab.market_points}, base ${ctx.lab.base_points}.`;
+  const pitchingPlanLine = (() => {
+    if (!ctx.pitchingPlan) return "";
+    const plans = [ctx.pitchingPlan.away, ctx.pitchingPlan.home].filter(Boolean);
+    const flagged = plans.filter(plan => plan.bullpen_game || plan.role === "limited_starter");
+    if (!flagged.length) return "";
+    const detail = flagged.map(plan =>
+      `${plan.pitcher}: ${plan.label}, ${Number(plan.expected_innings).toFixed(1)} expected innings`
+    ).join("; ");
+    return ` Pitching plan: ${detail}. The remaining innings are assigned to the bullpen.` +
+      " Bullpen fatigue, efficiency, and combined risk determine how LyDia grades those remaining innings.";
+  })();
 
   if (ctx.status === "official_pick") {
-    return `${ctx.pickTeam} is an official moneyline pick because it clears both gates: ${fmtPct(ctx.modelProb)} model win probability and ${(ctx.lab.score/10).toFixed(1)}/10 Lab Rating. ${valueLine} ${pitcherLine} ${bullpenLine}${efficiencyLine}${bullpenProbLine}${offenseLine}`;
+    return `${ctx.pickTeam} is an official moneyline pick because it clears both gates: ${fmtPct(ctx.modelProb)} model win probability and ${(ctx.lab.score/10).toFixed(1)}/10 Lab Rating. ${valueLine} ${pitcherLine} ${bullpenLine}${efficiencyLine}${bullpenProbLine}${pitchingPlanLine}${offenseLine}`;
   }
   if (ctx.status === "value_watch") {
     // Value watch already cleared the edge and Lab Rating floor for this tier —
@@ -821,7 +801,7 @@ function buildRead(ctx) {
     return `${ctx.pickTeam} is a value watch, not an official pick. ${valueLine} ${labLine}${efficiencyLine}${bullpenProbLine} ${gateLine}${offenseLine}`;
   }
   if (ctx.status === "watchlist") {
-    return `${ctx.pickTeam} remains on the watchlist. ${labLine} ${valueLine} ${pitcherLine} ${bullpenLine}${efficiencyLine}${bullpenProbLine}${offenseLine}`;
+    return `${ctx.pickTeam} remains on the watchlist. ${labLine} ${valueLine} ${pitcherLine} ${bullpenLine}${efficiencyLine}${bullpenProbLine}${pitchingPlanLine}${offenseLine}`;
   }
   return ctx.passReason || "No clear setup.";
 }
@@ -997,4 +977,3 @@ function movement(posted, later) {
   if (Math.abs(postedDec - laterDec) < 0.015) return "stable";
   return laterDec < postedDec ? "toward_lydia" : "away_from_lydia";
 }
-
