@@ -1,11 +1,50 @@
 {
   "date": "2026-07-22",
-  "generated_at": "2026-07-22T20:30:33.444Z",
+  "generated_at": "2026-07-22T20:56:39.916Z",
   "stale_reuse": false,
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
   "warnings": [],
   "items": [
+    {
+      "title": "Orioles vs Red Sox Game 2 Predictions, Picks, Odds, Best Bets: Can Boston Keep the Win Streak Alive? - Action Network",
+      "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPUnF1aGlxYjZBb3JYblNQNThlNk83eDllNnp0SjZkb3BIS3ZpR3hPNTBPRjFnREdaQWdwMFFJdS1nMTl1VV9SS2VmLTdhcGdKMWdCNEp3TnNHN08tY1ZvaElsUnI3RkRmdlBZdXN3WGRaRko5cjlram5udENuYV9VTFdBcDY3Szd0aE5IT0dURFZfVjM3dmNrdG0zbzJCVGVYMXlUYzJ0NzFRVkU4Z2hZdFBHeUdNUmk0RDQ0?oc=5",
+      "published_at": "2026-07-22T20:41:26.000Z",
+      "description": "Orioles vs Red Sox Game 2 Predictions, Picks, Odds, Best Bets: Can Boston Keep the Win Streak Alive? &nbsp;&nbsp; Action Network",
+      "source": "Action Network",
+      "published_label": "Jul 22, 2026",
+      "section": "unable_to_classify",
+      "classification_confidence": "no_explicit_side",
+      "game": "Baltimore Orioles @ Boston Red Sox",
+      "selected_side": null,
+      "lydia_takeaway": "This article matches Baltimore Orioles @ Boston Red Sox, but the headline and summary do not clearly identify a selected side. LyDia currently has Boston Red Sox Money Line at 73.0% model probability and 8.1/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
+    },
+    {
+      "title": "White Sox vs Rangers Prediction, Pick, MLB Odds for Wednesday, July 22 - Action Network",
+      "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPQ01rUmJ4a05ndGVlbnlHMHA4aGtpWUlEa1M2dkltMmhvZ2lCSUdsbGRVZzF1THpjclJNYmp1UEpiR0ZaaFNSM2IzZUJWMVhHQ29Xel82Q3NzRkgwMkRQd1UxS1JJYk1nYVExeUc1TWJWZE9nYXhOUTJBdjFtaXF2Yk5xaTJUVDdQS2tjNHc5SXR1X2FLLUQtd2lncmJ6RElEalZpRWFxVVNQUFUwdEd6Zw?oc=5",
+      "published_at": "2026-07-22T20:35:09.000Z",
+      "description": "White Sox vs Rangers Prediction, Pick, MLB Odds for Wednesday, July 22 &nbsp;&nbsp; Action Network",
+      "source": "Action Network",
+      "published_label": "Jul 22, 2026",
+      "section": "unable_to_classify",
+      "classification_confidence": "no_explicit_side",
+      "game": "Chicago White Sox @ Texas Rangers",
+      "selected_side": null,
+      "lydia_takeaway": "This article matches Chicago White Sox @ Texas Rangers, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago White Sox Money Line at 53.3% model probability and 3.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+    },
+    {
+      "title": "MLB Picks Today: Greg Peterson Best Bets Wednesday, July 22 - VSiN",
+      "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPWFZ4eFZwR2NqZG81RzZwcURIUDBDNmxkalRXeGowZlgxWnhzWEhBSEJUbWVFNGJTZGVWaUFTN3RtMER1QzF5SHR4UlFNemVraVRpOU1JY2pTeHVXLTdxazV0MVp6dnFKWWRyV2tVb3I1QzZUQ1l5bkdGMWdMbzdUd0FLTWtkQQ?oc=5",
+      "published_at": "2026-07-22T20:03:13.000Z",
+      "description": "MLB Picks Today: Greg Peterson Best Bets Wednesday, July 22 &nbsp;&nbsp; VSiN",
+      "source": "VSiN",
+      "published_label": "Jul 22, 2026",
+      "section": "market_context",
+      "classification_confidence": "no_game_match",
+      "game": null,
+      "selected_side": null,
+      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+    },
     {
       "title": "Marlins vs Astros Prediction, Pick, MLB Odds for Wednesday, July 22 - Action Network",
       "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNUVJ5T3cwdUVIR2NSd3F4UFdNUmRPQ1Nvc3I3dzFFYkNTc0ZqMnFkYlY4U1VfbjFuVFlXSXN0S2dXckRFMFRTRWRzU0pYMW5QWkoyYm9WbmF6UkVkb1FHeVN1T2lRYTM5dE91R3Y1clhsaVBKQ1U4ZWRLQ3JxZWR5Zm5NYWZxZHNuOFQ1UDlMUXhqRm1zUHNlR3JxUWdPS1MxYzE2MktmOGdKaEwy?oc=5",
@@ -17,7 +56,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Miami Marlins @ Houston Astros",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Miami Marlins @ Houston Astros, but the headline and summary do not clearly identify a selected side. LyDia currently has Houston Astros Money Line at 55.8% model probability and 5.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Miami Marlins @ Houston Astros, but the headline and summary do not clearly identify a selected side. LyDia currently has Houston Astros Money Line at 55.8% model probability and 5.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Player Props & Best Bets for Today, July 22 - Covers.com",
@@ -56,7 +95,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Los Angeles Dodgers @ Philadelphia Phillies",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 55.8% model probability and 4.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 56.9% model probability and 5.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Cardinals vs Angels Prediction, Odds: Expert MLB Pick for Wednesday - Action Network",
@@ -95,7 +134,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Detroit Tigers @ Chicago Cubs",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 55.1% model probability and 3.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 55.1% model probability and 4.0/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Player Props Today: HR Picks for Twins vs Guardians, Rays vs Blue Jays, More for Wednesday, July 22 - Action Network",
@@ -108,7 +147,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Tampa Bay Rays @ Toronto Blue Jays",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 58.5% model probability and 7.4/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 60.1% model probability and 7.7/10 Lab Rating, with value watch status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Home Run Picks Today: Player Props for Dodgers vs Phillies, More for Wednesday, July 22 - Action Network",
@@ -121,7 +160,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Los Angeles Dodgers @ Philadelphia Phillies",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 55.8% model probability and 4.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 56.9% model probability and 5.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Expert Picks & Baseball Predictions July 22 - Covers.com",
@@ -160,7 +199,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "San Diego Padres @ Atlanta Braves",
       "selected_side": null,
-      "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 55.6% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 56.6% model probability and 1.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Padres vs Braves Prediction, Picks & Odds for Tonight's MLB Game - Covers.com",
@@ -173,7 +212,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "San Diego Padres @ Atlanta Braves",
       "selected_side": null,
-      "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 55.6% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 56.6% model probability and 1.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Steve Makinen’s MLB Picks from Betting Splits and Systems for Wednesday, July 22 - VSiN",
@@ -200,51 +239,25 @@
       "game": "New York Mets @ Milwaukee Brewers",
       "selected_side": null,
       "lydia_takeaway": "This article matches New York Mets @ Milwaukee Brewers, but the headline and summary do not clearly identify a selected side. LyDia currently has Milwaukee Brewers Money Line at 65.4% model probability and 5.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-    },
-    {
-      "title": "Athletics vs. Diamondbacks Prediction | MLB Picks & Odds for Wednesday, July 22 - Sportsbook Review",
-      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNcThkdEY4eXhqOVQ0MTNmbDVxbTVpVFZOa3MzZ1BRbVhGZHZleU1XZ1BsVjk2QkFMaVJ4b3FlcUxWZ253UGJqNWNsUzJXdWtZeFk4TnZoYzFNRGxHN2Z5dkVmNVZ1ckoxcnhsSU1ucHkwWEFKNkNhV0JtUURZRURqZnVXdXI5RG9HSGVhQXBoaVhYOVZsc0QxR25iQ3R6Zlg4OU5LZWgyNA?oc=5",
-      "published_at": "2026-07-22T16:29:00.000Z",
-      "description": "Athletics vs. Diamondbacks Prediction | MLB Picks & Odds for Wednesday, July 22 &nbsp;&nbsp; Sportsbook Review",
-      "source": "Sportsbook Review",
-      "published_label": "Jul 22, 2026",
-      "section": "unable_to_classify",
-      "classification_confidence": "no_explicit_side",
-      "game": "Athletics @ Arizona Diamondbacks",
-      "selected_side": null,
-      "lydia_takeaway": "This article matches Athletics @ Arizona Diamondbacks, but the headline and summary do not clearly identify a selected side. LyDia currently has Athletics Money Line at 51.9% model probability and 8.0/10 Lab Rating, with value watch status. It stays unclassified rather than being counted as agreement."
-    },
-    {
-      "title": "Pirates vs Yankees Predictions, Start Time, Odds: MLB Picks for Game 1 of Doubleheader - Action Network",
-      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPeV9MLUtKcldTLVpodFZTXzUtSFRGT2hLWWgwUlVxakthODBBd3RSYkdVRmJHSVBnbGM2bUdCdWVYVUh4QmJXd1ctajVtSHNQWFFYaFY0WEY1a3NjM1RoZ1AtTng0VkdGaHlHeXVjMVVVQS1ZMHd2elJhZEJVUEY2QmhzSzRFRlN0NkFiQjdNUW9BaEgyUXVQNjJEUWxXbTNXR2pUaXE3clBaOC1OaThJc0JUaTh1QQ?oc=5",
-      "published_at": "2026-07-22T16:27:00.000Z",
-      "description": "Pirates vs Yankees Predictions, Start Time, Odds: MLB Picks for Game 1 of Doubleheader &nbsp;&nbsp; Action Network",
-      "source": "Action Network",
-      "published_label": "Jul 22, 2026",
-      "section": "unable_to_classify",
-      "classification_confidence": "no_explicit_side",
-      "game": "Pittsburgh Pirates @ New York Yankees",
-      "selected_side": null,
-      "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 61.0% model probability and 3.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-    },
-    {
-      "title": "Tigers vs Cubs Prediction, Picks & Odds for Tonight's MLB Game - Covers.com",
-      "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPM25jMlNmZEVZeDJPb0lCOTA3TVRpZlc5MEp3d0dfSkIzTnZWdXEycEdaaExaMW5HWjNKUjdiMUZOY1MteWtQT0RmYU5PTzg2dVRHd29lZWhWR2pkVWFnTWhQUFVPTy1ybmY4UWhEd21QSnl2amJ1d0ZaTWZTZXhsMkhncU5GNUI5YTVJ?oc=5",
-      "published_at": "2026-07-22T16:25:00.000Z",
-      "description": "Tigers vs Cubs Prediction, Picks & Odds for Tonight's MLB Game &nbsp;&nbsp; Covers.com",
-      "source": "Covers.com",
-      "published_label": "Jul 22, 2026",
-      "section": "unable_to_classify",
-      "classification_confidence": "no_explicit_side",
-      "game": "Detroit Tigers @ Chicago Cubs",
-      "selected_side": null,
-      "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 55.1% model probability and 3.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     }
   ],
   "groups": {
     "lydia_agrees": [],
     "lydia_disagrees": [],
     "market_context": [
+      {
+        "title": "MLB Picks Today: Greg Peterson Best Bets Wednesday, July 22 - VSiN",
+        "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPWFZ4eFZwR2NqZG81RzZwcURIUDBDNmxkalRXeGowZlgxWnhzWEhBSEJUbWVFNGJTZGVWaUFTN3RtMER1QzF5SHR4UlFNemVraVRpOU1JY2pTeHVXLTdxazV0MVp6dnFKWWRyV2tVb3I1QzZUQ1l5bkdGMWdMbzdUd0FLTWtkQQ?oc=5",
+        "published_at": "2026-07-22T20:03:13.000Z",
+        "description": "MLB Picks Today: Greg Peterson Best Bets Wednesday, July 22 &nbsp;&nbsp; VSiN",
+        "source": "VSiN",
+        "published_label": "Jul 22, 2026",
+        "section": "market_context",
+        "classification_confidence": "no_game_match",
+        "game": null,
+        "selected_side": null,
+        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      },
       {
         "title": "MLB Player Props & Best Bets for Today, July 22 - Covers.com",
         "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBNdVNiYk9PaXBaZFVfdVQzVmI0bnlLcHB5V0g1S19FeXgzd0xsUWFwRjdjM25uOG1GY0RCRlpVOEdnTVQ1TDhHWXRwVnhKVFhwc2JMamU1YUdHbnFYNDdta1BOYzU4TkdiVGtXOEdwUmtTcHMyNkczZA?oc=5",
@@ -313,6 +326,32 @@
     ],
     "unable_to_classify": [
       {
+        "title": "Orioles vs Red Sox Game 2 Predictions, Picks, Odds, Best Bets: Can Boston Keep the Win Streak Alive? - Action Network",
+        "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPUnF1aGlxYjZBb3JYblNQNThlNk83eDllNnp0SjZkb3BIS3ZpR3hPNTBPRjFnREdaQWdwMFFJdS1nMTl1VV9SS2VmLTdhcGdKMWdCNEp3TnNHN08tY1ZvaElsUnI3RkRmdlBZdXN3WGRaRko5cjlram5udENuYV9VTFdBcDY3Szd0aE5IT0dURFZfVjM3dmNrdG0zbzJCVGVYMXlUYzJ0NzFRVkU4Z2hZdFBHeUdNUmk0RDQ0?oc=5",
+        "published_at": "2026-07-22T20:41:26.000Z",
+        "description": "Orioles vs Red Sox Game 2 Predictions, Picks, Odds, Best Bets: Can Boston Keep the Win Streak Alive? &nbsp;&nbsp; Action Network",
+        "source": "Action Network",
+        "published_label": "Jul 22, 2026",
+        "section": "unable_to_classify",
+        "classification_confidence": "no_explicit_side",
+        "game": "Baltimore Orioles @ Boston Red Sox",
+        "selected_side": null,
+        "lydia_takeaway": "This article matches Baltimore Orioles @ Boston Red Sox, but the headline and summary do not clearly identify a selected side. LyDia currently has Boston Red Sox Money Line at 73.0% model probability and 8.1/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
+      },
+      {
+        "title": "White Sox vs Rangers Prediction, Pick, MLB Odds for Wednesday, July 22 - Action Network",
+        "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPQ01rUmJ4a05ndGVlbnlHMHA4aGtpWUlEa1M2dkltMmhvZ2lCSUdsbGRVZzF1THpjclJNYmp1UEpiR0ZaaFNSM2IzZUJWMVhHQ29Xel82Q3NzRkgwMkRQd1UxS1JJYk1nYVExeUc1TWJWZE9nYXhOUTJBdjFtaXF2Yk5xaTJUVDdQS2tjNHc5SXR1X2FLLUQtd2lncmJ6RElEalZpRWFxVVNQUFUwdEd6Zw?oc=5",
+        "published_at": "2026-07-22T20:35:09.000Z",
+        "description": "White Sox vs Rangers Prediction, Pick, MLB Odds for Wednesday, July 22 &nbsp;&nbsp; Action Network",
+        "source": "Action Network",
+        "published_label": "Jul 22, 2026",
+        "section": "unable_to_classify",
+        "classification_confidence": "no_explicit_side",
+        "game": "Chicago White Sox @ Texas Rangers",
+        "selected_side": null,
+        "lydia_takeaway": "This article matches Chicago White Sox @ Texas Rangers, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago White Sox Money Line at 53.3% model probability and 3.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      },
+      {
         "title": "Marlins vs Astros Prediction, Pick, MLB Odds for Wednesday, July 22 - Action Network",
         "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNUVJ5T3cwdUVIR2NSd3F4UFdNUmRPQ1Nvc3I3dzFFYkNTc0ZqMnFkYlY4U1VfbjFuVFlXSXN0S2dXckRFMFRTRWRzU0pYMW5QWkoyYm9WbmF6UkVkb1FHeVN1T2lRYTM5dE91R3Y1clhsaVBKQ1U4ZWRLQ3JxZWR5Zm5NYWZxZHNuOFQ1UDlMUXhqRm1zUHNlR3JxUWdPS1MxYzE2MktmOGdKaEwy?oc=5",
         "published_at": "2026-07-22T20:02:00.000Z",
@@ -323,7 +362,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Miami Marlins @ Houston Astros",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Miami Marlins @ Houston Astros, but the headline and summary do not clearly identify a selected side. LyDia currently has Houston Astros Money Line at 55.8% model probability and 5.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Miami Marlins @ Houston Astros, but the headline and summary do not clearly identify a selected side. LyDia currently has Houston Astros Money Line at 55.8% model probability and 5.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Dodgers vs Phillies Predictions, Picks, Odds: Our F5 Best Bet for Today’s MLB Game - Action Network",
@@ -336,7 +375,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Los Angeles Dodgers @ Philadelphia Phillies",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 55.8% model probability and 4.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 56.9% model probability and 5.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Cardinals vs Angels Prediction, Odds: Expert MLB Pick for Wednesday - Action Network",
@@ -375,7 +414,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Detroit Tigers @ Chicago Cubs",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 55.1% model probability and 3.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 55.1% model probability and 4.0/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "MLB Player Props Today: HR Picks for Twins vs Guardians, Rays vs Blue Jays, More for Wednesday, July 22 - Action Network",
@@ -388,7 +427,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Tampa Bay Rays @ Toronto Blue Jays",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 58.5% model probability and 7.4/10 Lab Rating, with watchlist status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 60.1% model probability and 7.7/10 Lab Rating, with value watch status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "MLB Home Run Picks Today: Player Props for Dodgers vs Phillies, More for Wednesday, July 22 - Action Network",
@@ -401,7 +440,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Los Angeles Dodgers @ Philadelphia Phillies",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 55.8% model probability and 4.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Los Angeles Dodgers @ Philadelphia Phillies, but the headline and summary do not clearly identify a selected side. LyDia currently has Los Angeles Dodgers Money Line at 56.9% model probability and 5.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Padres vs Braves Prediction, Pick, MLB Odds for Wednesday, July 22 - Action Network",
@@ -414,7 +453,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "San Diego Padres @ Atlanta Braves",
         "selected_side": null,
-        "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 55.6% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 56.6% model probability and 1.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Padres vs Braves Prediction, Picks & Odds for Tonight's MLB Game - Covers.com",
@@ -427,7 +466,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "San Diego Padres @ Atlanta Braves",
         "selected_side": null,
-        "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 55.6% model probability and 1.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 56.6% model probability and 1.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Mets vs Brewers Predictions, Start Time, Odds: MLB Picks for Wednesday - Action Network",
@@ -441,45 +480,6 @@
         "game": "New York Mets @ Milwaukee Brewers",
         "selected_side": null,
         "lydia_takeaway": "This article matches New York Mets @ Milwaukee Brewers, but the headline and summary do not clearly identify a selected side. LyDia currently has Milwaukee Brewers Money Line at 65.4% model probability and 5.8/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-      },
-      {
-        "title": "Athletics vs. Diamondbacks Prediction | MLB Picks & Odds for Wednesday, July 22 - Sportsbook Review",
-        "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNcThkdEY4eXhqOVQ0MTNmbDVxbTVpVFZOa3MzZ1BRbVhGZHZleU1XZ1BsVjk2QkFMaVJ4b3FlcUxWZ253UGJqNWNsUzJXdWtZeFk4TnZoYzFNRGxHN2Z5dkVmNVZ1ckoxcnhsSU1ucHkwWEFKNkNhV0JtUURZRURqZnVXdXI5RG9HSGVhQXBoaVhYOVZsc0QxR25iQ3R6Zlg4OU5LZWgyNA?oc=5",
-        "published_at": "2026-07-22T16:29:00.000Z",
-        "description": "Athletics vs. Diamondbacks Prediction | MLB Picks & Odds for Wednesday, July 22 &nbsp;&nbsp; Sportsbook Review",
-        "source": "Sportsbook Review",
-        "published_label": "Jul 22, 2026",
-        "section": "unable_to_classify",
-        "classification_confidence": "no_explicit_side",
-        "game": "Athletics @ Arizona Diamondbacks",
-        "selected_side": null,
-        "lydia_takeaway": "This article matches Athletics @ Arizona Diamondbacks, but the headline and summary do not clearly identify a selected side. LyDia currently has Athletics Money Line at 51.9% model probability and 8.0/10 Lab Rating, with value watch status. It stays unclassified rather than being counted as agreement."
-      },
-      {
-        "title": "Pirates vs Yankees Predictions, Start Time, Odds: MLB Picks for Game 1 of Doubleheader - Action Network",
-        "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPeV9MLUtKcldTLVpodFZTXzUtSFRGT2hLWWgwUlVxakthODBBd3RSYkdVRmJHSVBnbGM2bUdCdWVYVUh4QmJXd1ctajVtSHNQWFFYaFY0WEY1a3NjM1RoZ1AtTng0VkdGaHlHeXVjMVVVQS1ZMHd2elJhZEJVUEY2QmhzSzRFRlN0NkFiQjdNUW9BaEgyUXVQNjJEUWxXbTNXR2pUaXE3clBaOC1OaThJc0JUaTh1QQ?oc=5",
-        "published_at": "2026-07-22T16:27:00.000Z",
-        "description": "Pirates vs Yankees Predictions, Start Time, Odds: MLB Picks for Game 1 of Doubleheader &nbsp;&nbsp; Action Network",
-        "source": "Action Network",
-        "published_label": "Jul 22, 2026",
-        "section": "unable_to_classify",
-        "classification_confidence": "no_explicit_side",
-        "game": "Pittsburgh Pirates @ New York Yankees",
-        "selected_side": null,
-        "lydia_takeaway": "This article matches Pittsburgh Pirates @ New York Yankees, but the headline and summary do not clearly identify a selected side. LyDia currently has New York Yankees Money Line at 61.0% model probability and 3.4/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-      },
-      {
-        "title": "Tigers vs Cubs Prediction, Picks & Odds for Tonight's MLB Game - Covers.com",
-        "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPM25jMlNmZEVZeDJPb0lCOTA3TVRpZlc5MEp3d0dfSkIzTnZWdXEycEdaaExaMW5HWjNKUjdiMUZOY1MteWtQT0RmYU5PTzg2dVRHd29lZWhWR2pkVWFnTWhQUFVPTy1ybmY4UWhEd21QSnl2amJ1d0ZaTWZTZXhsMkhncU5GNUI5YTVJ?oc=5",
-        "published_at": "2026-07-22T16:25:00.000Z",
-        "description": "Tigers vs Cubs Prediction, Picks & Odds for Tonight's MLB Game &nbsp;&nbsp; Covers.com",
-        "source": "Covers.com",
-        "published_label": "Jul 22, 2026",
-        "section": "unable_to_classify",
-        "classification_confidence": "no_explicit_side",
-        "game": "Detroit Tigers @ Chicago Cubs",
-        "selected_side": null,
-        "lydia_takeaway": "This article matches Detroit Tigers @ Chicago Cubs, but the headline and summary do not clearly identify a selected side. LyDia currently has Chicago Cubs Money Line at 55.1% model probability and 3.9/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       }
     ]
   }

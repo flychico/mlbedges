@@ -1,8 +1,8 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T20:30:29.720Z",
+ "generated_at": "2026-07-22T20:56:36.143Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
- "events_fetched": 16,
+ "events_fetched": 14,
  "probables": {
   "822784": {
    "away": "Griffin Jax",
@@ -42,60 +42,80 @@
   }
  },
  "pitchers": {
-  "gabriel hughes": {
-   "name": "Gabriel Hughes",
-   "line": 5.5,
-   "over": -210,
-   "under": 155,
+  "cade cavalli": {
+   "name": "Cade Cavalli",
+   "line": 6.5,
+   "over": -130,
+   "under": -105,
    "books": 1,
    "game": "Washington Nationals @ Colorado Rockies",
-   "projection": 6.02,
-   "projection_raw": 6.44,
-   "game_pk": 824327
+   "projection": 5.04,
+   "projection_raw": 5.46,
+   "game_pk": 824327,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5,
+   "bullpen_game": false
   },
   "brady singer": {
    "name": "Brady Singer",
-   "line": 4.5,
-   "over": -185,
-   "under": 135,
+   "line": 5.5,
+   "over": 135,
+   "under": -185,
    "books": 1,
    "game": "Cincinnati Reds @ Seattle Mariners",
-   "projection": 3.77,
-   "projection_raw": 4.19,
-   "game_pk": 823110
-  },
-  "merrill kelly": {
-   "name": "Merrill Kelly",
-   "line": 3.5,
-   "over": -115,
-   "under": -120,
-   "books": 1,
-   "game": "Athletics @ Arizona Diamondbacks",
-   "projection": 3.08,
-   "projection_raw": 3.5,
-   "game_pk": 825055
+   "projection": 3.76,
+   "projection_raw": 4.18,
+   "game_pk": 823110,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5,
+   "bullpen_game": false
   },
   "gage jump": {
    "name": "Gage Jump",
-   "line": 4.5,
-   "over": -150,
-   "under": 110,
+   "line": 6.5,
+   "over": 115,
+   "under": -155,
    "books": 1,
    "game": "Athletics @ Arizona Diamondbacks",
-   "projection": 4.25,
-   "projection_raw": 4.67,
-   "game_pk": 825055
+   "projection": 4.45,
+   "projection_raw": 4.87,
+   "game_pk": 825055,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.1,
+   "bullpen_game": false
+  },
+  "hunter dobbins": {
+   "name": "Hunter Dobbins",
+   "line": 5.5,
+   "over": -200,
+   "under": 145,
+   "books": 1,
+   "game": "St. Louis Cardinals @ Los Angeles Angels",
+   "projection": 4.61,
+   "projection_raw": 5.03,
+   "game_pk": 824004,
+   "pitcher_role": "limited_starter",
+   "pitcher_role_label": "Limited starter",
+   "expected_innings": 4.2,
+   "bullpen_game": false
   },
   "reid detmers": {
    "name": "Reid Detmers",
    "line": 6.5,
-   "over": 115,
-   "under": -150,
-   "books": 2,
+   "over": 105,
+   "under": -140,
+   "books": 1,
    "game": "St. Louis Cardinals @ Los Angeles Angels",
-   "projection": 5.27,
-   "projection_raw": 5.69,
-   "game_pk": 824004
+   "projection": 5.36,
+   "projection_raw": 5.78,
+   "game_pk": 824004,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.6,
+   "bullpen_game": false
   },
   "eric lauer": {
    "name": "Eric Lauer",
@@ -104,9 +124,13 @@
    "under": -105,
    "books": 6,
    "game": "Los Angeles Dodgers @ Philadelphia Phillies",
-   "projection": 3.96,
-   "projection_raw": 4.38,
-   "game_pk": 823438
+   "projection": 3.04,
+   "projection_raw": 3.46,
+   "game_pk": 823438,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.1,
+   "bullpen_game": false
   },
   "aaron nola": {
    "name": "Aaron Nola",
@@ -117,18 +141,26 @@
    "game": "Los Angeles Dodgers @ Philadelphia Phillies",
    "projection": 4.54,
    "projection_raw": 4.96,
-   "game_pk": 823438
+   "game_pk": 823438,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.2,
+   "bullpen_game": false
   },
   "slade cecconi": {
    "name": "Slade Cecconi",
    "line": 3.5,
    "over": -148,
-   "under": 124,
+   "under": 122,
    "books": 6,
    "game": "Minnesota Twins @ Cleveland Guardians",
    "projection": 3.48,
    "projection_raw": 3.9,
-   "game_pk": 824408
+   "game_pk": 824408,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.2,
+   "bullpen_game": false
   },
   "bailey ober": {
    "name": "Bailey Ober",
@@ -139,29 +171,41 @@
    "game": "Minnesota Twins @ Cleveland Guardians",
    "projection": 3.86,
    "projection_raw": 4.28,
-   "game_pk": 824408
+   "game_pk": 824408,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.5,
+   "bullpen_game": false
   },
   "bubba chandler": {
    "name": "Bubba Chandler",
    "line": 4.5,
    "over": -131,
-   "under": 112,
-   "books": 3,
+   "under": 111,
+   "books": 5,
    "game": "Pittsburgh Pirates @ New York Yankees",
-   "projection": 4.46,
-   "projection_raw": 4.88,
-   "game_pk": 823519
+   "projection": 4.19,
+   "projection_raw": 4.61,
+   "game_pk": 823519,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 4.9,
+   "bullpen_game": false
   },
   "max fried": {
    "name": "Max Fried",
    "line": 3.5,
-   "over": -158,
+   "over": -160,
    "under": 133,
-   "books": 4,
+   "books": 5,
    "game": "Pittsburgh Pirates @ New York Yankees",
    "projection": 5.79,
    "projection_raw": 6.21,
-   "game_pk": 823519
+   "game_pk": 823519,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 6.2,
+   "bullpen_game": false
   },
   "griffin jax": {
    "name": "Griffin Jax",
@@ -170,27 +214,35 @@
    "under": -110,
    "books": 6,
    "game": "Tampa Bay Rays @ Toronto Blue Jays",
-   "projection": 4.17,
-   "projection_raw": 4.59,
-   "game_pk": 822784
+   "projection": 3.62,
+   "projection_raw": 4.04,
+   "game_pk": 822784,
+   "pitcher_role": "limited_starter",
+   "pitcher_role_label": "Limited starter",
+   "expected_innings": 4.4,
+   "bullpen_game": false
   },
   "kyle bradish": {
    "name": "Kyle Bradish",
    "line": 5.5,
    "over": 130,
-   "under": -153,
+   "under": -159,
    "books": 4,
    "game": "Baltimore Orioles @ Boston Red Sox",
    "projection": 5.33,
    "projection_raw": 5.75,
-   "game_pk": 824732
+   "game_pk": 824732,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.6,
+   "bullpen_game": false
   },
   "eduardo rivera": {
    "name": "Eduardo Rivera",
    "line": 3.5,
-   "over": -111,
+   "over": -103,
    "under": -115,
-   "books": 1,
+   "books": 3,
    "game": "Baltimore Orioles @ Boston Red Sox"
   },
   "martin perez": {
@@ -204,13 +256,17 @@
   "michael king": {
    "name": "Michael King",
    "line": 4.5,
-   "over": 112,
-   "under": -134,
+   "over": 115,
+   "under": -135,
    "books": 6,
    "game": "San Diego Padres @ Atlanta Braves",
    "projection": 4.41,
    "projection_raw": 4.83,
-   "game_pk": 824896
+   "game_pk": 824896,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.7,
+   "bullpen_game": false
   },
   "keider montero": {
    "name": "Keider Montero",
@@ -219,9 +275,13 @@
    "under": -115,
    "books": 6,
    "game": "Detroit Tigers @ Chicago Cubs",
-   "projection": 4.53,
-   "projection_raw": 4.95,
-   "game_pk": 824650
+   "projection": 3.83,
+   "projection_raw": 4.25,
+   "game_pk": 824650,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.8,
+   "bullpen_game": false
   },
   "colin rea": {
    "name": "Colin Rea",
@@ -230,20 +290,28 @@
    "under": -110,
    "books": 6,
    "game": "Detroit Tigers @ Chicago Cubs",
-   "projection": 4.51,
-   "projection_raw": 4.93,
-   "game_pk": 824650
+   "projection": 3.68,
+   "projection_raw": 4.1,
+   "game_pk": 824650,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.2,
+   "bullpen_game": false
   },
   "anthony kay": {
    "name": "Anthony Kay",
    "line": 4.5,
    "over": 120,
-   "under": -138,
+   "under": -135,
    "books": 6,
    "game": "Chicago White Sox @ Texas Rangers",
-   "projection": 4.07,
-   "projection_raw": 4.49,
-   "game_pk": 822873
+   "projection": 3.73,
+   "projection_raw": 4.15,
+   "game_pk": 822873,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 4.8,
+   "bullpen_game": false
   },
   "sandy alcantara": {
    "name": "Sandy Alcantara",
@@ -254,18 +322,26 @@
    "game": "Miami Marlins @ Houston Astros",
    "projection": 4.79,
    "projection_raw": 5.21,
-   "game_pk": 824166
+   "game_pk": 824166,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 6.5,
+   "bullpen_game": false
   },
   "peter lambert": {
    "name": "Peter Lambert",
    "line": 5.5,
-   "over": 129,
+   "over": 124,
    "under": -155,
    "books": 6,
    "game": "Miami Marlins @ Houston Astros",
    "projection": 5.22,
    "projection_raw": 5.64,
-   "game_pk": 824166
+   "game_pk": 824166,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.8,
+   "bullpen_game": false
   },
   "mitch keller": {
    "name": "Mitch Keller",
@@ -276,7 +352,11 @@
    "game": "Pittsburgh Pirates @ New York Yankees",
    "projection": 4.05,
    "projection_raw": 4.47,
-   "game_pk": 823518
+   "game_pk": 823518,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.4,
+   "bullpen_game": false
   },
   "gerrit cole": {
    "name": "Gerrit Cole",
@@ -287,7 +367,11 @@
    "game": "Pittsburgh Pirates @ New York Yankees",
    "projection": 6.26,
    "projection_raw": 6.68,
-   "game_pk": 823518
+   "game_pk": 823518,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.6,
+   "bullpen_game": false
   },
   "dean kremer": {
    "name": "Dean Kremer",
@@ -298,7 +382,11 @@
    "game": "Baltimore Orioles @ Boston Red Sox",
    "projection": 5.66,
    "projection_raw": 6.08,
-   "game_pk": 824735
+   "game_pk": 824735,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.3,
+   "bullpen_game": false
   },
   "jake bennett": {
    "name": "Jake Bennett",
@@ -309,7 +397,11 @@
    "game": "Baltimore Orioles @ Boston Red Sox",
    "projection": 4.84,
    "projection_raw": 5.26,
-   "game_pk": 824735
+   "game_pk": 824735,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.9,
+   "bullpen_game": false
   },
   "landen roupp": {
    "name": "Landen Roupp",
@@ -320,7 +412,11 @@
    "game": "San Francisco Giants @ Kansas City Royals",
    "projection": 5.29,
    "projection_raw": 5.71,
-   "game_pk": 824083
+   "game_pk": 824083,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.5,
+   "bullpen_game": false
   },
   "seth lugo": {
    "name": "Seth Lugo",
@@ -331,7 +427,11 @@
    "game": "San Francisco Giants @ Kansas City Royals",
    "projection": 3.79,
    "projection_raw": 4.21,
-   "game_pk": 824083
+   "game_pk": 824083,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.6,
+   "bullpen_game": false
   },
   "christian scott": {
    "name": "Christian Scott",
@@ -342,7 +442,11 @@
    "game": "New York Mets @ Milwaukee Brewers",
    "projection": 4.99,
    "projection_raw": 5.41,
-   "game_pk": 823761
+   "game_pk": 823761,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 4.5,
+   "bullpen_game": false
   },
   "logan henderson": {
    "name": "Logan Henderson",
@@ -353,18 +457,41 @@
    "game": "New York Mets @ Milwaukee Brewers",
    "projection": 6.1,
    "projection_raw": 6.52,
-   "game_pk": 823761
+   "game_pk": 823761,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 4.8,
+   "bullpen_game": false
   },
-  "cade cavalli": {
-   "name": "Cade Cavalli",
+  "gabriel hughes": {
+   "name": "Gabriel Hughes",
    "line": null,
    "over": null,
    "under": null,
    "books": 0,
    "game": "Washington Nationals @ Colorado Rockies",
-   "projection": 4.93,
-   "projection_raw": 5.35,
-   "game_pk": 824327
+   "projection": 4.95,
+   "projection_raw": 5.37,
+   "game_pk": 824327,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.4,
+   "bullpen_game": false
+  },
+  "merrill kelly": {
+   "name": "Merrill Kelly",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Athletics @ Arizona Diamondbacks",
+   "projection": 3.14,
+   "projection_raw": 3.56,
+   "game_pk": 825055,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.7,
+   "bullpen_game": false
   },
   "emerson hancock": {
    "name": "Emerson Hancock",
@@ -373,20 +500,13 @@
    "under": null,
    "books": 0,
    "game": "Cincinnati Reds @ Seattle Mariners",
-   "projection": 5.83,
-   "projection_raw": 6.25,
-   "game_pk": 823110
-  },
-  "hunter dobbins": {
-   "name": "Hunter Dobbins",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0,
-   "game": "St. Louis Cardinals @ Los Angeles Angels",
-   "projection": 6.79,
-   "projection_raw": 7.21,
-   "game_pk": 824004
+   "projection": 5.8,
+   "projection_raw": 6.22,
+   "game_pk": 823110,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.4,
+   "bullpen_game": false
   },
   "braydon fisher": {
    "name": "Braydon Fisher",
@@ -395,9 +515,13 @@
    "under": null,
    "books": 0,
    "game": "Tampa Bay Rays @ Toronto Blue Jays",
-   "projection": 5.94,
-   "projection_raw": 6.36,
-   "game_pk": 822784
+   "projection": 0.62,
+   "projection_raw": 1.04,
+   "game_pk": 822784,
+   "pitcher_role": "opener",
+   "pitcher_role_label": "Opener / bullpen game",
+   "expected_innings": 1.1,
+   "bullpen_game": true
   },
   "martín pérez": {
    "name": "Martín Pérez",
@@ -406,9 +530,13 @@
    "under": null,
    "books": 0,
    "game": "San Diego Padres @ Atlanta Braves",
-   "projection": 4.15,
-   "projection_raw": 4.57,
-   "game_pk": 824896
+   "projection": 3.62,
+   "projection_raw": 4.04,
+   "game_pk": 824896,
+   "pitcher_role": "traditional_starter",
+   "pitcher_role_label": "Traditional starter",
+   "expected_innings": 5.1,
+   "bullpen_game": false
   },
   "tyler alexander": {
    "name": "Tyler Alexander",
@@ -417,9 +545,13 @@
    "under": null,
    "books": 0,
    "game": "Chicago White Sox @ Texas Rangers",
-   "projection": 6.48,
-   "projection_raw": 6.9,
-   "game_pk": 822873
+   "projection": 0.59,
+   "projection_raw": 1.01,
+   "game_pk": 822873,
+   "pitcher_role": "opener",
+   "pitcher_role_label": "Opener / bullpen game",
+   "expected_innings": 1,
+   "bullpen_game": true
   }
  },
  "learned_bias": -0.42,
