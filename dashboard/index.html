@@ -151,7 +151,9 @@
 .market-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
 .market-box {
   min-width:0; border:1px solid rgba(109,93,252,.13); border-radius:13px;
-  padding:9px; background:linear-gradient(180deg,rgba(246,243,255,.75),rgba(255,255,255,.85));
+  padding:9px; min-height:76px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  background:linear-gradient(180deg,rgba(246,243,255,.75),rgba(255,255,255,.85));
 }
 .market-box.total { border-color:rgba(35,184,199,.18); background:linear-gradient(180deg,rgba(232,252,253,.76),rgba(255,255,255,.88)); }
 .market-box.rating { border-color:rgba(217,70,143,.18); background:linear-gradient(180deg,rgba(255,239,248,.76),rgba(255,255,255,.88)); }
@@ -505,15 +507,11 @@ function renderGameCard(item) {
   const pitcherHome = home.probablePitcher ? home.probablePitcher.fullName : (total && total.home_sp) || "TBD";
 
   const modelFavoriteAway = model && model.away >= model.home;
-  const modelFavoriteProbability = model ? Math.max(model.away, model.home) : null;
-  const modelFavoriteMarketProbability = model && marketMoneyline
-    ? (modelFavoriteAway ? marketMoneyline.awayProbability : marketMoneyline.homeProbability)
-    : null;
   const modelFavoriteName = model
     ? (modelFavoriteAway ? TEAM_SHORT[away.team.name] || away.team.name : TEAM_SHORT[home.team.name] || home.team.name)
     : null;
   const modelBox = model
-    ? `<span class="market-value">${Odds.fmtPct(modelFavoriteProbability)} ${escapeHtml(modelFavoriteName)}</span><span class="market-sub">${modelFavoriteMarketProbability != null ? `Market ${Odds.fmtPct(modelFavoriteMarketProbability)} · Edge ${Odds.fmtPct(modelFavoriteProbability-modelFavoriteMarketProbability)}` : "LyDia win probability"}</span>`
+    ? `<span class="market-value">${escapeHtml(modelFavoriteName)}</span>`
     : `<span class="market-value">Building</span><span class="market-sub">model read not published</span>`;
 
   const totalBox = consensusLine != null || projectedTotal != null
@@ -521,7 +519,7 @@ function renderGameCard(item) {
     : `<span class="market-value">Pending</span><span class="market-sub">total not published</span>`;
 
   const ratingBox = labRating
-    ? `<span class="market-value">${labRating}/10</span><span class="market-sub">${escapeHtml(statusLabel)}</span>`
+    ? `<span class="market-value">${labRating}/10</span>`
     : `<span class="market-value">—</span><span class="market-sub">Lab Rating pending</span>`;
 
   const probabilityCompare = model || marketMoneyline
