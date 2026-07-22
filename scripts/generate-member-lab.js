@@ -24,6 +24,7 @@ const OFFICIAL_MODEL_PROB = 0.72;
 const VALUE_WATCH_LAB_SCORE = 75;
 const WATCHLIST_LAB_SCORE = 65;
 const MAX_ABS_PRICE = 1000;
+const RUN_MODEL_WEIGHT = 0.50;
 
 const args = parseArgs(process.argv.slice(2));
 const DATE = args.date || etToday();
@@ -91,7 +92,9 @@ async function main() {
       '<div id="status" class="loading">Loading bullpen workload…</div>');
   }
 
-  const freshRows = openGames.map(g => modelGame(g, strength, pitchers, oddsMap, bullpen, offense)).filter(Boolean);
+  const totalsSource = readJsonSafe(`data/totals/${DATE}.json`) || { games: {} };
+  const runProjections = totalsSource.games || {};
+  const freshRows = openGames.map(g => modelGame(g, strength, pitchers, oddsMap, bullpen, offense, runProjections)).filter(Boolean);
   const freshByPk = new Map(freshRows.map(row => [String(row.game_pk), row]));
 
   // The Member Brief is the permanent full-day record. Recalculate games that
@@ -121,6 +124,7 @@ async function main() {
     snapshot_type: SNAPSHOT,
     source_of_truth: "LyDia Daily Engine",
     current_official_model: "moneyline_only",
+    model_version: "moneyline-v2-plus-runs-v1",
     official_pick_rules: {
       minimum_model_probability: OFFICIAL_MODEL_PROB,
       minimum_lab_score: OFFICIAL_LAB_SCORE,
@@ -147,15 +151,16 @@ async function main() {
     injectPicksRecord();
   }
 
-  const candidatePublished = buildPicksFile(rows, generatedAt);
-  const published = writeOrReusePublishedPicks(candidatePublished, allGames.length);
-
-  writeJson(`data/picks/${DATE}.json`, published);
-  if (DATE === etToday()) writeJson("data/picks/today.json", published);
-
-  mergeAndWriteMarket(buildMarketFile(rows, generatedAt));
-
-  console.log(`Generated LyDia source data for ${DATE}. Games: ${rows.length}. Official picks: ${published.picks.length}.`);
+  if (args["defer-publish"] === "true") {
+    console.log(`Generated provisional LyDia source data for ${DATE}. Waiting for unified run projections before locking picks.`);
+  } else {
+    const candidatePublished = buildPicksFile(rows, generatedAt);
+    const published = writeOrReusePublishedPicks(candidatePublished, allGames.length);
+    writeJson(`data/picks/${DATE}.json`, published);
+    if (DATE === etToday()) writeJson("data/picks/today.json", published);
+    mergeAndWriteMarket(buildMarketFile(rows, generatedAt));
+    console.log(`Generated unified LyDia source data for ${DATE}. Games: ${rows.length}. Official picks: ${published.picks.length}.`);
+  }
 }
 
 function parseArgs(argv) {
@@ -480,7 +485,40 @@ function modelV3(pBase, awayStats, homeStats, offAway, offHome, bpAway, bpHome) 
   const pHome = odds / (1 + odds);
   return { p_home: Number(pHome.toFixed(4)), fip_away: Number(spA.toFixed(2)), fip_home: Number(spH.toFixed(2)), off_adj: Number((V3_OFF_K * (dH - dA)).toFixed(4)), bp_adj: Number(bpAdj.toFixed(4)), version: "v3.1-bullpen" };
 }
-function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
+
+// Convert the same expected runs shown publicly into an additional moneyline
+// signal. Regulation ties are split evenly as a neutral extra-innings
+// approximation before this signal is blended with the established model.
+function winProbabilityFromRuns(homeRuns, awayRuns) {
+  if (!Number.isFinite(homeRuns) || !Number.isFinite(awayRuns) || homeRuns <= 0 || awayRuns <= 0) return null;
+  const maxRuns = 30;
+  const home = [Math.exp(-homeRuns)];
+  const away = [Math.exp(-awayRuns)];
+  for (let runs = 1; runs <= maxRuns; runs++) {
+    home[runs] = home[runs - 1] * homeRuns / runs;
+    away[runs] = away[runs - 1] * awayRuns / runs;
+  }
+  let homeWin = 0;
+  let tie = 0;
+  for (let h = 0; h <= maxRuns; h++) {
+    for (let a = 0; a <= maxRuns; a++) {
+      const probability = home[h] * away[a];
+      if (h > a) homeWin += probability;
+      else if (h === a) tie += probability;
+    }
+  }
+  return homeWin + tie * 0.5;
+}
+
+function blendProbabilities(baseProbability, runProbability, runWeight) {
+  const clampProbability = value => Math.max(0.001, Math.min(0.999, value));
+  const logit = value => Math.log(clampProbability(value) / (1 - clampProbability(value)));
+  const logistic = value => 1 / (1 + Math.exp(-value));
+  const weight = Math.max(0, Math.min(1, runWeight));
+  return logistic((1 - weight) * logit(baseProbability) + weight * logit(runProbability));
+}
+
+function modelGame(g, strength, pitchers, oddsMap, bullpen, offense, runProjections) {
   const aT = g.teams.away.team;
   const hT = g.teams.home.team;
   const sA = strength[aT.id];
@@ -504,7 +542,17 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
   const preBullpenOdds = (pBase / (1 - pBase)) * Math.exp(ERA_K * (spA - spH));
   const preBullpenHomeProb = preBullpenOdds / (1 + preBullpenOdds);
   const modelOdds = preBullpenOdds * Math.exp(bullpenAdj);
-  const pHome = modelOdds / (1 + modelOdds);
+  const legacyPHome = modelOdds / (1 + modelOdds);
+  const runProjection = runProjections && runProjections[String(g.gamePk)];
+  const runPHome = runProjection
+    ? winProbabilityFromRuns(Number(runProjection.proj_home), Number(runProjection.proj_away))
+    : null;
+  // Preserve the established moneyline model and enhance it with the run
+  // projection as a second signal. Blend on the log-odds scale so neither
+  // component is discarded and both remain auditable.
+  const pHome = Number.isFinite(runPHome)
+    ? blendProbabilities(legacyPHome, runPHome, RUN_MODEL_WEIGHT)
+    : legacyPHome;
 
   const pickHome = pHome >= 0.5;
   const pickTeam = pickHome ? hT.name : aT.name;
@@ -550,7 +598,9 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
 
   const pickOffCtx = offenseFormFor(pickHome ? hT.id : aT.id, null, offense);
   const oppOffCtx = offenseFormFor(pickHome ? aT.id : hT.id, null, offense);
-  const preBullpenModelProb = pickHome ? preBullpenHomeProb : 1 - preBullpenHomeProb;
+  const preBullpenModelProb = Number.isFinite(runPHome)
+    ? modelProb
+    : (pickHome ? preBullpenHomeProb : 1 - preBullpenHomeProb);
   const read = buildRead({
     status, pickTeam, oppTeam, modelProb, marketProb, edge, lab, pitchEdgeTeam, pitchGap,
     pitcherConflict, bullpenRead, pickBullpen, oppBullpen, bestPrice, majorBullpenCaution, passReason,
@@ -572,10 +622,23 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
     pick_team: pickTeam,
     side,
     model_probability: round(modelProb, 4),
+    model_source: Number.isFinite(runPHome) ? "moneyline-v2-plus-runs-v1" : "legacy-strength-fallback",
+    projected_runs: Number.isFinite(runPHome) ? {
+      away: Number(runProjection.proj_away),
+      home: Number(runProjection.proj_home),
+      total: Number(runProjection.projection)
+    } : null,
+    legacy_strength_probability: round(pickHome ? legacyPHome : 1 - legacyPHome, 4),
+    run_model_probability: Number.isFinite(runPHome)
+      ? round(pickHome ? runPHome : 1 - runPHome, 4)
+      : null,
+    run_model_weight: Number.isFinite(runPHome) ? RUN_MODEL_WEIGHT : 0,
     // Same team's win probability WITHOUT the bullpen adjustment, so the
     // effect is auditable and can be disclosed as a plain percentage-point
     // shift instead of a raw log-odds number.
-    model_probability_pre_bullpen: round(pickHome ? preBullpenHomeProb : 1 - preBullpenHomeProb, 4),
+    model_probability_pre_bullpen: Number.isFinite(runPHome)
+      ? null
+      : round(pickHome ? preBullpenHomeProb : 1 - preBullpenHomeProb, 4),
     edge: edge === null ? null : round(edge, 4),
     status,
     value_tag: status === "official_pick" ? "OFFICIAL PICK" : status === "value_watch" ? "VALUE WATCH" : status === "watchlist" ? "WATCHLIST" : "PASS",
@@ -736,8 +799,8 @@ function buildRead(ctx) {
     const w = (t, d) => `${t} ${d >= 0.05 ? "is swinging a hot bat" : d >= 0.02 ? "is a touch above its season form" : d <= -0.05 ? "is in a cold stretch" : d <= -0.02 ? "is a touch below its season form" : "is near its season form"} (${d >= 0 ? "+" : ""}${d.toFixed(3)} OPS)`;
     const diff = p.delta_ops - o.delta_ops;
     let tail = "";
-    if (diff <= -0.06) tail = " Recent form leans against this side — noted, not modeled.";
-    else if (diff >= 0.06) tail = " Recent form supports this side as well.";
+    if (diff <= -0.06) tail = " Recent form leans against this side and is included in the unified run projection.";
+    else if (diff >= 0.06) tail = " Recent form supports this side and is included in the unified run projection.";
     return ` Lineup check: ${w(ctx.pickTeam, p.delta_ops)}; ${w(ctx.oppTeam || "the opponent", o.delta_ops)}.${tail}`;
   })();
   const labLine = `Lab Rating ${(ctx.lab.score/10).toFixed(1)}/10: model edge ${ctx.lab.model_edge_points}, pitcher ${ctx.lab.pitcher_points}, bullpen ${ctx.lab.bullpen_points}, market ${ctx.lab.market_points}, base ${ctx.lab.base_points}.`;
@@ -801,7 +864,7 @@ function buildPicksFile(rows, generatedAt) {
       labScore: r.lab_score,
       labScoreBreakdown: r.lab_score_breakdown,
       status: r.status,
-      modelVersion: "moneyline-v2-strict-probability-gate-bullpen-aware",
+      modelVersion: "moneyline-v2-plus-runs-v1",
       pitcherEdge: r.pitcher_edge,
       bullpen: r.bullpen,
       moneyline: {
