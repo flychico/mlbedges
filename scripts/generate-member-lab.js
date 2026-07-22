@@ -58,8 +58,11 @@ async function main() {
     throw new Error(`No MLB games found for ${DATE}. No files were written.`);
   }
 
+  const previousBrief = readJsonSafe(`data/member-brief/${DATE}.json`) || { games: [] };
+  const previousRows = Array.isArray(previousBrief.games) ? previousBrief.games : [];
+  const previousByPk = new Map(previousRows.map(row => [String(row.game_pk), row]));
   const openGames = allGames.filter(g => g.status && g.status.abstractGameState === "Preview");
-  if (!openGames.length) {
+  if (!openGames.length && !previousRows.length) {
     throw new Error(`Closed slate guard: ${DATE} has ${allGames.length} game(s), but none are in Preview state. LyDia will not create or overwrite official picks after games start. Run Site maintenance cleanup or grade-results instead.`);
   }
 
@@ -68,7 +71,12 @@ async function main() {
   const pitchers = await fetchPitchers(openGames);
   const offense = await fetchOffenseForm(DATE);
   const oddsMap = buildOddsMap(oddsEvents);
-  const bullpenSource = await buildBullpenSource({ date: DATE, todayGames: openGames, fetchJson, generatedAt });
+  const bullpenSource = openGames.length
+    ? await buildBullpenSource({ date: DATE, todayGames: openGames, fetchJson, generatedAt })
+    : readJsonSafe(`data/bullpen/${DATE}.json`);
+  if (!bullpenSource) {
+    throw new Error(`Closed slate guard: no retained bullpen source exists for ${DATE}. No daily files were overwritten.`);
+  }
   const bullpen = bullpenSource.teams_by_name || {};
 
   writeJson(`data/bullpen/${DATE}.json`, bullpenSource);
@@ -83,11 +91,28 @@ async function main() {
       '<div id="status" class="loading">Loading bullpen workload…</div>');
   }
 
-  const rows = openGames.map(g => modelGame(g, strength, pitchers, oddsMap, bullpen, offense)).filter(Boolean)
+  const freshRows = openGames.map(g => modelGame(g, strength, pitchers, oddsMap, bullpen, offense)).filter(Boolean);
+  const freshByPk = new Map(freshRows.map(row => [String(row.game_pk), row]));
+
+  // The Member Brief is the permanent full-day record. Recalculate games that
+  // have not started, but retain the posted pregame row for every live or final
+  // game. Never replace the daily file with a shrinking Preview-only subset.
+  const rows = allGames
+    .map(game => freshByPk.get(String(game.gamePk)) || previousByPk.get(String(game.gamePk)) || null)
+    .filter(Boolean)
     .sort((a, b) => (b.lab_score || 0) - (a.lab_score || 0));
 
+  const retainedPks = new Set(rows.map(row => String(row.game_pk)));
+  const missingGames = allGames.filter(game => !retainedPks.has(String(game.gamePk)));
+  if (missingGames.length) {
+    throw new Error(
+      `Daily brief retention guard: refusing to overwrite ${DATE}; missing posted analysis for game(s) ` +
+      missingGames.map(game => game.gamePk).join(",")
+    );
+  }
+
   if (!rows.length) {
-    throw new Error(`Model guard: ${DATE} produced zero game rows from ${openGames.length} open game(s). No official files were written.`);
+    throw new Error(`Model guard: ${DATE} produced zero retained game rows. No official files were written.`);
   }
 
   const brief = {
@@ -211,6 +236,9 @@ function writeJson(file, obj) {
 }
 function readJson(file) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, file), "utf8"));
+}
+function readJsonSafe(file) {
+  try { return readJson(file); } catch (_) { return null; }
 }
 function seasonYear(date) {
   const d = new Date(date + "T12:00:00");
