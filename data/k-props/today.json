@@ -1,8 +1,8 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T18:06:12.540Z",
+ "generated_at": "2026-07-22T18:29:41.021Z",
  "source": "the-odds-api pitcher_strikeouts (us region; consensus = most common posted line, best price at it)",
- "events_fetched": 15,
+ "events_fetched": 16,
  "probables": {
   "822784": {
    "away": "Griffin Jax",
@@ -60,106 +60,95 @@
  "pitchers": {
   "gerrit cole": {
    "name": "Gerrit Cole",
-   "line": 9.5,
-   "over": 110,
-   "under": -110,
-   "books": 2,
-   "game": "Pittsburgh Pirates @ New York Yankees",
-   "projection": 5.73,
-   "projection_raw": 6.15,
-   "game_pk": 823518
-  },
-  "mitch keller": {
-   "name": "Mitch Keller",
-   "line": 6.5,
-   "over": -115,
-   "under": -115,
+   "line": 11.5,
+   "over": 125,
+   "under": -170,
    "books": 1,
    "game": "Pittsburgh Pirates @ New York Yankees",
-   "projection": 4,
-   "projection_raw": 4.42,
+   "projection": 6.16,
+   "projection_raw": 6.58,
    "game_pk": 823518
   },
   "jake bennett": {
    "name": "Jake Bennett",
    "line": 5.5,
-   "over": 115,
-   "under": -140,
-   "books": 2,
+   "over": 130,
+   "under": -175,
+   "books": 1,
    "game": "Baltimore Orioles @ Boston Red Sox",
-   "projection": 4.66,
-   "projection_raw": 5.08,
+   "projection": 4.76,
+   "projection_raw": 5.18,
    "game_pk": 824735
-  },
-  "landen roupp": {
-   "name": "Landen Roupp",
-   "line": 5.5,
-   "over": 124,
-   "under": -148,
-   "books": 4,
-   "game": "San Francisco Giants @ Kansas City Royals",
-   "projection": 5.18,
-   "projection_raw": 5.6,
-   "game_pk": 824083
   },
   "seth lugo": {
    "name": "Seth Lugo",
    "line": 4.5,
-   "over": 108,
-   "under": -127,
-   "books": 5,
+   "over": 115,
+   "under": -155,
+   "books": 1,
    "game": "San Francisco Giants @ Kansas City Royals",
-   "projection": 3.73,
-   "projection_raw": 4.15,
+   "projection": 3.59,
+   "projection_raw": 4.01,
+   "game_pk": 824083
+  },
+  "landen roupp": {
+   "name": "Landen Roupp",
+   "line": 5.5,
+   "over": -110,
+   "under": -120,
+   "books": 1,
+   "game": "San Francisco Giants @ Kansas City Royals",
+   "projection": 4.96,
+   "projection_raw": 5.38,
    "game_pk": 824083
   },
   "christian scott": {
    "name": "Christian Scott",
    "line": 5.5,
-   "over": -125,
-   "under": -101,
-   "books": 4,
+   "over": 100,
+   "under": -120,
+   "books": 2,
    "game": "New York Mets @ Milwaukee Brewers",
-   "projection": 5.01,
-   "projection_raw": 5.43,
+   "projection": 4.69,
+   "projection_raw": 5.11,
    "game_pk": 823761
   },
   "logan henderson": {
    "name": "Logan Henderson",
-   "line": 5.5,
-   "over": -122,
-   "under": 102,
-   "books": 4,
+   "line": 7.5,
+   "over": -150,
+   "under": 110,
+   "books": 1,
    "game": "New York Mets @ Milwaukee Brewers",
-   "projection": 5.61,
-   "projection_raw": 6.03,
+   "projection": 5.28,
+   "projection_raw": 5.7,
    "game_pk": 823761
+  },
+  "gabriel hughes": {
+   "name": "Gabriel Hughes",
+   "line": 4.5,
+   "over": 118,
+   "under": -143,
+   "books": 5,
+   "game": "Washington Nationals @ Colorado Rockies"
   },
   "cade cavalli": {
    "name": "Cade Cavalli",
    "line": 5.5,
-   "over": 117,
-   "under": -135,
+   "over": 115,
+   "under": -143,
    "books": 5,
    "game": "Washington Nationals @ Colorado Rockies",
    "projection": 5,
    "projection_raw": 5.42,
    "game_pk": 824327
   },
-  "gabriel hughes": {
-   "name": "Gabriel Hughes",
-   "line": 4.5,
-   "over": 116,
-   "under": -143,
-   "books": 5,
-   "game": "Washington Nationals @ Colorado Rockies"
-  },
   "gage jump": {
    "name": "Gage Jump",
    "line": 4.5,
-   "over": 104,
-   "under": -125,
-   "books": 4,
+   "over": 100,
+   "under": -121,
+   "books": 5,
    "game": "Athletics @ Arizona Diamondbacks",
    "projection": 4.52,
    "projection_raw": 4.94,
@@ -168,8 +157,8 @@
   "merrill kelly": {
    "name": "Merrill Kelly",
    "line": 4.5,
-   "over": 125,
-   "under": -151,
+   "over": 132,
+   "under": -167,
    "books": 5,
    "game": "Athletics @ Arizona Diamondbacks",
    "projection": 3.17,
@@ -179,8 +168,8 @@
   "brady singer": {
    "name": "Brady Singer",
    "line": 5.5,
-   "over": 112,
-   "under": -141,
+   "over": 118,
+   "under": -142,
    "books": 4,
    "game": "Cincinnati Reds @ Seattle Mariners",
    "projection": 3.87,
@@ -238,14 +227,14 @@
    "under": -133,
    "books": 5,
    "game": "Los Angeles Dodgers @ Philadelphia Phillies",
-   "projection": 4.55,
-   "projection_raw": 4.97,
+   "projection": 4.54,
+   "projection_raw": 4.96,
    "game_pk": 823438
   },
   "slade cecconi": {
    "name": "Slade Cecconi",
    "line": 3.5,
-   "over": -151,
+   "over": -149,
    "under": 122,
    "books": 5,
    "game": "Minnesota Twins @ Cleveland Guardians",
@@ -256,7 +245,7 @@
   "bailey ober": {
    "name": "Bailey Ober",
    "line": 4.5,
-   "over": 128,
+   "over": 131,
    "under": -150,
    "books": 5,
    "game": "Minnesota Twins @ Cleveland Guardians",
@@ -267,8 +256,8 @@
   "bubba chandler": {
    "name": "Bubba Chandler",
    "line": 4.5,
-   "over": -142,
-   "under": 114,
+   "over": -138,
+   "under": 110,
    "books": 3,
    "game": "Pittsburgh Pirates @ New York Yankees",
    "projection": 4.46,
@@ -311,8 +300,8 @@
   "martin perez": {
    "name": "Martin Perez",
    "line": 3.5,
-   "over": 102,
-   "under": -125,
+   "over": 105,
+   "under": -122,
    "books": 5,
    "game": "San Diego Padres @ Atlanta Braves"
   },
@@ -323,31 +312,53 @@
    "under": -135,
    "books": 5,
    "game": "San Diego Padres @ Atlanta Braves",
-   "projection": 4.42,
-   "projection_raw": 4.84,
+   "projection": 4.41,
+   "projection_raw": 4.83,
    "game_pk": 824896
   },
-  "keider montero": {
-   "name": "Keider Montero",
-   "line": 3.5,
-   "over": -110,
-   "under": -113,
-   "books": 5,
-   "game": "Detroit Tigers @ Chicago Cubs",
-   "projection": 4.53,
-   "projection_raw": 4.95,
-   "game_pk": 824650
-  },
-  "colin rea": {
-   "name": "Colin Rea",
+  "anthony kay": {
+   "name": "Anthony Kay",
    "line": 4.5,
-   "over": 102,
-   "under": -110,
+   "over": 106,
+   "under": -133,
    "books": 5,
-   "game": "Detroit Tigers @ Chicago Cubs",
-   "projection": 4.51,
-   "projection_raw": 4.93,
-   "game_pk": 824650
+   "game": "Chicago White Sox @ Texas Rangers",
+   "projection": 4.07,
+   "projection_raw": 4.49,
+   "game_pk": 822873
+  },
+  "sandy alcantara": {
+   "name": "Sandy Alcantara",
+   "line": 4.5,
+   "over": -159,
+   "under": 130,
+   "books": 5,
+   "game": "Miami Marlins @ Houston Astros",
+   "projection": 4.79,
+   "projection_raw": 5.21,
+   "game_pk": 824166
+  },
+  "peter lambert": {
+   "name": "Peter Lambert",
+   "line": 5.5,
+   "over": 124,
+   "under": -152,
+   "books": 5,
+   "game": "Miami Marlins @ Houston Astros",
+   "projection": 5.22,
+   "projection_raw": 5.64,
+   "game_pk": 824166
+  },
+  "mitch keller": {
+   "name": "Mitch Keller",
+   "line": null,
+   "over": null,
+   "under": null,
+   "books": 0,
+   "game": "Pittsburgh Pirates @ New York Yankees",
+   "projection": 4.05,
+   "projection_raw": 4.47,
+   "game_pk": 823518
   },
   "dean kremer": {
    "name": "Dean Kremer",
@@ -356,8 +367,8 @@
    "under": null,
    "books": 0,
    "game": "Baltimore Orioles @ Boston Red Sox",
-   "projection": 5.27,
-   "projection_raw": 5.69,
+   "projection": 5.41,
+   "projection_raw": 5.83,
    "game_pk": 824735
   },
   "braydon fisher": {
@@ -382,17 +393,6 @@
    "projection_raw": 4.57,
    "game_pk": 824896
   },
-  "anthony kay": {
-   "name": "Anthony Kay",
-   "line": null,
-   "over": null,
-   "under": null,
-   "books": 0,
-   "game": "Chicago White Sox @ Texas Rangers",
-   "projection": 4.07,
-   "projection_raw": 4.49,
-   "game_pk": 822873
-  },
   "tyler alexander": {
    "name": "Tyler Alexander",
    "line": null,
@@ -400,31 +400,31 @@
    "under": null,
    "books": 0,
    "game": "Chicago White Sox @ Texas Rangers",
-   "projection": 6.49,
-   "projection_raw": 6.91,
+   "projection": 6.48,
+   "projection_raw": 6.9,
    "game_pk": 822873
   },
-  "sandy alcantara": {
-   "name": "Sandy Alcantara",
+  "keider montero": {
+   "name": "Keider Montero",
    "line": null,
    "over": null,
    "under": null,
    "books": 0,
-   "game": "Miami Marlins @ Houston Astros",
-   "projection": 4.79,
-   "projection_raw": 5.21,
-   "game_pk": 824166
+   "game": "Detroit Tigers @ Chicago Cubs",
+   "projection": 4.53,
+   "projection_raw": 4.95,
+   "game_pk": 824650
   },
-  "peter lambert": {
-   "name": "Peter Lambert",
+  "colin rea": {
+   "name": "Colin Rea",
    "line": null,
    "over": null,
    "under": null,
    "books": 0,
-   "game": "Miami Marlins @ Houston Astros",
-   "projection": 5.22,
-   "projection_raw": 5.64,
-   "game_pk": 824166
+   "game": "Detroit Tigers @ Chicago Cubs",
+   "projection": 4.51,
+   "projection_raw": 4.93,
+   "game_pk": 824650
   }
  },
  "learned_bias": -0.42,
