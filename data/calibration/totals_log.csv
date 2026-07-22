@@ -43,3 +43,16 @@ date,gamePk,line,over_price,under_price,projection,actual_total,ou_result,lean,l
 2026-07-20,824736,8.5,-120,105,9.1,11,O,0.6,W,63,Baltimore Orioles @ Boston Red Sox
 2026-07-20,824898,9,-110,-102,11.8,5,U,2.8,L,94,San Diego Padres @ Atlanta Braves
 2026-07-20,825058,9,-118,105,11,7,U,2,L,79,Athletics @ Arizona Diamondbacks
+2026-07-21,822787,7.5,-102,-109,7.9,14,O,0.4,,46,Tampa Bay Rays @ Toronto Blue Jays
+2026-07-21,822871,8.5,-110,103,10.5,10,O,2,W,79,Chicago White Sox @ Texas Rangers
+2026-07-21,823114,8,-110,-106,7.8,6,U,-0.2,,43,Cincinnati Reds @ Seattle Mariners
+2026-07-21,823437,10,-105,-107,8.6,3,U,-1.4,W,69,Los Angeles Dodgers @ Philadelphia Phillies
+2026-07-21,823760,7.5,-113,-102,10.1,4,U,2.6,L,80,New York Mets @ Milwaukee Brewers
+2026-07-21,824005,9,-107,-107,8.9,6,U,-0.1,,42,St. Louis Cardinals @ Los Angeles Angels
+2026-07-21,824085,9,-110,-102,9.6,5,U,0.6,L,50,San Francisco Giants @ Kansas City Royals
+2026-07-21,824165,8,-116,101,9.8,8,P,1.8,,69,Miami Marlins @ Houston Astros
+2026-07-21,824329,11.5,100,-113,13.9,15,O,2.4,W,85,Washington Nationals @ Colorado Rockies
+2026-07-21,824409,8,-102,-112,8.4,7,U,0.4,,40,Minnesota Twins @ Cleveland Guardians
+2026-07-21,824652,8,-102,-112,10.5,13,O,2.5,W,94,Detroit Tigers @ Chicago Cubs
+2026-07-21,824895,9,-102,-110,11.6,11,O,2.6,W,94,San Diego Padres @ Atlanta Braves
+2026-07-21,825056,9,-113,-102,10,11,O,1,W,57,Athletics @ Arizona Diamondbacks
