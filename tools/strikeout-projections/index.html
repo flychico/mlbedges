@@ -35,8 +35,10 @@
 .controls { display:flex; gap:10px; align-items:end; flex-wrap:wrap; margin-bottom:16px; }
 .controls .field { margin-bottom:0; }
 .match-card { margin-bottom:14px; }
-.match-head { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; margin-bottom:8px; }
+.match-head { display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:baseline; margin-bottom:8px; }
 .match-head .matchup { font-weight:800; font-size:1.05rem; }
+.match-head .matchup { grid-column:2; text-align:center; }
+.match-head .small { grid-column:3; justify-self:end; }
 .k-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px; }
 .k-box { background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:12px; }
 .k-proj { font-size:1.9rem; font-weight:800; color:var(--accent); }
@@ -127,7 +129,7 @@ async function load(){
     }
 
     PROJ={};
-    gamesEl.innerHTML = games.map(g=>renderGame(g, ps, kv, leagueK)).join("");
+    gamesEl.innerHTML = games.map(g=>renderGame(g, ps, kv, leagueK, games, date)).join("");
     Object.keys(PROJ).forEach(pid => { const el = document.getElementById("ln-" + pid); if (el && el.value) lean(pid); });
     document.getElementById("game-jump").innerHTML = '<option value="">All games…</option>'+
       games.map(g=>`<option value="${g.gamePk}">${escapeHtml(g.teams.away.team.name)} @ ${escapeHtml(g.teams.home.team.name)}</option>`).join("");
@@ -182,14 +184,14 @@ function lean(pid){
   else if(d<=-0.7) el.innerHTML=`<span class="neg-text">UNDER lean (${d.toFixed(1)})</span>`;
   else el.innerHTML=`<span class="dim">no edge (${d>=0?"+":""}${d.toFixed(1)})</span>`;
 }
-function renderGame(g, ps, kv, leagueK){
+function renderGame(g, ps, kv, leagueK, allGames, date){
   LEAGUE_K=leagueK;
   const a=g.teams.away, h=g.teams.home;
   const pa=a.probablePitcher?ps[a.probablePitcher.id]:null;
   const ph=h.probablePitcher?ps[h.probablePitcher.id]:null;
   const time=new Date(g.gameDate).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
   return `<div class="card match-card" id="kg-${g.gamePk}">
-    <div class="match-head"><span class="matchup">${escapeHtml(a.team.name)} @ ${escapeHtml(h.team.name)}</span><span class="dim small">${time}</span></div>
+    <div class="match-head matchup-title-center"><a class="matchup" href="${permanentMatchupUrl(g,allGames,date)}">${escapeHtml(a.team.name)} @ ${escapeHtml(h.team.name)}</a><span class="dim small">${time}</span></div>
     <div class="k-grid">
       ${kBox(pa, h.team.name, h.team.id, kv, a.probablePitcher?a.probablePitcher.id:0)}
       ${kBox(ph, a.team.name, a.team.id, kv, h.probablePitcher?h.probablePitcher.id:0)}

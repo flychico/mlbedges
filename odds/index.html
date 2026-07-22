@@ -98,6 +98,7 @@ async function loadOdds() {
 
 function renderGame(g) {
   const home = g.home_team, away = g.away_team;
+  const matchupDate = new Date(g.commence_time).toLocaleDateString("en-CA", { timeZone:"America/New_York" });
   const start = new Date(g.commence_time).toLocaleString([], { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 
   // Collect each book's h2h, totals, and spread prices
@@ -192,8 +193,8 @@ function renderGame(g) {
   }
 
   return `<div class="card game-card">
-    <div class="game-head">
-      <span class="matchup">${escapeHtml(away)} @ ${escapeHtml(home)}</span>
+    <div class="game-head matchup-title-center">
+      <a class="matchup" href="${permanentMatchupUrl(g,games,matchupDate)}">${escapeHtml(away)} @ ${escapeHtml(home)}</a>
       <span class="dim small">${start}</span>
     </div>
     ${mlHtml}${totalHtml}${spreadHtml}

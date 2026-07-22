@@ -28,8 +28,10 @@
 <link rel="stylesheet" href="/css/style.css">
 <style>
 .match-card { margin-bottom:14px; }
-.vhead { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; }
+.vhead { display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:baseline; }
 .vhead .matchup { font-weight:800; font-size:1.05rem; }
+.vhead .matchup { grid-column:2; text-align:center; }
+.vhead .small { grid-column:3; justify-self:end; text-align:right; }
 .probgrid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; }
 .probbox { background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:12px; }
 .probbox .big { font-size:1.5rem; font-weight:800; }
@@ -252,7 +254,7 @@ function render(rows) {
     if (v3official) v3picks.push(`${v3.team} (${pct(v3.p)}${v3edge !== null ? ", edge " + pct(v3edge) : ""})`);
     if (r.status === "official_pick") v2picks.push(v2.team);
     return `<div class="card match-card ${disagree ? "disagree" : ""}">
-      <div class="vhead"><span class="matchup">${escapeHtml(r.away)} @ ${escapeHtml(r.home)}</span><span class="dim small">${r.time}${r.status === "official_pick" ? ' · <b>v2 OFFICIAL PICK</b>' : ""}</span></div>
+      <div class="vhead matchup-title-center"><a class="matchup" href="${permanentMatchupUrl(r,rows,date)}">${escapeHtml(r.away)} @ ${escapeHtml(r.home)}</a><span class="dim small">${r.time}${r.status === "official_pick" ? ' · <b>v2 OFFICIAL PICK</b>' : ""}</span></div>
       <div class="dim small" style="margin-top:4px">
         ${escapeHtml(r.spA)}: LyDia Pitcher Score <b>${Number.isFinite(r.sA2) ? (r.sA2/10).toFixed(1) : "—"}</b> → v3 skill score <b class="v3c">${Number.isFinite(r.sA3) ? (r.sA3/10).toFixed(1) : "—"}</b>${scoreShift(r.sA2, r.sA3)} (ERA-in ${r.eA.toFixed(2)} → FIP-in ${r.fA.toFixed(2)})<br>
         ${escapeHtml(r.spH)}: LyDia Pitcher Score <b>${Number.isFinite(r.sH2) ? (r.sH2/10).toFixed(1) : "—"}</b> → v3 skill score <b class="v3c">${Number.isFinite(r.sH3) ? (r.sH3/10).toFixed(1) : "—"}</b>${scoreShift(r.sH2, r.sH3)} (${r.eH.toFixed(2)} → ${r.fH.toFixed(2)})<br>

@@ -35,8 +35,10 @@
 .controls { display:flex; gap:10px; align-items:end; flex-wrap:wrap; margin-bottom:16px; }
 .controls .field { margin-bottom:0; }
 .match-card { margin-bottom:14px; }
-.t-head { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; margin-bottom:6px; }
+.t-head { display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:baseline; margin-bottom:6px; }
 .t-head .matchup { font-weight:800; font-size:1.05rem; }
+.t-head .matchup { grid-column:2; text-align:center; }
+.t-head .small { grid-column:3; justify-self:end; text-align:right; }
 .t-grid { display:flex; gap:22px; flex-wrap:wrap; align-items:flex-end; margin-top:6px; }
 .t-proj { font-size:1.9rem; font-weight:800; color:var(--accent); }
 .t-label { color:var(--text-dim); font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; }

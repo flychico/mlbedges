@@ -38,8 +38,10 @@
 .kpi .label { font-size:.76rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; }
 .kpi .value { font-size:1.35rem; font-weight:800; }
 .match-card { margin-bottom:14px; }
-.match-head { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; margin-bottom:10px; }
+.match-head { display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:baseline; margin-bottom:10px; }
 .match-head .matchup { font-weight:800; font-size:1.05rem; }
+.match-head .matchup { grid-column:2; text-align:center; }
+.match-head .small { grid-column:3; justify-self:end; }
 .edge-line { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0; }
 .pitcher-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; }
 .pitcher-box { background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:12px; }
@@ -157,7 +159,7 @@ async function load() {
 
   const ids = [...new Set(games.flatMap(g => ["away","home"].map(s => g.teams[s].probablePitcher && g.teams[s].probablePitcher.id).filter(Boolean)))];
   const [pitcherStats] = await Promise.all([LyDiaPitcherCore.loadPitchersForDate(ids, date), loadBullpen(date)]);
-  const cards = games.map(g => renderGame(g, pitcherStats));
+  const cards = games.map(g => renderGame(g, pitcherStats, games, date));
   statusEl.innerHTML = "";
   gamesEl.innerHTML = cards.join("");
 
@@ -415,7 +417,7 @@ function renderPitcherBox(label, team, p) {
   </div>`;
 }
 
-function renderGame(g, stats) {
+function renderGame(g, stats, allGames, date) {
   const awayTeam = g.teams.away.team.name;
   const homeTeam = g.teams.home.team.name;
   const d = matchupData(g, stats);
@@ -424,8 +426,8 @@ function renderGame(g, stats) {
   const read = buildPitcherRead(d, awayTeam, homeTeam);
 
   return `<div class="card match-card" id="game-${g.gamePk}" style="scroll-margin-top:70px">
-    <div class="match-head">
-      <span class="matchup">${escapeHtml(awayTeam)} @ ${escapeHtml(homeTeam)}</span>
+    <div class="match-head matchup-title-center">
+      <a class="matchup" href="${permanentMatchupUrl(g,allGames,date)}">${escapeHtml(awayTeam)} @ ${escapeHtml(homeTeam)}</a>
       <span class="dim small">${time}</span>
     </div>
     <div class="edge-line">

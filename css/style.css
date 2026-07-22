@@ -144,6 +144,21 @@ button.secondary, .btn.secondary { background: rgba(255,255,255,.88); color: var
 .game-card { margin-bottom: 18px; }
 .game-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
 .game-head .matchup { font-weight: 750; font-size: 1.05rem; }
+
+/* Shared presentation rhythm for analytical pages. Keep long-form body copy
+   readable, while centering page introductions, controls, and matchup titles. */
+main.container > .eyebrow,
+main.container > h1,
+main.container > h1 + p { text-align:center; }
+main.container > .controls { justify-content:center; }
+.matchup-title-center { text-align:center; }
+.matchup-title-center .matchup { color:var(--text); text-decoration:none; }
+.matchup-title-center .matchup:hover { color:var(--accent2); text-decoration:underline; }
+.game-head.matchup-title-center {
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:baseline;
+}
+.game-head.matchup-title-center .matchup { grid-column:2; text-align:center; }
+.game-head.matchup-title-center .small { grid-column:3; justify-self:end; text-align:right; }
 .best-odds { background: rgba(217,70,143,.14); border-radius: 4px; }
 .notice {
   background: rgba(255,255,255,.82); border: 1px solid var(--border); border-left: 4px solid var(--accent2);

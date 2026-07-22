@@ -38,7 +38,7 @@
 .kpi .label { font-size:.76rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; }
 .kpi .value { font-size:1.35rem; font-weight:800; }
 .team-card { margin-bottom:14px; }
-.team-head { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; margin-bottom:8px; }
+.team-head { display:flex; justify-content:center; gap:8px; align-items:baseline; margin-bottom:8px; text-align:center; }
 .team-head .matchup { font-weight:800; font-size:1.05rem; }
 .metric-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:10px; margin-top:10px; }
 .metric-box { background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:12px; }
@@ -273,6 +273,14 @@ function renderTeams() {
   const solo = [];
   for (const t of rows) { if (t.game_pk) (byGame[t.game_pk] = byGame[t.game_pk] || []).push(t); else solo.push(t); }
   const cards = [];
+  const matchupGames = Object.entries(byGame).map(([gamePk, pair]) => {
+    const away = pair.find(team => team.side === "away");
+    const home = pair.find(team => team.side === "home");
+    return away && home ? {
+      game_pk: gamePk, away: away.team, home: home.team,
+      game_time_iso: away.game_time_iso || home.game_time_iso
+    } : null;
+  }).filter(Boolean);
   for (const pk of Object.keys(byGame)) {
     const pair = byGame[pk];
     if (pair.length === 2) {
@@ -284,7 +292,7 @@ function renderTeams() {
         : gap >= 10 ? `${esc(lowerRisk)}'s pen carries somewhat less risk (gap ${(gap/10).toFixed(1)}).`
         : `No meaningful bullpen edge either way (gap ${(gap/10).toFixed(1)}).`;
       cards.push(`<div class="card team-card">
-        <div class="team-head"><span class="matchup">${esc(x.game || x.team + " vs " + y.team)}</span></div>
+        <div class="team-head matchup-title-center"><a class="matchup" href="${permanentMatchupUrl({game_pk:pk,away:x.team,home:y.team,game_time_iso:x.game_time_iso},matchupGames,datePick.value)}">${esc(x.game || x.team + " vs " + y.team)}</a></div>
         <div class="pen-grid">${penBox(x)}${penBox(y)}</div>
         <div class="read">${verdict}</div>
       </div>`);

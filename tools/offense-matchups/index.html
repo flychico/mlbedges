@@ -38,8 +38,10 @@
 .wpill { border:1px solid var(--border); background:var(--bg-card); border-radius:20px; padding:6px 14px; font-size:.83rem; font-weight:700; cursor:pointer; color:var(--text-dim); }
 .wpill.on { background:var(--accent2); border-color:var(--accent2); color:#fff; }
 .match-card { margin-bottom:14px; }
-.match-head { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; align-items:baseline; margin-bottom:10px; }
+.match-head { display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:baseline; margin-bottom:10px; }
 .match-head .matchup { font-weight:800; font-size:1.05rem; }
+.match-head .matchup { grid-column:2; text-align:center; }
+.match-head .small { grid-column:3; justify-self:end; }
 .team-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; }
 .team-box { background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:12px; overflow:hidden; }
 .team-box h3 { margin:0 0 2px; }
@@ -175,7 +177,7 @@ async function load() {
     }
 
     statusEl.innerHTML = "";
-    gamesEl.innerHTML = games.map(g => renderGame(g, windowBy, hands)).join("");
+    gamesEl.innerHTML = games.map(g => renderGame(g, windowBy, hands, games, date)).join("");
     const jump = document.getElementById("game-jump");
     jump.innerHTML = '<option value="">All games…</option>' + games.map(g =>
       `<option value="${g.gamePk}">${escapeHtml(g.teams.away.team.name)} @ ${escapeHtml(g.teams.home.team.name)}</option>`).join("");
@@ -329,7 +331,7 @@ function buildRead(aT, hT, aWin, hWin, aSn, hSn, aOpp, hOpp) {
   return parts.join(" ");
 }
 
-function renderGame(g, windowBy, hands) {
+function renderGame(g, windowBy, hands, allGames, date) {
   const a = g.teams.away, h = g.teams.home;
   const aWin = windowBy[a.team.id], hWin = windowBy[h.team.id];
   const aSn = seasonBy[a.team.id], hSn = seasonBy[h.team.id];
@@ -340,8 +342,8 @@ function renderGame(g, windowBy, hands) {
   const read = buildRead(a.team, h.team, aWin, hWin, aSn, hSn, aOpp, hOpp);
 
   return `<div class="card match-card" id="og-${g.gamePk}" style="scroll-margin-top:70px">
-    <div class="match-head">
-      <span class="matchup">${escapeHtml(a.team.name)} @ ${escapeHtml(h.team.name)}</span>
+    <div class="match-head matchup-title-center">
+      <a class="matchup" href="${permanentMatchupUrl(g,allGames,date)}">${escapeHtml(a.team.name)} @ ${escapeHtml(h.team.name)}</a>
       <span class="dim small">${time}</span>
     </div>
     <div class="team-grid">
