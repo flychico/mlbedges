@@ -235,9 +235,11 @@
   <p class="data-note">Official LyDia picks remain moneyline-only. Totals are shown as market information and LyDia projections, not official picks. Pregame odds can remain visible during live and completed games for context.</p>
 </main>
 
-<footer id="footer"></footer><script src="/js/app.js"></script>
+<footer id="footer"></footer>
+<script src="/js/app.js"></script>
 <script>
-renderNav("/dashboard/"); renderFooter();
+renderNav("/dashboard/");
+renderFooter();
 
 const TEAM_SHORT = {
   "Arizona Diamondbacks":"Diamondbacks","Athletics":"Athletics","Atlanta Braves":"Braves",
@@ -625,8 +627,14 @@ function modelProbabilities(brief, awayName, homeName) {
 }
 
 function inferPublishedPrice(brief, teamName) {
-  if (!brief || !brief.market || brief.pick_team !== teamName || !Number.isFinite(brief.market.best_price)) return null;
-  return brief.market.best_price;
+  if (!brief || !brief.market) return null;
+  const mk = brief.market;
+  // Prefer the per-side published price so BOTH teams show, not only the pick.
+  if (brief.away_team === teamName && Number.isFinite(mk.away_price)) return mk.away_price;
+  if (brief.home_team === teamName && Number.isFinite(mk.home_price)) return mk.home_price;
+  // Legacy briefs stored only the picked side's price.
+  if (brief.pick_team === teamName && Number.isFinite(mk.best_price)) return mk.best_price;
+  return null;
 }
 
 function fallbackMatchupUrl(game, date) {

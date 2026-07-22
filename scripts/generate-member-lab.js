@@ -603,6 +603,12 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense) {
     market: {
       no_vig_probability: marketProb === null ? null : round(marketProb, 4),
       best_price: bestPrice,
+      // Both sides, so the scoreboard shows a price for each team, not only the
+      // picked side. Computed already in the odds map; previously discarded.
+      away_price: m ? m.bestAway : null,
+      home_price: m ? m.bestHome : null,
+      away_no_vig: m ? round(m.pAway, 4) : null,
+      home_no_vig: m ? round(m.pHome, 4) : null,
       books: m ? m.books : 0
     }
   };
