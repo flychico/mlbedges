@@ -1,6 +1,6 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T06:11:40.930Z",
+ "generated_at": "2026-07-22T14:46:20.433Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.52,
  "probables": {
@@ -124,11 +124,11 @@
    "park_factor": 1.03,
    "away_sp": "Griffin Jax",
    "home_sp": "Braydon Fisher",
-   "line": 8.5,
-   "over": -105,
-   "under": -106,
-   "books": 7,
-   "lab": 45
+   "line": 8,
+   "over": -103,
+   "under": -105,
+   "books": 9,
+   "lab": 60
   },
   "822873": {
    "game": "Chicago White Sox @ Texas Rangers",
@@ -181,8 +181,8 @@
    "away_sp": "Anthony Kay",
    "home_sp": "Tyler Alexander",
    "line": 8.5,
-   "over": -114,
-   "under": 103,
+   "over": -113,
+   "under": 101,
    "books": 9,
    "lab": 59
   },
@@ -237,7 +237,7 @@
    "away_sp": "Brady Singer",
    "home_sp": "Emerson Hancock",
    "line": 8,
-   "over": -110,
+   "over": -107,
    "under": -104,
    "books": 9,
    "lab": 43
@@ -294,7 +294,7 @@
    "home_sp": "Aaron Nola",
    "line": 9.5,
    "over": -102,
-   "under": -113,
+   "under": -110,
    "books": 9,
    "lab": 82
   },
@@ -349,9 +349,9 @@
    "away_sp": "Mitch Keller",
    "home_sp": "Gerrit Cole",
    "line": 8.5,
-   "over": -113,
-   "under": 105,
-   "books": 8,
+   "over": -118,
+   "under": 103,
+   "books": 9,
    "lab": 90
   },
   "823519": {
@@ -405,9 +405,9 @@
    "away_sp": "Bubba Chandler",
    "home_sp": "Max Fried",
    "line": 8.5,
-   "over": -113,
-   "under": 105,
-   "books": 8,
+   "over": -118,
+   "under": 103,
+   "books": 9,
    "lab": 74
   },
   "823761": {
@@ -461,8 +461,8 @@
    "away_sp": "Christian Scott",
    "home_sp": "Logan Henderson",
    "line": 7.5,
-   "over": -118,
-   "under": 103,
+   "over": 103,
+   "under": -115,
    "books": 9,
    "lab": 54
   },
@@ -516,11 +516,11 @@
    "park_factor": 1,
    "away_sp": "Hunter Dobbins",
    "home_sp": "Reid Detmers",
-   "line": 9,
+   "line": 8.5,
    "over": -113,
-   "under": -102,
+   "under": 100,
    "books": 9,
-   "lab": 71
+   "lab": 63
   },
   "824083": {
    "game": "San Francisco Giants @ Kansas City Royals",
@@ -572,11 +572,11 @@
    "park_factor": 0.96,
    "away_sp": "Landen Roupp",
    "home_sp": "Seth Lugo",
-   "line": 9,
-   "over": -110,
-   "under": -102,
+   "line": 8.5,
+   "over": -108,
+   "under": 100,
    "books": 9,
-   "lab": 81
+   "lab": 73
   },
   "824166": {
    "game": "Miami Marlins @ Houston Astros",
@@ -686,7 +686,7 @@
    "home_sp": "Gabriel Hughes",
    "line": 11.5,
    "over": 100,
-   "under": -113,
+   "under": -115,
    "books": 9,
    "lab": 38
   },
@@ -741,7 +741,7 @@
    "away_sp": "Bailey Ober",
    "home_sp": "Slade Cecconi",
    "line": 8,
-   "over": -104,
+   "over": -102,
    "under": -110,
    "books": 9,
    "lab": 56
@@ -798,7 +798,7 @@
    "home_sp": "Colin Rea",
    "line": 8,
    "over": -102,
-   "under": -110,
+   "under": -105,
    "books": 9,
    "lab": 86
   },
@@ -852,11 +852,11 @@
    "park_factor": 1.06,
    "away_sp": "Kyle Bradish",
    "home_sp": "TBD",
-   "line": 9,
-   "over": 100,
-   "under": -112,
-   "books": 5,
-   "lab": 57
+   "line": 8.5,
+   "over": -118,
+   "under": 103,
+   "books": 9,
+   "lab": 65
   },
   "824735": {
    "game": "Baltimore Orioles @ Boston Red Sox",
@@ -908,11 +908,11 @@
    "park_factor": 1.06,
    "away_sp": "Dean Kremer",
    "home_sp": "Jake Bennett",
-   "line": 9,
-   "over": 100,
-   "under": -112,
-   "books": 5,
-   "lab": 63
+   "line": 8.5,
+   "over": -118,
+   "under": 103,
+   "books": 9,
+   "lab": 71
   },
   "824896": {
    "game": "San Diego Padres @ Atlanta Braves",
@@ -965,9 +965,9 @@
    "away_sp": "Michael King",
    "home_sp": "Martín Pérez",
    "line": 8.5,
-   "over": -118,
-   "under": 105,
-   "books": 8,
+   "over": -114,
+   "under": 103,
+   "books": 9,
    "lab": 98
   },
   "825055": {
@@ -1021,7 +1021,7 @@
    "away_sp": "Gage Jump",
    "home_sp": "Merrill Kelly",
    "line": 9,
-   "over": -110,
+   "over": -105,
    "under": -102,
    "books": 9,
    "lab": 71
