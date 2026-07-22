@@ -889,8 +889,37 @@ function writeOrReusePublishedPicks(candidate, scheduledGameCount) {
   if (fs.existsSync(path.join(ROOT, file))) {
     const existing = readJson(file);
     if (!existing || !Array.isArray(existing.picks)) throw new Error(`${file} exists but does not contain a picks array.`);
+
+    // A zero-pick file is a provisional snapshot, not an immutable official-pick
+    // lock. Morning runs can happen before the market and all model inputs are
+    // ready. If a later PREVIEW-only run produces official picks, promote that
+    // candidate before first pitch. Once any game starts, only a manual,
+    // evidence-backed repair may change the dated file.
+    if (existing.picks.length === 0 && candidate.picks.length > 0) {
+      const now = Date.now();
+      const allCandidatesPregame = candidate.picks.every(p => {
+        const firstPitch = Date.parse(p.time);
+        return Number.isFinite(firstPitch) && now < firstPitch;
+      });
+      if (!allCandidatesPregame) {
+        throw new Error(
+          `${file} is an empty provisional snapshot, but a later run found ${candidate.picks.length} official pick(s) after first pitch. ` +
+          "Refusing a retroactive lock. Restore the documented posted pick manually."
+        );
+      }
+      writeJson(file, candidate);
+      console.log(`Promoted ${candidate.picks.length} official pick(s) from the provisional zero-pick snapshot for ${DATE}.`);
+      if (DATE === etToday()) {
+        writeJson("data/published-picks/today.json", candidate);
+        injectInlineData("results/index.html", "results-inline-picks",
+          { date: candidate.date, picks: candidate.picks },
+          '<div class="loading">Loading live pick results...</div>');
+      }
+      return candidate;
+    }
+
     if (existing.picks.length === 0 && scheduledGameCount > 0) {
-      console.log(`${file} has zero official picks. This can be valid under the strict probability gate. Reusing the locked file.`);
+      console.log(`${file} remains a provisional zero-pick snapshot. It may be promoted before first pitch if a later run produces an official pick.`);
     } else {
       console.log(`Published picks already exist for ${DATE}; reusing ${file}.`);
     }
@@ -968,3 +997,4 @@ function movement(posted, later) {
   if (Math.abs(postedDec - laterDec) < 0.015) return "stable";
   return laterDec < postedDec ? "toward_lydia" : "away_from_lydia";
 }
+
