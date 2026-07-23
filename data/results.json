@@ -3102,8 +3102,8 @@
             "opponent_bullpen_score": 90,
             "posted_price": -108,
             "current_price": -113,
-            "closing_price": null,
-            "clv_result": "not_tracked",
+            "closing_price": 205,
+            "clv_result": "lost_to_close",
             "result": "NG",
             "lesson_tag": "not_graded"
           }
