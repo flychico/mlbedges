@@ -503,6 +503,8 @@ function renderGameCard(item) {
 
   const pitcherAway = away.probablePitcher ? away.probablePitcher.fullName : (total && total.away_sp) || "TBD";
   const pitcherHome = home.probablePitcher ? home.probablePitcher.fullName : (total && total.home_sp) || "TBD";
+  const pitcherAwayId = away.probablePitcher ? away.probablePitcher.id : null;
+  const pitcherHomeId = home.probablePitcher ? home.probablePitcher.id : null;
 
   const modelFavoriteAway = model && model.away >= model.home;
   const modelFavoriteName = model
@@ -530,7 +532,7 @@ function renderGameCard(item) {
       </div>`
     : "";
 
-  return `<a class="score-card ${isLive ? "is-live" : ""}" href="${cardTarget}" style="--away-color:${awayColor};--home-color:${homeColor}" aria-label="${escapeHtml(away.team.name)} at ${escapeHtml(home.team.name)} matchup analysis">
+  return `<div class="score-card ${isLive ? "is-live" : ""}" style="--away-color:${awayColor};--home-color:${homeColor}">
     <div class="card-body">
       <div class="card-top">
         <div class="game-meta">
@@ -562,10 +564,10 @@ function renderGameCard(item) {
         </div>
       </div>
 
-      <div class="pitcher-line">⚾ <span>${escapeHtml(pitcherAway)} vs ${escapeHtml(pitcherHome)}</span></div>
-      <div class="card-cta"><span>${directPage ? (isFinal ? "View prediction and final result" : "View prediction, picks and odds") : "Open matchup archive"}</span><span>→</span></div>
+      <div class="pitcher-line">⚾ <span>${pitcherOfficialLink(pitcherAway, pitcherAwayId)} vs ${pitcherOfficialLink(pitcherHome, pitcherHomeId)}</span></div>
+      <a class="card-cta" href="${cardTarget}" aria-label="${escapeHtml(away.team.name)} at ${escapeHtml(home.team.name)} matchup analysis"><span>${directPage ? (isFinal ? "View prediction and final result" : "View prediction, picks and odds") : "Open matchup archive"}</span><span>→</span></a>
     </div>
-  </a>`;
+  </div>`;
 }
 
 function teamRow(team, modelProbability, price, hasScore, winner, side) {
@@ -653,6 +655,12 @@ function fallbackMatchupUrl(game, date, scheduleGames) {
 
 function slugify(value) {
   return String(value).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+}
+function pitcherOfficialLink(name, id) {
+  const label = escapeHtml(name || "TBD");
+  return id
+    ? `<a href="https://www.mlb.com/player/${slugify(name)}-${id}" target="_blank" rel="noopener">${label}</a>`
+    : label;
 }
 
 function formatTime(value) {

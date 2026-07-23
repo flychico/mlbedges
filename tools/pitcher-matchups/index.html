@@ -395,11 +395,14 @@ function buildPitcherRead(d, awayTeam, homeTeam) {
 }
 
 function renderPitcherBox(label, team, p) {
+  const pitcherName = p.id
+    ? `<a href="https://www.mlb.com/player/${String(p.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-${p.id}" target="_blank" rel="noopener">${escapeHtml(p.name || "TBD")}</a>`
+    : escapeHtml(p.name || "TBD");
   return `<div class="pitcher-box">
     <h3>${escapeHtml(team)}</h3>
     <div class="dim small">${escapeHtml(label)} starter</div>
     <div style="display:flex;justify-content:space-between;gap:10px;align-items:end">
-      <div><b>${escapeHtml(p.name || "TBD")}</b><div class="small dim">${escapeHtml(p.grade || "Unknown")}</div></div>
+      <div><b>${pitcherName}</b><div class="small dim">${escapeHtml(p.grade || "Unknown")}</div></div>
       <div><div class="score-label">LyDia Pitcher Score</div><div class="score" style="text-align:right">${(p.score/10).toFixed(1)}<span style="font-size:.85rem;color:var(--text-dim)">/10</span></div></div>
     </div>
     <div class="stat-row"><span>ERA</span><span><b>${fmt(p.era)}</b>${chip(tEra(p.era))}</span></div>
@@ -469,4 +472,3 @@ function bullpenStrip(awayTeam, homeTeam) {
 </script>
 </body>
 </html>
-

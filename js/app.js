@@ -68,8 +68,7 @@ function renderNav(active) {
   const links = [
     ["/", "Home"],
     ["/dashboard/", "Scoreboard"],
-    ["/picks/", "Picks"],
-    ["/previews/", "Previews"],
+    ["/previews/", "Picks"],
     ["/results/", "Results"],
     ["/tools/", "Lab"],
     ["/stats/", "Stats"],

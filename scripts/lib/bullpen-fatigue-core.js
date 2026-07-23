@@ -65,34 +65,29 @@ async function getGamesForDate(date, fetchJson) {
 
 function createTeamState(todayGames) {
   const teams = {};
+  const appearances = [];
   for (const g of todayGames || []) {
     const away = g.teams && g.teams.away && g.teams.away.team;
     const home = g.teams && g.teams.home && g.teams.home.team;
     if (!away || !home) continue;
-    teams[away.id] = {
+    teams[away.id] = teams[away.id] || {
       team_id: away.id,
       team: away.name,
-      side: "away",
-      opponent: home.name,
-      game: `${away.name} @ ${home.name}`,
-      game_pk: g.gamePk,
-      game_time_iso: g.gameDate,
       games: [],
       pitcherDates: {}
     };
-    teams[home.id] = {
+    teams[home.id] = teams[home.id] || {
       team_id: home.id,
       team: home.name,
-      side: "home",
-      opponent: away.name,
-      game: `${away.name} @ ${home.name}`,
-      game_pk: g.gamePk,
-      game_time_iso: g.gameDate,
       games: [],
       pitcherDates: {}
     };
+    appearances.push(
+      { team_id: away.id, side: "away", opponent: home.name, game: `${away.name} @ ${home.name}`, game_pk: g.gamePk, game_time_iso: g.gameDate },
+      { team_id: home.id, side: "home", opponent: away.name, game: `${away.name} @ ${home.name}`, game_pk: g.gamePk, game_time_iso: g.gameDate }
+    );
   }
-  return teams;
+  return { teams, appearances };
 }
 
 function processBoxSide(box, side, teamId, date, teams, seq) {
@@ -433,7 +428,8 @@ async function buildBullpenSource({ date, todayGames, fetchJson, generatedAt }) 
   if (!date) throw new Error("buildBullpenSource requires a date");
   if (typeof fetchJson !== "function") throw new Error("buildBullpenSource requires fetchJson");
 
-  const teams = createTeamState(todayGames || []);
+  const state = createTeamState(todayGames || []);
+  const teams = state.teams;
   const lookupWarnings = [];
   // A postponed/suspended game's ORIGINAL listing can still report
   // abstractGameState "Final" even though detailedState says it never
@@ -476,10 +472,20 @@ async function buildBullpenSource({ date, todayGames, fetchJson, generatedAt }) 
     }
   }
 
-  const teamsRows = Object.values(teams).map(t => scoreTeam(t, date)).sort((a, b) => b.score - a.score || String(a.team).localeCompare(String(b.team)));
-  const highRisk = teamsRows.filter(t => t.label === "High risk").length;
-  const tired = teamsRows.filter(t => t.label === "Tired").length;
-  const fresh = teamsRows.filter(t => t.label === "Fresh").length;
+  const scoredById = new Map(Object.values(teams).map(t => {
+    const scored = scoreTeam(t, date);
+    return [String(t.team_id), scored];
+  }));
+  // Keep one row per team per scheduled game. This matters for doubleheaders:
+  // the risk calculation is team-level, but both games must remain visible.
+  const teamsRows = state.appearances.map(appearance => ({
+    ...scoredById.get(String(appearance.team_id)),
+    ...appearance
+  })).sort((a, b) => new Date(a.game_time_iso) - new Date(b.game_time_iso) || String(a.side).localeCompare(String(b.side)));
+  const uniqueRows = [...scoredById.values()];
+  const highRisk = uniqueRows.filter(t => t.label === "High risk").length;
+  const tired = uniqueRows.filter(t => t.label === "Tired").length;
+  const fresh = uniqueRows.filter(t => t.label === "Fresh").length;
 
   return {
     date,
@@ -491,11 +497,11 @@ async function buildBullpenSource({ date, todayGames, fetchJson, generatedAt }) 
     formula: "Fatigue = 45 + (recency-weighted relief innings above 3/game x 4.2) + (recency-weighted back-to-back arms x 8). Half-life 2 days, so an idle or rained-out day lowers fatigue. Runs allowed live in the efficiency score.",
     lookback_days: LOOKBACK_DAYS,
     summary: {
-      teams_tracked: teamsRows.length,
+      teams_tracked: uniqueRows.length,
       high_risk: highRisk,
       tired,
       fresh,
-      normal: teamsRows.length - highRisk - tired - fresh
+      normal: uniqueRows.length - highRisk - tired - fresh
     },
     warnings: lookupWarnings,
     teams: teamsRows,

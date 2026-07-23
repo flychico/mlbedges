@@ -390,6 +390,13 @@ function slugify(value) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 }
+function mlbPitcherLink(pitcher) {
+  const p = pitcher || {};
+  const label = esc(p.name || "TBD");
+  return p.id
+    ? `<a href="https://www.mlb.com/player/${slugify(p.name)}-${p.id}" target="_blank" rel="noopener">${label}</a>`
+    : label;
+}
 
 function shortTeam(team) {
   return TEAM_SHORT[team] || team;
@@ -1076,7 +1083,7 @@ section.card>h2{text-align:center}
         <tr><th>Date</th><td>${esc(titleDate)}</td></tr>
         <tr><th>First pitch</th><td>${esc(game.time ? `${game.time} ET` : prettyDateTime(gameTime) || "Not confirmed")}</td></tr>
         <tr><th>Venue</th><td>${esc(venue.name)}</td></tr>
-        <tr><th>Starting pitchers</th><td>${esc((pitcher.away && pitcher.away.name) || "TBD")} vs ${esc((pitcher.home && pitcher.home.name) || "TBD")}</td></tr>
+        <tr><th>Starting pitchers</th><td>${mlbPitcherLink(pitcher.away)} vs ${mlbPitcherLink(pitcher.home)}</td></tr>
         <tr><th>Weather</th><td>${esc(weatherText(weather, venue))}</td></tr>
       </tbody>
     </table>
@@ -1129,14 +1136,14 @@ section.card>h2{text-align:center}
       <input type="email" name="email" required placeholder="you@example.com" style="flex:1;min-width:200px">
       <button type="submit" class="secondary">Get the free card</button>
     </form>
-    <p style="margin-top:10px"><a class="btn blue" href="/picks/">Today's picks</a> <a class="btn secondary" href="/membership/">Membership</a></p>
+    <p style="margin-top:10px"><a class="btn blue" href="/previews/">Today's picks</a> <a class="btn secondary" href="/membership/">Membership</a></p>
   </div>
 
   <p class="small dim" style="margin-top:18px">Model outputs are not guarantees. LyDia provides analysis and education only. Every official pick remains visible on the <a href="/results/">Results page</a>. 21+. If you or someone you know has a gambling problem, call 1-800-GAMBLER.</p>
 </main>
 <footer id="footer"></footer>
 <script src="/js/app.js"></script>
-<script>renderNav("/picks/"); renderFooter();</script>
+<script>renderNav("/previews/"); renderFooter();</script>
 </body>
 </html>`;
 }
@@ -1163,7 +1170,7 @@ function renderPitcherCard(game, pitcherGame) {
   if (!validPitcher(a.name) && !validPitcher(h.name)) return "";
   const stat = (v, fmt) => typeof v === "number" ? fmt(v) : "-";
   const tile = (team, x) => `<div class="pcard">
-    <div class="pcard-top"><b>${esc(x.name || "TBD")}</b><span class="dim small">${esc(shortTeam(team))}${x.hand ? " · " + esc(x.hand) + "HP" : ""}</span></div>
+    <div class="pcard-top"><b>${mlbPitcherLink(x)}</b><span class="dim small">${esc(shortTeam(team))}${x.hand ? " · " + esc(x.hand) + "HP" : ""}</span></div>
     <div class="pcard-stats">
       <div><span class="pc-num">${esc(stat(x.era, v => v.toFixed(2)))}</span><span class="pc-lab">ERA</span></div>
       <div><span class="pc-num">${esc(stat(x.whip, v => v.toFixed(2)))}</span><span class="pc-lab">WHIP</span></div>
@@ -1244,7 +1251,7 @@ function renderStrikeoutProjections(game, pitcherGame, kprops) {
     const marketLine = hasLine
       ? `Market ${esc(oneDecimal(prop.line))}K &middot; O ${esc(odds(prop.over))} / U ${esc(odds(prop.under))} &middot; ${esc(prop.books)} book${prop.books === 1 ? "" : "s"}`
       : `No strikeout line posted when this page was generated`;
-    return `<div class="metric"><div class="label">${esc(entry.pitcher.name)} strikeouts</div><div class="value">${esc(oneDecimal(prop.projection))} <span class="dim small">projected</span></div>${leanHtml}<div class="small dim">${marketLine}</div></div>`;
+    return `<div class="metric"><div class="label">${mlbPitcherLink(entry.pitcher)} strikeouts</div><div class="value">${esc(oneDecimal(prop.projection))} <span class="dim small">projected</span></div>${leanHtml}<div class="small dim">${marketLine}</div></div>`;
   }).join("");
   return `<h3 style="margin:16px 0 4px">Strikeout projections <a class="tool-link" style="font-size:.78rem" href="/tools/strikeout-projections/">Full K board &rarr;</a></h3>
   <div class="metric-grid">${cells}</div>

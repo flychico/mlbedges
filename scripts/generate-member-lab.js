@@ -73,8 +73,8 @@ async function main() {
   const pitchers = await fetchPitchers(openGames);
   const offense = await fetchOffenseForm(DATE);
   const oddsMap = buildOddsMap(oddsEvents);
-  const bullpenSource = openGames.length
-    ? await buildBullpenSource({ date: DATE, todayGames: openGames, fetchJson, generatedAt })
+  const bullpenSource = allGames.length
+    ? await buildBullpenSource({ date: DATE, todayGames: allGames, fetchJson, generatedAt })
     : readJsonSafe(`data/bullpen/${DATE}.json`);
   if (!bullpenSource) {
     throw new Error(`Closed slate guard: no retained bullpen source exists for ${DATE}. No daily files were overwritten.`);
@@ -145,11 +145,8 @@ async function main() {
     // background to catch any later-in-the-day changes. Public-safe subset
     // only (renderBrief() only ever reads date/generated_at/summary/games).
     injectBriefInline({ date: brief.date, generated_at: brief.generated_at, summary: brief.summary, games: brief.games });
-    // Bake the same public-safe card into the /picks/ hub. That page is the
-    // evergreen SEO target, so its initial HTML must contain the real card and
-    // the real record rather than a loading placeholder.
-    injectPicksInline({ date: brief.date, generated_at: brief.generated_at, summary: brief.summary, games: brief.games });
-    injectPicksRecord();
+    // The old /picks/ hub is now a redirect to the unified /previews/ Picks
+    // experience. Do not inject data into that retired duplicate page.
   }
 
   if (args["defer-publish"] === "true") {
@@ -632,6 +629,8 @@ function modelGame(g, strength, pitchers, oddsMap, bullpen, offense, runProjecti
       home_score: homeScore.score,
       away_pitcher: awayPitcher ? awayPitcher.fullName : "TBD",
       home_pitcher: homePitcher ? homePitcher.fullName : "TBD",
+      away_pitcher_id: awayPitcher ? awayPitcher.id : null,
+      home_pitcher_id: homePitcher ? homePitcher.id : null,
       away_era: awayStats && Number.isFinite(awayStats.era) ? awayStats.era : null,
       home_era: homeStats && Number.isFinite(homeStats.era) ? homeStats.era : null,
       away_whip: awayStats && Number.isFinite(awayStats.whip) ? awayStats.whip : null,

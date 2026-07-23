@@ -151,12 +151,13 @@ let LEAGUE_K = 0.223;
 function kBox(pitcher, oppTeam, oppTeamId, kv, pid){
   const p=pitcher;
   if(!p) return `<div class="k-box"><b>TBD starter</b><div class="dim small">No projection until the probable posts.</div></div>`;
+  const pitcherName = `<a href="https://www.mlb.com/player/${String(p.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-${p.id || pid}" target="_blank" rel="noopener">${escapeHtml(p.name)}</a>`;
   const pr=project(p, oppTeamId, kv);
-  if(!pr) return `<div class="k-box"><b>${escapeHtml(p.name)}</b><div class="dim small">Not enough innings this season for a reliable projection.</div></div>`;
+  if(!pr) return `<div class="k-box"><b>${pitcherName}</b><div class="dim small">Not enough innings this season for a reliable projection.</div></div>`;
   PROJ[pid]=pr;
   const oppTier = pr.oppK===null ? "" : pr.oppK>=0.245 ? ' <span class="tier pos-text">strikes out a lot — helps the over</span>' : pr.oppK>=0.225 ? ' <span class="tier pos-text">above average strikeouts</span>' : pr.oppK<=0.195 ? ' <span class="tier neg-text">hard to strike out — hurts the over</span>' : ' <span class="tier">average strikeouts</span>';
   return `<div class="k-box">
-    <div style="display:flex;justify-content:space-between;align-items:baseline"><b>${escapeHtml(p.name)}</b><span class="dim small">${p.hand==="L"?"LHP":"RHP"}</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><b>${pitcherName}</b><span class="dim small">${p.hand==="L"?"LHP":"RHP"}</span></div>
     <div><span class="k-proj">${pr.k.toFixed(1)}</span> <span class="dim small">projected Ks${pr.lowSample ? ' · <b class="gold">small sample</b>' : ""}</span></div>
     <div class="k-row"><span>Pitching plan</span><b>${escapeHtml(pr.role.label)}</b></div>
     <div class="k-row"><span>K per batter (season)</span><b>${(pr.kbf*100).toFixed(1)}%</b></div>
@@ -197,4 +198,3 @@ function renderGame(g, ps, kv, leagueK, allGames, date){
 </script>
 </body>
 </html>
-

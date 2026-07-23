@@ -71,7 +71,7 @@
     <h1>Beat the market with a model that shows its work.</h1>
     <p class="lead">LyDia prices every MLB game against the market, tells you where the value is, and grades every pick in public — wins and losses alike. No hype, no hidden record.</p>
     <div class="hero-actions">
-      <a class="btn blue" href="/picks/">Today's picks</a>
+      <a class="btn blue" href="/previews/">Today's picks</a>
       <a class="btn secondary" href="/membership/">Become a member</a>
     </div>
     <div class="trust-row" id="trust-row">
@@ -81,7 +81,7 @@
 
   <div class="section-head">
     <h2>Today's best picks</h2>
-    <a class="dim small" href="/picks/">Full card &rarr;</a>
+    <a class="dim small" href="/previews/">Full card &rarr;</a>
   </div>
   <div id="featured" class="feat-grid">
     <div class="dim small">Loading today's card…</div>
@@ -178,7 +178,7 @@ async function loadJson(u){ try{ const r=await fetch(`${u}?v=${Date.now()}`,{cac
   const date=isoToday();
   let data = await loadJson(`/data/member-brief/${date}.json`);
   if(!data || !Array.isArray(data.games) || !data.games.length) data = await loadJson(`/data/member-brief/today.json`);
-  if(!data || !Array.isArray(data.games) || !data.games.length){ el.innerHTML=`<div class="dim small">No card published yet today. <a href="/picks/">See the latest card &rarr;</a></div>`; return; }
+  if(!data || !Array.isArray(data.games) || !data.games.length){ el.innerHTML=`<div class="dim small">No card published yet today. <a href="/previews/">See the latest card &rarr;</a></div>`; return; }
   const rank={official_pick:0,value_watch:1,watchlist:2,pass:3};
   const label={official_pick:"Official Pick",value_watch:"Value Watch",watchlist:"Watchlist",pass:"Pass"};
   const cls={official_pick:"pos",value_watch:"neutral",watchlist:"neutral",pass:"neutral"};

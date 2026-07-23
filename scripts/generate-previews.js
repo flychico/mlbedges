@@ -33,6 +33,15 @@ function prettyDateTime(iso) {
   return d.toLocaleString("en-US", { month:"short", day:"numeric", hour:"numeric", minute:"2-digit", timeZone:"America/New_York", timeZoneName:"short" });
 }
 function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c])); }
+function slug(s) { return String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""); }
+function mlbPitcherUrl(name, id) {
+  return id ? `https://www.mlb.com/player/${slug(name)}-${id}` : null;
+}
+function pitcherLink(name, id) {
+  const label = esc(name || "TBD");
+  const url = mlbPitcherUrl(name, id);
+  return url ? `<a class="pitcher-link" href="${url}" target="_blank" rel="noopener">${label}</a>` : label;
+}
 function pct(v, dp = 1) { return typeof v === "number" && Number.isFinite(v) ? `${(v * 100).toFixed(dp)}%` : "-"; }
 function edge(v) { return typeof v === "number" && Number.isFinite(v) ? `${v >= 0 ? "+" : ""}${pct(v)}` : "-"; }
 function labRating(v) { return LyDiaRead.labRating(v); }
@@ -120,8 +129,22 @@ async function main() {
   if (!Array.isArray(published.picks)) throw new Error(`Official pick file for ${DATE} does not contain a picks array.`);
   if (!brief.games.length) throw new Error(`Preview guard: ${DATE} has zero games in the member brief. Refusing to publish an empty public preview page.`);
 
+  // Use the canonical pitcher source for IDs so every displayed starter links
+  // to the official MLB player page, including briefs created before IDs were
+  // added directly to pitcher_edge.
+  const pitcherPath = path.join(ROOT, "data", "pitcher-matchups", `${DATE}.json`);
+  const pitcherGames = fs.existsSync(pitcherPath) ? (readJson(pitcherPath).games || {}) : {};
+  for (const game of brief.games) {
+    const canonical = pitcherGames[String(game.game_pk)] || pitcherGames[game.game_pk];
+    if (!canonical || !game.pitcher_edge) continue;
+    game.pitcher_edge.away_pitcher_id = game.pitcher_edge.away_pitcher_id || (canonical.away && canonical.away.id) || null;
+    game.pitcher_edge.home_pitcher_id = game.pitcher_edge.home_pitcher_id || (canonical.home && canonical.home.id) || null;
+  }
+
   fs.mkdirSync(path.join(ROOT, "previews"), { recursive: true });
-  fs.writeFileSync(path.join(ROOT, "previews", `${DATE}.html`), renderPreviewPage(brief, published), "utf8");
+  const page = renderPreviewPage(brief, published);
+  fs.writeFileSync(path.join(ROOT, "previews", `${DATE}.html`), page, "utf8");
+  fs.writeFileSync(path.join(ROOT, "previews", "index.html"), page, "utf8");
   updatePreviewArchive(DATE);
   updateSitemap();
   console.log(`Rendered previews/${DATE}.html from source data. Official picks: ${published.picks.length}.`);
@@ -142,19 +165,22 @@ function renderPreviewPage(brief, published) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MLB Game Previews and Lab Ratings ${esc(titleDate)} | LyDia</title>
-<meta name="description" content="LyDia MLB previews for ${esc(titleDate)} with bettor-friendly moneyline reasoning, model probability, pitcher matchup, bullpen workload, and market value.">
+<title>MLB Picks and Full-Card Analysis ${esc(titleDate)} | LyDia</title>
+<meta name="description" content="LyDia MLB picks for ${esc(titleDate)} with model probability, author attribution, pitcher matchup, bullpen workload, market value, and a documented reason for every decision.">
 <link rel="canonical" href="${SITE}/previews/${esc(DATE)}.html">
 <link rel="stylesheet" href="/css/style.css">
 <style>
-.pv{border:1px solid var(--border);border-radius:10px;background:var(--bg-card);padding:18px;margin:16px 0}.pv.featured{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}.pv h2{margin:0 0 4px;font-size:1.15rem}.pv .meta{color:var(--text-dim);font-size:.85rem;margin-bottom:8px}.featured-flag{display:inline-block;background:var(--accent);color:#fff;font-size:.75rem;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:8px}.status-badge{display:inline-block;color:#fff;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:20px;margin:4px 0 8px;background:var(--accent2)}.status-badge.official{background:var(--good)}.status-badge.pass{background:var(--text-dim)}.status-badge.watch{background:var(--accent2)}.field-grid{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:.88rem;margin:10px 0;padding:10px 0;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border)}.field-grid dt{color:var(--text-dim);margin:0}.field-grid dd{margin:0;font-weight:600}.why-block,.risk-block{font-size:.92rem;margin-top:12px;line-height:1.55}.why-block b,.risk-block b{display:block;margin-bottom:3px;color:var(--text)}
+.picks-hero{text-align:center;max-width:820px;margin:0 auto 22px}.picks-hero .subtitle{margin-left:auto;margin-right:auto}.pv{border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,var(--bg-card),var(--bg-elev));padding:22px;margin:18px auto;max-width:1040px;text-align:center;box-shadow:0 12px 30px rgba(23,25,46,.06)}.pv.featured{border-color:var(--accent);box-shadow:0 12px 34px rgba(109,94,252,.16)}.pv h2{margin:0 0 5px;font-size:1.25rem}.pv .meta{color:var(--text-dim);font-size:.88rem;margin-bottom:10px}.featured-flag{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;font-size:.75rem;font-weight:800;padding:4px 11px;border-radius:20px;margin-bottom:9px}.status-badge{display:inline-block;color:#fff;font-size:.75rem;font-weight:800;padding:4px 11px;border-radius:20px;margin:4px 0 10px;background:var(--accent2)}.status-badge.official{background:var(--good)}.status-badge.pass{background:var(--text-dim)}.status-badge.watch{background:var(--accent2)}.author-row{display:flex;align-items:center;justify-content:center;gap:9px;margin:7px auto 12px}.author-row img{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:center 24%;border:1px solid var(--border)}.author-row .byline{text-align:left;line-height:1.2}.pitcher-link{font-weight:750}.field-grid{display:grid;grid-template-columns:minmax(145px,.8fr) minmax(180px,1.2fr);gap:7px 16px;font-size:.9rem;margin:12px auto;padding:14px 0;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);max-width:760px;text-align:center}.field-grid dt{color:var(--text-dim);margin:0;font-weight:700}.field-grid dd{margin:0;font-weight:700}.why-block,.risk-block{font-size:.94rem;margin:14px auto 0;line-height:1.6;max-width:840px}.why-block b,.risk-block b{display:block;margin-bottom:3px;color:var(--text)}.archive-link{text-align:center;margin:10px 0 22px}@media(max-width:620px){.pv{padding:18px 14px}.field-grid{grid-template-columns:1fr}.field-grid dt{margin-top:5px}}
 </style>
 </head>
 <body>
 <nav id="nav"></nav>
 <main>
-<h1>MLB Game Previews | ${esc(titleDate)}</h1>
-<p class="subtitle">The daily card in bettor-friendly language: what LyDia likes, what it does not, and the actual reason behind each decision.</p>
+<div class="picks-hero">
+<p class="eyebrow">LyDia daily card</p>
+<h1>MLB Picks | ${esc(titleDate)}</h1>
+<p class="subtitle">One authoritative page for every official pick, research setup, and pass. Each decision includes the model probability, matchup evidence, risk, and author.</p>
+</div>
 <div class="kpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px">
   <div class="card"><div class="dim small">GAMES</div><div style="font-size:1.5rem;font-weight:800">${rows.length}</div></div>
   <div class="card"><div class="dim small">OFFICIAL PICKS</div><div style="font-size:1.5rem;font-weight:800">${official.length}</div></div>
@@ -163,6 +189,7 @@ function renderPreviewPage(brief, published) {
   <div class="card"><div class="dim small">PASSES</div><div style="font-size:1.5rem;font-weight:800">${passes.length}</div></div>
 </div>
 <p class="dim small">${updated ? `Updated ${esc(updated)}.` : "Updated by LyDia Daily Engine."} Official picks are published before grading.</p>
+<p class="archive-link"><a href="/previews/archive.html">View previous daily cards &rarr;</a></p>
 <div class="lead-box" style="margin-bottom:12px"><h3 style="margin:0 0 4px">Get tomorrow's MLB model card free</h3><p class="dim small" style="margin:0">One email, every morning. No payment required.</p><form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><p style="display:none"><input name="bot-field"></p><input type="hidden" name="form-name" value="newsletter"><input type="email" name="email" required placeholder="you@example.com" style="flex:1;min-width:200px"><button type="submit" class="secondary">Subscribe free</button></form></div>
 <div class="lead-box" style="border-color:var(--accent2)"><h3 style="margin:0 0 4px">Get the organized member view</h3><p class="dim small" style="margin:0">Members get official picks first, value watch setups second, and clear pass reasons for the rest of the card.</p><p style="margin-top:10px"><a class="btn blue" href="/membership/">Join LyDia | $30/mo</a> <a class="btn secondary" href="/member-brief/">Open Member Brief</a></p></div>
 ${cards}
@@ -181,7 +208,11 @@ function renderCard(g, featured) {
   const isPass = g.status === "pass";
   return `<div class="${featured ? "pv featured" : "pv"}" data-lab-score="${esc(g.lab_score ?? "")}">
   ${featured ? `<span class="featured-flag">Top Lab Rating</span>` : ""}<h2>${esc(g.game || "")}</h2>
-  <div class="meta">${esc(g.time || "")} ET · ${esc(pe.away_pitcher || "TBD")} vs ${esc(pe.home_pitcher || "TBD")}</div>
+  <div class="meta">${esc(g.time || "")} ET · ${pitcherLink(pe.away_pitcher, pe.away_pitcher_id)} vs ${pitcherLink(pe.home_pitcher, pe.home_pitcher_id)}</div>
+  <div class="author-row">
+    <img src="/img/lynold-mercado-headshot.jpg" alt="Lynold Mercado" width="38" height="38">
+    <div class="byline small"><strong><a href="/writers/lynold/">Lynold Mercado</a></strong><br><span class="dim">Founder and Model Developer</span></div>
+  </div>
   <span class="status-badge ${statusClass(g.status)}">${statusLabel(g.status)}</span>
   <dl class="field-grid">
     <dt>LyDia side</dt><dd>${esc(g.pick_team || "-")} Money Line</dd>
@@ -199,24 +230,22 @@ function renderCard(g, featured) {
 }
 
 function updatePreviewArchive(date) {
-  const file = path.join(ROOT, "previews", "index.html");
-  const link = `<a href="/previews/${date}.html">Game Previews | ${niceDate(date)}</a>`;
-  let links = [];
-  if (fs.existsSync(file)) {
-    const existing = fs.readFileSync(file, "utf8");
-    const matches = existing.match(/<a href="\/previews\/\d{4}-\d{2}-\d{2}\.html">[^<]+<\/a>/g) || [];
-    links = matches.filter(x => !x.includes(`/previews/${date}.html`));
-  }
-  links.unshift(link);
-  links = [...new Set(links)].slice(0, 60);
+  const file = path.join(ROOT, "previews", "archive.html");
+  const dates = fs.readdirSync(path.join(ROOT, "previews"))
+    .filter(name => /^\d{4}-\d{2}-\d{2}\.html$/.test(name))
+    .map(name => name.slice(0, 10))
+    .sort()
+    .reverse()
+    .slice(0, 60);
+  const links = dates.map(day => `<a href="/previews/${day}.html">MLB Picks | ${niceDate(day)}</a>`);
   fs.writeFileSync(file, `<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>MLB Game Previews archive | LyDia</title><meta name="description" content="Daily MLB game previews with bettor-friendly reasoning, model probability, pitcher matchup, bullpen workload, and market context."><link rel="stylesheet" href="/css/style.css"><style>.archive-list a{display:block;padding:8px 0;border-bottom:1px solid var(--border)}</style></head><body><nav id="nav"></nav><main><h1>Game Previews</h1><p class="subtitle">Daily MLB previews with the reason behind every official pick, value watch, watchlist, and pass.</p><div class="card archive-list">
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>MLB Picks archive | LyDia</title><meta name="description" content="LyDia's dated MLB picks and full-card analysis archive."><link rel="stylesheet" href="/css/style.css"><style>main{text-align:center}.archive-list{max-width:820px;margin:auto}.archive-list a{display:block;padding:10px 0;border-bottom:1px solid var(--border)}</style></head><body><nav id="nav"></nav><main><h1>MLB Picks Archive</h1><p class="subtitle">Previous daily cards with every official pick, research setup, and pass.</p><div class="card archive-list">
 ${links.join("\n")}
 </div></main><footer id="footer"></footer><script src="/js/app.js"></script><script>renderNav("/previews/"); renderFooter();</script></body></html>`, "utf8");
 }
 
 function updateSitemap() {
-  const staticPages = ["", "dashboard/", "picks/", "odds/", "tools/", "stats/", "recaps/", "articles/", "membership/", "results/", "previews/", "member-brief/",
+  const staticPages = ["", "dashboard/", "picks/", "odds/", "tools/", "stats/", "recaps/", "articles/", "membership/", "results/", "previews/", "previews/archive.html", "member-brief/",
     "mlb-betting-edge-explained/", "no-vig-odds-calculator-guide/", "how-to-find-value-in-mlb-moneylines/",
     "closing-line-value-mlb-betting/", "mlb-run-line-vs-moneyline/", "mlb-bullpen-fatigue-betting/",
     "mlb-park-factors-betting-guide/", "mlb-pitching-metrics-for-betting/", "how-to-bet-on-mlb/", "tools/offense-matchups/", "tools/pitcher-matchups/", "tools/bullpen-fatigue/", "tools/strikeout-projections/", "tools/totals-projections/"];

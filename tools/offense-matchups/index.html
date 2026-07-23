@@ -172,7 +172,7 @@ async function load() {
     if (pids.length) {
       try {
         const pd = await fetch(`https://statsapi.mlb.com/api/v1/people?personIds=${pids.join(",")}`).then(r => r.json());
-        for (const p of pd.people || []) hands[p.id] = { hand: (p.pitchHand || {}).code || null, name: p.fullName };
+        for (const p of pd.people || []) hands[p.id] = { id: p.id, hand: (p.pitchHand || {}).code || null, name: p.fullName };
       } catch(e) {}
     }
 
@@ -244,7 +244,11 @@ function teamBox(teamName, id, win, season, oppStarter) {
   if (oppStarter && oppStarter.hand) {
     const vs = oppStarter.hand === "L" ? sp.vl : sp.vr;
     const lg = oppStarter.hand === "L" ? "LHP" : "RHP";
-    handLine = `<div class="hand-row">vs ${lg} (season): <b>${f3(vs)}</b>${tierChip(opsTier(vs))} — faces ${oppStarter.hand === "L" ? "lefty" : "righty"} ${escapeHtml(oppStarter.name)}</div>`;
+    const pitcherSlug = String(oppStarter.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    const pitcherName = oppStarter.id
+      ? `<a href="https://www.mlb.com/player/${pitcherSlug}-${oppStarter.id}" target="_blank" rel="noopener">${escapeHtml(oppStarter.name)}</a>`
+      : escapeHtml(oppStarter.name);
+    handLine = `<div class="hand-row">vs ${lg} (season): <b>${f3(vs)}</b>${tierChip(opsTier(vs))} — faces ${oppStarter.hand === "L" ? "lefty" : "righty"} ${pitcherName}</div>`;
   } else if (oppStarter === null) {
     handLine = `<div class="hand-row dim">Opposing starter TBD — no handedness read yet</div>`;
   }
