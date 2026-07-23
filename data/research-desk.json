@@ -1,11 +1,37 @@
 {
   "date": "2026-07-23",
-  "generated_at": "2026-07-23T16:09:42.778Z",
+  "generated_at": "2026-07-23T16:39:18.928Z",
   "stale_reuse": false,
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
   "warnings": [],
   "items": [
+    {
+      "title": "Steve Makinen’s MLB Picks from Betting Splits and Systems for Thursday, July 23 - VSiN",
+      "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOYzRNS0J6R2JaVkc3YnZYS01uZjlZZWZneEZlT2dUQnF6dnBlNGFaZFdhbWxjZmNJMjBhQnk5Z2QxRXhJeE80VFdwaEg0MExlMUNGb0MxX3lPSmh1OVZKSk1ZcWdHTkhtS1JFYk96anhPMkZPbTAwLWgwMG5NU3BpTUdySGs4dHBUWllCbzRWU01sNDU2YkR1SDlsOGdXanE0?oc=5",
+      "published_at": "2026-07-23T16:28:35.000Z",
+      "description": "Steve Makinen’s MLB Picks from Betting Splits and Systems for Thursday, July 23 &nbsp;&nbsp; VSiN",
+      "source": "VSiN",
+      "published_label": "Jul 23, 2026",
+      "section": "market_context",
+      "classification_confidence": "no_game_match",
+      "game": null,
+      "selected_side": null,
+      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+    },
+    {
+      "title": "Top Picks from the MLB Betting Splits for Thursday July 23rd - VSiN",
+      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQQnMxenFtLVZSSFQwVElkeTZjWERKbHNJM0o3NF9ITk05enRyQTZHWjAwMGdLR1dPRE92ejBibllCdUhoeFZTczJnekUyRWY4TGxtUFE3SkpvNkc1VElmMHpndW1CT3RJdTN6Zy1kNlpjWGxjQm9IeGUzM0VBSVY2bUpuLTBtYXc4UkE?oc=5",
+      "published_at": "2026-07-23T16:22:36.000Z",
+      "description": "Top Picks from the MLB Betting Splits for Thursday July 23rd &nbsp;&nbsp; VSiN",
+      "source": "VSiN",
+      "published_label": "Jul 23, 2026",
+      "section": "market_context",
+      "classification_confidence": "no_game_match",
+      "game": null,
+      "selected_side": null,
+      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+    },
     {
       "title": "Best MLB Player Props Today (July 23, 2026): Picks & Predictions - VSiN",
       "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOdWthTTJqdUFYaFczeHJhcGtjVTMwS2o1dXl5UDNzUkxXaGgzUkx3aHJvNFlNWjlCc1VXc01vR29Vbk5KVXdJN2poZFBKZ2FFTnBmLVB2YkJ5ekV5eTRwZDVhOFFSMjgySDBUcWJZZWNmVUVGeTQ1eERJMHBlb3VhQzh4SExObkE?oc=5",
@@ -30,7 +56,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Minnesota Twins @ Cleveland Guardians",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 3.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Picks Today: Adam Burke’s Best Bets for Thursday, July 23 - VSiN",
@@ -82,7 +108,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Minnesota Twins @ Cleveland Guardians",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 3.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Rays vs Blue Jays Prediction, Odds & Home Run Pick for Today's MLB Game - Covers.com",
@@ -95,7 +121,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Tampa Bay Rays @ Toronto Blue Jays",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 74.3% model probability and 9.4/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 76.5% model probability and 8.8/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Best NRFI Bets Today for Thursday, July 23 | MLB No Run First Inning Picks - Sportsbook Review",
@@ -121,7 +147,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Arizona Diamondbacks @ St. Louis Cardinals",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Arizona Diamondbacks @ St. Louis Cardinals, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 52.0% model probability and 4.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Arizona Diamondbacks @ St. Louis Cardinals, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 52.0% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Thursday, July 23 - Covers.com",
@@ -199,7 +225,7 @@
       "classification_confidence": "no_explicit_side",
       "game": "Minnesota Twins @ Cleveland Guardians",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+      "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 3.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
       "title": "Diamondbacks vs Cardinals Prediction, Pick, MLB Odds for Thursday, July 23 - Action Network",
@@ -212,39 +238,39 @@
       "classification_confidence": "no_explicit_side",
       "game": "Arizona Diamondbacks @ St. Louis Cardinals",
       "selected_side": null,
-      "lydia_takeaway": "This article matches Arizona Diamondbacks @ St. Louis Cardinals, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 52.0% model probability and 4.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-    },
-    {
-      "title": "Rays vs Blue Jays Prediction, Pick, MLB Odds for Thursday, July 23 - Action Network",
-      "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQM2dLai1UVDF6SWxQdFV3LVpqWTd4QUlKM25CS184MFJDbmpnOFpndjNZcWFNVkhaUWJ3YTNGZ3BzYUt4UXBKWndrTXI3SFVIOS1RNXo1LUhUY2JsN0FPT2JOVU9ySC1XWWJVdi14aFpnMk9LR2psMktoeFpPbTRqbXByTjMxcjZxVU41YkRBMm9BUmFxUXZQY3dvbnNSal9IbG55YW9JdmpXWWtHQWc3Wg?oc=5",
-      "published_at": "2026-07-23T11:42:00.000Z",
-      "description": "Rays vs Blue Jays Prediction, Pick, MLB Odds for Thursday, July 23 &nbsp;&nbsp; Action Network",
-      "source": "Action Network",
-      "published_label": "Jul 23, 2026",
-      "section": "unable_to_classify",
-      "classification_confidence": "no_explicit_side",
-      "game": "Tampa Bay Rays @ Toronto Blue Jays",
-      "selected_side": null,
-      "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 74.3% model probability and 9.4/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
-    },
-    {
-      "title": "MLB Picks, Predictions Today: Matt Trollo’s Best Bets for Thursday, July 23 - Action Network",
-      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQU1FUM2N6MkxpVkZ2NTkzNWtkcWhEbVBWeGRUS1ZoQ0dOdzlVRFNLZzVHSUlBUEpJckJWdU5nejRHRWFUd3hNMHZjblNZRWJERk43ZVNscTNEN2V0OEs4M29pVHRLWWpDMTBJYlNxeDI3QldIX1NFdnU4dGFCUjBuTGxKWDY5UzBXa1E?oc=5",
-      "published_at": "2026-07-23T11:11:00.000Z",
-      "description": "MLB Picks, Predictions Today: Matt Trollo’s Best Bets for Thursday, July 23 &nbsp;&nbsp; Action Network",
-      "source": "Action Network",
-      "published_label": "Jul 23, 2026",
-      "section": "market_context",
-      "classification_confidence": "no_game_match",
-      "game": null,
-      "selected_side": null,
-      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      "lydia_takeaway": "This article matches Arizona Diamondbacks @ St. Louis Cardinals, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 52.0% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     }
   ],
   "groups": {
     "lydia_agrees": [],
     "lydia_disagrees": [],
     "market_context": [
+      {
+        "title": "Steve Makinen’s MLB Picks from Betting Splits and Systems for Thursday, July 23 - VSiN",
+        "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOYzRNS0J6R2JaVkc3YnZYS01uZjlZZWZneEZlT2dUQnF6dnBlNGFaZFdhbWxjZmNJMjBhQnk5Z2QxRXhJeE80VFdwaEg0MExlMUNGb0MxX3lPSmh1OVZKSk1ZcWdHTkhtS1JFYk96anhPMkZPbTAwLWgwMG5NU3BpTUdySGs4dHBUWllCbzRWU01sNDU2YkR1SDlsOGdXanE0?oc=5",
+        "published_at": "2026-07-23T16:28:35.000Z",
+        "description": "Steve Makinen’s MLB Picks from Betting Splits and Systems for Thursday, July 23 &nbsp;&nbsp; VSiN",
+        "source": "VSiN",
+        "published_label": "Jul 23, 2026",
+        "section": "market_context",
+        "classification_confidence": "no_game_match",
+        "game": null,
+        "selected_side": null,
+        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      },
+      {
+        "title": "Top Picks from the MLB Betting Splits for Thursday July 23rd - VSiN",
+        "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQQnMxenFtLVZSSFQwVElkeTZjWERKbHNJM0o3NF9ITk05enRyQTZHWjAwMGdLR1dPRE92ejBibllCdUhoeFZTczJnekUyRWY4TGxtUFE3SkpvNkc1VElmMHpndW1CT3RJdTN6Zy1kNlpjWGxjQm9IeGUzM0VBSVY2bUpuLTBtYXc4UkE?oc=5",
+        "published_at": "2026-07-23T16:22:36.000Z",
+        "description": "Top Picks from the MLB Betting Splits for Thursday July 23rd &nbsp;&nbsp; VSiN",
+        "source": "VSiN",
+        "published_label": "Jul 23, 2026",
+        "section": "market_context",
+        "classification_confidence": "no_game_match",
+        "game": null,
+        "selected_side": null,
+        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      },
       {
         "title": "Best MLB Player Props Today (July 23, 2026): Picks & Predictions - VSiN",
         "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOdWthTTJqdUFYaFczeHJhcGtjVTMwS2o1dXl5UDNzUkxXaGgzUkx3aHJvNFlNWjlCc1VXc01vR29Vbk5KVXdJN2poZFBKZ2FFTnBmLVB2YkJ5ekV5eTRwZDVhOFFSMjgySDBUcWJZZWNmVUVGeTQ1eERJMHBlb3VhQzh4SExObkE?oc=5",
@@ -335,19 +361,6 @@
         "game": null,
         "selected_side": null,
         "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
-      },
-      {
-        "title": "MLB Picks, Predictions Today: Matt Trollo’s Best Bets for Thursday, July 23 - Action Network",
-        "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQU1FUM2N6MkxpVkZ2NTkzNWtkcWhEbVBWeGRUS1ZoQ0dOdzlVRFNLZzVHSUlBUEpJckJWdU5nejRHRWFUd3hNMHZjblNZRWJERk43ZVNscTNEN2V0OEs4M29pVHRLWWpDMTBJYlNxeDI3QldIX1NFdnU4dGFCUjBuTGxKWDY5UzBXa1E?oc=5",
-        "published_at": "2026-07-23T11:11:00.000Z",
-        "description": "MLB Picks, Predictions Today: Matt Trollo’s Best Bets for Thursday, July 23 &nbsp;&nbsp; Action Network",
-        "source": "Action Network",
-        "published_label": "Jul 23, 2026",
-        "section": "market_context",
-        "classification_confidence": "no_game_match",
-        "game": null,
-        "selected_side": null,
-        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
       }
     ],
     "unable_to_classify": [
@@ -362,7 +375,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Minnesota Twins @ Cleveland Guardians",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 3.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Twins vs. Guardians Prediction | MLB Picks & Odds for Thursday, July 23 - Sportsbook Review",
@@ -375,7 +388,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Minnesota Twins @ Cleveland Guardians",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 3.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Rays vs Blue Jays Prediction, Odds & Home Run Pick for Today's MLB Game - Covers.com",
@@ -388,7 +401,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Tampa Bay Rays @ Toronto Blue Jays",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 74.3% model probability and 9.4/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 76.5% model probability and 8.8/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Diamondbacks vs Cardinals Prediction, Picks & Odds for Today's MLB Game - Covers.com",
@@ -401,7 +414,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Arizona Diamondbacks @ St. Louis Cardinals",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Arizona Diamondbacks @ St. Louis Cardinals, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 52.0% model probability and 4.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Arizona Diamondbacks @ St. Louis Cardinals, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 52.0% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Padres vs Braves Prediction, Pick, MLB Odds for Thursday, July 23 - Action Network",
@@ -453,7 +466,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Minnesota Twins @ Cleveland Guardians",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 3.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
         "title": "Diamondbacks vs Cardinals Prediction, Pick, MLB Odds for Thursday, July 23 - Action Network",
@@ -466,20 +479,7 @@
         "classification_confidence": "no_explicit_side",
         "game": "Arizona Diamondbacks @ St. Louis Cardinals",
         "selected_side": null,
-        "lydia_takeaway": "This article matches Arizona Diamondbacks @ St. Louis Cardinals, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 52.0% model probability and 4.3/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-      },
-      {
-        "title": "Rays vs Blue Jays Prediction, Pick, MLB Odds for Thursday, July 23 - Action Network",
-        "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQM2dLai1UVDF6SWxQdFV3LVpqWTd4QUlKM25CS184MFJDbmpnOFpndjNZcWFNVkhaUWJ3YTNGZ3BzYUt4UXBKWndrTXI3SFVIOS1RNXo1LUhUY2JsN0FPT2JOVU9ySC1XWWJVdi14aFpnMk9LR2psMktoeFpPbTRqbXByTjMxcjZxVU41YkRBMm9BUmFxUXZQY3dvbnNSal9IbG55YW9JdmpXWWtHQWc3Wg?oc=5",
-        "published_at": "2026-07-23T11:42:00.000Z",
-        "description": "Rays vs Blue Jays Prediction, Pick, MLB Odds for Thursday, July 23 &nbsp;&nbsp; Action Network",
-        "source": "Action Network",
-        "published_label": "Jul 23, 2026",
-        "section": "unable_to_classify",
-        "classification_confidence": "no_explicit_side",
-        "game": "Tampa Bay Rays @ Toronto Blue Jays",
-        "selected_side": null,
-        "lydia_takeaway": "This article matches Tampa Bay Rays @ Toronto Blue Jays, but the headline and summary do not clearly identify a selected side. LyDia currently has Tampa Bay Rays Money Line at 74.3% model probability and 9.4/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
+        "lydia_takeaway": "This article matches Arizona Diamondbacks @ St. Louis Cardinals, but the headline and summary do not clearly identify a selected side. LyDia currently has Arizona Diamondbacks Money Line at 52.0% model probability and 4.1/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       }
     ]
   }
