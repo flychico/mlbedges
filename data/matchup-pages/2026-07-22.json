@@ -1,6 +1,6 @@
 {
   "date": "2026-07-22",
-  "generated_at": "2026-07-23T05:09:32.263Z",
+  "generated_at": "2026-07-23T11:22:11.578Z",
   "source": "data/member-brief/2026-07-22.json",
   "pitcher_source": "data/pitcher-matchups/2026-07-22.json",
   "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
@@ -23,7 +23,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.858Z",
+      "generated_at": "2026-07-23T11:22:11.574Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -57,7 +57,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:30.733Z",
+      "generated_at": "2026-07-23T11:22:11.561Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -90,7 +90,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.350Z",
+      "generated_at": "2026-07-23T11:22:11.568Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -124,7 +124,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:32.161Z",
+      "generated_at": "2026-07-23T11:22:11.577Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -158,7 +158,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:32.060Z",
+      "generated_at": "2026-07-23T11:22:11.576Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -192,7 +192,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:30.631Z",
+      "generated_at": "2026-07-23T11:22:11.559Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -226,7 +226,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:30.834Z",
+      "generated_at": "2026-07-23T11:22:11.562Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -260,7 +260,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.655Z",
+      "generated_at": "2026-07-23T11:22:11.572Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -294,7 +294,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.240Z",
+      "generated_at": "2026-07-23T11:22:11.567Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -328,7 +328,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.757Z",
+      "generated_at": "2026-07-23T11:22:11.572Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -362,7 +362,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.959Z",
+      "generated_at": "2026-07-23T11:22:11.575Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -396,7 +396,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:30.935Z",
+      "generated_at": "2026-07-23T11:22:11.563Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -430,7 +430,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.037Z",
+      "generated_at": "2026-07-23T11:22:11.564Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -464,7 +464,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:32.263Z",
+      "generated_at": "2026-07-23T11:22:11.578Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -498,7 +498,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.138Z",
+      "generated_at": "2026-07-23T11:22:11.566Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -532,7 +532,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.452Z",
+      "generated_at": "2026-07-23T11:22:11.570Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
@@ -566,7 +566,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T05:09:31.554Z",
+      "generated_at": "2026-07-23T11:22:11.571Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
