@@ -95,6 +95,11 @@ jobs:
       - name: Verify matchup pages use Pitcher Matchup Tool data
         run: node scripts/verify-pitcher-matchup-alignment.js "${{ steps.publish_date.outputs.date }}"
 
+      - name: Refresh learning summary and verify synchronized policy
+        run: |
+          node scripts/generate-learning-summary.js
+          node scripts/verify-learning-lab.js --require-current-totals
+
       - name: Verify generated data and public copy
         run: |
           DATE_INPUT="${{ steps.publish_date.outputs.date }}"
@@ -171,4 +176,3 @@ jobs:
           NETLIFY_API_TOKEN: ${{ secrets.NETLIFY_API_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: node scripts/send-free-preview-emails.js "${{ steps.publish_date.outputs.date }}"
-
