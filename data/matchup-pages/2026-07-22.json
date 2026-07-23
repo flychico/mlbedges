@@ -1,6 +1,6 @@
 {
   "date": "2026-07-22",
-  "generated_at": "2026-07-22T21:13:52.181Z",
+  "generated_at": "2026-07-23T05:09:32.263Z",
   "source": "data/member-brief/2026-07-22.json",
   "pitcher_source": "data/pitcher-matchups/2026-07-22.json",
   "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
@@ -23,15 +23,15 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:51.769Z",
+      "generated_at": "2026-07-23T05:09:31.858Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T17:00",
-        "temperature_f": 87.1,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 84.5,
         "precipitation_probability": 0,
-        "wind_mph": 13,
-        "wind_direction_degrees": 258,
-        "weather_code": 1,
+        "wind_mph": 12,
+        "wind_direction_degrees": 292,
+        "weather_code": 0,
         "roof": false
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
@@ -57,14 +57,14 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:50.171Z",
+      "generated_at": "2026-07-23T05:09:30.733Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T18:00",
-        "temperature_f": 81.9,
-        "precipitation_probability": 2,
-        "wind_mph": 10.6,
-        "wind_direction_degrees": 186,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 74.1,
+        "precipitation_probability": 8,
+        "wind_mph": 5.3,
+        "wind_direction_degrees": 255,
         "weather_code": 3,
         "roof": false
       },
@@ -90,14 +90,14 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:51.257Z",
+      "generated_at": "2026-07-23T05:09:31.350Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T18:00",
-        "temperature_f": 72.5,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 69.6,
         "precipitation_probability": 0,
-        "wind_mph": 9.7,
-        "wind_direction_degrees": 40,
+        "wind_mph": 6.9,
+        "wind_direction_degrees": 105,
         "weather_code": 1,
         "roof": true
       },
@@ -124,13 +124,13 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:52.079Z",
+      "generated_at": "2026-07-23T05:09:32.161Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T18:00",
-        "temperature_f": 79.8,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 77.2,
         "precipitation_probability": 1,
-        "wind_mph": 8.3,
+        "wind_mph": 6.8,
         "wind_direction_degrees": 27,
         "weather_code": 0,
         "roof": false
@@ -158,20 +158,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:51.976Z",
+      "generated_at": "2026-07-23T05:09:32.060Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T19:00",
-        "temperature_f": 92.8,
-        "precipitation_probability": 1,
-        "wind_mph": 3.9,
-        "wind_direction_degrees": 31,
-        "weather_code": 0,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 79.7,
+        "precipitation_probability": 47,
+        "wind_mph": 11.7,
+        "wind_direction_degrees": 223,
+        "weather_code": 3,
         "roof": false
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 8,
+        "home_score": 0,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -187,20 +192,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:50.065Z",
+      "generated_at": "2026-07-23T05:09:30.631Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T20:00",
-        "temperature_f": 83.3,
-        "precipitation_probability": 0,
-        "wind_mph": 7,
-        "wind_direction_degrees": 312,
-        "weather_code": 0,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 86.9,
+        "precipitation_probability": 1,
+        "wind_mph": 9.3,
+        "wind_direction_degrees": 336,
+        "weather_code": 1,
         "roof": true
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 5,
+        "home_score": 3,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -216,20 +226,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:50.306Z",
+      "generated_at": "2026-07-23T05:09:30.834Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T20:00",
-        "temperature_f": 100.9,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 104.5,
         "precipitation_probability": 1,
-        "wind_mph": 4,
-        "wind_direction_degrees": 52,
+        "wind_mph": 4.2,
+        "wind_direction_degrees": 72,
         "weather_code": 0,
         "roof": true
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 5,
+        "home_score": 15,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -245,20 +260,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:51.565Z",
+      "generated_at": "2026-07-23T05:09:31.655Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T20:00",
-        "temperature_f": 85.5,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 84.1,
         "precipitation_probability": 0,
-        "wind_mph": 5.5,
-        "wind_direction_degrees": 258,
+        "wind_mph": 8.6,
+        "wind_direction_degrees": 239,
         "weather_code": 0,
         "roof": false
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 1,
+        "home_score": 0,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -274,20 +294,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:51.067Z",
+      "generated_at": "2026-07-23T05:09:31.240Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T23:00",
-        "temperature_f": 78.9,
-        "precipitation_probability": 3,
-        "wind_mph": 7.5,
-        "wind_direction_degrees": 280,
-        "weather_code": 0,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 80.3,
+        "precipitation_probability": 1,
+        "wind_mph": 8.1,
+        "wind_direction_degrees": 294,
+        "weather_code": 3,
         "roof": false
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 9,
+        "home_score": 5,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -303,20 +328,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:51.667Z",
+      "generated_at": "2026-07-23T05:09:31.757Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T23:00",
-        "temperature_f": 69.4,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 67.7,
         "precipitation_probability": 0,
-        "wind_mph": 6.4,
-        "wind_direction_degrees": 306,
-        "weather_code": 1,
+        "wind_mph": 2.7,
+        "wind_direction_degrees": 318,
+        "weather_code": 0,
         "roof": false
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 10,
+        "home_score": 6,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -332,20 +362,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:51.871Z",
+      "generated_at": "2026-07-23T05:09:31.959Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T23:00",
-        "temperature_f": 86.4,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 84.5,
         "precipitation_probability": 0,
-        "wind_mph": 13.3,
-        "wind_direction_degrees": 247,
+        "wind_mph": 12,
+        "wind_direction_degrees": 292,
         "weather_code": 0,
         "roof": false
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 0,
+        "home_score": 2,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -361,20 +396,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:50.562Z",
+      "generated_at": "2026-07-23T05:09:30.935Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T23:00",
-        "temperature_f": 66.1,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 63.7,
         "precipitation_probability": 0,
-        "wind_mph": 7.6,
-        "wind_direction_degrees": 273,
+        "wind_mph": 10.7,
+        "wind_direction_degrees": 271,
         "weather_code": 0,
         "roof": true
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 4,
+        "home_score": 2,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -390,23 +430,24 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:50.813Z",
+      "generated_at": "2026-07-23T05:09:31.037Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T23:00",
-        "temperature_f": 76,
-        "precipitation_probability": 18,
-        "wind_mph": 4.8,
-        "wind_direction_degrees": 208,
-        "weather_code": 51,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 74.1,
+        "precipitation_probability": 8,
+        "wind_mph": 5.3,
+        "wind_direction_degrees": 255,
+        "weather_code": 3,
         "roof": false
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
       "final": {
-        "away_score": 3,
-        "home_score": 6,
-        "moneyline_result": "W"
+        "away_score": 5,
+        "home_score": 1,
+        "moneyline_result": null,
+        "void_reason": null
       }
     },
     {
@@ -423,20 +464,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:52.181Z",
+      "generated_at": "2026-07-23T05:09:32.263Z",
       "weather": {
         "source": "Open-Meteo forecast",
-        "forecast_time_utc": "2026-07-22T23:00",
-        "temperature_f": 86,
+        "forecast_time_utc": "2026-07-23T00:00",
+        "temperature_f": 85.1,
         "precipitation_probability": 6,
-        "wind_mph": 11,
+        "wind_mph": 6.1,
         "wind_direction_degrees": 186,
-        "weather_code": 0,
+        "weather_code": 1,
         "roof": false
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 6,
+        "home_score": 7,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -452,20 +498,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:50.957Z",
+      "generated_at": "2026-07-23T05:09:31.138Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
-        "temperature_f": 101.9,
+        "temperature_f": 93.6,
         "precipitation_probability": 1,
-        "wind_mph": 9.5,
-        "wind_direction_degrees": 75,
-        "weather_code": 3,
+        "wind_mph": 12.3,
+        "wind_direction_degrees": 38,
+        "weather_code": 0,
         "roof": true
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 4,
+        "home_score": 2,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -481,20 +532,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:51.359Z",
+      "generated_at": "2026-07-23T05:09:31.452Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
-        "temperature_f": 69.7,
+        "temperature_f": 69.5,
         "precipitation_probability": 0,
-        "wind_mph": 8.8,
-        "wind_direction_degrees": 58,
+        "wind_mph": 4.7,
+        "wind_direction_degrees": 73,
         "weather_code": 0,
         "roof": false
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 5,
+        "home_score": 1,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-22",
@@ -510,20 +566,25 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-22T21:13:51.462Z",
+      "generated_at": "2026-07-23T05:09:31.554Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T00:00",
-        "temperature_f": 95.8,
-        "precipitation_probability": 14,
-        "wind_mph": 4.2,
-        "wind_direction_degrees": 295,
-        "weather_code": 0,
+        "temperature_f": 94.7,
+        "precipitation_probability": 13,
+        "wind_mph": 3.7,
+        "wind_direction_degrees": 25,
+        "weather_code": 3,
         "roof": true
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 2,
+        "home_score": 5,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     }
   ]
 }

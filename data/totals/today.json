@@ -1,46 +1,9 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T21:13:45.590Z",
+ "generated_at": "2026-07-23T05:09:26.513Z",
  "source": "LyDia totals projection (offense factor × opposing pitching × park × pen fatigue) + the-odds-api totals consensus",
  "league_rpg": 4.52,
- "probables": {
-  "822784": {
-   "away": "Griffin Jax",
-   "home": "Braydon Fisher"
-  },
-  "822873": {
-   "away": "Anthony Kay",
-   "home": "Tyler Alexander"
-  },
-  "823438": {
-   "away": "Eric Lauer",
-   "home": "Aaron Nola"
-  },
-  "823519": {
-   "away": "Bubba Chandler",
-   "home": "Max Fried"
-  },
-  "824166": {
-   "away": "Sandy Alcantara",
-   "home": "Peter Lambert"
-  },
-  "824408": {
-   "away": "Bailey Ober",
-   "home": "Slade Cecconi"
-  },
-  "824650": {
-   "away": "Keider Montero",
-   "home": "Colin Rea"
-  },
-  "824732": {
-   "away": "Kyle Bradish",
-   "home": "Eduardo Rivera"
-  },
-  "824896": {
-   "away": "Michael King",
-   "home": "Martín Pérez"
-  }
- },
+ "probables": {},
  "games": {
   "822784": {
    "game": "Tampa Bay Rays @ Toronto Blue Jays",
