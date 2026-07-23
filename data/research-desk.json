@@ -1,6 +1,6 @@
 {
   "date": "2026-07-23",
-  "generated_at": "2026-07-23T17:08:18.458Z",
+  "generated_at": "2026-07-23T18:00:51.152Z",
   "stale_reuse": false,
   "mode": "explicit-side-classification-v3",
   "note": "Agreement and disagreement require an explicitly extracted side. A matchup match alone is never enough.",
@@ -85,11 +85,37 @@
       "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 3.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
     },
     {
+      "title": "MLB Picks Today: Greg Peterson Best Bets Thursday, July 23 - VSiN",
+      "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOcnkzNG1mV19Qc09sMFA2T1g2QTR2S0JvTzNRd29vb0hRUy1PeW0wLXdZSzliamlsRkY5LW9zVW1hTzZ5U21USlRPdUVQTzF6MERMRGJqMWNTX1JMc1lKNEc1VnVoeVVDaE5lRUE3RWZLN2lYRjlmYjBSZmxnZG9VZ3VJSmI?oc=5",
+      "published_at": "2026-07-23T15:37:04.000Z",
+      "description": "MLB Picks Today: Greg Peterson Best Bets Thursday, July 23 &nbsp;&nbsp; VSiN",
+      "source": "VSiN",
+      "published_label": "Jul 23, 2026",
+      "section": "market_context",
+      "classification_confidence": "no_game_match",
+      "game": null,
+      "selected_side": null,
+      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+    },
+    {
       "title": "MLB Picks Today: Adam Burke’s Best Bets for Thursday, July 23 - VSiN",
       "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQZ0JuelNEM1c3ZEhPM3UxREF3V1pHVUFxLTFPNG5nckljTWdKVGFxSFpPOE1SaGFWTGg0T3FRMXVkSVhrMG5pMVBHTk5PbGZ4cjd6bGJKZ2c2VUR0dDg2M2lpbjRvdWpuNmxSdC1GU2p1Tl96bUdKUUwzN2NQRGRQQ1JRVS04YTA?oc=5",
       "published_at": "2026-07-23T15:35:51.000Z",
       "description": "MLB Picks Today: Adam Burke’s Best Bets for Thursday, July 23 &nbsp;&nbsp; VSiN",
       "source": "VSiN",
+      "published_label": "Jul 23, 2026",
+      "section": "market_context",
+      "classification_confidence": "no_game_match",
+      "game": null,
+      "selected_side": null,
+      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+    },
+    {
+      "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Thursday, July 23 - Covers.com",
+      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdGxLTXBXX0tsMVBZbGQ0U0pwX3dNaDU4aHFYU2hBVFdpNlR3T0lncTQ1aWtkT1l2cFhYb1JNT2ZCUk9HY2xsT1AwdEo4VVdwTDNITExlRzR4ak5TQXVNZ0FESjRrb2duSnRTTUZMNWdRcEFENlVQb3hpbHdCS2RJNmNn?oc=5",
+      "published_at": "2026-07-23T15:04:00.000Z",
+      "description": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Thursday, July 23 &nbsp;&nbsp; Covers.com",
+      "source": "Covers.com",
       "published_label": "Jul 23, 2026",
       "section": "market_context",
       "classification_confidence": "no_game_match",
@@ -137,10 +163,10 @@
       "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
     },
     {
-      "title": "Twins vs. Guardians Prediction | MLB Picks & Odds for Thursday, July 23 - Sportsbook Review",
+      "title": "Twins vs. Guardians Prediction & Picks: MLB Odds for Thursday, July 23 - Sportsbook Review",
       "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOZFVvMDNiMDZSVzBTZzFlLUV6ZXA3ek9PbDNvdVRtQmtJRzlaT1RSdW5kWmgtRzZZbHV4d2pfWm5UV2dLU1oxeFRhZzRJT1N2N05CMjJqWExOTFlneVVzc2s3ZGVXYmZqU0JscEhtRDRXZ1JwTC1Ra0xfSE05RFRMWl84bmZKbG93RzZWUnRCRkhRQTY1Q254QnY1cEQwZw?oc=5",
       "published_at": "2026-07-23T14:38:00.000Z",
-      "description": "Twins vs. Guardians Prediction | MLB Picks & Odds for Thursday, July 23 &nbsp;&nbsp; Sportsbook Review",
+      "description": "Twins vs. Guardians Prediction & Picks: MLB Odds for Thursday, July 23 &nbsp;&nbsp; Sportsbook Review",
       "source": "Sportsbook Review",
       "published_label": "Jul 23, 2026",
       "section": "unable_to_classify",
@@ -148,6 +174,19 @@
       "game": "Minnesota Twins @ Cleveland Guardians",
       "selected_side": null,
       "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 3.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
+    },
+    {
+      "title": "Top 3 MLB Picks & Predictions: Thursday (7/23) - BettingPros",
+      "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQNHg3Nk45dG5HaF9EVm1jM3dqY3ZVbVMxVGE1dTlhNTlzRFBKR3o2UUU1dEduRENQcWpHVlFvZ3MwMGh4c2Q4ZFQ4TkxyTEh1SlF4eWltdlVTNWVEUXlhMDc4T28wVFhyaWRhOG1LYU1naGd6cl9IeTdad29KSFBBU1pfM2p2UdIBiwFBVV95cUxPV2dXaWo0cFNKZTVuZ3YyTkx4TXlsTlBLUVRJX0tXb1hBN2k1MUR6cXE4N3ZjQ3llcF9VV1hRSjc2dmttRllyMFhBS09MeWdKSzhqaXJNLVhKY09WajlQWXpiSEV2NWozd3hmLUtrd2EtMG11Z29DMDR1Ym5YaklDbDhfZXdnbnBmOUo4?oc=5",
+      "published_at": "2026-07-23T14:28:29.000Z",
+      "description": "Top 3 MLB Picks & Predictions: Thursday (7/23) &nbsp;&nbsp; BettingPros",
+      "source": "BettingPros",
+      "published_label": "Jul 23, 2026",
+      "section": "market_context",
+      "classification_confidence": "no_game_match",
+      "game": null,
+      "selected_side": null,
+      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
     },
     {
       "title": "Rays vs Blue Jays Prediction, Odds & Home Run Pick for Today's MLB Game - Covers.com",
@@ -168,19 +207,6 @@
       "published_at": "2026-07-23T14:22:00.000Z",
       "description": "Best NRFI Bets Today for Thursday, July 23 | MLB No Run First Inning Picks &nbsp;&nbsp; Sportsbook Review",
       "source": "Sportsbook Review",
-      "published_label": "Jul 23, 2026",
-      "section": "market_context",
-      "classification_confidence": "no_game_match",
-      "game": null,
-      "selected_side": null,
-      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
-    },
-    {
-      "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Thursday, July 23 - Covers.com",
-      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdGxLTXBXX0tsMVBZbGQ0U0pwX3dNaDU4aHFYU2hBVFdpNlR3T0lncTQ1aWtkT1l2cFhYb1JNT2ZCUk9HY2xsT1AwdEo4VVdwTDNITExlRzR4ak5TQXVNZ0FESjRrb2duSnRTTUZMNWdRcEFENlVQb3hpbHdCS2RJNmNn?oc=5",
-      "published_at": "2026-07-23T14:03:00.000Z",
-      "description": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Thursday, July 23 &nbsp;&nbsp; Covers.com",
-      "source": "Covers.com",
       "published_label": "Jul 23, 2026",
       "section": "market_context",
       "classification_confidence": "no_game_match",
@@ -213,32 +239,6 @@
       "game": "Kansas City Royals @ Detroit Tigers",
       "selected_side": null,
       "lydia_takeaway": "This article matches Kansas City Royals @ Detroit Tigers, but the headline and summary do not clearly identify a selected side. LyDia currently has Detroit Tigers Money Line at 58.9% model probability and 3.0/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-    },
-    {
-      "title": "MLB Best Bets Today: Predictions, Picks, Props for all Five Games on Thursday (July 23) - Action Network",
-      "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPR0VBZThaemNpdVNSTTFSTW9QdXBfZVZaS2RFRHBsXzdvS1FvM3dXYVQxd2lkSmJaVlU1cmxqTXh3c1hnV0RqVUN1ekd5eVYtT0dEYlBzcUNTRE5rNktiSVEydU1CSEtXOFF0NkJvSjJZZFFINTFXSGRTUXVUaER6LXZkUl95OUI2eVd2ZmhIdm5BWThKbTk3bVNFb0xoaVFpRHZkVFBuWng?oc=5",
-      "published_at": "2026-07-23T13:33:00.000Z",
-      "description": "MLB Best Bets Today: Predictions, Picks, Props for all Five Games on Thursday (July 23) &nbsp;&nbsp; Action Network",
-      "source": "Action Network",
-      "published_label": "Jul 23, 2026",
-      "section": "market_context",
-      "classification_confidence": "no_game_match",
-      "game": null,
-      "selected_side": null,
-      "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
-    },
-    {
-      "title": "Padres vs Braves Prediction, Picks & Odds for Today's MLB Game - Covers.com",
-      "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOUlZqX0ZYQ0t0MjR5RmlYbWJ2T0t2bkJ1NHRxSDBZUkJWeTE2ZllBNk9YVzZ3WXd6VWx2UFlNRWJtN3NDWldmLU85eVNkbjV6VTlRSm9mYjdlak9PNE5yd1VJYjdxQ1gwRExPWVVqRFQyZlRYWGR1VVVKcXpaRElCLVdfMXFVYXhlbHBqbA?oc=5",
-      "published_at": "2026-07-23T12:41:00.000Z",
-      "description": "Padres vs Braves Prediction, Picks & Odds for Today's MLB Game &nbsp;&nbsp; Covers.com",
-      "source": "Covers.com",
-      "published_label": "Jul 23, 2026",
-      "section": "unable_to_classify",
-      "classification_confidence": "no_explicit_side",
-      "game": "San Diego Padres @ Atlanta Braves",
-      "selected_side": null,
-      "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 77.5% model probability and 8.5/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
     }
   ],
   "groups": {
@@ -298,11 +298,37 @@
         "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
       },
       {
+        "title": "MLB Picks Today: Greg Peterson Best Bets Thursday, July 23 - VSiN",
+        "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOcnkzNG1mV19Qc09sMFA2T1g2QTR2S0JvTzNRd29vb0hRUy1PeW0wLXdZSzliamlsRkY5LW9zVW1hTzZ5U21USlRPdUVQTzF6MERMRGJqMWNTX1JMc1lKNEc1VnVoeVVDaE5lRUE3RWZLN2lYRjlmYjBSZmxnZG9VZ3VJSmI?oc=5",
+        "published_at": "2026-07-23T15:37:04.000Z",
+        "description": "MLB Picks Today: Greg Peterson Best Bets Thursday, July 23 &nbsp;&nbsp; VSiN",
+        "source": "VSiN",
+        "published_label": "Jul 23, 2026",
+        "section": "market_context",
+        "classification_confidence": "no_game_match",
+        "game": null,
+        "selected_side": null,
+        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      },
+      {
         "title": "MLB Picks Today: Adam Burke’s Best Bets for Thursday, July 23 - VSiN",
         "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQZ0JuelNEM1c3ZEhPM3UxREF3V1pHVUFxLTFPNG5nckljTWdKVGFxSFpPOE1SaGFWTGg0T3FRMXVkSVhrMG5pMVBHTk5PbGZ4cjd6bGJKZ2c2VUR0dDg2M2lpbjRvdWpuNmxSdC1GU2p1Tl96bUdKUUwzN2NQRGRQQ1JRVS04YTA?oc=5",
         "published_at": "2026-07-23T15:35:51.000Z",
         "description": "MLB Picks Today: Adam Burke’s Best Bets for Thursday, July 23 &nbsp;&nbsp; VSiN",
         "source": "VSiN",
+        "published_label": "Jul 23, 2026",
+        "section": "market_context",
+        "classification_confidence": "no_game_match",
+        "game": null,
+        "selected_side": null,
+        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      },
+      {
+        "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Thursday, July 23 - Covers.com",
+        "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdGxLTXBXX0tsMVBZbGQ0U0pwX3dNaDU4aHFYU2hBVFdpNlR3T0lncTQ1aWtkT1l2cFhYb1JNT2ZCUk9HY2xsT1AwdEo4VVdwTDNITExlRzR4ak5TQXVNZ0FESjRrb2duSnRTTUZMNWdRcEFENlVQb3hpbHdCS2RJNmNn?oc=5",
+        "published_at": "2026-07-23T15:04:00.000Z",
+        "description": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Thursday, July 23 &nbsp;&nbsp; Covers.com",
+        "source": "Covers.com",
         "published_label": "Jul 23, 2026",
         "section": "market_context",
         "classification_confidence": "no_game_match",
@@ -350,37 +376,24 @@
         "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
       },
       {
+        "title": "Top 3 MLB Picks & Predictions: Thursday (7/23) - BettingPros",
+        "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQNHg3Nk45dG5HaF9EVm1jM3dqY3ZVbVMxVGE1dTlhNTlzRFBKR3o2UUU1dEduRENQcWpHVlFvZ3MwMGh4c2Q4ZFQ4TkxyTEh1SlF4eWltdlVTNWVEUXlhMDc4T28wVFhyaWRhOG1LYU1naGd6cl9IeTdad29KSFBBU1pfM2p2UdIBiwFBVV95cUxPV2dXaWo0cFNKZTVuZ3YyTkx4TXlsTlBLUVRJX0tXb1hBN2k1MUR6cXE4N3ZjQ3llcF9VV1hRSjc2dmttRllyMFhBS09MeWdKSzhqaXJNLVhKY09WajlQWXpiSEV2NWozd3hmLUtrd2EtMG11Z29DMDR1Ym5YaklDbDhfZXdnbnBmOUo4?oc=5",
+        "published_at": "2026-07-23T14:28:29.000Z",
+        "description": "Top 3 MLB Picks & Predictions: Thursday (7/23) &nbsp;&nbsp; BettingPros",
+        "source": "BettingPros",
+        "published_label": "Jul 23, 2026",
+        "section": "market_context",
+        "classification_confidence": "no_game_match",
+        "game": null,
+        "selected_side": null,
+        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
+      },
+      {
         "title": "Best NRFI Bets Today for Thursday, July 23 | MLB No Run First Inning Picks - Sportsbook Review",
         "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPQjBrclJZYTFac0ZqT1NIUnUzN0h5OGhfd1E3N196Y1pSWkRtOG92U3dMQ3RaemhYWHhHNUZ1eF9aWl9sZFVzRTRxV2xPenJLVWJ1cnZydXhSdVlsbWo5b0Z5WGNhckVpekpyeG1YRVJ0TVdBaER5TEJyUWV3dUdPWU95d0hwRDVUV2tJ?oc=5",
         "published_at": "2026-07-23T14:22:00.000Z",
         "description": "Best NRFI Bets Today for Thursday, July 23 | MLB No Run First Inning Picks &nbsp;&nbsp; Sportsbook Review",
         "source": "Sportsbook Review",
-        "published_label": "Jul 23, 2026",
-        "section": "market_context",
-        "classification_confidence": "no_game_match",
-        "game": null,
-        "selected_side": null,
-        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
-      },
-      {
-        "title": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Thursday, July 23 - Covers.com",
-        "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdGxLTXBXX0tsMVBZbGQ0U0pwX3dNaDU4aHFYU2hBVFdpNlR3T0lncTQ1aWtkT1l2cFhYb1JNT2ZCUk9HY2xsT1AwdEo4VVdwTDNITExlRzR4ak5TQXVNZ0FESjRrb2duSnRTTUZMNWdRcEFENlVQb3hpbHdCS2RJNmNn?oc=5",
-        "published_at": "2026-07-23T14:03:00.000Z",
-        "description": "MLB Home Run Predictions Today: Best HR Prop Bets, Picks, Parlay & Odds for Thursday, July 23 &nbsp;&nbsp; Covers.com",
-        "source": "Covers.com",
-        "published_label": "Jul 23, 2026",
-        "section": "market_context",
-        "classification_confidence": "no_game_match",
-        "game": null,
-        "selected_side": null,
-        "lydia_takeaway": "Useful outside market context, but not an official LyDia signal by itself."
-      },
-      {
-        "title": "MLB Best Bets Today: Predictions, Picks, Props for all Five Games on Thursday (July 23) - Action Network",
-        "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPR0VBZThaemNpdVNSTTFSTW9QdXBfZVZaS2RFRHBsXzdvS1FvM3dXYVQxd2lkSmJaVlU1cmxqTXh3c1hnV0RqVUN1ekd5eVYtT0dEYlBzcUNTRE5rNktiSVEydU1CSEtXOFF0NkJvSjJZZFFINTFXSGRTUXVUaER6LXZkUl95OUI2eVd2ZmhIdm5BWThKbTk3bVNFb0xoaVFpRHZkVFBuWng?oc=5",
-        "published_at": "2026-07-23T13:33:00.000Z",
-        "description": "MLB Best Bets Today: Predictions, Picks, Props for all Five Games on Thursday (July 23) &nbsp;&nbsp; Action Network",
-        "source": "Action Network",
         "published_label": "Jul 23, 2026",
         "section": "market_context",
         "classification_confidence": "no_game_match",
@@ -417,10 +430,10 @@
         "lydia_takeaway": "This article matches Minnesota Twins @ Cleveland Guardians, but the headline and summary do not clearly identify a selected side. LyDia currently has Cleveland Guardians Money Line at 58.8% model probability and 3.7/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
       },
       {
-        "title": "Twins vs. Guardians Prediction | MLB Picks & Odds for Thursday, July 23 - Sportsbook Review",
+        "title": "Twins vs. Guardians Prediction & Picks: MLB Odds for Thursday, July 23 - Sportsbook Review",
         "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOZFVvMDNiMDZSVzBTZzFlLUV6ZXA3ek9PbDNvdVRtQmtJRzlaT1RSdW5kWmgtRzZZbHV4d2pfWm5UV2dLU1oxeFRhZzRJT1N2N05CMjJqWExOTFlneVVzc2s3ZGVXYmZqU0JscEhtRDRXZ1JwTC1Ra0xfSE05RFRMWl84bmZKbG93RzZWUnRCRkhRQTY1Q254QnY1cEQwZw?oc=5",
         "published_at": "2026-07-23T14:38:00.000Z",
-        "description": "Twins vs. Guardians Prediction | MLB Picks & Odds for Thursday, July 23 &nbsp;&nbsp; Sportsbook Review",
+        "description": "Twins vs. Guardians Prediction & Picks: MLB Odds for Thursday, July 23 &nbsp;&nbsp; Sportsbook Review",
         "source": "Sportsbook Review",
         "published_label": "Jul 23, 2026",
         "section": "unable_to_classify",
@@ -467,19 +480,6 @@
         "game": "Kansas City Royals @ Detroit Tigers",
         "selected_side": null,
         "lydia_takeaway": "This article matches Kansas City Royals @ Detroit Tigers, but the headline and summary do not clearly identify a selected side. LyDia currently has Detroit Tigers Money Line at 58.9% model probability and 3.0/10 Lab Rating, with pass status. It stays unclassified rather than being counted as agreement."
-      },
-      {
-        "title": "Padres vs Braves Prediction, Picks & Odds for Today's MLB Game - Covers.com",
-        "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOUlZqX0ZYQ0t0MjR5RmlYbWJ2T0t2bkJ1NHRxSDBZUkJWeTE2ZllBNk9YVzZ3WXd6VWx2UFlNRWJtN3NDWldmLU85eVNkbjV6VTlRSm9mYjdlak9PNE5yd1VJYjdxQ1gwRExPWVVqRFQyZlRYWGR1VVVKcXpaRElCLVdfMXFVYXhlbHBqbA?oc=5",
-        "published_at": "2026-07-23T12:41:00.000Z",
-        "description": "Padres vs Braves Prediction, Picks & Odds for Today's MLB Game &nbsp;&nbsp; Covers.com",
-        "source": "Covers.com",
-        "published_label": "Jul 23, 2026",
-        "section": "unable_to_classify",
-        "classification_confidence": "no_explicit_side",
-        "game": "San Diego Padres @ Atlanta Braves",
-        "selected_side": null,
-        "lydia_takeaway": "This article matches San Diego Padres @ Atlanta Braves, but the headline and summary do not clearly identify a selected side. LyDia currently has Atlanta Braves Money Line at 77.5% model probability and 8.5/10 Lab Rating, with official pick status. It stays unclassified rather than being counted as agreement."
       }
     ]
   }
