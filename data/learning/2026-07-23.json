@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-23T18:14:57.018Z",
+  "generated_at": "2026-07-24T02:08:21.903Z",
   "status": "ready",
   "latest_date": "2026-07-23",
   "days_reviewed": 15,
@@ -14,10 +14,10 @@
     "source": "published-picks",
     "record_all_markets": "0-0",
     "units_all_markets": null,
-    "ungraded": 2,
+    "ungraded": 0,
     "moneyline_record": "0-0",
     "moneyline_win_rate": null,
-    "official_moneyline_picks": 0,
+    "official_moneyline_picks": 2,
     "legacy_market_entries": 0
   },
   "gates": {
@@ -27,34 +27,51 @@
     "note": "Official picks require high model probability and strong setup quality. A high Lab Rating alone is not enough."
   },
   "process_metrics": {
-    "average_model_probability": null,
-    "average_lab_score": null,
-    "average_raw_edge": null,
-    "clv_counts": {},
-    "lesson_counts": {},
-    "strong_official_count": 11,
+    "average_model_probability": 0.7589,
+    "average_lab_score": 89.5,
+    "average_raw_edge": 0.1647,
+    "clv_counts": {
+      "lost_to_close": 1,
+      "beat_close": 1
+    },
+    "lesson_counts": {
+      "voided_starter_scratched": 2
+    },
+    "strong_official_count": 13,
     "protected_by_probability_gate_count": 11,
-    "high_bullpen_risk_count": 6,
+    "high_bullpen_risk_count": 7,
     "pitcher_conflict_count": 0
   },
   "findings": [
     {
-      "title": "No official moneyline picks graded yet",
-      "read": "Learning will become useful after a finished slate is graded under the current model."
+      "title": "Official-pick discipline",
+      "read": "2 moneyline picks were graded. Record: 0-0."
+    },
+    {
+      "title": "Probability gate",
+      "read": "Across all reviewed days, 11 graded setups had strong Lab Rating but model probability below 72%. Those should remain value watch, not official picks."
+    },
+    {
+      "title": "Bullpen learning",
+      "read": "Across all reviewed days, 7 graded moneyline picks carried a meaningful bullpen caution. Review these before adjusting thresholds."
+    },
+    {
+      "title": "Pitcher learning",
+      "read": "No major starting-pitcher conflicts showed up in the graded moneyline set."
     }
   ],
   "calibration": {
     "status": "ready",
     "model_version": "moneyline-v2-plus-runs-v1",
-    "games_graded": 17,
-    "brier_score": 0.2445,
+    "games_graded": 21,
+    "brier_score": 0.2613,
     "shadow_model": {
       "status": "ready",
-      "games": 17,
+      "games": 21,
       "official_model_version": "moneyline-v2-plus-runs-v1",
       "shadow_model_version": "v3.1-bullpen",
-      "brier_official": 0.2445,
-      "brier_shadow": 0.2535,
+      "brier_official": 0.2613,
+      "brier_shadow": 0.2641,
       "leader": "official",
       "disagreements": 2,
       "shadow_wins_disagreements": 1,
@@ -62,37 +79,37 @@
     },
     "attribution": {
       "status": "collecting",
-      "games": 17,
+      "games": 21,
       "needed": 150
     },
     "kprops": {
       "status": "ready",
       "self_calibration": "-0.42 K correction active (n=59)",
-      "graded": 63,
-      "with_projection": 59,
-      "bias": -0.42,
-      "mae": 1.73,
-      "lean_record": "11-13",
-      "over_lean_record": "8-8",
-      "under_lean_record": "3-5",
-      "no_lean": 35,
+      "graded": 70,
+      "with_projection": 65,
+      "bias": -0.44,
+      "mae": 1.65,
+      "lean_record": "14-13",
+      "over_lean_record": "9-8",
+      "under_lean_record": "5-5",
+      "no_lean": 38,
       "note": "Bias = actual minus projection (positive means we under-project). Leans only counted at 0.7+ strikeout edges. Small samples early — a lean record means little before ~100 graded pitchers."
     },
     "note": "Shadow ledger for learning only — never part of the public record. Official picks stay the only published record.",
     "buckets": [
       {
         "range": "50-55%",
-        "games": 4,
-        "wins": 2,
-        "expected_win_rate": 0.529,
-        "actual_win_rate": 0.5
+        "games": 5,
+        "wins": 3,
+        "expected_win_rate": 0.527,
+        "actual_win_rate": 0.6
       },
       {
         "range": "55-60%",
-        "games": 7,
-        "wins": 4,
-        "expected_win_rate": 0.572,
-        "actual_win_rate": 0.571
+        "games": 9,
+        "wins": 5,
+        "expected_win_rate": 0.576,
+        "actual_win_rate": 0.556
       },
       {
         "range": "60-65%",
@@ -114,6 +131,13 @@
         "wins": 1,
         "expected_win_rate": 0.73,
         "actual_win_rate": 1
+      },
+      {
+        "range": "75-100%",
+        "games": 1,
+        "wins": 0,
+        "expected_win_rate": 0.765,
+        "actual_win_rate": 0
       }
     ],
     "shadow_by_status": {
@@ -123,9 +147,9 @@
         "units": -1.09
       },
       "official_pick": {
-        "games": 1,
+        "games": 2,
         "wins": 1,
-        "units": 0.74
+        "units": -0.26
       },
       "watchlist": {
         "games": 1,
@@ -133,9 +157,9 @@
         "units": -1
       },
       "pass": {
-        "games": 12,
-        "wins": 7,
-        "units": 0.01
+        "games": 15,
+        "wins": 9,
+        "units": 0.5
       }
     }
   },
@@ -338,6 +362,42 @@
         "bullpen_label": "Elevated volatility",
         "pick_side_bullpen_score": 61,
         "opponent_bullpen_score": 57
+      },
+      {
+        "date": "2026-07-23",
+        "status": "official_pick",
+        "model_version": "moneyline-v2-plus-runs-v1",
+        "game": "Tampa Bay Rays @ Toronto Blue Jays",
+        "pick": "Tampa Bay Rays",
+        "result": "VOID",
+        "model_probability": 0.7428,
+        "lab_score": 94,
+        "raw_edge": 0.2489,
+        "clv_result": "lost_to_close",
+        "lesson_tag": "voided_starter_scratched",
+        "pitcher_edge_team": "Tampa Bay Rays",
+        "pitcher_gap": 19,
+        "bullpen_label": "Supports LyDia side",
+        "pick_side_bullpen_score": 50,
+        "opponent_bullpen_score": 90
+      },
+      {
+        "date": "2026-07-23",
+        "status": "official_pick",
+        "model_version": "moneyline-v2-plus-runs-v1",
+        "game": "San Diego Padres @ Atlanta Braves",
+        "pick": "Atlanta Braves",
+        "result": "VOID",
+        "model_probability": 0.7749,
+        "lab_score": 85,
+        "raw_edge": 0.0805,
+        "clv_result": "beat_close",
+        "lesson_tag": "voided_starter_scratched",
+        "pitcher_edge_team": "Atlanta Braves",
+        "pitcher_gap": 46,
+        "bullpen_label": "Both bullpens stressed",
+        "pick_side_bullpen_score": 75,
+        "opponent_bullpen_score": 65
       }
     ],
     "protected_by_probability_gate": [
@@ -648,16 +708,71 @@
         "bullpen_label": "Adds caution",
         "pick_side_bullpen_score": 76,
         "opponent_bullpen_score": 34
+      },
+      {
+        "date": "2026-07-23",
+        "status": "official_pick",
+        "model_version": "moneyline-v2-plus-runs-v1",
+        "game": "San Diego Padres @ Atlanta Braves",
+        "pick": "Atlanta Braves",
+        "result": "VOID",
+        "model_probability": 0.7749,
+        "lab_score": 85,
+        "raw_edge": 0.0805,
+        "clv_result": "beat_close",
+        "lesson_tag": "voided_starter_scratched",
+        "pitcher_edge_team": "Atlanta Braves",
+        "pitcher_gap": 46,
+        "bullpen_label": "Both bullpens stressed",
+        "pick_side_bullpen_score": 75,
+        "opponent_bullpen_score": 65
       }
     ],
     "pitcher_conflicts": [],
-    "all_moneyline": []
+    "all_moneyline": [
+      {
+        "date": null,
+        "status": "official_pick",
+        "model_version": "moneyline-v2-plus-runs-v1",
+        "game": "Tampa Bay Rays @ Toronto Blue Jays",
+        "pick": "Tampa Bay Rays",
+        "result": "VOID",
+        "model_probability": 0.7428,
+        "lab_score": 94,
+        "raw_edge": 0.2489,
+        "clv_result": "lost_to_close",
+        "lesson_tag": "voided_starter_scratched",
+        "pitcher_edge_team": "Tampa Bay Rays",
+        "pitcher_gap": 19,
+        "bullpen_label": "Supports LyDia side",
+        "pick_side_bullpen_score": 50,
+        "opponent_bullpen_score": 90
+      },
+      {
+        "date": null,
+        "status": "official_pick",
+        "model_version": "moneyline-v2-plus-runs-v1",
+        "game": "San Diego Padres @ Atlanta Braves",
+        "pick": "Atlanta Braves",
+        "result": "VOID",
+        "model_probability": 0.7749,
+        "lab_score": 85,
+        "raw_edge": 0.0805,
+        "clv_result": "beat_close",
+        "lesson_tag": "voided_starter_scratched",
+        "pitcher_edge_team": "Atlanta Braves",
+        "pitcher_gap": 46,
+        "bullpen_label": "Both bullpens stressed",
+        "pick_side_bullpen_score": 75,
+        "opponent_bullpen_score": 65
+      }
+    ]
   },
   "multi_day": {
     "moneyline_record": "21-9",
     "moneyline_win_rate": 0.7,
-    "official_moneyline_entries": 30,
-    "strict_gate_candidates": 11,
+    "official_moneyline_entries": 32,
+    "strict_gate_candidates": 13,
     "high_lab_low_probability_entries": 11,
     "note": "Multi-day view includes whatever historical data exists. Older days may include legacy model behavior."
   },
@@ -666,5 +781,17 @@
     "Watch whether official picks with model probability >= 72% beat low-probability value watches over a larger sample.",
     "Track closing price movement once market snapshots have enough data.",
     "Keep value watch separate from official picks."
-  ]
+  ],
+  "coach": {
+    "status": "collecting",
+    "title": "Collecting a trustworthy current-model sample",
+    "summary": "LyDia has 8 of 7 required current-model days and 11 of 20 required current-model official picks. Recommendations remain paused until both minimums are reached.",
+    "current_model_days": 8,
+    "current_model_picks": 11,
+    "minimum_days": 7,
+    "minimum_picks": 20,
+    "bullpen_model_owner": "bullpen-fatigue-v3-runs-aware",
+    "recommendations": [],
+    "hard_stop": "Coach findings are review prompts only. No automatic threshold, weight, formula, publishing, or betting change is permitted."
+  }
 }

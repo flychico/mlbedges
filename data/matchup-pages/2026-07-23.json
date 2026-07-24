@@ -1,6 +1,6 @@
 {
   "date": "2026-07-23",
-  "generated_at": "2026-07-23T18:14:56.871Z",
+  "generated_at": "2026-07-24T02:08:21.496Z",
   "source": "data/member-brief/2026-07-23.json",
   "pitcher_source": "data/pitcher-matchups/2026-07-23.json",
   "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
@@ -23,7 +23,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T18:14:56.381Z",
+      "generated_at": "2026-07-24T02:08:21.493Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T16:00",
@@ -36,7 +36,12 @@
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 5,
+        "home_score": 6,
+        "moneyline_result": "VOID",
+        "void_reason": "listed starter scratched: Griffin Canning → Kyle Hart"
+      }
     },
     {
       "date": "2026-07-23",
@@ -52,7 +57,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T18:14:56.544Z",
+      "generated_at": "2026-07-24T02:08:21.493Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T17:00",
@@ -65,7 +70,12 @@
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 3,
+        "home_score": 1,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-23",
@@ -81,7 +91,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T18:14:56.214Z",
+      "generated_at": "2026-07-24T02:08:21.491Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T19:00",
@@ -94,7 +104,12 @@
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 1,
+        "home_score": 3,
+        "moneyline_result": "VOID",
+        "void_reason": "listed starter scratched: Ian Seymour → Casey Legumina"
+      }
     },
     {
       "date": "2026-07-23",
@@ -110,7 +125,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T18:14:56.707Z",
+      "generated_at": "2026-07-24T02:08:21.494Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T21:00",
@@ -123,7 +138,12 @@
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 10,
+        "home_score": 6,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     },
     {
       "date": "2026-07-23",
@@ -139,7 +159,7 @@
       "quality_score": 11,
       "quality_total": 11,
       "missing": [],
-      "generated_at": "2026-07-23T18:14:56.870Z",
+      "generated_at": "2026-07-24T02:08:21.495Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-23T23:00",
@@ -152,7 +172,12 @@
       },
       "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
       "preserved": false,
-      "final": null
+      "final": {
+        "away_score": 3,
+        "home_score": 4,
+        "moneyline_result": null,
+        "void_reason": null
+      }
     }
   ]
 }

@@ -16,3 +16,7 @@ date,gamePk,model_version,status,result,model_prob,lab,pitcher_gap,kbb_diff,gb_p
 2026-07-22,824327,moneyline-v2-plus-runs-v1,pass,W,0.5644,26,-2,0.0309,0.5538,0.3416,0.172,-5
 2026-07-22,824083,moneyline-v2-plus-runs-v1,pass,L,0.5131,24,6,0.0281,0.6031,0.293,-0.124,-6
 2026-07-22,824896,moneyline-v2-plus-runs-v1,pass,W,0.5489,18,-5,-0.0198,0.5407,0.2434,-0.098,-4
+2026-07-23,822785,moneyline-v2-plus-runs-v1,official_pick,L,0.7652,88,14,0.0375,0.4432,0.3065,0.112,40
+2026-07-23,824406,moneyline-v2-plus-runs-v1,pass,L,0.588,37,4,0.0451,0.54,0.2878,0.156,1
+2026-07-23,823042,moneyline-v2-plus-runs-v1,pass,W,0.5199,37,-19,-0.0077,0.5581,0.2833,0.245,-19
+2026-07-23,824247,moneyline-v2-plus-runs-v1,pass,W,0.5888,30,25,0.1812,0.4732,0.1884,0.018,-29
