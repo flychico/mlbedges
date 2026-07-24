@@ -204,12 +204,14 @@ async function main() {
 
 function renderPreviewPage(brief, published) {
   const rows = [...brief.games].sort((a, b) => (b.lab_score || 0) - (a.lab_score || 0));
+  const publishedByPk = new Map((published.picks || []).map(p => [String(p.gamePk), p]));
   const official = rows.filter(r => r.status === "official_pick");
   const valueWatch = rows.filter(r => r.status === "value_watch");
   const watchlist = rows.filter(r => r.status === "watchlist");
   const passes = rows.filter(r => r.status === "pass");
   const titleDate = niceDate(brief.date || DATE);
-  const cards = rows.map((g, i) => renderCard(g, i === 0 && g.status === "official_pick")).join("\n");
+  const officialPlayCount = (published.picks || []).reduce((n, p) => n + (p.moneyline ? 1 : 0) + (p.total ? 1 : 0) + ((p.strikeouts || []).length), 0);
+  const cards = rows.map((g, i) => renderCard(g, i === 0 && g.status === "official_pick", publishedByPk.get(String(g.game_pk)))).join("\n");
   const updated = prettyDateTime(brief.generated_at || published.generated_at || published.generated);
 
   return `<!DOCTYPE html>
@@ -235,7 +237,7 @@ function renderPreviewPage(brief, published) {
 </div>
 <div class="kpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px">
   <div class="card"><div class="dim small">GAMES</div><div style="font-size:1.5rem;font-weight:800">${rows.length}</div></div>
-  <div class="card"><div class="dim small">OFFICIAL PICKS</div><div style="font-size:1.5rem;font-weight:800">${official.length}</div></div>
+  <div class="card"><div class="dim small">OFFICIAL PICKS</div><div style="font-size:1.5rem;font-weight:800">${officialPlayCount}</div><div class="dim small">across all markets</div></div>
   <div class="card"><div class="dim small">VALUE WATCH</div><div style="font-size:1.5rem;font-weight:800">${valueWatch.length}</div></div>
   <div class="card"><div class="dim small">WATCHLIST</div><div style="font-size:1.5rem;font-weight:800">${watchlist.length}</div></div>
   <div class="card"><div class="dim small">PASSES</div><div style="font-size:1.5rem;font-weight:800">${passes.length}</div></div>
@@ -254,10 +256,15 @@ ${cards}
 </html>`;
 }
 
-function renderCard(g, featured) {
+function renderCard(g, featured, published) {
   const pe = g.pitcher_edge || {};
   const m = g.market || {};
   const isPass = g.status === "pass";
+  const officialMarkets = [];
+  if (published && published.moneyline) officialMarkets.push(`<div><b>Moneyline:</b> ${esc(published.moneyline.pick)} ${odds(published.moneyline.bestAm)}</div>`);
+  if (published && published.total) officialMarkets.push(`<div><b>Game total:</b> ${esc(published.total.pick)} ${esc(published.total.line)} ${odds(published.total.bestAm)}</div>`);
+  for (const k of (published && published.strikeouts) || []) officialMarkets.push(`<div><b>Pitcher Ks:</b> ${esc(k.pitcher)} ${esc(k.pick)} ${esc(k.line)} ${odds(k.bestAm)}</div>`);
+  const cardStatus = officialMarkets.length ? "official_pick" : g.status;
   return `<div class="${featured ? "pv featured" : "pv"}" data-lab-score="${esc(g.lab_score ?? "")}">
   ${featured ? `<span class="featured-flag">Top Lab Rating</span>` : ""}<h2>${esc(g.game || "")}</h2>
   <div class="meta">${esc(g.time || "")} ET · ${pitcherLink(pe.away_pitcher, pe.away_pitcher_id)} vs ${pitcherLink(pe.home_pitcher, pe.home_pitcher_id)}</div>
@@ -265,7 +272,8 @@ function renderCard(g, featured) {
     <img src="/img/lynold-mercado-headshot.jpg" alt="Lynold Mercado" width="38" height="38">
     <div class="byline small"><strong><a href="/writers/lynold/">Lynold Mercado</a></strong><br><span class="dim">Founder and Model Developer</span></div>
   </div>
-  <span class="status-badge ${statusClass(g.status)}">${statusLabel(g.status)}</span>
+  <span class="status-badge ${statusClass(cardStatus)}">${statusLabel(cardStatus)}</span>
+  ${officialMarkets.length ? `<div class="notice" style="max-width:760px;margin:4px auto 12px"><strong>Official markets</strong>${officialMarkets.join("")}</div>` : ""}
   <dl class="field-grid">
     <dt>LyDia side</dt><dd>${esc(g.pick_team || "-")} Money Line</dd>
     <dt>Lab Rating</dt><dd>${labRating(g.lab_score)}</dd>

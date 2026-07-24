@@ -52,7 +52,8 @@ if (totals.model_version || requireCurrentTotals) {
   if (!totals.policy || totals.policy.research_min_edge !== 0.7 || totals.policy.research_min_setup !== 70) {
     fail("Totals research-lean policy is not synchronized.");
   }
-  if (totals.policy.official_totals_enabled !== false) fail("Official totals must remain disabled.");
+  if (totals.policy.official_totals_enabled !== true) fail("Official totals must be enabled.");
+  if (totals.policy.team_totals_official_enabled !== false) fail("Team totals must remain research-only.");
 }
 
 const totalsSource = read("scripts/update-totals.js");
@@ -62,8 +63,11 @@ if (!totalsSource.includes('const TOTALS_MODEL_VERSION = "totals-runs-v2-innings
 if (!totalsSource.includes("research_min_edge: 0.7") || !totalsSource.includes("research_min_setup: 70")) {
   fail("Totals generator thresholds disagree with the synchronized policy.");
 }
-if (!totalsSource.includes("official_totals_enabled: false")) {
-  fail("Totals generator must keep official totals disabled.");
+if (!totalsSource.includes("official_totals_enabled: true")) {
+  fail("Totals generator must enable official full-game totals.");
+}
+if (!totalsSource.includes("team_totals_official_enabled: false")) {
+  fail("Totals generator must keep team totals research-only.");
 }
 
 const totalsTool = read("tools/totals-projections/index.html");

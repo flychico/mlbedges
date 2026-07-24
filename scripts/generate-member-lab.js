@@ -2,8 +2,8 @@
 /*
   LyDia source-of-truth daily engine.
   Creates research data and locked official picks only for an open slate.
-  Current official model: moneyline only.
-  Official picks require both a strong model probability and a strong Lab Rating.
+  Official markets: moneyline, full-game totals, and pitcher strikeouts.
+  Each market keeps its own qualification rule and record.
 */
 const fs = require("fs");
 const path = require("path");
@@ -26,6 +26,10 @@ const VALUE_WATCH_LAB_SCORE = 75;
 const WATCHLIST_LAB_SCORE = 65;
 const MAX_ABS_PRICE = 1000;
 const RUN_MODEL_WEIGHT = 0.50;
+const OFFICIAL_TOTAL_EDGE = 1.0;
+const OFFICIAL_TOTAL_LAB = 80;
+const OFFICIAL_K_EDGE = 0.7;
+const OFFICIAL_K_MIN_BOOKS = 2;
 
 const args = parseArgs(process.argv.slice(2));
 const DATE = args.date || etToday();
@@ -124,7 +128,7 @@ async function main() {
     generated_at: generatedAt,
     snapshot_type: SNAPSHOT,
     source_of_truth: "LyDia Daily Engine",
-    current_official_model: "moneyline_only",
+    current_official_model: "multi_market_v1",
     model_version: "moneyline-v2-plus-runs-v1",
     official_pick_rules: {
       minimum_model_probability: OFFICIAL_MODEL_PROB,
@@ -194,8 +198,13 @@ function injectPicksRecord() {
   if (!days.length) return;
   let wins = 0, losses = 0, units = 0;
   for (const d of days) {
-    if (d.current_official_model !== "moneyline_only") continue;
-    for (const p of (Array.isArray(d.picks) ? d.picks : [])) {
+    if (!["moneyline_only", "multi_market_v1"].includes(d.current_official_model)) continue;
+    if (d.market_records) {
+      for (const r of Object.values(d.market_records)) {
+        wins += Number(r.wins) || 0;
+        losses += Number(r.losses) || 0;
+      }
+    } else for (const p of (Array.isArray(d.picks) ? d.picks : [])) {
       if (p.mlResult === "W") wins++;
       else if (p.mlResult === "L") losses++;
     }
@@ -826,42 +835,106 @@ function riskNote(r) {
   return `Primary caution: ${notes.join("; ")}. Recheck official news before first pitch.`;
 }
 function buildPicksFile(rows, generatedAt) {
-  const official = rows.filter(r => r.status === "official_pick");
-  return {
-    date: DATE,
-    generated: generatedAt,
-    generated_at: generatedAt,
-    locked_at: generatedAt,
-    source_of_truth: "LyDia Daily Engine",
-    current_official_model: "moneyline_only",
-    lock_policy: "Dated official pick files are append-only. Re-running the engine for the same date reuses the existing dated file instead of changing official picks.",
-    note: "Official picks require market edge, model probability >= 72%, Lab Rating >= 8.0/10, pitcher support, and no major bullpen caution.",
-    picks: official.map(r => ({
+  const totals = readJsonSafe(`data/totals/${DATE}.json`) || { games: {} };
+  const kprops = readJsonSafe(`data/k-props/${DATE}.json`) || { pitchers: {} };
+  const byPk = new Map(rows.map(r => [String(r.game_pk), r]));
+  const groups = new Map();
+  const ensureGroup = r => {
+    const key = String(r.game_pk);
+    if (!groups.has(key)) groups.set(key, {
       gamePk: r.game_pk,
       away: r.away_team,
       home: r.home_team,
       time: r.game_time_iso,
       labScore: r.lab_score,
       labScoreBreakdown: r.lab_score_breakdown,
-      status: r.status,
-      modelVersion: "moneyline-v2-plus-runs-v1",
+      status: "official_pick",
+      modelVersion: "multi-market-v1",
       pitcherEdge: r.pitcher_edge,
       bullpen: r.bullpen,
-      moneyline: {
-        pick: r.pick_team,
-        side: r.side,
-        prob: r.model_probability,
-        mktProb: r.market.no_vig_probability,
-        bestAm: r.market.best_price,
-        valueTag: r.value_tag,
-        isPass: false,
-        tier: r.lab_score >= 90 ? "Elite Setup" : "Qualified Official",
-        edgeScore: r.lab_score,
-        rawEdge: r.edge,
-        why: r.read,
-        risk: riskNote(r)
-      }
-    }))
+      moneyline: null,
+      total: null,
+      strikeouts: []
+    });
+    return groups.get(key);
+  };
+
+  for (const r of rows.filter(x => x.status === "official_pick")) {
+    ensureGroup(r).moneyline = {
+      pick: r.pick_team,
+      side: r.side,
+      prob: r.model_probability,
+      mktProb: r.market.no_vig_probability,
+      bestAm: r.market.best_price,
+      valueTag: r.value_tag,
+      isPass: false,
+      tier: r.lab_score >= 90 ? "Elite Setup" : "Qualified Official",
+      edgeScore: r.lab_score,
+      rawEdge: r.edge,
+      why: r.read,
+      risk: riskNote(r)
+    };
+  }
+
+  for (const [pk, t] of Object.entries(totals.games || {})) {
+    const r = byPk.get(String(pk));
+    if (!r || !Number.isFinite(t.projection) || !Number.isFinite(t.line) || !Number.isFinite(t.lab)) continue;
+    const edge = Number((t.projection - t.line).toFixed(1));
+    const pick = edge > 0 ? "Over" : "Under";
+    const price = pick === "Over" ? t.over : t.under;
+    if (Math.abs(edge) < OFFICIAL_TOTAL_EDGE || t.lab < OFFICIAL_TOTAL_LAB || !Number.isFinite(price)) continue;
+    ensureGroup(r).total = {
+      pick,
+      line: t.line,
+      bestAm: price,
+      projection: t.projection,
+      edge,
+      labScore: t.lab,
+      books: t.books || 0,
+      modelVersion: totals.model_version || "totals-runs-v2-innings-allocation",
+      valueTag: "OFFICIAL PICK"
+    };
+  }
+
+  for (const rec of Object.values(kprops.pitchers || {})) {
+    const r = byPk.get(String(rec.game_pk));
+    if (!r || !Number.isFinite(rec.projection) || !Number.isFinite(rec.line)) continue;
+    const edge = Number((rec.projection - rec.line).toFixed(2));
+    const pick = edge > 0 ? "Over" : "Under";
+    const price = pick === "Over" ? rec.over : rec.under;
+    const roleEligible = rec.bullpen_game !== true && Number(rec.expected_innings) >= 4;
+    if (Math.abs(edge) < OFFICIAL_K_EDGE || !roleEligible || Number(rec.books) < OFFICIAL_K_MIN_BOOKS || !Number.isFinite(price)) continue;
+    ensureGroup(r).strikeouts.push({
+      pitcher: rec.name,
+      pick,
+      line: rec.line,
+      bestAm: price,
+      projection: rec.projection,
+      edge,
+      books: rec.books,
+      expectedInnings: rec.expected_innings,
+      pitcherRole: rec.pitcher_role,
+      modelVersion: "pitcher-strikeouts-self-calibrated-v1",
+      valueTag: "OFFICIAL PICK"
+    });
+  }
+
+  return {
+    date: DATE,
+    generated: generatedAt,
+    generated_at: generatedAt,
+    locked_at: generatedAt,
+    source_of_truth: "LyDia Daily Engine",
+    current_official_model: "multi_market_v1",
+    lock_policy: "Dated official pick files are append-only. Re-running the engine for the same date reuses the existing dated file instead of changing official picks.",
+    note: "Official records are separated by market. Moneylines use the 72% probability and 8.0/10 Lab gates; game totals use a 1.0-run edge and 8.0/10 totals setup; pitcher Ks use a 0.7-K edge, posted price, two-book coverage, and a confirmed non-opener workload.",
+    rules: {
+      moneyline: { minimum_probability: OFFICIAL_MODEL_PROB, minimum_lab: OFFICIAL_LAB_SCORE, minimum_edge: VALUE_EDGE },
+      game_total: { minimum_edge_runs: OFFICIAL_TOTAL_EDGE, minimum_lab: OFFICIAL_TOTAL_LAB },
+      pitcher_strikeouts: { minimum_edge_k: OFFICIAL_K_EDGE, minimum_books: OFFICIAL_K_MIN_BOOKS, minimum_expected_innings: 4 },
+      team_totals: { official_enabled: false, status: "research_only" }
+    },
+    picks: [...groups.values()]
   };
 }
 function writeOrReusePublishedPicks(candidate, scheduledGameCount) {
@@ -869,6 +942,30 @@ function writeOrReusePublishedPicks(candidate, scheduledGameCount) {
   if (fs.existsSync(path.join(ROOT, file))) {
     const existing = readJson(file);
     if (!existing || !Array.isArray(existing.picks)) throw new Error(`${file} exists but does not contain a picks array.`);
+
+    // One-time schema promotion: preserve every locked moneyline exactly as
+    // published, then add newly approved official market types only for games
+    // that have not started. Once promoted, the multi-market file is immutable.
+    if (existing.current_official_model !== "multi_market_v1" && candidate.current_official_model === "multi_market_v1") {
+      const existingByPk = new Map(existing.picks.map(p => [String(p.gamePk), p]));
+      for (const next of candidate.picks) {
+        const firstPitch = Date.parse(next.time);
+        if (!Number.isFinite(firstPitch) || Date.now() >= firstPitch) continue;
+        const prior = existingByPk.get(String(next.gamePk));
+        if (prior) {
+          if (!prior.total && next.total) prior.total = next.total;
+          if ((!Array.isArray(prior.strikeouts) || !prior.strikeouts.length) && next.strikeouts && next.strikeouts.length) prior.strikeouts = next.strikeouts;
+        } else if (next.total || (next.strikeouts && next.strikeouts.length)) {
+          existing.picks.push(next);
+        }
+      }
+      existing.current_official_model = "multi_market_v1";
+      existing.market_promotion_at = new Date().toISOString();
+      existing.rules = candidate.rules;
+      existing.note = candidate.note;
+      writeJson(file, existing);
+      console.log(`Promoted ${file} to the multi-market official schema without changing locked moneylines.`);
+    }
 
     // A zero-pick file is a provisional snapshot, not an immutable official-pick
     // lock. Morning runs can happen before the market and all model inputs are

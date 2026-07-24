@@ -1240,9 +1240,10 @@ function renderStrikeoutProjections(game, pitcherGame, kprops) {
     const prop = entry.prop;
     const hasLine = typeof prop.line === "number";
     const lean = hasLine && typeof prop.projection === "number" ? prop.projection - prop.line : null;
+    const official = lean !== null && Math.abs(lean) >= 0.7 && prop.bullpen_game !== true && Number(prop.expected_innings) >= 4 && Number(prop.books) >= 2 && Number.isFinite(lean > 0 ? prop.over : prop.under);
     let leanHtml = "";
-    if (lean !== null && Math.abs(lean) >= 0.3) {
-      leanHtml = `<div class="k-lean ${lean > 0 ? "over" : "under"}">LyDia leans ${lean > 0 ? "OVER" : "UNDER"} ${esc(oneDecimal(prop.line))}K by ${Math.abs(lean).toFixed(1)}</div>`;
+    if (lean !== null && Math.abs(lean) >= 0.7) {
+      leanHtml = `<div class="k-lean ${lean > 0 ? "over" : "under"}">${official ? "Official pick" : "LyDia leans"} ${lean > 0 ? "OVER" : "UNDER"} ${esc(oneDecimal(prop.line))}K by ${Math.abs(lean).toFixed(1)}</div>`;
     } else if (lean !== null) {
       leanHtml = `<div class="k-lean flat">Model and market agree</div>`;
     }
@@ -1253,7 +1254,7 @@ function renderStrikeoutProjections(game, pitcherGame, kprops) {
   }).join("");
   return `<h3 style="margin:16px 0 4px">Strikeout projections <a class="tool-link" style="font-size:.78rem" href="/tools/strikeout-projections/">Full K board &rarr;</a></h3>
   <div class="metric-grid">${cells}</div>
-  <p class="small dim">Projections are self-calibrated against graded results${kprops && kprops.learned_n ? ` (${esc(kprops.learned_n)} graded starts)` : ""}. Leans are context, not official picks.</p>`;
+  <p class="small dim">Projections are self-calibrated against graded results${kprops && kprops.learned_n ? ` (${esc(kprops.learned_n)} graded starts)` : ""}. Official K picks require a 0.7+ strikeout edge, a posted price from at least two books, and a confirmed non-opener workload of at least four expected innings.</p>`;
 }
 
 function renderOffenseTable(game, teamHitting) {
@@ -1336,6 +1337,13 @@ function renderTotals(total) {
     : Math.abs(difference) < 0.7
       ? "The model and market are close."
       : `The model projects ${Math.abs(difference).toFixed(1)} runs ${difference > 0 ? "above" : "below"} the market total. A research lean still requires a setup rating of at least 7.0/10.`;
+  const official = total.official_eligible === true || (difference !== null && Math.abs(difference) >= 1 && Number(total.lab) >= 80);
+  const teamTotalCard = side => {
+    const t = total.team_totals && total.team_totals[side];
+    if (!t) return "";
+    const read = t.lean ? `${t.lean} research lean (${t.edge > 0 ? "+" : ""}${oneDecimal(t.edge)})` : t.line == null ? "Market line pending" : "No team-total lean";
+    return `<div class="metric"><div class="label">${esc(t.team)} team total</div><div class="value">${esc(oneDecimal(t.projection))} projected</div><div class="small dim">Line ${esc(oneDecimal(t.line))} &middot; O ${esc(odds(t.over))} / U ${esc(odds(t.under))}</div><div class="small">${esc(read)}</div></div>`;
+  };
   return `<section class="card">
     <div class="sec-head"><h2>Run total projection</h2><a class="tool-link" href="/tools/totals-projections/">Full Totals Projections &rarr;</a></div>
     <div class="metric-grid">
@@ -1345,8 +1353,10 @@ function renderTotals(total) {
       <div class="metric"><div class="label">Projected home runs</div><div class="value">${esc(oneDecimal(total.proj_home))}</div></div>
       <div class="metric"><div class="label">Over price</div><div class="value">${esc(odds(total.over))}</div></div>
       <div class="metric"><div class="label">Under price</div><div class="value">${esc(odds(total.under))}</div></div>
+      ${teamTotalCard("away")}
+      ${teamTotalCard("home")}
     </div>
-    <p>${esc(context)} Totals are research context only; official totals are currently disabled.</p>
+    <p>${official ? `<strong>Official total pick: ${difference > 0 ? "Over" : "Under"} ${esc(oneDecimal(total.line))}.</strong> ` : ""}${esc(context)} Team totals remain research-only until their graded sample is established.</p>
   </section>`;
 }
 

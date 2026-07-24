@@ -35,6 +35,9 @@
     if (pick.total && pick.total.pick) {
       plays.push({ market: "Total", pick: `${pick.total.pick} ${pick.total.line}`, side: pick.total.pick, line: Number(pick.total.line), price: pick.total.bestAm });
     }
+    for (const k of pick.strikeouts || []) {
+      plays.push({ market: "K Prop", pick: `${k.pitcher} ${k.pick} ${k.line}`, pitcher: k.pitcher, side: k.pick, line: Number(k.line), price: k.bestAm });
+    }
     if (pick.runLine && pick.runLine.pick) {
       plays.push({ market: "RL", pick: `${pick.runLine.pick} ${Number(pick.runLine.point) > 0 ? "+" : ""}${pick.runLine.point}`, team: pick.runLine.pick, point: Number(pick.runLine.point), price: pick.runLine.bestAm });
     }
@@ -59,6 +62,23 @@
     if (play.market === "Total") {
       if (totalRuns === play.line) return { result: "PUSH", cls: "" };
       const won = play.side === "Over" ? totalRuns > play.line : totalRuns < play.line;
+      return { result: won ? "W" : "L", cls: won ? "pos-text" : "neg-text" };
+    }
+    if (play.market === "K Prop") {
+      let actual = null;
+      const box = game && game._box;
+      if (!box) return { result: "", cls: "" };
+      if (box) for (const side of ["away", "home"]) {
+        const players = (box.teams && box.teams[side] && box.teams[side].players) || {};
+        for (const player of Object.values(players)) {
+          if (player.person && player.person.fullName === play.pitcher && player.stats && player.stats.pitching && player.stats.pitching.inningsPitched !== undefined) {
+            actual = Number(player.stats.pitching.strikeOuts) || 0;
+          }
+        }
+      }
+      if (actual === null) return { result: "VOID", cls: "" };
+      if (actual === play.line) return { result: "PUSH", cls: "" };
+      const won = play.side === "Over" ? actual > play.line : actual < play.line;
       return { result: won ? "W" : "L", cls: won ? "pos-text" : "neg-text" };
     }
     if (play.market === "RL") {
@@ -174,6 +194,14 @@
     if (!schedRes.ok) throw new Error(`Could not load MLB scoreboard: HTTP ${schedRes.status}`);
     const schedule = await schedRes.json();
     const games = ((((schedule.dates || [])[0]) || {}).games || []);
+    await Promise.all(games.map(async game => {
+      const pick = picks.find(p => Number(p.gamePk) === Number(game.gamePk));
+      if (!pick || !(pick.strikeouts || []).length || !game.status || game.status.abstractGameState !== "Final") return;
+      try {
+        const res = await fetch(`https://statsapi.mlb.com/api/v1/game/${game.gamePk}/boxscore?v=${Date.now()}`, { cache: "no-store" });
+        if (res.ok) game._box = await res.json();
+      } catch (e) {}
+    }));
     const gamesByPk = new Map(games.map(g => [Number(g.gamePk), g]));
     const summary = renderRows(picks, gamesByPk);
     const checked = new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" });

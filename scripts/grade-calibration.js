@@ -222,9 +222,8 @@ async function main() {
         if (tSeen.has(key)) continue;
         const f = finals[pk];
         if (!f || f.awayScore == null || f.homeScore == null) continue;
-        // scratched-starter void applies to totals too
-        const briefG = games.find(x => String(x.game_pk) === String(pk));
-        if (briefG && await gameVoided(briefG)) continue;
+        // Full-game totals are team markets. An opener/starter change does not
+        // void the wager unless the sportsbook voids the market itself.
         const actual = f.awayScore + f.homeScore;
         const hasLine = Number.isFinite(g.line);
         const ou = hasLine ? (actual > g.line ? "O" : actual < g.line ? "U" : "P") : "";
