@@ -35,7 +35,7 @@
         "team": "Kansas City Royals",
         "type": "opener_bulk",
         "confidence": "manual",
-        "source_note": "Manual override submitted through the Publish workflow: Beck Way 2 IP, Noah Cameron 5 IP, bullpen 2 IP.",
+        "source_note": "Manual pitching update: Beck Way 2 IP, Noah Cameron 5 IP, bullpen 2 IP.",
         "segments": [
           {
             "role": "opener",

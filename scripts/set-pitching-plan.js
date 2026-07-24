@@ -110,7 +110,7 @@ async function main() {
       team,
       type: bulk ? "opener_bulk" : "opener_bullpen",
       confidence: "manual",
-      source_note: `Manual override submitted through the Publish workflow: ${segments.map(segment => `${segment.pitcher || "bullpen"} ${segment.expected_innings} IP`).join(", ")}.`,
+      source_note: `Manual pitching update: ${segments.map(segment => `${segment.pitcher || "bullpen"} ${segment.expected_innings} IP`).join(", ")}.`,
       segments
     };
   }
