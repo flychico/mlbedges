@@ -22,10 +22,11 @@ if (!html.includes('/js/pitcher-matchup-core.js')) {
 
 const oldLoad = 'const [pitcherStats] = await Promise.all([fetchPitchers(ids, date), loadBullpen(date)]);';
 const newLoad = 'const [pitcherStats] = await Promise.all([LyDiaPitcherCore.loadPitchersForDate(ids, date), loadBullpen(date)]);';
+const canonicalLoadPattern = /LyDiaPitcherCore\.loadPitchersForDate\s*\(\s*ids\s*,\s*date\s*\)/;
 if (html.includes(oldLoad)) {
   html = html.replace(oldLoad, newLoad);
   changed = true;
-} else if (!html.includes(newLoad)) {
+} else if (!canonicalLoadPattern.test(html)) {
   throw new Error("Pitcher tool data-source line not found.");
 }
 
