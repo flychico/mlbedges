@@ -1,6 +1,6 @@
 {
   "date": "2026-07-24",
-  "generated_at": "2026-07-24T03:02:20.860Z",
+  "generated_at": "2026-07-24T03:08:46.468Z",
   "source": "data/member-brief/2026-07-24.json",
   "pitcher_source": "data/pitcher-matchups/2026-07-24.json",
   "pitcher_source_version": "pitcher-matchup-core-v2-role-aware",
@@ -26,7 +26,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:19.658Z",
+      "generated_at": "2026-07-24T03:08:45.262Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T20:00",
@@ -58,7 +58,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:19.959Z",
+      "generated_at": "2026-07-24T03:08:45.562Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T23:00",
@@ -90,7 +90,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:20.660Z",
+      "generated_at": "2026-07-24T03:08:46.262Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T23:00",
@@ -122,7 +122,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:19.558Z",
+      "generated_at": "2026-07-24T03:08:45.162Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T23:00",
@@ -154,7 +154,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:20.260Z",
+      "generated_at": "2026-07-24T03:08:45.862Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T23:00",
@@ -188,7 +188,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:20.460Z",
+      "generated_at": "2026-07-24T03:08:46.063Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T23:00",
@@ -220,7 +220,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:20.160Z",
+      "generated_at": "2026-07-24T03:08:45.762Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T23:00",
@@ -254,7 +254,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:20.360Z",
+      "generated_at": "2026-07-24T03:08:45.962Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T23:00",
@@ -286,7 +286,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:20.760Z",
+      "generated_at": "2026-07-24T03:08:46.368Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T23:00",
@@ -318,7 +318,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:20.859Z",
+      "generated_at": "2026-07-24T03:08:46.467Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-24T23:00",
@@ -350,7 +350,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:20.560Z",
+      "generated_at": "2026-07-24T03:08:46.162Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-25T00:00",
@@ -382,7 +382,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:19.457Z",
+      "generated_at": "2026-07-24T03:08:45.061Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-25T00:00",
@@ -414,7 +414,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:20.059Z",
+      "generated_at": "2026-07-24T03:08:45.661Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-25T00:00",
@@ -446,7 +446,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:19.858Z",
+      "generated_at": "2026-07-24T03:08:45.462Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-25T00:00",
@@ -478,7 +478,7 @@
         "market_probability",
         "market_price"
       ],
-      "generated_at": "2026-07-24T03:02:19.758Z",
+      "generated_at": "2026-07-24T03:08:45.362Z",
       "weather": {
         "source": "Open-Meteo forecast",
         "forecast_time_utc": "2026-07-25T02:00",

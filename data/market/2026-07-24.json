@@ -1,6 +1,6 @@
 {
   "date": "2026-07-24",
-  "generated_at": "2026-07-24T03:02:15.613Z",
+  "generated_at": "2026-07-24T03:08:41.449Z",
   "items": [
     {
       "pick_id": "colorado-rockies-milwaukee-brewers-2026-07-24-ml",
@@ -23,5 +23,5 @@
       "read": "Market tracking compares LyDia's posted number against later current and closing snapshots."
     }
   ],
-  "snapshot_type": "posted"
+  "snapshot_type": "current"
 }

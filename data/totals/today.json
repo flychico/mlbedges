@@ -1,6 +1,6 @@
 {
  "date": "2026-07-24",
- "generated_at": "2026-07-24T03:02:14.807Z",
+ "generated_at": "2026-07-24T03:08:40.366Z",
  "model_version": "totals-runs-v2-innings-allocation",
  "policy": {
   "version": "totals-policy-v3-official",
@@ -168,15 +168,15 @@
      "classification": "research_lean"
     }
    },
-   "lab": 93,
-   "official_eligible": true,
+   "lab": 40,
+   "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 40,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "official_pick"
+   "classification": "line_pending"
   },
   "822872": {
    "game": "Seattle Mariners @ Texas Rangers",
@@ -270,15 +270,15 @@
      "classification": "no_lean"
     }
    },
-   "lab": 48,
+   "lab": 40,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 8,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "no_lean"
+   "classification": "line_pending"
   },
   "822952": {
    "game": "Cleveland Guardians @ Tampa Bay Rays",
@@ -372,15 +372,15 @@
      "classification": "research_lean"
     }
    },
-   "lab": 51,
+   "lab": 40,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 11.2,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "no_lean"
+   "classification": "line_pending"
   },
   "823031": {
    "game": "Cincinnati Reds @ St. Louis Cardinals",
@@ -474,15 +474,15 @@
      "classification": "no_lean"
     }
    },
-   "lab": 71,
+   "lab": 40,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 11.2,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "research_lean"
+   "classification": "line_pending"
   },
   "823196": {
    "game": "Los Angeles Angels @ San Francisco Giants",
@@ -576,15 +576,15 @@
      "classification": "line_pending"
     }
    },
-   "lab": 82,
-   "official_eligible": true,
+   "lab": 40,
+   "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 22.4,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "official_pick"
+   "classification": "line_pending"
   },
   "823352": {
    "game": "Chicago Cubs @ Pittsburgh Pirates",
@@ -678,15 +678,15 @@
      "classification": "research_lean"
     }
    },
-   "lab": 82,
-   "official_eligible": true,
+   "lab": 40,
+   "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 28.8,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "official_pick"
+   "classification": "line_pending"
   },
   "823434": {
    "game": "New York Yankees @ Philadelphia Phillies",
@@ -780,15 +780,15 @@
      "classification": "research_lean"
     }
    },
-   "lab": 46,
+   "lab": 40,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 6.4,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "no_lean"
+   "classification": "line_pending"
   },
   "823601": {
    "game": "Los Angeles Dodgers @ New York Mets",
@@ -882,15 +882,15 @@
      "classification": "no_lean"
     }
    },
-   "lab": 48,
+   "lab": 40,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 8,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "no_lean"
+   "classification": "line_pending"
   },
   "823680": {
    "game": "Athletics @ Minnesota Twins",
@@ -984,15 +984,15 @@
      "classification": "research_lean"
     }
    },
-   "lab": 70,
+   "lab": 40,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 30.4,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "research_lean"
+   "classification": "line_pending"
   },
   "823759": {
    "game": "Colorado Rockies @ Milwaukee Brewers",
@@ -1086,15 +1086,15 @@
      "classification": "research_lean"
     }
    },
-   "lab": 75,
+   "lab": 40,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 28.8,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "research_lean"
+   "classification": "line_pending"
   },
   "823843": {
    "game": "San Diego Padres @ Miami Marlins",
@@ -1188,15 +1188,15 @@
      "classification": "no_lean"
     }
    },
-   "lab": 29,
+   "lab": 28,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 12.5,
-    "edge_points": 1.6,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "no_lean"
+   "classification": "line_pending"
   },
   "824248": {
    "game": "Kansas City Royals @ Detroit Tigers",
@@ -1290,15 +1290,15 @@
      "classification": "no_lean"
     }
    },
-   "lab": 32,
+   "lab": 28,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 12.5,
-    "edge_points": 4.8,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "no_lean"
+   "classification": "line_pending"
   },
   "824573": {
    "game": "Houston Astros @ Chicago White Sox",
@@ -1392,15 +1392,15 @@
      "classification": "research_lean"
     }
    },
-   "lab": 66,
+   "lab": 40,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 12.8,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "no_lean_low_setup"
+   "classification": "line_pending"
   },
   "824733": {
    "game": "Toronto Blue Jays @ Boston Red Sox",
@@ -1494,15 +1494,15 @@
      "classification": "research_lean"
     }
    },
-   "lab": 66,
+   "lab": 40,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 25,
-    "edge_points": 12.8,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "no_lean_low_setup"
+   "classification": "line_pending"
   },
   "824812": {
    "game": "Atlanta Braves @ Baltimore Orioles",
@@ -1596,17 +1596,17 @@
      "classification": "research_lean"
     }
    },
-   "lab": 56,
+   "lab": 28,
    "official_eligible": false,
    "setup_components": {
     "base": 15,
     "data_confidence": 12.5,
-    "edge_points": 22.4,
+    "edge_points": 0,
     "alignment_threshold": 0.7
    },
-   "classification": "no_lean_low_setup"
+   "classification": "line_pending"
   }
  },
  "learned_bias": 0,
- "learned_n": 4
+ "learned_n": 5
 }
