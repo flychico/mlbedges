@@ -3,3 +3,4 @@ date,gamePk,model_version,line,over_price,under_price,projection,actual_total,ou
 2026-07-23,823042,totals-runs-v2-innings-allocation,7.5,104,-112,9.5,16,O,2,W,79,research_lean,Arizona Diamondbacks @ St. Louis Cardinals
 2026-07-23,824247,totals-runs-v2-innings-allocation,8.5,-103,-106,8.3,7,U,-0.2,,43,no_lean,Kansas City Royals @ Detroit Tigers
 2026-07-23,824406,totals-runs-v2-innings-allocation,4.5,104,-111,8.7,4,U,4.2,L,80,strong_research_lean,Minnesota Twins @ Cleveland Guardians
+2026-07-23,824893,totals-runs-v2-innings-allocation,9.5,-104,-110,11.8,11,O,2.3,W,97,strong_research_lean,San Diego Padres @ Atlanta Braves
